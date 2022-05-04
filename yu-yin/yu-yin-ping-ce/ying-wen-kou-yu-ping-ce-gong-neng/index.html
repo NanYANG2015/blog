@@ -4,8 +4,11 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="小妇人, 梦园">
-    <meta name="description" content="">
+    <meta name="keywords" content="英文口语评测功能, 梦园">
+    <meta name="description" content="英文口语评测功能技术文档
+科大讯飞：https://www.xfyun.cn/doc/Ise/IseAPI.html#接口说明
+驰声：https://www.chivox.com/opendoc/#/ChineseDoc/coreEn/
+先">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +22,7 @@
 
     
 
-    <title>小妇人 | 梦园</title>
+    <title>英文口语评测功能 | 梦园</title>
     <link rel="icon" type="image/png" href="/blog/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/blog/libs/awesome/css/all.min.css">
@@ -372,7 +375,7 @@
                     <div class="row">
                         <div class="col s12 m12 l12">
                             <div class="brand">
-                                <h1 class="description center-align post-title">小妇人</h1>
+                                <h1 class="description center-align post-title">英文口语评测功能</h1>
                             </div>
                         </div>
                     </div>
@@ -385,8 +388,12 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/blog/categories/%E4%B9%A6%E7%B1%8D/" class="post-category">
-                                书籍
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/" class="post-category">
+                                语音
+                            </a>
+                        
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E8%AF%84%E6%B5%8B/" class="post-category">
+                                语音评测
                             </a>
                         
                     </div>
@@ -427,7 +434,338 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                
+                <h1 id="英文口语评测功能"><a href="#英文口语评测功能" class="headerlink" title="英文口语评测功能"></a>英文口语评测功能</h1><h2 id="技术文档"><a href="#技术文档" class="headerlink" title="技术文档"></a>技术文档</h2><ul>
+<li>科大讯飞：<a target="_blank" rel="noopener" href="https://www.xfyun.cn/doc/Ise/IseAPI.html#%E6%8E%A5%E5%8F%A3%E8%AF%B4%E6%98%8E">https://www.xfyun.cn/doc/Ise/IseAPI.html#接口说明</a></li>
+<li>驰声：<a target="_blank" rel="noopener" href="https://www.chivox.com/opendoc/#/ChineseDoc/coreEn/">https://www.chivox.com/opendoc/#/ChineseDoc/coreEn/</a></li>
+<li>先声：<a target="_blank" rel="noopener" href="https://open.singsound.com/doc/engine?type=engine-en-en.word.score">https://open.singsound.com/doc/engine?type=engine-en-en.word.score</a></li>
+</ul>
+<h2 id="题型"><a href="#题型" class="headerlink" title="题型"></a>题型</h2><table>
+<thead>
+<tr>
+<th>题型</th>
+<th>科大讯飞</th>
+<th>驰声</th>
+<th>先声</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>音标朗读</td>
+<td></td>
+<td>√ 自定义文本音标</td>
+<td>√</td>
+</tr>
+<tr>
+<td>单词朗读</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>单词纠音（音素识别）</td>
+<td></td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>句子朗读</td>
+<td>√</td>
+<td>√</td>
+<td>√ 支持音频对比，返回音量、语调、语速相关度得分</td>
+</tr>
+<tr>
+<td>句子纠音</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td>篇章朗读</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>背诵</td>
+<td></td>
+<td>√ 篇章朗读题型背诵模式，要求严格按顺序朗读</td>
+<td>√</td>
+</tr>
+<tr>
+<td>句子选读</td>
+<td></td>
+<td></td>
+<td>√ 返回实际朗读的是第几个句子</td>
+</tr>
+<tr>
+<td>自然拼读</td>
+<td></td>
+<td></td>
+<td>√ &#x3D;&#x3D;（文本形式不明确）&#x3D;&#x3D;</td>
+</tr>
+<tr>
+<td>选择</td>
+<td>√</td>
+<td>√ 支持单选、多选</td>
+<td>√ <br>支持扩展选择题：用户可以在事先设定的固定答案基础上扩展表述；引擎检测到读的更像哪个答案，就会有对应的得分。支持设置错误关键词。<br>支持设置解码网络：常规、精简（解码速度快，但效果下降；当参考文本较多时，可以设置）</td>
+</tr>
+<tr>
+<td>问答</td>
+<td>√</td>
+<td>√</td>
+<td>√ 支持设置错误关键词</td>
+</tr>
+<tr>
+<td>复述、口头翻译、看图说话、口头作文</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>自由识别</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="功能配置"><a href="#功能配置" class="headerlink" title="功能配置"></a>功能配置</h2><table>
+<thead>
+<tr>
+<th></th>
+<th>科大讯飞</th>
+<th>驰声</th>
+<th>先声</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>区分英美式发音</td>
+<td></td>
+<td>支持K12词汇</td>
+<td>√</td>
+</tr>
+<tr>
+<td>自定义音标</td>
+<td>√ 支持指定数字的读法</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>集外词</td>
+<td></td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>人群定制</td>
+<td>传入group（成人、中学、小学）、grade（年级，junior、middle、senior）</td>
+<td>自适应少儿、成人群体</td>
+<td>儿童单词、句子为单独的题型；看图说话、复述支持设置，影响打分松紧度</td>
+</tr>
+<tr>
+<td>松紧调节</td>
+<td>仅中文评测支持，3档</td>
+<td>线性调节</td>
+<td>朗读题 5档；问答题 0.8-1.5线性调节</td>
+</tr>
+<tr>
+<td>实时评测</td>
+<td></td>
+<td>√</td>
+<td>√</td>
+</tr>
+</tbody></table>
+<h2 id="评测结果"><a href="#评测结果" class="headerlink" title="评测结果"></a>评测结果</h2><table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th>科大讯飞</th>
+<th>驰声</th>
+<th>先声</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>音频级</td>
+<td>总分</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td></td>
+<td>发音准确度分</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td></td>
+<td>流畅度分</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td></td>
+<td>标准度&#x2F;韵律分</td>
+<td>√</td>
+<td>意群（sense）、重读、升降调</td>
+<td>√ 意群、重读、升降调占比分别为50%、25%、25%</td>
+</tr>
+<tr>
+<td></td>
+<td>完整度分</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td></td>
+<td>语法分</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>识别文本</td>
+<td>自由表述题</td>
+<td>句子纠音：若错读、增读的单词在参考文本内，正常识别，否则标记为unk。<br>自由识别：识别文本带标点符号，支持逗号、句号、问号、感叹号</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>关键词&#x2F;要点命中</td>
+<td></td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>句子级</td>
+<td>句末升降调检错</td>
+<td></td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>词级</td>
+<td>评分</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td></td>
+<td>正确、替换、漏读、增读、回读</td>
+<td>√</td>
+<td>√ 不区分回读</td>
+<td>正确、漏读、回读</td>
+</tr>
+<tr>
+<td></td>
+<td>浊化</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>连读</td>
+<td></td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td></td>
+<td>失去爆破</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>重读</td>
+<td></td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td></td>
+<td>意群停顿</td>
+<td></td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td></td>
+<td>字母-音素对应</td>
+<td></td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>音节级</td>
+<td>评分</td>
+<td>√</td>
+<td></td>
+<td>√</td>
+</tr>
+<tr>
+<td></td>
+<td>发音检错</td>
+<td>√</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>重音检错</td>
+<td>√ 检测重读音节是否重读</td>
+<td>√ 检测音节是否重读</td>
+<td>√</td>
+</tr>
+<tr>
+<td>音素级</td>
+<td>评分</td>
+<td></td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td></td>
+<td>发音检错</td>
+<td></td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td></td>
+<td>发音诊断</td>
+<td></td>
+<td>√ 音素识别</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>正确、替换、漏读、增读、回读</td>
+<td>√</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<ul>
+<li>音标、单词朗读仅发音准确度维度</li>
+<li>标准度&#x2F;韵律分：科大讯飞：文本单词数&gt;&#x3D;5时才有</li>
+<li>语法分：仅自由表述题有</li>
+<li>驰声<ul>
+<li>选择题、AITalk：返回置信度得分，可由应用层根据题目难易设置阈值（通常为75）判断结果是否正确</li>
+</ul>
+</li>
+<li>先声<ul>
+<li>句子朗读：统计各音素出现的次数、平均发音得分</li>
+</ul>
+</li>
+</ul>
+
                 
             </div>
             <hr/>
@@ -481,9 +819,10 @@
     <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <div class="card-title">
                     <a href="/blog/yu-yin/yu-yin-ping-ce/ying-wen-kou-yu-ping-ce-gong-neng/"> 英文口语评测功能</a>
@@ -495,9 +834,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-05-04
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-05-04
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -514,6 +853,7 @@
                         </span>
                     </div>
                 </div>
+
                 
             </div>
         </div>
@@ -525,7 +865,7 @@
             </div>
             <div class="card">
                 <div class="card-title">
-                    <a href="/blog/videos/he-ping-zhan-shi/"> 和平战士</a>
+                    <a href="/blog/books/xiao-fu-ren/"> 小妇人</a>
                 </div>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
@@ -541,8 +881,8 @@
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/blog/categories/%E8%A7%86%E9%A2%91/" class="post-category">
-                                    视频
+                            <a href="/blog/categories/%E4%B9%A6%E7%B1%8D/" class="post-category">
+                                    书籍
                                 </a>
                             
                             
