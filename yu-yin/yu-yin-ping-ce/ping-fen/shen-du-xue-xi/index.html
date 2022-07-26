@@ -1,0 +1,1443 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="基于深度学习的语音评分, 梦园">
+    <meta name="description" content="1. 基于深度学习的语音评分1.1. 2022 Self-Supervised
+作者：AI Lab, Kakao Enterprise（韩国公司）
+
+1.1.1. 系统结构*GAP：global average pooling
+
+用L2数据">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    
+
+    <title>基于深度学习的语音评分 | 梦园</title>
+    <link rel="icon" type="image/png" href="/blog/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/blog/libs/awesome/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="/blog/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/blog/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/blog/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/blog/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/blog/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/blog/css/my.css">
+
+    <script src="/blog/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">梦园</div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/blog/" class="waves-effect waves-light">
+      
+      <i class="fas fa-list" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/blog/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/blog/about">
+          
+          <i class="fas fa-user-circle" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>我</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/blog/words">
+          
+          <i class="fas fa-pen" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>文字</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/blog/books">
+          
+          <i class="fas fa-book" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>书</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/blog/videos">
+          
+          <i class="fas fa-film" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>视频</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/blog/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">梦园</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/blog/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-list"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/blog/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  style="background:  ;" >
+              
+                <li>
+
+                  <a href="/blog/about " style="margin-left:50px">
+				  
+				   <i class="fa fas fa-user-circle" style="position: absolute;left:28px" ></i>
+			      
+		          <span>我</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/blog/words " style="margin-left:50px">
+				  
+				   <i class="fa fas fa-pen" style="position: absolute;left:28px" ></i>
+			      
+		          <span>文字</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/blog/books " style="margin-left:50px">
+				  
+				   <i class="fa fas fa-book" style="position: absolute;left:28px" ></i>
+			      
+		          <span>书</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/blog/videos " style="margin-left:50px">
+				  
+				   <i class="fa fas fa-film" style="position: absolute;left:28px" ></i>
+			      
+		          <span>视频</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+<script src="/blog/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/blog/';
+            }
+        }
+    })();
+</script>
+
+
+<div class="bg-cover pd-header about-cover">
+    <div class="container">
+    <div class="row">
+    <div class="col s10 offset-s1 m8 offset-m2 l8">
+        <div class="brand">
+            <div class="title">
+                
+                愿，彼此相伴，走过流年
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/blog/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 200px);
+        overflow: scroll;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="pd-header post-cover">
+                <div class="container" style="right: 0px;left: 0px;">
+                    <div class="row">
+                        <div class="col s12 m12 l12">
+                            <div class="brand">
+                                <h1 class="description center-align post-title">基于深度学习的语音评分</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row tag-cate">
+                <div class="right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/" class="post-category">
+                                语音
+                            </a>
+                        
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E8%AF%84%E6%B5%8B/" class="post-category">
+                                语音评测
+                            </a>
+                        
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E8%AF%84%E6%B5%8B/%E8%AF%84%E5%88%86/" class="post-category">
+                                评分
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2022-07-23
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2022-07-25
+                </div>
+                
+
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/blog/libs/prism/prism.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="基于深度学习的语音评分">1. 基于深度学习的语音评分</h1><h2 id="2022-Self-Supervised">1.1. 2022 Self-Supervised</h2><ul>
+<li>作者：AI Lab, Kakao Enterprise（韩国公司）</li>
+</ul>
+<h3 id="系统结构">1.1.1. 系统结构</h3><p><img src="https://note.youdao.com/yws/api/personal/file/BFDD37C3573F4F26B239C5302803D698?method=download&shareKey=cff7651e77f5b2b2f598af67f96793d9" alt="系统流程"><br>*GAP：global average pooling</p>
+<ul>
+<li>用L2数据+CTC fine-tune 自监督学习模型（wav2vec 2.0、HuBERT）；</li>
+<li>取各transformer层的上下文表示的均值；</li>
+<li>输入文本字符序列，采用BLSTM评分</li>
+</ul>
+<h3 id="评价">1.1.2. 评价</h3><ul>
+<li>数据集：KESL（韩国英语二语学习者）、Speechocean762</li>
+<li>基线：自研DNN-HMM AM。Agg: SpeechRater time-aggregated特征。Seq: 时间序列特征，eGeMAPS set[33]（包含MFCC、响度、音调、jitter、shimmer）的均值、方差，各特征均值方差归一化，采用OpenSmile提取。</li>
+<li>自监督学习模型：采用Fairseq上的，finetune 150k步，batch size&#x3D;8</li>
+<li>评分模型：embedding 64维，BLSTM 1层，128维</li>
+</ul>
+<p><img src="https://note.youdao.com/yws/api/personal/file/13BFFD96987142BA83ABE9698C5B1B24?method=download&shareKey=675676e74d6085d132469aee97282a55" alt="实验结果"></p>
+<h3 id="其它">1.1.3. 其它</h3><ul>
+<li>Kim E, Jeon J J, Seo H, et al. Automatic Pronunciation Assessment using Self-Supervised Speech Representation Learning[J]. arXiv preprint arXiv:2204.03863, 2022.</li>
+</ul>
+<h2 id="2022-Multi-Aspect-Multi-Granularity">1.2. 2022 Multi-Aspect Multi-Granularity</h2><ul>
+<li>作者：MIT 人工智能实验室（CSAIL）、平安科技研究院（PAII Inc.）</li>
+<li>发表信息：ICASSP 2022</li>
+<li><font color="Red">代码：<a target="_blank" rel="noopener" href="https://github.com/YuanGongND/gopt">https://github.com/YuanGongND/gopt</a></font> (Goodness Of Pronunciation feature-based Transformer)</li>
+<li>创新点<ul>
+<li>采用BERT风格非层级的标准Transformer 架构</li>
+<li>联合训练音素、单词、句子级各维度分及总分</li>
+</ul>
+</li>
+</ul>
+<h3 id="系统结构-1">1.2.1. 系统结构</h3><p><img src="https://note.youdao.com/yws/api/personal/file/WEB915a9e1bc3fbd6be8224b3a8122dbfbd?method=download&shareKey=6c0e39f6c5b19fa1a9892f30ad805242" alt="系统结构"></p>
+<ul>
+<li>声学模型<ul>
+<li>TDNN-F，训练集：960h Librispeech，用Kaldi Librispeech S5 recipe训练</li>
+<li>PAII-A：自研AM，452h L1 + 1696h L2</li>
+<li>PAII-B：995h L1 + 6591h L2</li>
+</ul>
+</li>
+<li>输入<ul>
+<li>GOP特征：84维（42个音素，log phone posterior、log posterior ratio），经过1层线性层降维至24维</li>
+<li>正确发音phone embedding，24维。<ul>
+<li>音素序列填充5个[cls] token，对应句子级各维度分、总分</li>
+</ul>
+</li>
+<li>位置embedding，24维，可训练</li>
+</ul>
+</li>
+<li>采用标准Transformer encoder结构，但减为3层，embedding 24维</li>
+<li>评分：各个评分分别采用1层24*1的线性层，layer normalization。<font style="background: green">单词分：训练时反向传播至该单词的各个音素，推断时取其各个音素的输出的均值。</font></li>
+</ul>
+<h3 id="评价-1">1.2.2. 评价</h3><ul>
+<li>数据集：speechocean762（类别不均衡，主要为高分），单词、句子评分缩放至0-2，与音素一致</li>
+<li>评价指标：主要为PCC（Pearson相关系数）</li>
+<li>基线：RF（随机森林）、SVR（支持向量回归）、[21]transfer learning、LSTM</li>
+</ul>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBe86bc0edfdbde5c5f9c1462cd7bc2797?method=download&shareKey=a13ff3549e54e584ec7ebb674f8d68f3" alt="实验结果"></p>
+<img src="https://note.youdao.com/yws/api/personal/file/WEBe04116ccf077c827de0f320a76641997?method=download&shareKey=7c437dbe136f2f972ca8c513e65879df" width="50%">
+
+<ul>
+<li>实验结论<ul>
+<li><font color="Red">GOPT除单词重音、句子完整度评分性能较差（可能与speechocean762训练集中句子完整度分布不均有关）外，其它任务可提供SOTA效果</font></li>
+<li>采用PAII-A，单词、句子评分性能提升，但句子评分性能下降</li>
+<li>联合训练音素、单词、句子评分模型，相对于分别训练，各模型性能都有提升。</li>
+<li>正确发音phone embedding对提升模型性能有帮助</li>
+<li>继续加宽或加深模型结构，性能无提升（训练集较小）</li>
+<li>采用PAII-A、PAII-B，评分性能相当</li>
+</ul>
+</li>
+</ul>
+<h3 id="其它-1">1.2.3. 其它</h3><ul>
+<li>Gong Y, Chen Z, Chu I H, et al. Transformer-Based Multi-Aspect Multi-Granularity Non-Native English Speaker Pronunciation Assessment[C]&#x2F;&#x2F;ICASSP 2022-2022 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP). IEEE, 2022: 7262-7266.</li>
+</ul>
+<h2 id="2020-Multi-Granularity">1.3. 2020 Multi-Granularity</h2><ul>
+<li>作者：腾讯智能平台产品部、北京语言大学</li>
+<li>发表信息：Interspeech 2020</li>
+<li>创新点：<ul>
+<li>考虑音素、单词、句子评分间的层次关系和上下文，提出一种分层网络结构，联合评分</li>
+<li>采用半监督训练，利用无标注数据训练音素检错</li>
+</ul>
+</li>
+</ul>
+<h3 id="系统结构-2">1.3.1. 系统结构</h3><p><img src="https://note.youdao.com/yws/api/personal/file/WEB15d8915a312dd0f51572a305759e4465?method=download&shareKey=06c0c6e07038fab09d0b18a838356915" alt="系统结构"></p>
+<h3 id="音素检错">1.3.2. 音素检错</h3><ul>
+<li>输入<ul>
+<li>GOP：通过强制对齐计算</li>
+<li>音素embedding</li>
+<li>位置embedding：B、I、E、S分别表示单词开头、中间、末尾、单音素词。<font color="Red">音素发音因其在单词中的位置而异。</font></li>
+<li>类别embedding：C、V分别表示辅音、元音。<font color="Red">单词中元音和辅音的重要性不同。</font></li>
+</ul>
+</li>
+<li>半监督 - PUNU (positive unlabeled and negative unlabeled) learning<ul>
+<li><p>正样本：native发音；负样本：GOP较低的L2学习者发音；unlabeled数据：剩下的L2发音。</p>
+</li>
+<li><p>损失函数如下：</p>
+<p>$R_{\mathrm{PUNU}}^{\gamma}(g)&#x3D;(1-\gamma) R_{\mathrm{PU}}(g)+\gamma R_{\mathrm{NU}}(g)$<br>$R_{\mathrm{PU}}(g)&#x3D;\theta_{\mathrm{P}} E_{\mathrm{P}}[l(g(x), 1)]+E_{\mathrm{U}}[l(g(x),-1)]-\theta_{\mathrm{P}} E_{\mathrm{P}}[l(g(x),-1)]$<br>$R_{\mathrm{NU}}(g)&#x3D;\theta_{\mathrm{N}} E_{\mathrm{N}}[l(g(x),-1)]+E_{\mathrm{U}}[\mathrm{l}(g(x), 1)]-\theta_{\mathrm{N}} E_{\mathrm{N}}[l(g(x), 1)]$</p>
+<p>其中, $g$ 为任意决策函数, $l$ 为 loss 函数, $\theta_P$、$\theta_N$ 为正负样本的先验概率, $E_U$、$E_P$、$E_N$ 分别表示未标记数据、正类、负类（边际）的损失期望。</p>
+</li>
+<li><p>模型结构：BLSTM</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="单词评分">1.3.3. 单词评分</h3><p><font color="Red">单词中每个音素对最终单词得分的贡献不同，采用attention机制。</font></p>
+<p>$U_{p}&#x3D;\tanh \left(w * O_{p}+b\right)$<br>$\alpha_{p}&#x3D;\frac{\exp \left(U_{p}^{T} U_{w}\right)}{\sum_{q \in w} \exp \left(U_{q}^{T} U_{w}\right)}$<br>$S_{w}&#x3D;\sum_{p \in w} \alpha_{p} O_{p}$</p>
+<p><font style="background: green"> 其中, $O_p$ 为音素$p$的评分, $U_w$是随机初始化的向量, 可以作为单词上下文的记忆单元。</font></p>
+<h3 id="句子评分">1.3.4. 句子评分</h3><ul>
+<li><font color="Red">不同属性（如词性、音素个数）的单词对句子得分贡献不同。</font></li>
+<li>输入：word层输出、词性、单词长度</li>
+<li>模型结构：BLSTM+MLP，sigmoid回归。</li>
+<li>multitask：$L_{total}&#x3D;(1-w)\times L_{sent}+ w\times L_{phoneme}$，$L_{sent}$其中为句子评分的均方误差损失，$L_{phoneme}$为PUNU损失。</li>
+</ul>
+<h3 id="评价-2">1.3.5. 评价</h3><ul>
+<li>数据集<ul>
+<li>Timit + 22998英语句子，1000中国说话人，16-20岁。句子评分、单词评分、音素检错标注量分别为8998、4000、10000句。句子平均单词数为13。标注音素量99568。</li>
+<li>1-5分，3人评分取均值。3人评一致性：计算某一评分员的评分与剩余评分员的平均分之间的PCC，句子、词级分别为0.78、0.76。</li>
+<li>检错3人投票，<font style="background: green"> 3人评一致性：随机挑选1000句，计算任意两标注员的Kappa系数，平均0.65，95%置信度区间(0.647, 0.653)，p-value小于0.1%，一致性较高。</font></li>
+</ul>
+</li>
+<li>训练集：7998句non-native数据，有评分。5000句native数据，无评分。</li>
+<li>测试集：4000句，标注了39808个音素、1000词、1000句。错误音素占比约14%。</li>
+</ul>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB85b5a6de565f9c520658835b95786ba8?method=download&shareKey=8632f81f22963f5f07fd6cb3e9eef9d2" width="40%">
+<img src="https://note.youdao.com/yws/api/personal/file/WEB2d0fd1ee7ade8549ac8bcab6226f37e1?method=download&shareKey=2f0a145baa086763a420d45b143c03a9" width="30%">
+<img src="https://note.youdao.com/yws/api/personal/file/WEB4d0c8cbceb3537c0867f876ff2f2f3e7?method=download&shareKey=6e744f4ae6c8a59b0bb97a0674605191" width="30%">
+
+<ul>
+<li>基线</li>
+<li>实验结果<ul>
+<li><p>句子评分效果</p>
+<p>基线：2BLSTM+MLP，后一BLSTM的输入为音素BLSTM最后一个隐含单元的输出拼接、词性、单词长度</p>
+<img src="https://note.youdao.com/yws/api/personal/file/WEBa5476cf9e1f6ac5f1ee3c5cdf4c56b69?method=download&shareKey=1c586ae1cc1ff426900c1b9e0fccfd67" width="30%">
+
+<p>*STL：single task learning</p>
+<p>结论：单词层attention、multitask学习可提升评分性能</p>
+</li>
+<li><p>单词评分效果</p>
+<p>基线：BLSTM+MLP：去掉上述句子评分BLSTM。SL：用3000个单词评分标注数据训练。</p>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB30a1747796429bff94888d09a7eb6ce1?method=download&shareKey=fd537dcca8a48cdd697826af548cdbd4" width="30%">
+
+<p>结论：对比前两行：attention机制有收益；最后一行：PCC较高，仅用句子、音素级标注信息，仍能学到单词分信息</p>
+</li>
+<li><p>音素检错效果</p>
+<p>基线：SL：用59760个音素检错标注训练</p>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB8f8bcea9b4f939f430dd5b5985a7b779?method=download&shareKey=767fa915db6e5fe6e9c036fb5461cd0b" width="40%">
+
+<p>结论：半监督学习未召回略差于有监督学习，虚警相差较小</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="其它-2">1.3.6. 其它</h3><ul>
+<li>Lin B, Wang L, Feng X, et al. Automatic scoring at multi-granularity for L2 pronunciation[J]. Proc. Interspeech 2020, 2020: 3022-3026.</li>
+</ul>
+<h2 id="2021-Transfer-Learning">1.4. 2021 Transfer Learning</h2><ul>
+<li>创新点：当前基于DNN-HMM的GOP计算存在许多局限性。相较于传统方案采用ASR AM计算GOP等评分特征，提出直接采用AM提取的深层特征进行评分。迁移学习：采用ASR预训练模型，用评分任务fine-tune。</li>
+</ul>
+<h3 id="系统结构-3">1.4.1. 系统结构</h3><ul>
+<li><p>评分模型</p>
+<ul>
+<li>输入：ASR AM提取的深层特征、<font color="Red">对齐信息</font></li>
+<li>基于强制对齐，对于各音素，对应帧的深层特征取均值，+ phone embedding</li>
+<li>multi-head self-attention + 非线性变换，得到词级表示</li>
+<li>self-attention + 非线性变换，得到句级表示</li>
+<li>sigmoid，输出句级评分</li>
+</ul>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBb8aabe4e549f1441e61dcc9a7716f7d3?method=download&shareKey=613e5a88949bb3da5e41d40b701034c4" alt="评分模型"></p>
+</li>
+<li><p>训练流程</p>
+<ul>
+<li>预训练11层TDNN-HMM ASR声学模型，深层特征256维，非线性变换降为32维</li>
+<li>采用大量合成数据，用基于GOP的评分模型打分（low-quality），预训练评分模型</li>
+<li>采用少量指定任务的专家标注数据fine-tune</li>
+</ul>
+</li>
+</ul>
+<h3 id="评价-3">1.4.2. 评价</h3><ul>
+<li><p>数据集</p>
+<ul>
+<li>ASR：960h LibriSpeech + 1000h L2</li>
+<li>合成数据：50000句</li>
+<li>fine tune数据<ul>
+<li>11000句（含1000句测试集），平均词数13，3位专家打分1-5</li>
+<li>Speechocean762（50%用作测试集，分数缩放至0-1）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>模型</p>
+<ul>
+<li><p>LayerNorm</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBf2598f6a988b3abc7aa208f25151d084?method=download&shareKey=8e75af74d0c68b63984455913b513017" alt="参数量"></p>
+</li>
+</ul>
+</li>
+<li><p>实验结果</p>
+<table>
+<thead>
+<tr>
+<th>对比实验</th>
+<th>实验结果</th>
+<th>实验结论</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>对比基于GOP的SOTA：<br>输入音素GOP、embedding，2层BLSTM+MLP；<br>输入音素GOP均值、各音素的平均位置（BIES）、句子音素总数，GBT</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEB2584d9889200577d4e05c1c40b773378?method=download&shareKey=2ff0f42e16e7e3bd70ff3579ca55fa1d" alt="table2"></td>
+<td></td>
+</tr>
+<tr>
+<td>对比输入特征<br>STPs：考虑转移概率</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEB41fd8d0028b57c6ac522716778d9bf76?method=download&shareKey=640db70f420eb058d02bf9acf6e4736c" alt="table3"></td>
+<td><font style="background: green">采用音素GOP特征，当前模型效果差于2BLSTM+MLP？</font></td>
+</tr>
+<tr>
+<td>冻结AM参数、3阶段训练</td>
+<td></td>
+<td>始终冻结AM参数+第2阶段预训练+finetune效果最好。评分模型参数量约为AM的0.2%，finetune高效</td>
+</tr>
+<tr>
+<td>self-attention机制：对比替换为平均</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEB448228dfdb5c057f5ff3834eb5266409?method=download&shareKey=a776ada79534cc24c131ec6d40c2d626" alt="table6"></td>
+<td></td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<h3 id="其它-3">1.4.3. 其它</h3><ul>
+<li>Lin B, Wang L. Deep Feature Transfer Learning for Automatic Pronunciation Assessment[C]&#x2F;&#x2F;Interspeech. 2021: 4438-4442.</li>
+</ul>
+<h2 id="2019-ETS-monologue-and-dialogue">1.5. 2019 ETS monologue and dialogue</h2><ul>
+<li>作者：ETS</li>
+<li>发表信息：ICASSP 2019</li>
+<li>创新点<ul>
+<li>采用基于attention的BLSTM对自由表述的3个维度评分：内容（话题相关度、得体性）、 <del>组织（语篇结构和连贯性）、</del> 语用（词汇、语法）、delivery（发音、重音、流利度、语调）</li>
+<li>采用BLSTM或MemN2N（端到端记忆网络）编码提示文本或多轮对话的历史信息</li>
+</ul>
+</li>
+</ul>
+<h3 id="系统结构-4">1.5.1. 系统结构</h3><p><img src="https://note.youdao.com/yws/api/personal/file/WEB05d8ea96857c948df270d54c2ea4bd7b?method=download&shareKey=13649c67fc1902c199e82d58e714a8e1" alt="系统结构"></p>
+<ul>
+<li><p>内容</p>
+<ul>
+<li><p>word embedding层：用Google’s Word2Vec初始化，模型训练时优化</p>
+</li>
+<li><p>采用BLSTM将提示文本的词序列编码为固定长度的向量$v^{p}$，与回答中各个词的词向量$e_{t}^{r}$拼接</p>
+</li>
+<li><p>采用MemN2N（端到端记忆网络）编码多轮对话的历史信息</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBbee3fc2e061a11f9349e7cdf74c4a56d?method=download&shareKey=44b98cb337ce9340ba995bc7dbf86812" alt="MemN2N"></p>
+<p>拼接$e_{t}^{r}$、$v^{p}$、$a^{p} \cdot v_{h}^{p}$、$a^{r} \cdot v_{h}^{r}$，其中，$v_{h}^{p}$、$v_{h}^{r}$分别表示历史提示、历史回答，$a^{p}$、$a^{r}$分别表示对应的attention向量</p>
+</li>
+</ul>
+</li>
+<li><p>语用特征：POS：词性one-hot向量；DEP：句法依存标签，如主语、宾语；Morph（形态）。采用spaCy提取，分别19、51、248维</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB6be899029c0f7a47b674b1bf2a192990?method=download&shareKey=ca8d499efbb82aa9d542fba7f09661da" alt="示例"></p>
+</li>
+<li><p>发音：采用non-native ASR模型识别，native ASR模型<font color="Red">强制对齐</font>。8维特征：时长、音调、强度、静音或停顿时长、non-native ASR模型后验概率、native ASR模型后验概率、识别结果LM分、ASR置信度分，取各帧平均。</p>
+</li>
+<li><p>评分模型</p>
+<ul>
+<li>维度分：attention层输出向量的均值。多轮对话：对每个回答评维度分，整个对话的维度分取多轮对话的均值</li>
+<li>总分：3个维度分拼接，经过1层全连接层</li>
+</ul>
+</li>
+</ul>
+<h3 id="评价-4">1.5.2. 评价</h3><ul>
+<li><p>数据集</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB5093f7bd21d0f1ad1ab6174a184a8dd4?method=download&shareKey=705b2902d86e06a96f4e9b67dbcfc520" alt="数据量"></p>
+<ul>
+<li>monolog：delivery、内容、语用，0-4分</li>
+<li>对话：整个对话的总分，考虑熟练程度和任务完成情况</li>
+</ul>
+</li>
+<li><p>声学模型</p>
+<ul>
+<li>识别模型：基于iVector的BLSTM，960h non-native数据。LM用提示文本自适应</li>
+<li>强制对齐：960h LibriSpeech</li>
+<li>提取语用、内容特征时过滤filler words、重复的partial words</li>
+</ul>
+</li>
+<li><p>超参：BLSTM 128维。dropout&#x3D;0.5。100 epochs、batch size 64。MemN2N：记忆前10轮提示与回答，memory size 20</p>
+</li>
+<li><p>基线</p>
+<ul>
+<li>评分特征：SpeechRater，超过100个</li>
+<li>回归模型：Logistic回归、AdaBoost、决策树、Gradient Boost、SVM、随机森林等。其中，随机森林效果最好。</li>
+</ul>
+</li>
+<li><p>实验结果</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBe2fe44d756ef9b96a97ae1d2f871de31?method=download&shareKey=0ea130ed2ffa18245bd99e5d4d685a31" alt="实验结果"></p>
+<p>*预测的维度分与总分计算相关度，无人工标注</p>
+</li>
+<li><p>实验结论</p>
+<ul>
+<li>内容：结合提示信息，评分效果较好。采用MemN2N可进一步提高多轮对话内容评分与人工分的相关度。</li>
+<li>发音采用音节级特征较好（音素级或音节级LM分：采用所属单词的LM分）</li>
+<li>输入所有特征计算总分，效果更好，神经网络可以学习各维度特征间的关系。</li>
+</ul>
+</li>
+</ul>
+<h3 id="其它-4">1.5.3. 其它</h3><ul>
+<li>Qian Y, Lange P, Evanini K, et al. Neural approaches to automated speech scoring of monologue and dialogue responses[C]&#x2F;&#x2F;ICASSP 2019-2019 IEEE international conference on acoustics, speech and signal processing (ICASSP). IEEE, 2019: 8112-8116.</li>
+<li>展望：可解释性、诊断</li>
+</ul>
+<h2 id="2018-ETS-prompt-aware">1.6. 2018 ETS prompt-aware</h2><h3 id="其它-5">1.6.1. 其它</h3><ul>
+<li>Qian Y, Ubale R, Mulholland M, et al. A prompt-aware neural network approach to content-based scoring of non-native spontaneous speech[C]&#x2F;&#x2F;2018 IEEE spoken language technology workshop (SLT). IEEE, 2018: 979-986.</li>
+</ul>
+<h2 id="2018-ETS-acoustics-transcription">1.7. 2018 ETS acoustics + transcription</h2><ul>
+<li>作者：ETS</li>
+<li>发表信息：ICASSP 2018</li>
+<li>提示无关的神经网络评分模型（BD-LSTM + attention），输入识别文本word embedding、各单词的后验概率及声学特征，输出评分</li>
+</ul>
+<h3 id="系统结构-5">1.7.1. 系统结构</h3><p><img src="https://note.youdao.com/yws/api/personal/file/WEBd31cc498c578d02c7497165e2e58a513?method=download&shareKey=3bd314af1bfa5a11c60bfded4a5d2cd2" alt="系统结构"></p>
+<ul>
+<li>声学模型：DNN-HMM，训练集：819h non-native自发语音</li>
+<li>评分模型输入<ul>
+<li>lexical模型：识别文本word embedding序列。采用预训练的Glove模型，OOV采用全0向量，300维，训练评分模型时fine-tune</li>
+<li>声学模型：每个词的声学模型后验概率、时长、pitch均值、intensity均值</li>
+</ul>
+</li>
+<li>评分模型<ul>
+<li>1D CNN<ul>
+<li>参考[14]，采用3种尺寸的卷积核$\left(conv_{size}-1, conv_{size}, conv_{size}+1\right)$，用于覆盖不同的感受野。各$conv_{n}$个卷积核</li>
+<li>input -&gt; dropout $dp_{CNN}1$ -&gt; 卷积层 -&gt; max pooling（沿时间轴） -&gt; dropout $dp_{CNN}2$</li>
+</ul>
+</li>
+<li>BD-LSTM<ul>
+<li>input -&gt; dropout $dp_{RNN}1$ -&gt; BD-LSTM -&gt; dropout $dp_{RNN}2$</li>
+</ul>
+</li>
+<li>BD-LSTM + attention<ul>
+<li>input -&gt; dropout -&gt; BD-LSTM -&gt; attention -&gt; dropout</li>
+</ul>
+</li>
+<li>超参tuning：采用Hyperopt Python包实现的Tree Parzen Estimation (TPE)方法[23]。$conv_{size}&#x3D;4, conv_{n}&#x3D;100, dp_{CNN}1&#x3D;dp_{RNN}1&#x3D;0.25, dp_{CNN}2&#x3D;dp_{RNN}2&#x3D;0.5, LSTM_{dim}^{lex}&#x3D;128, LSTM_{dim}^{ac}&#x3D;32$</li>
+</ul>
+</li>
+</ul>
+<h3 id="评价-5">1.7.2. 评价</h3><ul>
+<li><p>数据集：训练集 2930，开发集 731，测试集 1827。4分制。</p>
+</li>
+<li><p>传统模型（基线）</p>
+<ul>
+<li><p>随机森林、GBT（Gradient Boosting Tree）、SVR（Support Vector Regression）。其中，GBT模型人-机评分相关度最高。</p>
+</li>
+<li><p>评分特征</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB2b3d68c3d17278fcc388c60f44fbca7b?method=download&shareKey=93dba1172f8282c23aea663f0988cfed" alt="评分特征"></p>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>特征示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>流利度</td>
+<td>单词数&#x2F;秒、单词数&#x2F;段、静音段个数、静音段平均时长、长停顿（&gt;0.5s）频率、有声停顿（uh、um）个数</td>
+</tr>
+<tr>
+<td>韵律、语调、重音</td>
+<td>韵律事件（prominences and boundary tones）的占比、之间的平均距离、距离的平均差，元音、辅音、音节时长的占比、标准差、Pairwise Variability Index</td>
+</tr>
+<tr>
+<td>发音</td>
+<td>native AM 强制对齐计算likelihood、ASR词级置信度均值、在native语料上统计各元音的时长均值，计算测试数据元音时长与参考值的差值的均值</td>
+</tr>
+<tr>
+<td>语法</td>
+<td></td>
+</tr>
+<tr>
+<td>用词</td>
+<td>多样性、复杂度</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+</li>
+<li><p>实验结果</p>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB80c4a6aa4b8e87255eb450053d7e42d9?method=download&shareKey=19bfa2868abd6d958f9a91870d239584" width="50%">
+
+<p>相较于传统评分模型采用n-gram提取评分特征，word embedding可提供更丰富的信息</p>
+</li>
+<li><p>展望：可解释性、更多声学特征、其它attention机制</p>
+</li>
+</ul>
+<h3 id="其它-6">1.7.3. 其它</h3><ul>
+<li><p>Chen L, Tao J, Ghaffarzadegan S, et al. End-to-end neural network based automated speech scoring[C]&#x2F;&#x2F;2018 IEEE international conference on acoustics, speech and signal processing (ICASSP). IEEE, 2018: 6234-6238.</p>
+</li>
+<li><p>Yu Z, Ramanarayanan V, Suendermann-Oeft D, et al. Using bidirectional LSTM recurrent neural networks to learn high-level abstractions of sequential features for automated scoring of non-native spontaneous speech[C]&#x2F;&#x2F;2015 IEEE Workshop on Automatic Speech Recognition and Understanding (ASRU). IEEE, 2015: 338-345.</p>
+</li>
+<li><p>Taghipour K, Ng H T. A neural approach to automated essay scoring[C]&#x2F;&#x2F;Proceedings of the 2016 conference on empirical methods in natural language processing. 2016: 1882-1891.</p>
+<p>CNN（提取局部上下文信息）+ RNN（提取长时信息）+ mean over time回归（利用全文信息）</p>
+</li>
+</ul>
+<h2 id="2020-spectrograms-transcriptions">1.8. 2020 spectrograms + transcriptions</h2><h3 id="其它-7">1.8.1. 其它</h3><ul>
+<li>Grover M S, Kumar Y, Sarin S, et al. Multi-modal automated speech scoring using attention fusion[J]. arXiv preprint arXiv:2005.08182, 2020.</li>
+</ul>
+<h2 id="2022-Deep-Learning-for-Automatic-Assessment-and-Feedback-of-Spoken-English">1.9. 2022 Deep Learning for Automatic Assessment and Feedback of Spoken English</h2><ul>
+<li>发表信息：剑桥大学博士论文</li>
+</ul>
+<h3 id="其它-8">1.9.1. 其它</h3><p>Kyriakopoulos K. Deep Learning for Automatic Assessment and Feedback of Spoken English[D]. University of Cambridge, 2022.</p>
+<h2 id="2022-Chinese-English-interpretation口语翻译">1.10. 2022 Chinese-English interpretation口语翻译</h2><ul>
+<li>作者：广东外语外贸大学</li>
+</ul>
+<h3 id="系统结构-6">1.10.1. 系统结构</h3><ul>
+<li><p>流畅度分：语速</p>
+</li>
+<li><p><font color="Red">关键字、内容、语法：采用Bert预训练模型、BiLSTM、attention机制</font></p>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB2a27b65f57024957f23441b7cf64123f?method=download&shareKey=d00680ca591a47f6ec40226486adbc31" width="50%"></li>
+<li><p>采用随机森林回归器融合4个维度分计算总分</p>
+</li>
+</ul>
+<h2 id="2022-Word-Scoring">1.11. 2022 Word Scoring</h2><ul>
+<li>作者：字节跳动</li>
+<li>创新点：<ul>
+<li>数据增强：给定词典中的音素序列，从训练数据相应的音素级特征中随机抽样来伪造单词样本，单词分取音素GOP均值</li>
+<li>引入MFCC、deep feature</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBe00917195f9a8da3492d09eff12bc9f6?method=download&shareKey=55db844dfc0db67bba44ab887f6bea6b" alt="数据增强"></p>
+<h3 id="其它-9">1.11.1. 其它</h3><p>Fu K, Gao S, Wang K, et al. Improving Non-native Word-level Pronunciation Scoring with Phone-level Mixup Data Augmentation and Multi-source Information[J]. arXiv preprint arXiv:2203.01826, 2022.</p>
+<h2 id="【弃】2020-Automated-chinese-language-proficiency-scoring-by-utilizing-siamese-convolutional-neural-network-and-fusion-based-approach">1.12. 【弃】2020 Automated chinese language proficiency scoring by utilizing siamese convolutional neural network and fusion based approach</h2><ul>
+<li>论文质量较差，弃</li>
+<li>自制数据集</li>
+</ul>
+<h3 id="系统结构-7">1.12.1. 系统结构</h3><ul>
+<li>native speakers’ key points、测试者语音，提取100*300维向量 -&gt; 分别送入权重共享的卷积层 -&gt; pooling层 -&gt; 计算cosine相似度 -&gt; 线性层输出分数</li>
+<li>人工设计的特征：详见SpeechRater v5.0。提取tf-idf特征，计算测试语音、同一单词人工分4分的训练语音的cosine 相似度</li>
+</ul>
+<h3 id="其它-10">1.12.2. 其它</h3><ul>
+<li>Kwong A, Muzamal J H, Zhang P Y, et al. Automated chinese language proficiency scoring by utilizing siamese convolutional neural network and fusion based approach[C]&#x2F;&#x2F;2020 International Conference on Engineering and Emerging Technologies (ICEET). IEEE, 2020: 1-6.</li>
+<li>语音评测系统质量控制[37, 39-42]</li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <i class="fas fa-exclamation-circle"></i>
+            <span>
+                本文不允许转载。
+            </span>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <div class="card-title">
+                    <a href="/blog/yu-yin/yu-yin-ping-ce/ping-fen/shen-du-xue-xi/"> 基于深度学习的语音评分</a>
+                </div>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-07-23
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/" class="post-category">
+                                    语音
+                                </a>
+                            
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E8%AF%84%E6%B5%8B/" class="post-category">
+                                    语音评测
+                                </a>
+                            
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E8%AF%84%E6%B5%8B/%E8%AF%84%E5%88%86/" class="post-category">
+                                    评分
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <div class="card-title">
+                    <a href="/blog/yu-yin/gong-ju-bao/wenet/lun-wen/"> WeNet论文</a>
+                </div>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-06-12
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/" class="post-category">
+                                    语音
+                                </a>
+                            
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E5%B7%A5%E5%85%B7%E5%8C%85/" class="post-category">
+                                    工具包
+                                </a>
+                            
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E5%B7%A5%E5%85%B7%E5%8C%85/WeNet/" class="post-category">
+                                    WeNet
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('50')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE' || selection.getRangeAt(0).commonAncestorContainer.nodeName === 'CODE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: 梦园<br />'
+            + '文章作者: nanyang<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/blog/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/blog/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/blog/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/blog/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/blog/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('6'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    });
+</script>
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/blog/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="5001011615"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/blog/libs/aplayer/APlayer.min.js"></script>
+<script src="/blog/libs/aplayer/Meting.min.js"></script>
+
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2019-2022</span>
+            
+            <a href="/blog/about" target="_blank">nanyang</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link ">
+    <a href="https://github.com/NanYANG2015" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:2271348390@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=2271348390" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 2271348390" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/blog/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/blog/libs/materialize/materialize.min.js"></script>
+    <script src="/blog/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/blog/libs/aos/aos.js"></script>
+    <script src="/blog/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/blog/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/blog/js/matery.js"></script>
+
+    
+
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+    
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/blog/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

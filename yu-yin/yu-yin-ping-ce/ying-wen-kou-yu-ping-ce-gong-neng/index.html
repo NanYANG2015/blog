@@ -5,11 +5,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="英文口语评测功能, 梦园">
-    <meta name="description" content="1.  英文口语评测功能
-1.1.  技术文档
-
+    <meta name="description" content="1. 英文口语评测功能1.1. 技术文档
 科大讯飞：https://www.xfyun.cn/doc/Ise/IseAPI.html#接口说明
-驰声：https://www.chivox.com/opendoc/#/ChineseD">
+驰声：https://www.chivox.com/opendoc/#/ChineseDoc/c">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -315,8 +313,8 @@
     }
 
     #toc-content {
-        padding-bottom: 30px;
-        overflow: auto;
+        height: calc(100vh - 200px);
+        overflow: scroll;
     }
 
     #toc-content ol {
@@ -435,15 +433,12 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="英文口语评测功能">1.  英文口语评测功能</h1>
-<h2 id="技术文档">1.1.  技术文档</h2>
-<ul>
+                <h1 id="英文口语评测功能">1. 英文口语评测功能</h1><h2 id="技术文档">1.1. 技术文档</h2><ul>
 <li>科大讯飞：<a target="_blank" rel="noopener" href="https://www.xfyun.cn/doc/Ise/IseAPI.html#%E6%8E%A5%E5%8F%A3%E8%AF%B4%E6%98%8E">https://www.xfyun.cn/doc/Ise/IseAPI.html#接口说明</a></li>
 <li>驰声：<a target="_blank" rel="noopener" href="https://www.chivox.com/opendoc/#/ChineseDoc/coreEn/">https://www.chivox.com/opendoc/#/ChineseDoc/coreEn/</a></li>
 <li>先声：<a target="_blank" rel="noopener" href="https://open.singsound.com/doc/engine?type=engine-en-en.word.score">https://open.singsound.com/doc/engine?type=engine-en-en.word.score</a></li>
 </ul>
-<h2 id="题型">1.2.  题型</h2>
-<table>
+<h2 id="题型">1.2. 题型</h2><table>
 <thead>
 <tr>
 <th>题型</th>
@@ -452,8 +447,7 @@
 <th>先声</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>音标朗读</td>
 <td></td>
 <td>√ 自定义文本音标</td>
@@ -531,10 +525,8 @@
 <td>√</td>
 <td></td>
 </tr>
-</tbody>
-</table>
-<h2 id="功能配置">1.3.  功能配置</h2>
-<table>
+</tbody></table>
+<h2 id="功能配置">1.3. 功能配置</h2><table>
 <thead>
 <tr>
 <th></th>
@@ -543,8 +535,7 @@
 <th>先声</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>区分英美式发音</td>
 <td></td>
 <td>支持K12词汇</td>
@@ -580,10 +571,8 @@
 <td>√</td>
 <td>√</td>
 </tr>
-</tbody>
-</table>
-<h2 id="评测结果">1.4.  评测结果</h2>
-<table>
+</tbody></table>
+<h2 id="评测结果">1.4. 评测结果</h2><table>
 <thead>
 <tr>
 <th></th>
@@ -593,8 +582,7 @@
 <th>先声</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>音频级</td>
 <td>总分</td>
 <td>√</td>
@@ -617,7 +605,7 @@
 </tr>
 <tr>
 <td></td>
-<td>标准度/韵律分</td>
+<td>标准度&#x2F;韵律分</td>
 <td>√</td>
 <td>意群（sense）、重读、升降调</td>
 <td>√ 意群、重读、升降调占比分别为50%、25%、25%</td>
@@ -645,7 +633,7 @@
 </tr>
 <tr>
 <td></td>
-<td>关键词/要点命中</td>
+<td>关键词&#x2F;要点命中</td>
 <td></td>
 <td>√</td>
 <td>√</td>
@@ -762,19 +750,16 @@
 <td></td>
 <td></td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <ul>
 <li>音标、单词朗读仅发音准确度维度</li>
-<li>标准度/韵律分：科大讯飞：文本单词数&gt;=5时才有</li>
+<li>标准度&#x2F;韵律分：科大讯飞：文本单词数&gt;&#x3D;5时才有</li>
 <li>语法分：仅自由表述题有</li>
-<li>驰声
-<ul>
+<li>驰声<ul>
 <li>选择题、AITalk：返回置信度得分，可由应用层根据题目难易设置阈值（通常为75）判断结果是否正确</li>
 </ul>
 </li>
-<li>先声
-<ul>
+<li>先声<ul>
 <li>句子朗读：统计各音素出现的次数、平均发音得分</li>
 </ul>
 </li>
