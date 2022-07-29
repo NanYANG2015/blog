@@ -427,7 +427,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-07-28
+                    2022-07-29
                 </div>
                 
 
@@ -451,7 +451,7 @@
             <div id="articleContent">
                 <h1 id="基于深度学习的语音评分">1. 基于深度学习的语音评分</h1>
 <div class="markmap-container" style="height:200px">
-  <svg data="{&quot;t&quot;:&quot;heading&quot;,&quot;d&quot;:1,&quot;p&quot;:{&quot;lines&quot;:[0,1]},&quot;v&quot;:&quot;CAPT/CALL&quot;,&quot;c&quot;:[{&quot;t&quot;:&quot;heading&quot;,&quot;d&quot;:2,&quot;p&quot;:{&quot;lines&quot;:[1,2]},&quot;v&quot;:&quot;MDD: mispronunciation detection and diagnosis&quot;},{&quot;t&quot;:&quot;heading&quot;,&quot;d&quot;:2,&quot;p&quot;:{&quot;lines&quot;:[2,3]},&quot;v&quot;:&quot;automatic pronunciation assessment/scoring&quot;,&quot;c&quot;:[{&quot;t&quot;:&quot;heading&quot;,&quot;d&quot;:3,&quot;p&quot;:{&quot;lines&quot;:[3,4]},&quot;v&quot;:&quot;应用场景&quot;,&quot;c&quot;:[{&quot;t&quot;:&quot;list_item&quot;,&quot;d&quot;:5,&quot;p&quot;:{&quot;lines&quot;:[4,5]},&quot;v&quot;:&quot;reading aloud: pronunciation (stress), fluency, integrity, rhythm (intonation) ……&quot;},{&quot;t&quot;:&quot;list_item&quot;,&quot;d&quot;:5,&quot;p&quot;:{&quot;lines&quot;:[5,6]},&quot;v&quot;:&quot;spontaneous (constrained): content, grammar, language use, pronunciation ……&quot;}]},{&quot;t&quot;:&quot;heading&quot;,&quot;d&quot;:3,&quot;p&quot;:{&quot;lines&quot;:[6,7]},&quot;v&quot;:&quot;系统结构&quot;,&quot;c&quot;:[{&quot;t&quot;:&quot;list_item&quot;,&quot;d&quot;:5,&quot;p&quot;:{&quot;lines&quot;:[7,8]},&quot;v&quot;:&quot;声学特征&quot;,&quot;c&quot;:[{&quot;t&quot;:&quot;list_item&quot;,&quot;d&quot;:7,&quot;p&quot;:{&quot;lines&quot;:[8,9]},&quot;v&quot;:&quot;采用预训练的ASR模型（如自监督学习模型wav2vec 2.0、HuBERT，transformer等）提取声学表示&quot;},{&quot;t&quot;:&quot;list_item&quot;,&quot;d&quot;:7,&quot;p&quot;:{&quot;lines&quot;:[9,10]},&quot;v&quot;:&quot;伪造数据/低质量数据预训练评分模型&quot;},{&quot;t&quot;:&quot;list_item&quot;,&quot;d&quot;:7,&quot;p&quot;:{&quot;lines&quot;:[10,11]},&quot;v&quot;:&quot;专家标注数据fine tune&quot;}]},{&quot;t&quot;:&quot;list_item&quot;,&quot;d&quot;:5,&quot;p&quot;:{&quot;lines&quot;:[11,12]},&quot;v&quot;:&quot;文本特征&quot;,&quot;c&quot;:[{&quot;t&quot;:&quot;list_item&quot;,&quot;d&quot;:7,&quot;p&quot;:{&quot;lines&quot;:[12,13]},&quot;v&quot;:&quot;word/subword/character embedding&quot;},{&quot;t&quot;:&quot;list_item&quot;,&quot;d&quot;:7,&quot;p&quot;:{&quot;lines&quot;:[13,14]},&quot;v&quot;:&quot;朗读文本/参考文本+识别文本&quot;}]},{&quot;t&quot;:&quot;list_item&quot;,&quot;d&quot;:5,&quot;p&quot;:{&quot;lines&quot;:[14,15]},&quot;v&quot;:&quot;attention&quot;},{&quot;t&quot;:&quot;list_item&quot;,&quot;d&quot;:5,&quot;p&quot;:{&quot;lines&quot;:[15,16]},&quot;v&quot;:&quot;多维度分&quot;},{&quot;t&quot;:&quot;list_item&quot;,&quot;d&quot;:5,&quot;p&quot;:{&quot;lines&quot;:[16,17]},&quot;v&quot;:&quot;流式、延迟&quot;}]}]}]}"/>
+  <svg data="{&quot;t&quot;:&quot;heading&quot;,&quot;d&quot;:1,&quot;p&quot;:{&quot;lines&quot;:[0,1]},&quot;v&quot;:&quot;CAPT/CALL&quot;,&quot;c&quot;:[{&quot;t&quot;:&quot;heading&quot;,&quot;d&quot;:2,&quot;p&quot;:{&quot;lines&quot;:[1,2]},&quot;v&quot;:&quot;MDD: mispronunciation detection and diagnosis&quot;},{&quot;t&quot;:&quot;heading&quot;,&quot;d&quot;:2,&quot;p&quot;:{&quot;lines&quot;:[2,3]},&quot;v&quot;:&quot;automatic pronunciation assessment/scoring&quot;,&quot;c&quot;:[{&quot;t&quot;:&quot;heading&quot;,&quot;d&quot;:3,&quot;p&quot;:{&quot;lines&quot;:[3,4]},&quot;v&quot;:&quot;应用场景&quot;,&quot;c&quot;:[{&quot;t&quot;:&quot;list_item&quot;,&quot;d&quot;:5,&quot;p&quot;:{&quot;lines&quot;:[4,5]},&quot;v&quot;:&quot;reading aloud: pronunciation (stress), fluency, integrity, rhythm (intonation) ……&quot;},{&quot;t&quot;:&quot;list_item&quot;,&quot;d&quot;:5,&quot;p&quot;:{&quot;lines&quot;:[5,6]},&quot;v&quot;:&quot;spontaneous (constrained): content, grammar, language use, pronunciation ……&quot;}]},{&quot;t&quot;:&quot;heading&quot;,&quot;d&quot;:3,&quot;p&quot;:{&quot;lines&quot;:[6,7]},&quot;v&quot;:&quot;系统结构&quot;,&quot;c&quot;:[{&quot;t&quot;:&quot;list_item&quot;,&quot;d&quot;:5,&quot;p&quot;:{&quot;lines&quot;:[7,8]},&quot;v&quot;:&quot;声学特征&quot;,&quot;c&quot;:[{&quot;t&quot;:&quot;list_item&quot;,&quot;d&quot;:7,&quot;p&quot;:{&quot;lines&quot;:[8,9]},&quot;v&quot;:&quot;采用预训练的ASR模型（如自监督学习模型wav2vec 2.0、HuBERT，transformer等）提取声学表示&quot;},{&quot;t&quot;:&quot;list_item&quot;,&quot;d&quot;:7,&quot;p&quot;:{&quot;lines&quot;:[9,10]},&quot;v&quot;:&quot;伪造数据/低质量数据预训练评分模型&quot;},{&quot;t&quot;:&quot;list_item&quot;,&quot;d&quot;:7,&quot;p&quot;:{&quot;lines&quot;:[10,11]},&quot;v&quot;:&quot;专家标注数据fine tune&quot;}]},{&quot;t&quot;:&quot;list_item&quot;,&quot;d&quot;:5,&quot;p&quot;:{&quot;lines&quot;:[11,12]},&quot;v&quot;:&quot;文本特征&quot;,&quot;c&quot;:[{&quot;t&quot;:&quot;list_item&quot;,&quot;d&quot;:7,&quot;p&quot;:{&quot;lines&quot;:[12,13]},&quot;v&quot;:&quot;word/subword/character embedding&quot;},{&quot;t&quot;:&quot;list_item&quot;,&quot;d&quot;:7,&quot;p&quot;:{&quot;lines&quot;:[13,14]},&quot;v&quot;:&quot;朗读文本/参考文本+识别文本&quot;}]},{&quot;t&quot;:&quot;list_item&quot;,&quot;d&quot;:5,&quot;p&quot;:{&quot;lines&quot;:[14,15]},&quot;v&quot;:&quot;attention&quot;},{&quot;t&quot;:&quot;list_item&quot;,&quot;d&quot;:5,&quot;p&quot;:{&quot;lines&quot;:[15,16]},&quot;v&quot;:&quot;多维度分&quot;},{&quot;t&quot;:&quot;list_item&quot;,&quot;d&quot;:5,&quot;p&quot;:{&quot;lines&quot;:[16,17]},&quot;v&quot;:&quot;流式、延迟&quot;},{&quot;t&quot;:&quot;list_item&quot;,&quot;d&quot;:5,&quot;p&quot;:{&quot;lines&quot;:[17,18]},&quot;v&quot;:&quot;可解释性、诊断反馈&quot;}]}]}]}"/>
 </div>
 
 
@@ -697,18 +697,18 @@
 </ul>
 <h2 id="2022-Deep-Learning-for-Automatic-Assessment-and-Feedback-of-Spoken-English">1.5. 2022 Deep Learning for Automatic Assessment and Feedback of Spoken English</h2><ul>
 <li>发表信息：剑桥大学博士论文</li>
-<li><font color="red">创新点：优于大量、可靠的多维度人工评分较难获取，采用总分标注数据，通过限定输入特征进行端到端多维度评分。相较于特征提取-评分两阶段模型，端到端模型能更好地拟合人工分，且对不同的数据集、不同的评分任务，泛化性能更好</font></li>
+<li><font color="red">创新点：由于大量、可靠的多维度人工评分较难获取，采用总分标注数据，通过限定输入特征进行端到端多维度评分。相较于特征提取-评分两阶段模型，端到端模型能更好地拟合人工分，且对不同的数据集、不同的评分任务，泛化性能更好</font></li>
 <li><font color="red">存在的问题：需要强制对齐信息 </font></li>
 </ul>
 <h3 id="系统结构-4">1.5.1. 系统结构</h3><h4 id="发音评分">1.5.1.1. 发音评分</h4><ul>
 <li>采用音素距离特征，与发音人属性（音色、性别等）不相关</li>
-<li>传统方案：采用单高斯模型建模各音素的发音，计算各音素模型间的对称KL散度，拼接为$\frac{1}{2} p\left ( p-1 \right )$维的向量，并取$\log\left ( d+1 \right )$，对于短语音，包含缺失音素的KL散度设为-1。输入一层全连接进行评分。<ul>
-<li>缺点：每个说话者需要大量数据训练高斯模型；可能丢弃发音相关的信息；未考虑音素发音过程中的变化、音素位置、上下文影响；存在错误的识别、强制对齐</li>
+<li>传统方案：采用单高斯模型建模各音素的发音，计算各音素模型间的对称KL散度，拼接为$\frac{1}{2} p\left ( p-1 \right )$维的向量，并取$\log\left ( d+1 \right )$。对于短语音，包含缺失音素的KL散度设为-1。输入一层全连接进行评分。<ul>
+<li>缺点：每个说话者需要大量数据训练高斯模型；可能丢弃发音相关的信息；未考虑音素的发音过程、同一音素在不同上下文中发音可能不同、音素对于评分的重要性取决于上下文；存在错误的识别、强制对齐</li>
 </ul>
 </li>
 <li>端到端方案：将各音素片段的帧序列编码为固定长度的embedding，对应同一音素的音素片段采用attention加权平均得到音素embedding，计算音素embedding间的欧式距离。输入一层全连接进行评分。<ul>
 <li>各模块初始化<ul>
-<li>双胞胎网络：+sigmoid，判断两音素是否一致，预训练</li>
+<li>双胞胎双向RNN：+sigmoid，判断两音素是否一致，预训练</li>
 <li>评分全连接层：采用基线模型初始化</li>
 </ul>
 </li>
@@ -716,7 +716,7 @@
 </ul>
 </li>
 </ul>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB7176bacfcf429dccb31d01b15693550f?method=download&shareKey=ec352fbca4d4bd034b6e439a23d35347">
+<img src="https://note.youdao.com/yws/api/personal/file/WEB7176bacfcf429dccb31d01b15693550f?method=download&shareKey=ec352fbca4d4bd034b6e439a23d35347" width="709px">
 
 <h4 id="韵律评分">1.5.1.2. 韵律评分</h4><ul>
 <li><p>英语的重音等时性</p>
