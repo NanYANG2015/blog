@@ -427,7 +427,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-07-29
+                    2022-08-01
                 </div>
                 
 
@@ -706,13 +706,15 @@
 <li>缺点：每个说话者需要大量数据训练高斯模型；可能丢弃发音相关的信息；未考虑音素的发音过程、同一音素在不同上下文中发音可能不同、音素对于评分的重要性取决于上下文；存在错误的识别、强制对齐</li>
 </ul>
 </li>
-<li>端到端方案：将各音素片段的帧序列编码为固定长度的embedding，对应同一音素的音素片段采用attention加权平均得到音素embedding，计算音素embedding间的欧式距离。输入一层全连接进行评分。<ul>
+<li>端到端方案：将各音素片段的帧序列编码为固定长度的embedding，对应同一音素的音素片段采用attention（学习忽略对齐错误的音素片段、关注发音错误的片段）加权平均得到音素embedding，计算音素embedding间的欧式距离。输入一层全连接进行评分。<ul>
 <li>各模块初始化<ul>
 <li>双胞胎双向RNN：+sigmoid，判断两音素是否一致，预训练</li>
 <li>评分全连接层：采用基线模型初始化</li>
 </ul>
 </li>
 <li>端到端fine-tuning</li>
+<li>为了模型收敛，损失函数需要加attention权重熵的惩罚项，$C \left( \lambda, S_{train} \right)&#x3D;MSE_{train} -\beta \sum_{m&#x3D;1}^{M} \sum_{n&#x3D;1}^{N_{m}} \alpha_{n m} \log \alpha_{n m}$，其中$M$为音素总数，$N_m$ 为该音素的音素片段数</li>
+<li>存在的问题：音素片段数目不确定，attention如何实现？</li>
 </ul>
 </li>
 </ul>
@@ -736,31 +738,93 @@
 <li><p>端到端方案</p>
 <ul>
 <li>采用attention学习音程中不同子段的重要性（学习忽略对齐错误导致的时长异常的子段），与该音程时长拼接 $ x_k&#x3D;\left[\sum_{m&#x3D;1}^{M^{(k)}} \alpha_{m} d\left(v_{m}^{(k)}\right), d\left(\tau_{k}\right)\right] $</li>
-<li>采用序列模型建模元音音程序列、非元音音程序列。</li>
-<li>分别在学习得到的固定长度的元音音程特征序列、非元音音程特征序列上加attention。</li>
+<li>采用序列模型（BLSTM或transformer）学习元音音程特征序列 $x_{1: K_{V}}^{(V)}$ 、非元音音程特征序列。</li>
+<li>分别在元音音程深层特征序列$h_{1: K_{V}}^{(V)}$、非元音音程深层特征序列上加attention。</li>
 <li>拼接 $\tilde{\boldsymbol{h}} &#x3D; \left[\tilde{\boldsymbol{h}}^{(V)}, \tilde{\boldsymbol{h}}^{(C)}\right]$，采用1层全连接评分。</li>
 </ul>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB1662f02ff97ca28c83a9ac353cebcb29?method=download&shareKey=20178e325c8829035111c33474cf80cf"></li>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB1662f02ff97ca28c83a9ac353cebcb29?method=download&shareKey=20178e325c8829035111c33474cf80cf" width="711px"></li>
 </ul>
 <h4 id="语调评分">1.5.1.3. 语调评分</h4><ul>
+<li>重读单词基频高</li>
 <li>传统方案<ul>
-<li>方案一：浊化区域的音调的均值、中位数、最大值、1&#x2F;4分位数、3&#x2F;4分位数，采用1层全连接评分</li>
-<li>方案二：统计各音素的上述特征，对于清音和静音，采用浊化概念计算上述统计值，采用sequence-to-vector模型建模</li>
-<li>方案三：采用最小二乘cosine拟合频谱包络（DCT），清音区域插值</li>
+<li>方案一：浊音区域的基频的均值、中位数、最大值、1&#x2F;4分位数、3&#x2F;4分位数，采用1层全连接评分</li>
+<li>方案二：考虑清音音素和静音，对于各音素，分别采用基频、浊音概率计算上述统计值并拼接，采用sequence-to-vector模型评分</li>
+<li>方案三：采用最小二乘cosine拟合基频包络（DCT），清音区域插值，提取相应的系数向量采用DNN评分</li>
 </ul>
 </li>
 <li>端到端方案<ul>
-<li>特征：音调、浊化概率序列</li>
+<li>输入：基频、浊音概率序列、position embedding。multi-head sequence-to-vector attention</li>
 <li>考虑到长音频不适合用帧序列特征，采用sequence-to-vector模型学习各音素的特征表示，再采用sequence-to-vector模型预测分数</li>
 </ul>
 </li>
 </ul>
-<img src="https://note.youdao.com/yws/api/personal/file/WEBab93c416e54a88463f04bac213c506cf?method=download&shareKey=61fe567f298dc2bbc0a50a246d336ac2" width="710px">
+<img src="https://note.youdao.com/yws/api/personal/file/WEBab93c416e54a88463f04bac213c506cf?method=download&shareKey=61fe567f298dc2bbc0a50a246d336ac2" width="500px">
 
-<h4 id="文本评分">1.5.1.4. 文本评分</h4><p>采用BERT提取word embedding，采用LSTM with attention评分</p>
+<h4 id="文本评分">1.5.1.4. 文本评分</h4><p>采用BERT提取word embedding，采用LSTM with attention评分[223]</p>
 <h4 id="系统结构-5">1.5.1.5. 系统结构</h4><img src="https://note.youdao.com/yws/api/personal/file/WEBb09fd6a33bd460fc514eb7c6d99d211a?method=download&shareKey=b60236ca8e8979ca0069a830a9f487d2" width="706px">
 
-<h3 id="评价-2">1.5.2. 评价</h3><h3 id="其它-4">1.5.3. 其它</h3><ul>
+<h3 id="总分">1.5.2. 总分</h3><ul>
+<li>方案一：各维度分均值</li>
+<li>方案二：拼接各维度分打分器倒数第二层的输入表示，输入全连接网络评总分</li>
+<li>方案三：各维度分的加权和：采用维度分打分器的中间表示、全连接网络计算attention系数</li>
+</ul>
+<h3 id="评价-2">1.5.3. 评价</h3><ul>
+<li><p>数据集<br>英语水平测试数据，测试含简答、读8句话、根据提示自由表述，对每个说话人评总分0-6。</p>
+</li>
+<li><p>基线：Gaussian Process评分器[154]</p>
+</li>
+<li><p>实验结果</p>
+<ul>
+<li><font color="red">*由于维度分没有人工标注，采用总分进行近似</font></li>
+<li>*由于模型对随机初始化较敏感，统计5次训练的模型的均值、标准差</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>实验</th>
+<th>实验结果</th>
+<th>实验结论</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>发音</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEB3913cedf044c88366820bbf5c4d5c58e?method=download&shareKey=84242511a73adfa55e575ec8c8744835"></td>
+<td>输入特征：MFCC vs PLP，性能差异较小；<br> 音素片段的sequence-to-vector模型，BLSTM + 最后一层输出additive attention，性能最好；<br> 在训练集-测试集 匹配&#x2F;不匹配的配置下，端到端模型性能均最好，一方面端到端模型可以学习更有表征能力的特征，另一方面泛化能力更好；<br>观察人工分-机器分散点图，端到端模型存在低分打高，但对特定人工分，机器分分布更集中；<br> tunability：分别采用音素距离KL散度、采用说话人分类任务训练得到的x-vector、采用评分任务训练得到的deep 音素距离特征，后者在L1分类任务上性能最好</td>
+</tr>
+<tr>
+<td>韵律</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEBfc777e01dd42196937bed56940b389d7?method=download&shareKey=df673e504d499f435ecd21407b97e996"></td>
+<td>sequence-to-vector模型：BLSTM + 最后一层输出additive attention；<br> 存在明显的低分打高</td>
+</tr>
+<tr>
+<td>语调</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEB3270f41bcc6d831669450c9f25110614?method=download&shareKey=ce5ceff13afb5b18939ea898aff4de27"></td>
+<td>相较于multi-head attention，attention LSTM评分效果更好；<br> 不存在明显的打分偏移，基于基频统计特征的DNN存在明显的低分打高</td>
+</tr>
+<tr>
+<td>发音分-音素距离-音素片段attention分布</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEB34df75f218c23024b00dc4e3f3b088f3?method=download&shareKey=02a7f78a56973a438be39d7228dfea90"></td>
+<td>：大多数情况下，attention权重接近均匀分布，仅排除少量异常值；余下的大部分只关注一个或少量具有代表性的音素片段；剩下的取中间值的较少，可能是随机现象，也可能是关注发音特别错误或特别好的音素片段</td>
+</tr>
+<tr>
+<td>维度分相关性、互补性</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEBad03336b0f416faef0441aabed50706e?method=download&shareKey=2853e4e6318acb5b4860f2242397b24a"></td>
+<td>发音评分与文本评分有一定的相关性：发音中缺失的音素与说话长度、单词的丰富程度等有关；各维度分互补</td>
+</tr>
+<tr>
+<td>评分模型系统偏差</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEB4ef2e51c6d3e8128e12d0f861d029b1e?method=download&shareKey=9a212a7e25487cd248ad343aba51cb85"></td>
+<td><font color="red">韵律分：高水平数据中才与总分相关，无法区分中低水平说话人的韵律水平；<br> 发音和文本特征较难区分高水平数据；<br> 发音分低分打低：可能由于ASR错误率更高</font></td>
+</tr>
+<tr>
+<td>总分</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEB28847721cde7c6b5b25325a1baf7b812?method=download&shareKey=ba4b6bf4eae0cde16e8ed2c6d66dc33f"></td>
+<td>各维度分的加权和（采用attention计算加权系数）效果最好</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<h3 id="其它-4">1.5.4. 其它</h3><ul>
 <li>Kyriakopoulos K. Deep Learning for Automatic Assessment and Feedback of Spoken English[D]. University of Cambridge, 2022.<ul>
 <li>5.1节：理论推导了采用总分标注数据，训练多维度评分模型的可行性</li>
 </ul>
