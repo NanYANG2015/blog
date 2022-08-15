@@ -5,14 +5,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="WeNet代码, 梦园">
-    <meta name="description" content="1.  IterableDataset - Processor
-
+    <meta name="description" content="1. IterableDataset - Processor
 根据输入list生成IterableDataset
-
 数据类型
-
 raw：json信息列表，存储key、wav(、start、end)、txt
-shard：压缩包列表。随机：">
+shard：压缩包列表。随机：压缩包间">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -273,104 +270,10 @@ shard：压缩包列表。随机：">
 
 
 
-<main class="post-container content">
+<main class="container content">
 
     
-    <link rel="stylesheet" href="/blog/libs/tocbot/tocbot.css">
-<style>
-    #articleContent h1::before,
-    #articleContent h2::before,
-    #articleContent h3::before,
-    #articleContent h4::before,
-    #articleContent h5::before,
-    #articleContent h6::before {
-        display: block;
-        content: " ";
-        height: 100px;
-        margin-top: -100px;
-        visibility: hidden;
-    }
-
-    #articleContent :focus {
-        outline: none;
-    }
-
-    .toc-fixed {
-        position: fixed;
-        top: 64px;
-    }
-
-    .toc-widget {
-        width: 345px;
-        padding-left: 20px;
-    }
-
-    .toc-widget .toc-title {
-        padding: 35px 0 15px 17px;
-        font-size: 1.5rem;
-        font-weight: bold;
-        line-height: 1.5rem;
-    }
-
-    .toc-widget ol {
-        padding: 0;
-        list-style: none;
-    }
-
-    #toc-content {
-        height: calc(100vh - 200px);
-        overflow: scroll;
-    }
-
-    #toc-content ol {
-        padding-left: 10px;
-    }
-
-    #toc-content ol li {
-        padding-left: 10px;
-    }
-
-    #toc-content .toc-link:hover {
-        color: #42b983;
-        font-weight: 700;
-        text-decoration: underline;
-    }
-
-    #toc-content .toc-link::before {
-        background-color: transparent;
-        max-height: 25px;
-
-        position: absolute;
-        right: 23.5vw;
-        display: block;
-    }
-
-    #toc-content .is-active-link {
-        color: #42b983;
-    }
-
-    #floating-toc-btn {
-        position: fixed;
-        right: 15px;
-        bottom: 76px;
-        padding-top: 15px;
-        margin-bottom: 0;
-        z-index: 998;
-    }
-
-    #floating-toc-btn .btn-floating {
-        width: 48px;
-        height: 48px;
-    }
-
-    #floating-toc-btn .btn-floating i {
-        line-height: 48px;
-        font-size: 1.4rem;
-    }
-</style>
-<div class="row">
-    <div id="main-content" class="col s12 m12 l9">
-        <!-- 文章内容详情 -->
+    <!-- 文章内容详情 -->
 <div id="artDetail">
     <div class="card">
         <div class="card-content article-info">
@@ -442,12 +345,9 @@ shard：压缩包列表。随机：">
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="iterabledataset-processor">1.  IterableDataset - Processor</h1>
-<ul>
-<li>根据输入list生成IterableDataset
-<ul>
-<li>数据类型
-<ul>
+                <h1 id="IterableDataset-Processor">1. IterableDataset - Processor</h1><ul>
+<li>根据输入list生成IterableDataset<ul>
+<li>数据类型<ul>
 <li>raw：json信息列表，存储key、wav(、start、end)、txt</li>
 <li>shard：压缩包列表。随机：压缩包间随机，压缩包内部顺序遍历</li>
 </ul>
@@ -455,19 +355,16 @@ shard：压缩包列表。随机：">
 <li>训练集按rank、worker_id划分数据；CV集各卡均用全集</li>
 </ul>
 </li>
-<li>tokenize
-<ul>
-<li><font color="green">non_lang_syms：用[……]、&lt;……&gt;、{……}分割文本（如’12[12]34&lt;34&gt;56{56}{78}'分割为[‘12’, ‘[12]’, ‘34’, ‘&lt;34&gt;’, ‘56’, ‘{56}’, ‘’, ‘{78}’, ‘’]），转大写。若token在non_lang_syms中，直接使用；否则BPE/按空格分割/按字符分割</font></li>
+<li>tokenize<ul>
+<li><font color="green">non_lang_syms：用[……]、&lt;……&gt;、{……}分割文本（如’12[12]34&lt;34&gt;56{56}{78}’分割为[‘12’, ‘[12]’, ‘34’, ‘&lt;34&gt;’, ‘56’, ‘{56}’, ‘’, ‘{78}’, ‘’]），转大写。若token在non_lang_syms中，直接使用；否则BPE&#x2F;按空格分割&#x2F;按字符分割</font></li>
 <li>BPE<pre class="line-numbers language-none"><code class="language-none">import sentencepiece
 sp &#x3D; sentencepiece.SentencePieceProcessor()
 sp.load(bpe_model)
-sp.encode_as_pieces(word)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
+sp.encode_as_pieces(word)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
 <li>symbol_table：token转id</li>
 </ul>
 </li>
-<li>filter：过滤过短或过长的样本
-<ul>
+<li>filter：过滤过短或过长的样本<ul>
 <li>max_length(10240)、min_length(10)：音频帧数，帧移10ms</li>
 <li>token_max_length(200)、token_min_length(1)</li>
 <li>min_output_input_ratio(0.0005)、max_output_input_ratio(1)</li>
@@ -475,16 +372,14 @@ sp.encode_as_pieces(word)<span aria-hidden="true" class="line-numbers-rows"><spa
 </li>
 <li>resample</li>
 <li>speed_perturb：各样本随机变速[0.9, 1.0, 1.1]。默认不使用</li>
-<li><font color="green">提取fbank/mfcc</font>：<font color="red">音频要求16bit</font><pre class="line-numbers language-none"><code class="language-none">torchaudio.compliance.kaldi as kaldi
+<li><font color="green">提取fbank&#x2F;mfcc</font>：<font color="red">音频要求16bit</font><pre class="line-numbers language-none"><code class="language-none">torchaudio.compliance.kaldi as kaldi
 feat &#x3D; kaldi.fbank(waveform, num_mel_bins&#x3D;num_mel_bins, frame_length&#x3D;frame_length, frame_shift&#x3D;frame_shift, dither&#x3D;dither, energy_floor&#x3D;0.0, sample_frequency&#x3D;sample_rate)
-feat &#x3D; kaldi.mfcc(waveform, num_mel_bins&#x3D;num_mel_bins, frame_length&#x3D;frame_length, frame_shift&#x3D;frame_shift, dither&#x3D;dither, num_ceps&#x3D;num_ceps, high_freq&#x3D;high_freq, low_freq&#x3D;low_freq, sample_frequency&#x3D;sample_rate)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-</li>
+feat &#x3D; kaldi.mfcc(waveform, num_mel_bins&#x3D;num_mel_bins, frame_length&#x3D;frame_length, frame_shift&#x3D;frame_shift, dither&#x3D;dither, num_ceps&#x3D;num_ceps, high_freq&#x3D;high_freq, low_freq&#x3D;low_freq, sample_frequency&#x3D;sample_rate)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
 <li>spec_aug：频谱mask，num_t_mask、num_f_mask、max_t、max_f，max_w未使用。默认使用</li>
 <li>spec_sub：频谱替换，num_t_sub、max_t，随机替换为该时刻前的特征。默认不使用</li>
 <li>shuffle：：<font color="red">局部shuffle，shuffle_size默认10000</font>。默认使用</li>
-<li>sort：局部按帧数排序，便于帧数相近的样本放到同一batch，sort_size=500。默认使用</li>
-<li>batch
-<ul>
+<li>sort：局部按帧数排序，便于帧数相近的样本放到同一batch，sort_size&#x3D;500。默认使用</li>
+<li>batch<ul>
 <li>静态batch：除最后一个batch，batch size固定</li>
 <li>动态batch：按max_frames_in_batch（含padding）拼batch</li>
 </ul>
@@ -494,11 +389,9 @@ feat &#x3D; kaldi.mfcc(waveform, num_mel_bins&#x3D;num_mel_bins, frame_length&#x
 torchaudio.load(wav_file)
 torchaudio.backend.sox_io_backend.load(filepath&#x3D;wav_file, num_frames&#x3D;end_frame - start_frame, frame_offset&#x3D;start_frame)
 torchaudio.transforms.Resample(orig_freq&#x3D;sample_rate, new_freq&#x3D;resample_rate)(waveform)
-wav, _ &#x3D; torchaudio.sox_effects.apply_effects_tensor(waveform, sample_rate, [[&#39;speed&#39;, str(speed)], [&#39;rate&#39;, str(sample_rate)]])<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
+wav, _ &#x3D; torchaudio.sox_effects.apply_effects_tensor(waveform, sample_rate, [[&#39;speed&#39;, str(speed)], [&#39;rate&#39;, str(sample_rate)]])<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 </ul>
-<h1 id="模型结构">2.  模型结构</h1>
-<div class="mermaid">
+<h1 id="模型结构">2. 模型结构</h1><h2 id="encoder">2.1. encoder</h2><div class="mermaid">
   flowchart TD
     classDef font_red color:red;
     classDef font_green color:green;
@@ -566,11 +459,11 @@ wav, _ &#x3D; torchaudio.sox_effects.apply_effects_tensor(waveform, sample_rate,
     end
 
     位置embedding --> 计算chunk_mask
-    计算chunk_mask --> transformer -->tmp2
-    计算chunk_mask --> conformer -->tmp2
+    计算chunk_mask --> transformer*num_blocks -->tmp2
+    计算chunk_mask --> conformer*num_blocks -->tmp2
     tmp2(" ") -- normalize_before -->LayerNorm2("LayerNorm")
 
-    subgraph transformer
+    subgraph transformer*num_blocks
         subgraph transformer_attention
             tmp3(" ") --> normalize_before1{"normalize_before"}
             normalize_before1 -- Yes --> LayerNorm3("LayerNorm") --> MultiHeadedAttention1("MultiHeadedAttention"):::font_red
@@ -601,7 +494,7 @@ wav, _ &#x3D; torchaudio.sox_effects.apply_effects_tensor(waveform, sample_rate,
         end
     end
 
-    subgraph conformer
+    subgraph conformer*num_blocks
         subgraph conformer_macaron
             tmp7(" ") --> macaron{"macaron"}
             macaron -- Yes --> normalize_before5{"normalize_before"}
@@ -700,6 +593,36 @@ wav, _ &#x3D; torchaudio.sox_effects.apply_effects_tensor(waveform, sample_rate,
     end
 </div>
 
+
+<h2 id="decoder">2.2. decoder</h2><div class="mermaid">
+  flowchart TD
+    classDef font_red color:red;
+    classDef font_green color:green;
+
+    subgraph TransformerDecoder
+        tmp(" ") -- train --> 输入1("输入label、label长度") --> tgt_mask("mask padding、未来输出") --> embedding --> +位置embedding --> transformer*num_blocks
+        tmp -- decode --> 输入2("输入上一时刻解码结果") --> embedding
+
+        transformer*num_blocks --> normalize_before1{"normalize_before"}
+        normalize_before1 -- Yes --> LayerNorm1("LayerNorm") --> tmp1(" ")
+        normalize_before1 -- No --> tmp1
+
+        tmp1 --> output{"use_output_layer"}
+        output -- Yes --> Linear1("Linear(attention_dim, vocab_size)") --> train_decode{"train/decode"}
+        train_decode -- train --> tmp2(" ")
+        train_decode -- decode --> log_softmax --> tmp2
+        output -- No --> tmp2
+
+        subgraph transformer*num_blocks
+            train("train：缓存encoder各block的输出")
+        end
+    end
+
+    subgraph BiTransformerDecoder
+        tmp3(" ") -- train --> 输出left_decoder与right_decoder结果
+        tmp3 -- decode --> 采用left_decoder
+    end
+</div>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
             </div>
@@ -901,87 +824,6 @@ wav, _ &#x3D; torchaudio.sox_effects.apply_effects_tensor(waveform, sample_rate,
 
 <script type="text/javascript" src="/blog/libs/codeBlock/codeShrink.js"></script>
 
-
-    </div>
-    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
-        <div class="toc-widget card" style="background-color: white;">
-            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
-            <div id="toc-content"></div>
-        </div>
-    </div>
-</div>
-
-<!-- TOC 悬浮按钮. -->
-
-<div id="floating-toc-btn" class="hide-on-med-and-down">
-    <a class="btn-floating btn-large bg-color">
-        <i class="fas fa-list-ul"></i>
-    </a>
-</div>
-
-
-<script src="/blog/libs/tocbot/tocbot.min.js"></script>
-<script>
-    $(function () {
-        tocbot.init({
-            tocSelector: '#toc-content',
-            contentSelector: '#articleContent',
-            headingsOffset: -($(window).height() * 0.4 - 45),
-            collapseDepth: Number('6'),
-            headingSelector: 'h2, h3, h4'
-        });
-
-        // Set scroll toc fixed.
-        let tocHeight = parseInt($(window).height() * 0.4 - 64);
-        let $tocWidget = $('.toc-widget');
-        $(window).scroll(function () {
-            let scroll = $(window).scrollTop();
-            /* add post toc fixed. */
-            if (scroll > tocHeight) {
-                $tocWidget.addClass('toc-fixed');
-            } else {
-                $tocWidget.removeClass('toc-fixed');
-            }
-        });
-
-        
-        /* 修复文章卡片 div 的宽度. */
-        let fixPostCardWidth = function (srcId, targetId) {
-            let srcDiv = $('#' + srcId);
-            if (srcDiv.length === 0) {
-                return;
-            }
-
-            let w = srcDiv.width();
-            if (w >= 450) {
-                w = w + 21;
-            } else if (w >= 350 && w < 450) {
-                w = w + 18;
-            } else if (w >= 300 && w < 350) {
-                w = w + 16;
-            } else {
-                w = w + 14;
-            }
-            $('#' + targetId).width(w);
-        };
-
-        // 切换TOC目录展开收缩的相关操作.
-        const expandedClass = 'expanded';
-        let $tocAside = $('#toc-aside');
-        let $mainContent = $('#main-content');
-        $('#floating-toc-btn .btn-floating').click(function () {
-            if ($tocAside.hasClass(expandedClass)) {
-                $tocAside.removeClass(expandedClass).hide();
-                $mainContent.removeClass('l9');
-            } else {
-                $tocAside.addClass(expandedClass).show();
-                $mainContent.addClass('l9');
-            }
-            fixPostCardWidth('artDetail', 'prenext-posts');
-        });
-        
-    });
-</script>
 
     
 
