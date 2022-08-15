@@ -4,48 +4,15 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="音标, 梦园">
-    <meta name="description" content="1.  音标
-1.1.  符号表
-1.1.1.  辅音
+    <meta name="keywords" content="WeNet代码, 梦园">
+    <meta name="description" content="1.  IterableDataset - Processor
 
+根据输入list生成IterableDataset
 
+数据类型
 
-辅音
-单词
-音标
-
-
-
-
-p
-pen
-/pen/
-
-
-b
-bad
-/bæd/
-
-
-t
-tea
-/tiː/
-
-
-d
-did
-/dɪd/
-
-
-k
-cat
-/kæt/
-
-
-ɡ
-get
-">
+raw：json信息列表，存储key、wav(、start、end)、txt
+shard：压缩包列表。随机：">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -59,7 +26,7 @@ get
 
     
 
-    <title>音标 | 梦园</title>
+    <title>WeNet代码 | 梦园</title>
     <link rel="icon" type="image/png" href="/blog/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/blog/libs/awesome/css/all.min.css">
@@ -412,7 +379,7 @@ get
                     <div class="row">
                         <div class="col s12 m12 l12">
                             <div class="brand">
-                                <h1 class="description center-align post-title">音标</h1>
+                                <h1 class="description center-align post-title">WeNet代码</h1>
                             </div>
                         </div>
                     </div>
@@ -429,8 +396,12 @@ get
                                 语音
                             </a>
                         
-                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E5%AD%A6/" class="post-category">
-                                语音学
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E5%B7%A5%E5%85%B7%E5%8C%85/" class="post-category">
+                                工具包
+                            </a>
+                        
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E5%B7%A5%E5%85%B7%E5%8C%85/WeNet/" class="post-category">
+                                WeNet
                             </a>
                         
                     </div>
@@ -442,14 +413,14 @@ get
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-05-03
+                    2022-08-12
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-06-12
+                    2022-08-15
                 </div>
                 
 
@@ -471,693 +442,264 @@ get
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="音标">1.  音标</h1>
-<h2 id="符号表">1.1.  符号表</h2>
-<h3 id="辅音">1.1.1.  辅音</h3>
-<table>
-<thead>
-<tr>
-<th>辅音</th>
-<th>单词</th>
-<th>音标</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>p</td>
-<td>pen</td>
-<td>/pen/</td>
-</tr>
-<tr>
-<td>b</td>
-<td>bad</td>
-<td>/bæd/</td>
-</tr>
-<tr>
-<td>t</td>
-<td>tea</td>
-<td>/tiː/</td>
-</tr>
-<tr>
-<td>d</td>
-<td>did</td>
-<td>/dɪd/</td>
-</tr>
-<tr>
-<td>k</td>
-<td>cat</td>
-<td>/kæt/</td>
-</tr>
-<tr>
-<td>ɡ</td>
-<td>get</td>
-<td>/ɡet/</td>
-</tr>
-<tr>
-<td>tʃ</td>
-<td>chain</td>
-<td>/tʃeɪn/</td>
-</tr>
-<tr>
-<td>dʒ</td>
-<td>jam</td>
-<td>/dʒæm/</td>
-</tr>
-<tr>
-<td>f</td>
-<td>fall</td>
-<td>/fɔːl/</td>
-</tr>
-<tr>
-<td>v</td>
-<td>van</td>
-<td>/væn/</td>
-</tr>
-<tr>
-<td>θ</td>
-<td>thin</td>
-<td>/θɪn/</td>
-</tr>
-<tr>
-<td>ð</td>
-<td>this</td>
-<td>/ðɪs/</td>
-</tr>
-<tr>
-<td>s</td>
-<td>see</td>
-<td>/siː/</td>
-</tr>
-<tr>
-<td>z</td>
-<td>zoo</td>
-<td>/zuː/</td>
-</tr>
-<tr>
-<td>ʃ</td>
-<td>shoe</td>
-<td>/ʃuː/</td>
-</tr>
-<tr>
-<td>ʒ</td>
-<td>vision</td>
-<td>/ˈvɪʒn/</td>
-</tr>
-<tr>
-<td>h</td>
-<td>hat</td>
-<td>/hæt/</td>
-</tr>
-<tr>
-<td>m</td>
-<td>man</td>
-<td>/mæn/</td>
-</tr>
-<tr>
-<td>n</td>
-<td>now</td>
-<td>/naʊ/</td>
-</tr>
-<tr>
-<td>ŋ</td>
-<td>sing</td>
-<td>/sɪŋ/</td>
-</tr>
-<tr>
-<td>l</td>
-<td>leg</td>
-<td>/leɡ/</td>
-</tr>
-<tr>
-<td>r</td>
-<td>red</td>
-<td>/red/</td>
-</tr>
-<tr>
-<td>j</td>
-<td>yes</td>
-<td>/jes/</td>
-</tr>
-<tr>
-<td>w</td>
-<td>wet</td>
-<td>/wet/</td>
-</tr>
-</tbody>
-</table>
-<h3 id="元音">1.1.2.  元音</h3>
-<table>
-<thead>
-<tr>
-<th>牛津</th>
-<th>单词</th>
-<th>音标</th>
-<th>备注</th>
-<th>朗文</th>
-<th>-</th>
-<th>-</th>
-<th>-</th>
-<th>cambridge</th>
-<th>-</th>
-<th>-</th>
-<th>-</th>
-<th>-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>ʌ</td>
-<td>cup</td>
-<td>/kʌp/</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>ɑː</td>
-<td>father</td>
-<td>/ˈfɑːðə(r)/</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>ɒ</td>
-<td>got</td>
-<td>/ɡɒt/</td>
-<td>British English</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>ɔː</td>
-<td>saw</td>
-<td>/sɔː/</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>ə</td>
-<td>about</td>
-<td>/əˈbaʊt/</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>ɜː</td>
-<td>fur</td>
-<td>/fɜː(r)/</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>ɪ</td>
-<td>sit</td>
-<td>/sɪt/</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>i</td>
-<td>happy</td>
-<td>/ˈhæpi/</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>iː</td>
-<td>see</td>
-<td>/siː/</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>ʊ</td>
-<td>put</td>
-<td>/pʊt/</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>u</td>
-<td>actual</td>
-<td>/ˈæktʃuəl/</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>uː</td>
-<td>too</td>
-<td>/tuː/</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>e</td>
-<td>bed</td>
-<td>/bed/</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>æ</td>
-<td>cat</td>
-<td>/kæt/</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>aɪ</td>
-<td>my</td>
-<td>/maɪ/</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>eɪ</td>
-<td>say</td>
-<td>/seɪ/</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>ɔɪ</td>
-<td>boy</td>
-<td>/bɔɪ/</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>aʊ</td>
-<td>now</td>
-<td>/naʊ/</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>əʊ</td>
-<td>go</td>
-<td>/ɡəʊ/</td>
-<td></td>
-<td>British English</td>
-<td>oʊ</td>
-<td>note</td>
-<td>American English</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>ɪə</td>
-<td>near</td>
-<td>/nɪə(r)/</td>
-<td>British English</td>
-<td><s>British English</s></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>eə</td>
-<td>hair</td>
-<td>/heə(r)/</td>
-<td>British English</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>ʊə</td>
-<td>pure</td>
-<td>/pjʊə(r)/</td>
-<td>British English</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td>ɒː</td>
-<td>dog</td>
-<td>American English</td>
-<td>ɚ</td>
-<td>mother</td>
-<td></td>
-<td>American English，轻音节</td>
-<td>ər</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td>iə</td>
-<td>peculiar</td>
-<td></td>
-<td>ɝ</td>
-<td>worm</td>
-<td></td>
-<td>American English，重读音节</td>
-<td>ər</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td>t̬</td>
-<td>butter</td>
-<td>/ˈbʌt̬.ɚ/</td>
-<td>American English</td>
-<td>[ɾ]</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td>l̩</td>
-<td>little</td>
-<td>/ˈlɪt.l̩/</td>
-<td></td>
-<td>[ɫ]</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td><sup>ə</sup>l,<sup>ə</sup>m,<sup>ə</sup>n</td>
-<td></td>
-<td>/leɪb.<sup>ə</sup>l/</td>
-<td></td>
-<td>(ə)l …</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td><sup>r</sup></td>
-<td>four apples</td>
-<td>fɔː<sup>r</sup> + ˈæp.l ̩z = fɔːˈræp.l ̩z</td>
-<td>British English，在元音前时才发音</td>
-<td>(r)</td>
-</tr>
-</tbody>
-</table>
-<h3 id="备注">1.1.3.  备注</h3>
+                <h1 id="iterabledataset-processor">1.  IterableDataset - Processor</h1>
 <ul>
-<li>
-<p>/i/可以发成/iː/或/ɪ/或两者之间折中的音；/u/代表/uː/和/ʊ/之间的弱元音</p>
-</li>
-<li>
-<p>/ɒ/只出现在英式英语中，美式英语的发音通常是/ɔː/或/ɑː/</p>
-</li>
-<li>
-<p>(r)：只有紧跟的是下一个单词开头的元音时，英式发音才会出现/r/，如far away；否则省略/r/。对于美式英语来说，所有的/r/都应该发音。</p>
-</li>
-<li>
-<p>/l̩/ 、/n̩/、(/m̩)/：成音节，如final /ˈfaɪnl/，发音为[<sup>ə</sup>l] or [<sup>ə</sup>n]</p>
-</li>
-<li>
-<p>音位变体</p>
+<li>根据输入list生成IterableDataset
 <ul>
-<li>
-<p>/t/音素还包含闪音[ɾ]和glottal stop [ʔ]。</p>
-<p>[ɾ] 发音像快速的/d/，美式发音，在很多拼写为-t-或-tt-的单词中，在元音或/r/之后、非重读元音或音节/l/之前，如city /ˈsɪt̮ɪ /; parting /ˈpɑrt̮ɪŋ /; little /ˈlɪt̮l /；</p>
-<p>英美式发音有时会用glottal stop [ʔ] (声带短暂的闭合)来表达/t/，比如football /ˈfʊtbɔːl/和button /ˈbʌtn/。</p>
-</li>
-<li>
-<p>/l/在元音之前或中间时（如 like）与在其他位置时（如 full [ɫ] ）发音不同</p>
-</li>
-<li>
-<p>/r/ [ɹ]如red</p>
-</li>
+<li>数据类型
+<ul>
+<li>raw：json信息列表，存储key、wav(、start、end)、txt</li>
+<li>shard：压缩包列表。随机：压缩包间随机，压缩包内部顺序遍历</li>
 </ul>
 </li>
-<li>
-<p>/x/：摩擦音，如苏格兰的loch、爱尔兰的lough /lɒx/</p>
-</li>
-<li>
-<p>˜：鼻元音，可能在某些源自法语的单词中保留，如penchant /ˈpɒ̃ʃɒ̃/</p>
-</li>
-<li>
-<p>有的发音标注了强、弱形式，给出的第一个发音通常代表最常用的；但是当一个单词被强调时，应该采用strong form；当单词位于句子末尾时，也通常使用strong form。如can /kən/, strong form /kæn/</p>
-</li>
-<li>
-<p>重读音节相对loud、持续时间长、发音清晰，并且可以通过音调被注意到。重读音节通常不包含弱元音/ə/、/i/或/u/。</p>
-</li>
-<li>
-<p>英语音素 48 vs 44</p>
-<blockquote>
-<p>传统语音学认为：英语有48个音素。一个音素对应一个音标，所以共有48个国际音标。这也是我们国内更加熟知的一种音标体系。</p>
-<p>现代语音学认为：英语有44个音素。因为现代语音学认为 /tr/ /dr/ /ts/ /dz/ 这四个不是独立的音素，而是辅音连缀。</p>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/31484071">https://zhuanlan.zhihu.com/p/31484071</a></p>
-</blockquote>
-<blockquote>
-<p>/ts/、/dz/、/tr/、/dr/ 如果作为辅音连缀简单地连读，影响正确发音</p>
-<p><a target="_blank" rel="noopener" href="https://www.hjenglish.com/yinbiao/p776611/">https://www.hjenglish.com/yinbiao/p776611/</a></p>
-</blockquote>
-</li>
+<li>训练集按rank、worker_id划分数据；CV集各卡均用全集</li>
 </ul>
-<h3 id="参考">1.1.4.  参考</h3>
+</li>
+<li>tokenize
 <ul>
-<li><a target="_blank" rel="noopener" href="https://www.oxfordlearnersdictionaries.com/about/english/pronunciation_english">https://www.oxfordlearnersdictionaries.com/about/english/pronunciation_english</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.oxfordlearnersdictionaries.com/about/pronunciation_american_english">https://www.oxfordlearnersdictionaries.com/about/pronunciation_american_english</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.ldoceonline.com/howtouse.html">https://www.ldoceonline.com/howtouse.html</a></li>
-<li><a target="_blank" rel="noopener" href="https://dictionary.cambridge.org/help/phonetics.html">https://dictionary.cambridge.org/help/phonetics.html</a></li>
-<li><a target="_blank" rel="noopener" href="https://go-xyz.xyz/extdomains/zh.wikipedia.org/wiki/%E8%8B%B1%E8%AA%9E%E5%9C%8B%E9%9A%9B%E9%9F%B3%E6%A8%99">https://go-xyz.xyz/extdomains/zh.wikipedia.org/wiki/英語國際音標</a></li>
-<li><a target="_blank" rel="noopener" href="https://go-xyz.xyz/extdomains/zh.wikipedia.org/wiki/DJ%E9%9F%B3%E6%A8%99">https://go-xyz.xyz/extdomains/zh.wikipedia.org/wiki/DJ音標</a></li>
-<li><a target="_blank" rel="noopener" href="https://go-xyz.xyz/extdomains/zh.wikipedia.org/wiki/KK%E9%9F%B3%E6%A8%99">https://go-xyz.xyz/extdomains/zh.wikipedia.org/wiki/KK音標</a></li>
-<li>音素、音标、国际音标（IPA）、DJ音标、KK音标、宽式标音等 <a target="_blank" rel="noopener" href="https://en-yinbiao.xiao84.com/study">https://en-yinbiao.xiao84.com/study</a></li>
-<li>音标特殊字符unicode编码：<a target="_blank" rel="noopener" href="http://www.fmddlmyy.cn/text65.html">http://www.fmddlmyy.cn/text65.html</a> （注意ɡ、ː、ˈ、ˌ）</li>
+<li><font color="green">non_lang_syms：用[……]、&lt;……&gt;、{……}分割文本（如’12[12]34&lt;34&gt;56{56}{78}'分割为[‘12’, ‘[12]’, ‘34’, ‘&lt;34&gt;’, ‘56’, ‘{56}’, ‘’, ‘{78}’, ‘’]），转大写。若token在non_lang_syms中，直接使用；否则BPE/按空格分割/按字符分割</font></li>
+<li>BPE<pre class="line-numbers language-none"><code class="language-none">import sentencepiece
+sp &#x3D; sentencepiece.SentencePieceProcessor()
+sp.load(bpe_model)
+sp.encode_as_pieces(word)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li>symbol_table：token转id</li>
 </ul>
-<h2 id="词典">1.2.  词典</h2>
+</li>
+<li>filter：过滤过短或过长的样本
 <ul>
-<li>
-<p>主流英语词典：朗文、牛津、剑桥、柯林斯、韦式 <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/26d12a32f048">https://www.jianshu.com/p/26d12a32f048</a></p>
-</li>
-<li>
-<p>朗文交际9000词 <a target="_blank" rel="noopener" href="https://github.com/MuhammadYaseenKhan/Longman-Communication">https://github.com/MuhammadYaseenKhan/Longman-Communication</a></p>
-</li>
-<li>
-<p>韦式词典</p>
-<p><a target="_blank" rel="noopener" href="https://www.merriam-webster.com/assets/mw/static/pdf/help/guide-to-pronunciation.pdf">https://www.merriam-webster.com/assets/mw/static/pdf/help/guide-to-pronunciation.pdf</a></p>
-<p><a target="_blank" rel="noopener" href="https://mdx.mdict.org/%E5%85%AD%E5%A4%A7%E7%9F%A5%E5%90%8D%E8%AF%8D%E5%85%B8/%E9%9F%A6%E6%B0%8F_Merriam-Webster/Merriam-Webster/Merriam-Webster/">https://mdx.mdict.org/六大知名词典/韦氏_Merriam-Webster/Merriam-Webster/Merriam-Webster/</a></p>
-</li>
-<li>
-<p>数据堂英语发音词典：<a target="_blank" rel="noopener" href="https://m.datatang.com/news/info/aboutus/451">https://m.datatang.com/news/info/aboutus/451</a></p>
-</li>
+<li>max_length(10240)、min_length(10)：音频帧数，帧移10ms</li>
+<li>token_max_length(200)、token_min_length(1)</li>
+<li>min_output_input_ratio(0.0005)、max_output_input_ratio(1)</li>
 </ul>
-<h2 id="arpabet音素集">1.3.  ARPAbet音素集</h2>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB3fda55097eb7eb054863211dc53ea73d?method=download&amp;shareKey=fecd6d9867afa9c0ab9874d271e9ce46" alt="wiki"></p>
-<p>元音区分是否重读，重音标记：0表示非重音，1表示主重音，2表示次重音</p>
-<h3 id="arpabet-to-ipa">1.3.1.  arpabet-to-ipa</h3>
-<p><a target="_blank" rel="noopener" href="https://github.com/wwesantos/arpabet-to-ipa/blob/master/src/App.php">https://github.com/wwesantos/arpabet-to-ipa/blob/master/src/App.php</a></p>
-<h3 id="与48个音素的区别">1.3.2.  与48个音素的区别</h3>
+</li>
+<li>resample</li>
+<li>speed_perturb：各样本随机变速[0.9, 1.0, 1.1]。默认不使用</li>
+<li><font color="green">提取fbank/mfcc</font>：<font color="red">音频要求16bit</font><pre class="line-numbers language-none"><code class="language-none">torchaudio.compliance.kaldi as kaldi
+feat &#x3D; kaldi.fbank(waveform, num_mel_bins&#x3D;num_mel_bins, frame_length&#x3D;frame_length, frame_shift&#x3D;frame_shift, dither&#x3D;dither, energy_floor&#x3D;0.0, sample_frequency&#x3D;sample_rate)
+feat &#x3D; kaldi.mfcc(waveform, num_mel_bins&#x3D;num_mel_bins, frame_length&#x3D;frame_length, frame_shift&#x3D;frame_shift, dither&#x3D;dither, num_ceps&#x3D;num_ceps, high_freq&#x3D;high_freq, low_freq&#x3D;low_freq, sample_frequency&#x3D;sample_rate)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</li>
+<li>spec_aug：频谱mask，num_t_mask、num_f_mask、max_t、max_f，max_w未使用。默认使用</li>
+<li>spec_sub：频谱替换，num_t_sub、max_t，随机替换为该时刻前的特征。默认不使用</li>
+<li>shuffle：：<font color="red">局部shuffle，shuffle_size默认10000</font>。默认使用</li>
+<li>sort：局部按帧数排序，便于帧数相近的样本放到同一batch，sort_size=500。默认使用</li>
+<li>batch
 <ul>
-<li>无短元音/ɒ/，美式发音中多为/ɑː/或/ɔː/，如lot、long</li>
-<li>无双元音/ɪə/、/eə/、/ʊə/，用两个单元音表示</li>
-<li>无4个辅音连缀，用两个音标表示</li>
-<li>/ʌ/、/ə/共用符号AH，美式英语中常为多发音，如but</li>
+<li>静态batch：除最后一个batch，batch size固定</li>
+<li>动态batch：按max_frames_in_batch（含padding）拼batch</li>
 </ul>
-<h3 id="cmucarnegie-mellon-university词典">1.3.3.  CMU(Carnegie Mellon University)词典</h3>
-<p><a target="_blank" rel="noopener" href="http://www.speech.cs.cmu.edu/cgi-bin/cmudict/">http://www.speech.cs.cmu.edu/cgi-bin/cmudict/</a></p>
-<p>CMU词典用于北美英语，采用ARPAbet音素集，元音区分是否重读</p>
-<p>39个音素：</p>
-<p>元音(15)：AA, AE, AH, AO, AW, AY, EH, ER, EY, IH, IY, OW, OY, UH, UW</p>
-<p>辅音(24)：B, CH, D, DH, F, G, HH, JH, K, L, M, N, NG, P, R, S, SH, T, TH, V, W, Y, Z, ZH</p>
-<h2 id="发音学习视频">1.4.  发音学习视频</h2>
-<ul>
-<li>《BBC音标教程》Alex <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV127411n7nj">https://www.bilibili.com/video/BV127411n7nj</a></li>
-<li>《英语语音》屠蓓 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1EP4y1p7p3">https://www.bilibili.com/video/BV1EP4y1p7p3</a></li>
-<li>《美语从头学：美语音标》赖世雄  <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1qo4y1S7tY/">https://www.bilibili.com/video/BV1qo4y1S7tY/</a></li>
-<li>英语兔 <a target="_blank" rel="noopener" href="https://space.bilibili.com/483162496/channel/series">https://space.bilibili.com/483162496/channel/series</a></li>
+</li>
+<li>padding：batch内样本按帧数降序排列，特征补0，label补-1</li>
+<li>torchaudio<pre class="line-numbers language-none"><code class="language-none">torchaudio.backend.sox_io_backend.info(wav_file).sample_rate
+torchaudio.load(wav_file)
+torchaudio.backend.sox_io_backend.load(filepath&#x3D;wav_file, num_frames&#x3D;end_frame - start_frame, frame_offset&#x3D;start_frame)
+torchaudio.transforms.Resample(orig_freq&#x3D;sample_rate, new_freq&#x3D;resample_rate)(waveform)
+wav, _ &#x3D; torchaudio.sox_effects.apply_effects_tensor(waveform, sample_rate, [[&#39;speed&#39;, str(speed)], [&#39;rate&#39;, str(sample_rate)]])<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 </ul>
-<h2 id="频谱">1.5.  频谱</h2>
-<p><a target="_blank" rel="noopener" href="https://home.cc.umanitoba.ca/~krussll/phonetics/acoustic/spectrogram-sounds.html">https://home.cc.umanitoba.ca/~krussll/phonetics/acoustic/spectrogram-sounds.html</a></p>
+<h1 id="模型结构">2.  模型结构</h1>
+<div class="mermaid">
+  flowchart TD
+    classDef font_red color:red;
+    classDef font_green color:green;
+
+    输入("输入：x: [B, T, D], <br> mask_pad: [B, 1, T]，有效帧对应1，拼batch时补的帧对应0")
+    输入 --> CMVN
+    CMVN --> 下采样
+
+    subgraph 下采样
+        不下采样
+        4倍下采样
+        6倍下采样
+        8倍下采样
+
+        subgraph 不下采样
+            direction TB
+            Linear1("Linear(input_size, output_size)")
+            Linear1 --> LayerNorm1 --> Dropout1
+        end
+
+        subgraph 4倍下采样
+            direction TB
+            Conv2d1("Conv2d(1, output_size, 3, 2)")
+            Conv2d2("Conv2d(output_size, output_size, 3, 2)")
+            Linear2("Linear(output_size * (((input_size - 1) // 2 - 1) // 2), output_size)")
+            mask_pad1("mask_pad = mask_pad[:, :, :-2:2][:, :, :-2:2]")
+
+            Conv2d1 --> ReLU1(ReLU) --> Conv2d2 --> ReLU2(ReLU) --> Linear2
+        end
+
+        subgraph 6倍下采样
+            direction TB
+            Conv2d3("Conv2d(1, output_size, 3, 2)")
+            Conv2d4("Conv2d(output_size, output_size, 5, 3)")
+            Linear3("Linear( , output_size)")
+            mask_pad2("mask_pad = mask_pad[:, :, :-2:2][:, :, :-4:3]")
+
+            Conv2d3 --> ReLU3(ReLU) --> Conv2d4 --> ReLU4(ReLU) --> Linear3
+        end
+
+        subgraph 8倍下采样
+            direction TB
+            Conv2d5("Conv2d(1, output_size, 3, 2)")
+            Conv2d6("Conv2d(output_size, output_size, 3, 2)")
+            Conv2d7("Conv2d(output_size, output_size, 3, 2)")
+            Linear4("Linear( , output_size)")
+            mask_pad3("mask_pad = mask_pad[:, :, :-2:2][:, :, :-2:2][:, :, :-2:2]")
+
+            Conv2d5 --> ReLU5(ReLU) --> Conv2d6 --> ReLU6(ReLU) --> Conv2d7 --> ReLU7(ReLU) --> Linear4
+        end    
+    end
+
+    下采样 --> 位置embedding
+    subgraph 位置embedding
+        pos_emd("pos_emb(pos, 2i) = sin(pos/(10000^(2i/dim))) <br> pos_emb(pos, 2i+1) = cos(pos/(10000^(2i/dim))) <br> 拼batch计算时，offset小于0的位置采用pos_emb[0]"):::font_green
+        位置embedding1("x = x * math.sqrt(dim) + pos_emb"):::font_green
+        相对位置embedding("x *= math.sqrt(dim)"):::font_green
+        无位置embedding("x不变，pos_emb全0")
+        Dropout2("dropout(x), dropout(pos_emb)")
+
+        tmp1(" ") --> pos_emd
+        pos_emd -- 位置embedding --> 位置embedding1 --> Dropout2
+        pos_emd -- 相对位置embedding --> 相对位置embedding --> Dropout2
+        tmp1 -- 无位置embedding --> 无位置embedding --> Dropout2
+    end
+
+    位置embedding --> 计算chunk_mask
+    计算chunk_mask --> transformer -->tmp2
+    计算chunk_mask --> conformer -->tmp2
+    tmp2(" ") -- normalize_before -->LayerNorm2("LayerNorm")
+
+    subgraph transformer
+        subgraph transformer_attention
+            tmp3(" ") --> normalize_before1{"normalize_before"}
+            normalize_before1 -- Yes --> LayerNorm3("LayerNorm") --> MultiHeadedAttention1("MultiHeadedAttention"):::font_red
+            normalize_before1 -- No --> MultiHeadedAttention1
+
+            MultiHeadedAttention1 --> concat_after1{"concat_after"}
+            concat_after1 -- Yes --> concat_after2("linear(concat(x, att(x)))") --> tmp4(" ")
+            concat_after1 -- No --> Dropout3("Dropout") --> tmp4
+
+            tmp3 -- + --> tmp4
+
+            tmp4 --> normalize_before2{"normalize_before"}
+            normalize_before2 -- Yes --> tmp5(" ")
+            normalize_before2 -- No --> LayerNorm4("LayerNorm") --> tmp5
+        end
+
+        subgraph transformer_FeedForward
+            tmp5 --> normalize_before3{"normalize_before"}
+            normalize_before3 -- Yes --> LayerNorm5("LayerNorm") --> PositionwiseFeedForward1("PositionwiseFeedForward: <br> w2(dropout(activation(w1*x+b1)))+b2 <br> w1:[input, hidden] w2:[hidden, input]"):::font_red
+            normalize_before3 -- No --> PositionwiseFeedForward1
+            PositionwiseFeedForward1 --> Dropout4("Dropout")
+
+            tmp5 -- + --> Dropout4
+
+            Dropout4 --> normalize_before4{"normalize_before"}
+            normalize_before4 -- Yes --> tmp6(" ")
+            normalize_before4 -- No --> LayerNorm6("LayerNorm") --> tmp6
+        end
+    end
+
+    subgraph conformer
+        subgraph conformer_macaron
+            tmp7(" ") --> macaron{"macaron"}
+            macaron -- Yes --> normalize_before5{"normalize_before"}
+            macaron -- No --> tmp8(" ")
+
+            normalize_before5 -- Yes --> LayerNorm7("LayerNorm") --> PositionwiseFeedForward2("PositionwiseFeedForward"):::font_red
+            normalize_before5 -- No --> PositionwiseFeedForward2
+            PositionwiseFeedForward2 --> Dropout5("Dropout") --> scale("*0.5")
+
+            tmp7 -- + --> scale
+
+            scale --> normalize_before6{"normalize_before"}
+            normalize_before6 -- Yes --> tmp8
+            normalize_before6 -- No --> LayerNorm8("LayerNorm") --> tmp8
+        end
+
+        subgraph conformer_attention
+            tmp8 --> normalize_before7{"normalize_before"}
+            normalize_before7 -- Yes --> LayerNorm9("LayerNorm") --> tmp9(" ")
+            normalize_before7 -- No --> tmp9
+
+            subgraph Attention
+                direction TB
+
+                计算qkv("q、k、v均采用Linear计算 <br> 更新att_cache: 历史[k, v]，(1, head, chunk_size * num_decoding_left_chunks + T, d_k * 2)"):::font_red
+                计算attention系数("计算attention系数：采用了chunk_mask <br> Dropout"):::font_red
+                attention("scaled dot product self-attention")
+                Linear5("Linear(output_size, output_size)")
+
+                Rel("pos_bias_u、pos_bias_v: [head, d_k]，xavier_uniform_初始化，可训练 <br> softmax{[(q + pos_bias_u)k + (q + pos_bias_v)(W*pos_emb)]/math.sqrt(d_k)}v <br> rel_shift: 未采用"):::font_red
+
+                tmp9 --> 计算qkv -- MultiHeadedAttention --> 计算attention系数 --> attention --> Linear5
+
+                计算qkv -- RelPositionMultiHeadedAttention --> Rel --> Linear5
+            end
+
+            Linear5 --> concat_after3{"concat_after"}
+            concat_after3 -- Yes --> concat_after4("linear(concat(x, att(x)))") --> tmp10(" ")
+            concat_after3 -- No --> Dropout6("Dropout") --> tmp10
+
+            tmp8 -- + --> tmp10
+
+            tmp10 --> normalize_before8{"normalize_before"}
+            normalize_before8 -- Yes --> tmp11(" ")
+            normalize_before8 -- No --> LayerNorm10("LayerNorm") --> tmp11
+        end
+
+        subgraph conformer_conv
+            tmp11 --> conv{"conv"}
+            conv -- Yes --> normalize_before9{"normalize_before"}
+
+            normalize_before9 -- Yes --> LayerNorm11("LayerNorm") --> tmp12(" ")
+            normalize_before9 -- No --> tmp12
+
+            tmp12 --> mask_pad4("mask_pad的帧均置0"):::font_red --> causal{"causal"}
+            causal -- Yes -->
+            padding("第一次计算时左侧填充(kernel_size-1)帧0，<br> 后续从cache中取缓存的历史有效输入"):::font_red --> pointwise_conv1
+            causal -- No --> pointwise_conv1
+
+            pointwise_conv1("pointwise_conv: 1D卷积，channel扩充为2倍"):::font_red --> GLU("GLU，channel减半"):::font_red --> depthwise_conv
+            click GLU "https://pytorch.org/docs/stable/generated/torch.nn.functional.glu.html"
+
+            depthwise_conv("nn.Conv1d(channels, channels, kernel_size, stride=1, padding=padding, groups=channels, bias=bias) <br> 若非causal，左右填充(kernel_size - 1) // 2帧0"):::font_red
+            depthwise_conv --> BatchNorm1d/LayerNorm --> activation("activation，如SiLU/swish")
+            click activation "https://pytorch.org/docs/stable/generated/torch.nn.SiLU.html"
+
+            activation --> pointwise_conv2("pointwise_conv: 1D卷积"):::font_red --> mask_pad5("mask_pad的帧均置0"):::font_red -->Dropout7("Dropout")
+
+            tmp11 -- + --> Dropout7
+
+            Dropout7 --> normalize_before10{"normalize_before"}
+            normalize_before10 -- Yes --> tmp13(" ")
+            normalize_before10 -- No --> LayerNorm12("LayerNorm") --> tmp13
+            conv -- No --> tmp13
+        end
+
+        subgraph conformer_FeedForward
+            tmp13 --> normalize_before11{"normalize_before"}
+            normalize_before11 -- Yes --> LayerNorm13("LayerNorm") --> PositionwiseFeedForward3("PositionwiseFeedForward"):::font_red
+            normalize_before11 -- No --> PositionwiseFeedForward3
+
+            PositionwiseFeedForward3 --> Dropout8("Dropout") --> macaron2{"macaron"}
+            macaron2 -- Yes --> scale2(*0.5) --> tmp14(" ")
+            macaron2 -- No --> tmp14(" ")
+
+            tmp13 -- + --> tmp14
+
+            tmp14 --> normalize_before12{"normalize_before"}
+            normalize_before12 -- Yes --> tmp15(" ")
+            normalize_before12 -- No --> LayerNorm14("LayerNorm") --> tmp15
+
+            tmp15--> conv2{"conv"}
+            conv2 -- Yes --> LayerNorm15("LayerNorm") --> tmp16(" ")
+            conv2 -- No --> tmp16(" ")
+        end
+    end
+</div>
+
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
             </div>
@@ -1212,12 +754,13 @@ get
     <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <div class="card-title">
-                    <a href="/blog/ji-qi-xue-xi/loss/ctc/"> CTC</a>
+                    <a href="/blog/yu-yin/gong-ju-bao/wenet/dai-ma/"> WeNet代码</a>
                 </div>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
@@ -1226,25 +769,30 @@ get
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-05-03
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-08-12
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                    机器学习
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/" class="post-category">
+                                    语音
                                 </a>
                             
-                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/loss/" class="post-category">
-                                    loss
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E5%B7%A5%E5%85%B7%E5%8C%85/" class="post-category">
+                                    工具包
+                                </a>
+                            
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E5%B7%A5%E5%85%B7%E5%8C%85/WeNet/" class="post-category">
+                                    WeNet
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
             </div>
         </div>
@@ -1256,7 +804,7 @@ get
             </div>
             <div class="card">
                 <div class="card-title">
-                    <a href="/blog/yu-yin/yu-yin-ping-ce/gop/"> GOP</a>
+                    <a href="/blog/yu-yin/yu-yin-ping-ce/ping-fen/shen-du-xue-xi/"> 基于深度学习的语音评分</a>
                 </div>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
@@ -1266,7 +814,7 @@ get
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-05-03
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-07-23
                             </span>
                         <span class="publish-author">
                             
@@ -1278,6 +826,10 @@ get
                             
                             <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E8%AF%84%E6%B5%8B/" class="post-category">
                                     语音评测
+                                </a>
+                            
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E8%AF%84%E6%B5%8B/%E8%AF%84%E5%88%86/" class="post-category">
+                                    评分
                                 </a>
                             
                             
@@ -1435,6 +987,13 @@ get
 
 </main>
 
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    });
+</script>
 
 
 
