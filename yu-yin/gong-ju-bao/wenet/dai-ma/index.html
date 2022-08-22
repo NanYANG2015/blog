@@ -5,11 +5,15 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="WeNet代码, 梦园">
-    <meta name="description" content="1. IterableDataset - Processor
-根据输入list生成IterableDataset
-数据类型
-raw：json信息列表，存储key、wav(、start、end)、txt
-shard：压缩包列表。随机：压缩包间">
+    <meta name="description" content="1. 数据预处理
+compute_cmvn_stats：生成global_cmvn
+mean_stat：训练集上各维特征的总和
+var_stat：训练集上各维特征的平方和
+frame_num：训练集总帧数
+
+
+
+2. IterableDat">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -323,7 +327,7 @@ shard：压缩包列表。随机：压缩包间">
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-08-15
+                    2022-08-22
                 </div>
                 
 
@@ -345,10 +349,18 @@ shard：压缩包列表。随机：压缩包间">
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="IterableDataset-Processor">1. IterableDataset - Processor</h1><ul>
+                <h1 id="数据预处理">1. 数据预处理</h1><ul>
+<li>compute_cmvn_stats：生成global_cmvn<ul>
+<li>mean_stat：训练集上各维特征的总和</li>
+<li>var_stat：训练集上各维特征的平方和</li>
+<li>frame_num：训练集总帧数</li>
+</ul>
+</li>
+</ul>
+<h1 id="IterableDataset-Processor">2. IterableDataset - Processor</h1><ul>
 <li>根据输入list生成IterableDataset<ul>
 <li>数据类型<ul>
-<li>raw：json信息列表，存储key、wav(、start、end)、txt</li>
+<li>raw：json列表，存储key、wav(、start、end)、txt</li>
 <li>shard：压缩包列表。随机：压缩包间随机，压缩包内部顺序遍历</li>
 </ul>
 </li>
@@ -365,7 +377,7 @@ sp.encode_as_pieces(word)<span aria-hidden="true" class="line-numbers-rows"><spa
 </ul>
 </li>
 <li>filter：过滤过短或过长的样本<ul>
-<li>max_length(10240)、min_length(10)：音频帧数，帧移10ms</li>
+<li>max_length(10240)、min_length(10)：帧数，帧移10ms</li>
 <li>token_max_length(200)、token_min_length(1)</li>
 <li>min_output_input_ratio(0.0005)、max_output_input_ratio(1)</li>
 </ul>
@@ -377,7 +389,7 @@ feat &#x3D; kaldi.fbank(waveform, num_mel_bins&#x3D;num_mel_bins, frame_length&#
 feat &#x3D; kaldi.mfcc(waveform, num_mel_bins&#x3D;num_mel_bins, frame_length&#x3D;frame_length, frame_shift&#x3D;frame_shift, dither&#x3D;dither, num_ceps&#x3D;num_ceps, high_freq&#x3D;high_freq, low_freq&#x3D;low_freq, sample_frequency&#x3D;sample_rate)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
 <li>spec_aug：频谱mask，num_t_mask、num_f_mask、max_t、max_f，max_w未使用。默认使用</li>
 <li>spec_sub：频谱替换，num_t_sub、max_t，随机替换为该时刻前的特征。默认不使用</li>
-<li>shuffle：：<font color="red">局部shuffle，shuffle_size默认10000</font>。默认使用</li>
+<li>shuffle：<font color="red">局部shuffle，shuffle_size默认10000</font>。默认使用</li>
 <li>sort：局部按帧数排序，便于帧数相近的样本放到同一batch，sort_size&#x3D;500。默认使用</li>
 <li>batch<ul>
 <li>静态batch：除最后一个batch，batch size固定</li>
@@ -391,8 +403,9 @@ torchaudio.backend.sox_io_backend.load(filepath&#x3D;wav_file, num_frames&#x3D;e
 torchaudio.transforms.Resample(orig_freq&#x3D;sample_rate, new_freq&#x3D;resample_rate)(waveform)
 wav, _ &#x3D; torchaudio.sox_effects.apply_effects_tensor(waveform, sample_rate, [[&#39;speed&#39;, str(speed)], [&#39;rate&#39;, str(sample_rate)]])<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 </ul>
-<h1 id="模型结构">2. 模型结构</h1><h2 id="encoder">2.1. encoder</h2><div class="mermaid">
-  flowchart TD
+<h1 id="模型结构">3. 模型结构</h1><h2 id="encoder">3.1. encoder</h2><div class="mermaid">
+  %%{init: {'themeVariables': {'fontSize': '24px'}}}%%
+flowchart TD
     classDef font_red color:red;
     classDef font_green color:green;
 
@@ -409,7 +422,7 @@ wav, _ &#x3D; torchaudio.sox_effects.apply_effects_tensor(waveform, sample_rate,
         subgraph 不下采样
             direction TB
             Linear1("Linear(input_size, output_size)")
-            Linear1 --> LayerNorm1 --> Dropout1
+            Linear1 --> LayerNorm1("LayerNorm") --> Dropout1("Dropout")
         end
 
         subgraph 4倍下采样
@@ -441,7 +454,7 @@ wav, _ &#x3D; torchaudio.sox_effects.apply_effects_tensor(waveform, sample_rate,
             mask_pad3("mask_pad = mask_pad[:, :, :-2:2][:, :, :-2:2][:, :, :-2:2]")
 
             Conv2d5 --> ReLU5(ReLU) --> Conv2d6 --> ReLU6(ReLU) --> Conv2d7 --> ReLU7(ReLU) --> Linear4
-        end    
+        end
     end
 
     下采样 --> 位置embedding
@@ -462,6 +475,20 @@ wav, _ &#x3D; torchaudio.sox_effects.apply_effects_tensor(waveform, sample_rate,
     计算chunk_mask --> transformer*num_blocks -->tmp2
     计算chunk_mask --> conformer*num_blocks -->tmp2
     tmp2(" ") -- normalize_before -->LayerNorm2("LayerNorm")
+
+    subgraph 计算chunk_mask
+        use_dynamic_chunk{"use_dynamic_chunk"} -- Yes --> decoding_chunk_size{"decoding_chunk_size"}
+        decoding_chunk_size -- 小于0 --> tmp18("不分chunk，历史、未来全部可见")
+        decoding_chunk_size -- 大于0 --> 采用固定的chunk_size --> num_decoding_left_chunks{"num_decoding_left_chunks"}
+        decoding_chunk_size -- 等于0 --> tmp17("随机动态chunk_size，帧数取值范围为[1, 25]或全部可见（概率50%），支持use_dynamic_left_chunk") --> num_decoding_left_chunks
+
+        use_dynamic_chunk -- No --> static_chunk_size{"static_chunk_size"}
+        static_chunk_size -- 小于等于0 --> tmp18
+        static_chunk_size -- 大于0 --> 采用固定的chunk_size
+
+        num_decoding_left_chunks -- 小于0 --> tmp19("历史全部可见，当前chunk可见，未来chunk不可见")
+        num_decoding_left_chunks -- 大于等于0 --> 仅可见指定的历史chunk数
+    end
 
     subgraph transformer*num_blocks
         subgraph transformer_attention
@@ -594,14 +621,21 @@ wav, _ &#x3D; torchaudio.sox_effects.apply_effects_tensor(waveform, sample_rate,
 </div>
 
 
-<h2 id="decoder">2.2. decoder</h2><div class="mermaid">
-  flowchart TD
+<ul>
+<li>load_cmvn：计算均值、方差倒数。支持json格式、kaldi文本格式输入</li>
+<li>下采样：2D卷积下采样至1&#x2F;4或1&#x2F;6或1&#x2F;8，感受野分别为7、11、15帧（延迟分别为6、10、14) <br> <font color="green">存在的问题：x_mask。如下采样至1&#x2F;4时，取<code>x_mask[:, :, :-2:2][:, :, :-2:2]</code>，第1个点中心时刻为第3帧，感受野为0-6帧，第一个点的mask应取第6帧</font></li>
+<li>forward_chunk：输入(chunk_size - 1) * subsample_rate + subsample.right_context + 1帧有效数据，输出chunk_size帧，并更新att_cache、cnn_cache</li>
+<li>forward_chunk_by_chunk：输入有效帧，模拟逐chunk流式计算</li>
+</ul>
+<h2 id="decoder">3.2. decoder</h2><div class="mermaid">
+  %%{init: {'themeVariables': {'fontSize': '24px'}}}%%
+flowchart TD
     classDef font_red color:red;
     classDef font_green color:green;
 
     subgraph TransformerDecoder
         tmp(" ") -- train --> 输入1("输入label、label长度") --> tgt_mask("mask padding、未来输出") --> embedding --> +位置embedding --> transformer*num_blocks
-        tmp -- decode --> 输入2("输入上一时刻解码结果") --> embedding
+        tmp -- decode --> 输入2("自回归：输入上一时刻解码结果") --> embedding
 
         transformer*num_blocks --> normalize_before1{"normalize_before"}
         normalize_before1 -- Yes --> LayerNorm1("LayerNorm") --> tmp1(" ")
@@ -614,15 +648,232 @@ wav, _ &#x3D; torchaudio.sox_effects.apply_effects_tensor(waveform, sample_rate,
         output -- No --> tmp2
 
         subgraph transformer*num_blocks
-            train("train：缓存encoder各block的输出")
+            direction TB
+
+            subgraph self_attention
+                direction TB
+                tmp4(" ") --> normalize_before2{"normalize_before"}
+                normalize_before2 -- Yes --> LayerNorm2("LayerNorm") --> tmp5(" ")
+                normalize_before2 -- No --> tmp5
+
+                tmp5 --> MultiHeadedAttention1("MultiHeadedAttention: q: 上一时刻输出，k/v: 历史输出，mask未来输出"):::font_red
+                MultiHeadedAttention1 --> concat_after1{"concat_after"}
+                concat_after1 -- Yes --> concat_after2("linear(concat(x, att(x)))") --> tmp6(" ")
+                concat_after1 -- No --> Dropout3("Dropout") --> tmp6
+
+                tmp4 -- + --> tmp6
+
+                tmp6 --> normalize_before3{"normalize_before"}
+                normalize_before3 -- Yes --> tmp7(" ")
+                normalize_before3 -- No --> LayerNorm3("LayerNorm") --> tmp7
+            end
+
+            subgraph inter_attention
+                direction TB
+                tmp7 --> normalize_before4{"normalize_before"}
+                normalize_before4 -- Yes --> LayerNorm4("LayerNorm") --> tmp8(" ")
+                normalize_before4 -- No --> tmp8
+
+                tmp8 --> MultiHeadedAttention2("MultiHeadedAttention: q: decoder隐层表示，k/v: encoder输出，mask未来输出"):::font_red
+                MultiHeadedAttention2 --> concat_after3{"concat_after"}
+                concat_after3 -- Yes --> concat_after4("linear(concat(x, att(x)))") --> tmp9(" ")
+                concat_after3 -- No --> Dropout4("Dropout") --> tmp9
+
+                tmp7 -- + --> tmp9
+
+                tmp9 --> normalize_before5{"normalize_before"}
+                normalize_before5 -- Yes --> tmp10(" ")
+                normalize_before5 -- No --> LayerNorm5("LayerNorm") --> tmp10
+
+            end
+
+            subgraph FeedForward
+                tmp10 --> normalize_before6{"normalize_before"}
+                normalize_before6 -- Yes --> LayerNorm6("LayerNorm") --> PositionwiseFeedForward:::font_red
+                normalize_before6 -- No --> PositionwiseFeedForward
+                PositionwiseFeedForward --> Dropout5("Dropout")
+
+                tmp10 -- + --> Dropout5
+
+                Dropout5 --> normalize_before7{"normalize_before"}
+                normalize_before7 -- Yes --> tmp11(" ")
+                normalize_before7 -- No --> LayerNorm7("LayerNorm") --> tmp11
+            end
+
+            decode("decode：缓存每一时刻decoder各block的输出；输入tgt递增存储每一时刻的输出")
         end
     end
 
     subgraph BiTransformerDecoder
-        tmp3(" ") -- train --> 输出left_decoder与right_decoder结果
-        tmp3 -- decode --> 采用left_decoder
+        tmp3(" ") -- train/rescore --> 输出left_decoder与right_decoder结果:::font_red
+        tmp3 -- decode --> 采用left_decoder:::font_red
     end
 </div>
+
+
+<h2 id="Transducer">3.3. Transducer</h2><div class="mermaid">
+  %%{init: {'themeVariables': {'fontSize': '24px'}}}%%
+flowchart TD
+    classDef font_red color:red;
+    classDef font_green color:green;
+
+    input("输入上一时刻预测值") --> Embedding1("Embedding(vocab_size, embed_size)") --> Dropout1("Dropout")
+    Dropout1 -- RNNPredictor --> RNNPredictor
+    Dropout1 -- EmbeddingPredictor --> EmbeddingPredictor
+    Dropout1 -- ConvPredictor --> ConvPredictor
+
+    subgraph RNNPredictor
+        RNN("RNN/LSTM/GRU，记录历史h、c，初始为全0"):::font_red --> linear1("Linear(hidden_size, output_size)") --> tmp1
+    end
+
+    subgraph EmbeddingPredictor
+        direction TB
+
+        input1("拼接定长的历史输入 <br> input(B,L,1,C,E)，B: batch size, L: seq_len, C: context_size, E: embed_size"):::font_red --> attention:::font_red
+
+        subgraph attention
+            input1 --> dot
+            W("W(H,C,E)，H: num_heads") --> dot
+            dot("broadcast dot product, (B,L,H,C,E)"):::font_red --> sum1("sum, (B,L,H,C)") --> unsqueeze("unsqueeze, (B,L,H,1,C)") --> matmul
+            input1 --> matmul("matmul，(B,L,H,1,E)") --> sum2("squeeze, sum，(B,L,E)") --> scale("scale，/(H*C)")
+
+            click dot "https://arxiv.org/pdf/2109.07513.pdf"
+        end
+
+        scale --> proj("Linear(embed_size, embed_size)") --> LayerNorm --> swish --> tmp1
+    end
+
+    subgraph ConvPredictor
+        input2("拼接定长的历史输入，初始输入blank") --> conv --> LayerNorm2("LayerNorm")--> activation --> tmp1
+    end
+
+    subgraph join
+        input3("输入：encoder_output") --> prejoin_linear1{"prejoin_linear"}
+        tmp1("predictor output") --> prejoin_linear2{"prejoin_linear"}
+        prejoin_linear1 -- Yes --> prejoin_linear3("Linear(enc_output_size, join_dim)") --> tmp2(" ")
+        prejoin_linear1 -- No --> tmp2
+        prejoin_linear2 -- Yes --> prejoin_linear4("Linear(pred_output_size, join_dim)") --> tmp3(" ")
+        prejoin_linear2 -- No --> tmp3
+
+        tmp2 --> tmp4("+"):::font_red
+        tmp3 --> tmp4
+
+        tmp4 --> postjoin_linear1{"postjoin_linear"}
+        postjoin_linear1 -- Yes --> postjoin_linear2("Linear(join_dim, join_dim)") --> tmp5(" ")
+        postjoin_linear1 -- No --> tmp5
+
+        tmp5 --> activation2("activation") --> linear2("Linear(join_dim, vocab_size)")
+    end
+</div>
+
+
+<h2 id="CTC-Attention-x2F-Transducer">3.4. CTC-Attention&#x2F;Transducer</h2><ul>
+<li>CTC：输入encoder_output –&gt; Linear(“Linear(, vocab_size)”)</li>
+<li>attention：KLDivLoss + label smoothing</li>
+</ul>
+<p>$$ L_{\mathrm{ATT}}(x, y)&#x3D;(1-\alpha) L_{\mathrm{ATT-L2R}}(x, y)+\alpha {L}_{\mathrm{ATT-R2L}}(x, y) $$</p>
+<p>$$ L_{\mathrm{CTC-ATT}}(x, y)&#x3D;\lambda L_{\mathrm{CTC}}(x, y)+(1-\lambda) {L}_{\mathrm{ATT}}(x, y) $$</p>
+<p>$$ L_{\mathrm{CTC-ATT-RNNT}}(x, y)&#x3D; L_{\mathrm{RNNT}}(x, y)+\beta L_{\mathrm{ATT}}(x, y)+\lambda L_{\mathrm{CTC}}(x, y) $$</p>
+<h2 id="解码">3.5. 解码</h2><p>目前支持四种解码算法：</p>
+<ul>
+<li><p>CTC greedy beam search，帧级别输出，解码过程不合并前缀，最终n-best上进行ctc序列处理。</p>
+</li>
+<li><p>CTC prefix beam search：帧级别解码，合并相同的ctc序列前缀。</p>
+</li>
+<li><p>Attention decoder beam search：基于cross-attention的label级别解码。</p>
+</li>
+<li><p>CTC + attention rescoring：第一遍采用CTC prefix beam search，该结果可作为流式结果实时返回。将CTC decoder的n-best结果，通过attention decoder进行teacher forcing rescoring（指定各时刻输出，仅提取分数），根据得分重新排序。</p>
+<p>score &#x3D; 反向attention decoder分 * w_r + 正向attention decoder分 * (1-w_r) + CTC分 * w_ctc</p>
+</li>
+</ul>
+<h3 id="Transducer解码">3.5.1. Transducer解码</h3><ul>
+<li><p>greedy search</p>
+<div class="mermaid">
+  %%{init: {'themeVariables': {'fontSize': '24px'}}}%%
+flowchart TD
+    classDef font_red color:red;
+    classDef font_green color:green;
+
+    输入一帧encoder_out --> nblk{"上一输出是否为blank"}
+    nblk -- Yes --> predictor.forward_step --> decode
+    nblk -- No --> 采用之前计算的pred_out --> decode
+
+    decode --> blank{"是否为blank"} -- No --> 输出 --> per_frame_noblk{"单帧encoder_out解码出的非blank token>=per_frame_noblk"}:::font_red
+    per_frame_noblk -- No --> predictor.forward_step
+    per_frame_noblk -- Yes --> 输入一帧encoder_out
+    blank -- Yes --> 输入一帧encoder_out
+</div>
+
+</li>
+<li><p>prefix beam search</p>
+<div class="mermaid">
+  %%{init: {'themeVariables': {'fontSize': '24px'}}}%%
+flowchart TD
+    classDef font_red color:red;
+
+    RNNT("RNNT: 仅支持一帧encoder_out输出一个token"):::font_red --> shallow_fusion("后验概率加权求和")
+    CTC --> shallow_fusion --> topk("取topk，得到N * N个候选") --> prefix("解码结果（不含blank）相同的合并后验概率") --> 取topk
+</div>
+
+</li>
+<li><p>RNNT + attention rescoring</p>
+<div class="mermaid">
+  %%{init: {'themeVariables': {'fontSize': '24px'}}}%%
+flowchart TD
+    classDef font_red color:red;
+    classDef font_green color:green;
+
+    decode1("CTC/RNNT prefix beam search") --> torchaudio.functional.rnnt_loss:::font_green
+    decode1 --> attention_rescore
+    decode1 -- w_c --> score加权求和
+    torchaudio.functional.rnnt_loss -- w_t --> score加权求和
+    attention_rescore -- w_a --> score加权求和
+</div>
+</li>
+</ul>
+<h2 id="模型训练">3.6. 模型训练</h2><ul>
+<li><p>LRScheduler<br>$$<br>l_{r}&#x3D;\begin{cases}<br>l_{r} * \frac{\text { step }}{\text { warmup_step }} &amp; , \text { step } \leqslant \text { warmup_step } \<br>l_{r} * \sqrt{\frac{\text { warmup_step }}{\text { step }}} &amp; , \text { step }&gt;\text { warmup_step}<br>\end{cases}<br>$$</p>
+</li>
+<li><p>fp16梯度同步</p>
+<pre class="line-numbers language-none"><code class="language-none">model.cuda()
+model &#x3D; torch.nn.parallel.DistributedDataParallel(model, find_unused_parameters&#x3D;True)
+from torch.distributed.algorithms.ddp_comm_hooks import (default as comm_hooks,)
+model.register_comm_hook(state&#x3D;None, hook&#x3D;comm_hooks.fp16_compress_hook)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p><font color="green"><a target="_blank" rel="noopener" href="https://pytorch.org/docs/stable/notes/amp_examples.html">混合精度训练</a></font></p>
+</li>
+<li><p>梯度累积</p>
+<pre class="line-numbers language-none"><code class="language-none">from contextlib import nullcontext
+if is_distributed and batch_idx % accum_grad !&#x3D; 0:
+    context &#x3D; model.no_sync
+else:
+    context &#x3D; nullcontext
+with context():
+    loss_dict &#x3D; model(feats, feats_lengths, target, target_lengths)
+    loss &#x3D; loss_dict[&#39;loss&#39;] &#x2F; accum_grad
+    loss.backward()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>梯度裁剪</p>
+<pre class="line-numbers language-none"><code class="language-none">from torch.nn.utils import clip_grad_norm_
+if use_amp:
+    scaler.unscale_(optimizer)
+    grad_norm &#x3D; clip_grad_norm_(model.parameters(), clip)
+    # We don&#39;t check grad here since that if the gradient
+    # has inf&#x2F;nan values, scaler.step will skip optimizer.step().
+    scaler.step(optimizer)
+    scaler.update()
+else:
+    grad_norm &#x3D; clip_grad_norm_(model.parameters(), clip)
+    if torch.isfinite(grad_norm):
+        optimizer.step()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>average model：取cv_loss最小或最后的 n个epoch的模型，取参数均值</p>
+</li>
+</ul>
+<h2 id="参考资源">3.7. 参考资源</h2><ul>
+<li><font color="green">相对position embedding：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1901.02860">https://arxiv.org/abs/1901.02860</a> </font></li>
+<li><font color="green">Embedding predictor：<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2109.07513.pdf">https://arxiv.org/pdf/2109.07513.pdf</a> </font></li>
+</ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
             </div>
