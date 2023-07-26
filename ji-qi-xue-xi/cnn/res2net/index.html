@@ -4,12 +4,11 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="post, 梦园">
+    <meta name="keywords" content="Res2Net, 梦园">
     <meta name="description" content="
 出发点：表示多尺度的特征、增大感受野。
 
-
-$$\mathbf{y}_i&amp;#x3D; \begin{cases}\mathbf{x}_i &amp;amp; i&amp;#x3D;1 \ \mathbf{K}_i\left(\mathbf{x}_i\ri">
+$$\mathbf{y}_i= \begin{cases}\mathbf{x}_i &amp; i=1 \\ \mathbf{K}_i\left(\mathbf{x}_i\right) &amp; i=2 \\ ">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -23,7 +22,7 @@ $$\mathbf{y}_i&amp;#x3D; \begin{cases}\mathbf{x}_i &amp;amp; i&amp;#x3D;1 \ \mat
 
     
 
-    <title>post | 梦园</title>
+    <title>Res2Net | 梦园</title>
     <link rel="icon" type="image/png" href="/blog/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/blog/libs/awesome/css/all.min.css">
@@ -282,7 +281,7 @@ $$\mathbf{y}_i&amp;#x3D; \begin{cases}\mathbf{x}_i &amp;amp; i&amp;#x3D;1 \ \mat
                     <div class="row">
                         <div class="col s12 m12 l12">
                             <div class="brand">
-                                <h1 class="description center-align post-title">post</h1>
+                                <h1 class="description center-align post-title">Res2Net</h1>
                             </div>
                         </div>
                     </div>
@@ -348,21 +347,26 @@ $$\mathbf{y}_i&amp;#x3D; \begin{cases}\mathbf{x}_i &amp;amp; i&amp;#x3D;1 \ \mat
                 <ul>
 <li><p>出发点：表示多尺度的特征、增大感受野。</p>
 <img src="https://note.youdao.com/yws/api/personal/file/WEB61ffb780869eb695d691e4d54876ac5b?method=download&shareKey=3f447136c62dbd906f1b59cde85798da" width="385">
-
-<p>$$\mathbf{y}_i&#x3D; \begin{cases}\mathbf{x}_i &amp; i&#x3D;1 \ \mathbf{K}_i\left(\mathbf{x}_i\right) &amp; i&#x3D;2 \ \mathbf{K}_i\left(\mathbf{x}<em>i+\mathbf{y}</em>{i-1}\right) &amp; 2&lt;i \leqslant s\end{cases}$$</p>
-</li>
+$$\mathbf{y}_i= \begin{cases}\mathbf{x}_i & i=1 \\ \mathbf{K}_i\left(\mathbf{x}_i\right) & i=2 \\ \mathbf{K}_i\left(\mathbf{x}_i+\mathbf{y}_{i-1}\right) & 2<i \leqslant s\end{cases}$$ < li>
 <li><p>名称由来：残差块里又有残差连接。</p>
 </li>
 <li><p>多尺度的理解：$\mathbf{x}_2$ 经过1个 $3 \times 3$ 的卷积得到 $\mathbf{y}_2$，而 $\mathbf{y}_2$ 会作为 $\mathbf{K}_3$ 的输入，再次经过1个 $3 \times 3$ 的卷积。2次 $3 \times 3$ 的卷积相当于1个 $5 \times 5$ 的卷积，因此，$\mathbf{K}_3$ 融合了 $3 \times 3$ 的感受野的特征 和 $5 \times 5$ 的感受野的特征。以此类推。得到的 $\mathbf{y}$ 可以表征多尺度的特征。</p>
 </li>
 <li><p>性能</p>
 <ul>
-<li>很容易与其它结构整合。</li>
-<li>由于具有较强的多尺度特征表征能力，在许多任务上都取得了性能提升，如图片分类、目标检测、语义分割、显著目标检测等，对于不同尺寸的对象性能都有提升。<br><img src="https://note.youdao.com/yws/api/personal/file/WEB8f041f566f23b3eaa720ab325b3570c6?method=download&shareKey=8b34ae8793fd313603365c485b8a7c82" width="320"><img src="https://note.youdao.com/yws/api/personal/file/WEBad279f36483cb4953f11ee2987747fa1?method=download&shareKey=21ea4d5cec3f46fcf6856e76b1dc810a" width="377"></li>
-<li><font color="green">虽然 $\mathbf{y}_i$ 需要顺序计算，但Res2Net模块引入的额外运行时间通常可以忽略不计。</font></li>
-<li>相较于模型深度 depth、1层的 channel 数 width、cardinality[68]，增加 scale 可以获得更快的性能提升。<img src="https://note.youdao.com/yws/api/personal/file/WEB0b0ad93f6733adeef588208ca17e008c?method=download&shareKey=3b201a76aede1628dec4ee4d9199853a" width="380">
-*scale为5、6时性能提升有限，可能由于CIFAR数据集中的图片太小（$32 \times 32$）
-*当图片中的对象尺寸已经可以被Res2Net模块覆盖时，继续增加 scale ，性能提升有限；若固定模型复杂度，增加 scale 会导致每个感受野的通道数减少，可能会降低模型处理特定尺度特征的能力。</li>
+<li><p>很容易与其它结构整合。</p>
+</li>
+<li><p>由于具有较强的多尺度特征表征能力，在许多任务上都取得了性能提升，如图片分类、目标检测、语义分割、显著目标检测等，对于不同尺寸的对象性能都有提升。</p>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB8f041f566f23b3eaa720ab325b3570c6?method=download&shareKey=8b34ae8793fd313603365c485b8a7c82" width="320">
+<img src="https://note.youdao.com/yws/api/personal/file/WEBad279f36483cb4953f11ee2987747fa1?method=download&shareKey=21ea4d5cec3f46fcf6856e76b1dc810a" width="377"></li>
+<li><p><font color="green">虽然 $\mathbf{y}_i$ 需要顺序计算，但Res2Net模块引入的额外运行时间通常可以忽略不计。</font></p>
+</li>
+<li><p>相较于模型深度 depth、1层的 channel 数 width、cardinality[68]，增加 scale 可以获得更快的性能提升。</p>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB0b0ad93f6733adeef588208ca17e008c?method=download&shareKey=3b201a76aede1628dec4ee4d9199853a" width="380">
+
+<p>*scale为5、6时性能提升有限，可能由于CIFAR数据集中的图片太小（$32 \times 32$）。</p>
+<p>*当图片中的对象尺寸已经可以被Res2Net模块覆盖时，继续增加 scale ，性能提升有限；若固定模型复杂度，增加 scale 会导致每个感受野的通道数减少，可能会降低模型处理特定尺度特征的能力。</p>
+</li>
 </ul>
 </li>
 <li><p>论文<br>Gao S H, Cheng M M, Zhao K, et al. Res2net: A new multi-scale backbone architecture[J]. IEEE transactions on pattern analysis and machine intelligence, 2019, 43(2): 652-662.</p>
@@ -374,7 +378,7 @@ $$\mathbf{y}_i&amp;#x3D; \begin{cases}\mathbf{x}_i &amp;amp; i&amp;#x3D;1 \ \mat
 </li>
 </ul>
 </li>
-</ul>
+</i></li></ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
             </div>
@@ -435,7 +439,7 @@ $$\mathbf{y}_i&amp;#x3D; \begin{cases}\mathbf{x}_i &amp;amp; i&amp;#x3D;1 \ \mat
             </div>
             <div class="card">
                 <div class="card-title">
-                    <a href="/blog/ji-qi-xue-xi/cnn/res2net/"> post</a>
+                    <a href="/blog/ji-qi-xue-xi/cnn/res2net/"> Res2Net</a>
                 </div>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
