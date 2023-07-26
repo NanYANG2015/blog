@@ -4,8 +4,12 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="分类: WeNet, 梦园">
-    <meta name="description" content="梦园">
+    <meta name="keywords" content="post, 梦园">
+    <meta name="description" content="
+出发点：表示多尺度的特征、增大感受野。
+
+
+$$\mathbf{y}_i&amp;#x3D; \begin{cases}\mathbf{x}_i &amp;amp; i&amp;#x3D;1 \ \mathbf{K}_i\left(\mathbf{x}_i\ri">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +23,7 @@
 
     
 
-    <title>分类: WeNet | 梦园</title>
+    <title>post | 梦园</title>
     <link rel="icon" type="image/png" href="/blog/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/blog/libs/awesome/css/all.min.css">
@@ -232,7 +236,22 @@
 
 </header>
 
-    <div class="bg-cover pd-header about-cover">
+    
+<script src="/blog/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/blog/';
+            }
+        }
+    })();
+</script>
+
+
+<div class="bg-cover pd-header about-cover">
     <div class="container">
     <div class="row">
     <div class="col s10 offset-s1 m8 offset-m2 l8">
@@ -249,122 +268,326 @@
     </div>
 </div>
 
-<main class="content">
 
-    <div id="category-cloud" class="container chip-container">
+
+<main class="container content">
+
+    
+    <!-- 文章内容详情 -->
+<div id="artDetail">
     <div class="card">
-        <div class="card-content">
-            <div class="category-chips">
-                <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/">语音</a><span class="category-list-count">17</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/">语音识别</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E8%AF%84%E6%B5%8B/">语音评测</a><span class="category-list-count">8</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E8%AF%84%E6%B5%8B/%E8%AF%84%E5%88%86/">评分</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E8%AF%84%E6%B5%8B/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E8%AF%84%E6%B5%8B/%E7%89%B9%E5%BE%81/">特征</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E8%AF%84%E6%B5%8B/%E4%BA%A7%E5%93%81/">产品</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E5%AD%A6/">语音学</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E5%B7%A5%E5%85%B7%E5%8C%85/">工具包</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E5%B7%A5%E5%85%B7%E5%8C%85/WeNet/">WeNet</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E5%B7%A5%E5%85%B7%E5%8C%85/Kaldi/">Kaldi</a><span class="category-list-count">1</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%A7%86%E9%A2%91/">视频</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A1%86%E6%9E%B6/">框架</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/loss/">loss</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/CNN/">CNN</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/CNN/Res2Net/">Res2Net</a><span class="category-list-count">1</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E6%96%87%E5%AD%97/">文字</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E6%96%87%E5%AD%97/%E8%AF%97%E8%AF%8D/">诗词</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E4%B9%A6%E7%B1%8D/">书籍</a><span class="category-list-count">1</span></li></ul>
+        <div class="card-content article-info">
+            <div class="pd-header post-cover">
+                <div class="container" style="right: 0px;left: 0px;">
+                    <div class="row">
+                        <div class="col s12 m12 l12">
+                            <div class="brand">
+                                <h1 class="description center-align post-title">post</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row tag-cate">
+                <div class="right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                机器学习
+                            </a>
+                        
+                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/CNN/" class="post-category">
+                                CNN
+                            </a>
+                        
+                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/CNN/Res2Net/" class="post-category">
+                                Res2Net
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2023-07-26
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2023-07-26
+                </div>
+                
+
+                
+
+                
+
+                
             </div>
         </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/blog/libs/prism/prism.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <ul>
+<li><p>出发点：表示多尺度的特征、增大感受野。</p>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB61ffb780869eb695d691e4d54876ac5b?method=download&shareKey=3f447136c62dbd906f1b59cde85798da" width="385">
+
+<p>$$\mathbf{y}_i&#x3D; \begin{cases}\mathbf{x}_i &amp; i&#x3D;1 \ \mathbf{K}_i\left(\mathbf{x}_i\right) &amp; i&#x3D;2 \ \mathbf{K}_i\left(\mathbf{x}<em>i+\mathbf{y}</em>{i-1}\right) &amp; 2&lt;i \leqslant s\end{cases}$$</p>
+</li>
+<li><p>名称由来：残差块里又有残差连接。</p>
+</li>
+<li><p>多尺度的理解：$\mathbf{x}_2$ 经过1个 $3 \times 3$ 的卷积得到 $\mathbf{y}_2$，而 $\mathbf{y}_2$ 会作为 $\mathbf{K}_3$ 的输入，再次经过1个 $3 \times 3$ 的卷积。2次 $3 \times 3$ 的卷积相当于1个 $5 \times 5$ 的卷积，因此，$\mathbf{K}_3$ 融合了 $3 \times 3$ 的感受野的特征 和 $5 \times 5$ 的感受野的特征。以此类推。得到的 $\mathbf{y}$ 可以表征多尺度的特征。</p>
+</li>
+<li><p>性能</p>
+<ul>
+<li>很容易与其它结构整合。</li>
+<li>由于具有较强的多尺度特征表征能力，在许多任务上都取得了性能提升，如图片分类、目标检测、语义分割、显著目标检测等，对于不同尺寸的对象性能都有提升。<br><img src="https://note.youdao.com/yws/api/personal/file/WEB8f041f566f23b3eaa720ab325b3570c6?method=download&shareKey=8b34ae8793fd313603365c485b8a7c82" width="320"><img src="https://note.youdao.com/yws/api/personal/file/WEBad279f36483cb4953f11ee2987747fa1?method=download&shareKey=21ea4d5cec3f46fcf6856e76b1dc810a" width="377"></li>
+<li><font color="green">虽然 $\mathbf{y}_i$ 需要顺序计算，但Res2Net模块引入的额外运行时间通常可以忽略不计。</font></li>
+<li>相较于模型深度 depth、1层的 channel 数 width、cardinality[68]，增加 scale 可以获得更快的性能提升。<img src="https://note.youdao.com/yws/api/personal/file/WEB0b0ad93f6733adeef588208ca17e008c?method=download&shareKey=3b201a76aede1628dec4ee4d9199853a" width="380">
+*scale为5、6时性能提升有限，可能由于CIFAR数据集中的图片太小（$32 \times 32$）
+*当图片中的对象尺寸已经可以被Res2Net模块覆盖时，继续增加 scale ，性能提升有限；若固定模型复杂度，增加 scale 会导致每个感受野的通道数减少，可能会降低模型处理特定尺度特征的能力。</li>
+</ul>
+</li>
+<li><p>论文<br>Gao S H, Cheng M M, Zhao K, et al. Res2net: A new multi-scale backbone architecture[J]. IEEE transactions on pattern analysis and machine intelligence, 2019, 43(2): 652-662.</p>
+<ul>
+<li>第2章相关工作<ul>
+<li>计算机视觉领域的Backbone Networks：AlexNet、VGGNet、Network in Network、GoogLeNet、Inception、ResNet、DenseNet、DLA等。</li>
+<li>视觉任务的多尺度表示：spatial pyramid pooling、feature pyramid、atrous convolutional。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <i class="fas fa-exclamation-circle"></i>
+            <span>
+                本文不允许转载。
+            </span>
+        
     </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <div class="card-title">
+                    <a href="/blog/ji-qi-xue-xi/cnn/res2net/"> post</a>
+                </div>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-07-26
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    机器学习
+                                </a>
+                            
+                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/CNN/" class="post-category">
+                                    CNN
+                                </a>
+                            
+                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/CNN/Res2Net/" class="post-category">
+                                    Res2Net
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <div class="card-title">
+                    <a href="/blog/yu-yin/yu-yin-ping-ce/te-zheng/bu-dang-ting-dun/"> 不当停顿</a>
+                </div>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-01-02
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/" class="post-category">
+                                    语音
+                                </a>
+                            
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E8%AF%84%E6%B5%8B/" class="post-category">
+                                    语音评测
+                                </a>
+                            
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E8%AF%84%E6%B5%8B/%E7%89%B9%E5%BE%81/" class="post-category">
+                                    特征
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
 </div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('50')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE' || selection.getRangeAt(0).commonAncestorContainer.nodeName === 'CODE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: 梦园<br />'
+            + '文章作者: nanyang<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/blog/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/blog/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/blog/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/blog/libs/codeBlock/codeShrink.js"></script>
 
 
     
 
-    <article id="articles" class="container articles">
-        <div class="row tags-posts">
-            
-            <div class="article tag-post col s12 m6 l4" >
-                <div class="card">
-                    <a href="/blog/yu-yin/gong-ju-bao/wenet/dai-ma/">
-                        <div class=" card-content" >
-                            <span class="card-title" style="padding: 1px;font-size:20px;font-weight:700;height:80px;">WeNet代码</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <!--<div class="summary block-with-text">
-                            
-                                1. 数据预处理
-compute_cmvn_stats：生成global_cmvn
-mean_stat：训练集上各维特征的总和
-var_stat：训练集上各维特征的平方和
-frame_num：训练集总帧数
-
-
-
-2. IterableDat
-                            
-                        </div>-->
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-08-12
-                                <i class="far fa-edit fa-fw icon-date"></i>2022-08-22
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/" class="post-category">
-                                    语音
-                                </a>
-                                
-                                <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E5%B7%A5%E5%85%B7%E5%8C%85/" class="post-category">
-                                    工具包
-                                </a>
-                                
-                                <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E5%B7%A5%E5%85%B7%E5%8C%85/WeNet/" class="post-category">
-                                    WeNet
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                </div>
-            </div>
-            
-            <div class="article tag-post col s12 m6 l4" >
-                <div class="card">
-                    <a href="/blog/yu-yin/gong-ju-bao/wenet/lun-wen/">
-                        <div class=" card-content" >
-                            <span class="card-title" style="padding: 1px;font-size:20px;font-weight:700;height:80px;">WeNet论文</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <!--<div class="summary block-with-text">
-                            
-                                
-                            
-                        </div>-->
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-06-12
-                                <i class="far fa-edit fa-fw icon-date"></i>2022-06-12
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/" class="post-category">
-                                    语音
-                                </a>
-                                
-                                <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E5%B7%A5%E5%85%B7%E5%8C%85/" class="post-category">
-                                    工具包
-                                </a>
-                                
-                                <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E5%B7%A5%E5%85%B7%E5%8C%85/WeNet/" class="post-category">
-                                    WeNet
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                </div>
-            </div>
-            
-        </div>
-    </article>
 </main>
 
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    });
+</script>
 
 
 
