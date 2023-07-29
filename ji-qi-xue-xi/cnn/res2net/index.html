@@ -8,7 +8,8 @@
     <meta name="description" content="
 出发点：表示多尺度的特征、增大感受野。
 
-$$\mathbf{y}_i= \begin{cases}\mathbf{x}_i &amp; i=1 \\ \mathbf{K}_i\left(\mathbf{x}_i\right) &amp; i=2 \\ ">
+
+$$\mathbf{y}_i&amp;#x3D; \begin{cases}\mathbf{x}_i &amp;amp; i &amp;#x3D; 1 \ \mathbf{K}_i\left(\mathbf{x}_i\">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -302,10 +303,6 @@ $$\mathbf{y}_i= \begin{cases}\mathbf{x}_i &amp; i=1 \\ \mathbf{K}_i\left(\mathbf
                                 CNN
                             </a>
                         
-                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/CNN/Res2Net/" class="post-category">
-                                Res2Net
-                            </a>
-                        
                     </div>
                     
                 </div>
@@ -322,7 +319,7 @@ $$\mathbf{y}_i= \begin{cases}\mathbf{x}_i &amp; i=1 \\ \mathbf{K}_i\left(\mathbf
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-07-26
+                    2023-07-30
                 </div>
                 
 
@@ -347,7 +344,9 @@ $$\mathbf{y}_i= \begin{cases}\mathbf{x}_i &amp; i=1 \\ \mathbf{K}_i\left(\mathbf
                 <ul>
 <li><p>出发点：表示多尺度的特征、增大感受野。</p>
 <img src="https://note.youdao.com/yws/api/personal/file/WEB61ffb780869eb695d691e4d54876ac5b?method=download&shareKey=3f447136c62dbd906f1b59cde85798da" width="385">
-$$\mathbf{y}_i= \begin{cases}\mathbf{x}_i & i=1 \\ \mathbf{K}_i\left(\mathbf{x}_i\right) & i=2 \\ \mathbf{K}_i\left(\mathbf{x}_i+\mathbf{y}_{i-1}\right) & 2<i \leqslant s\end{cases}$$ < li>
+
+<p>$$\mathbf{y}_i&#x3D; \begin{cases}\mathbf{x}_i &amp; i &#x3D; 1 \ \mathbf{K}_i\left(\mathbf{x}_i\right) &amp; i &#x3D; 2 \ \mathbf{K}_i\left(\mathbf{x}<em>i+\mathbf{y}</em>{i-1}\right) &amp; 2&lt;i \leqslant s\end{cases}$$</p>
+</li>
 <li><p>名称由来：残差块里又有残差连接。</p>
 </li>
 <li><p>多尺度的理解：$\mathbf{x}_2$ 经过1个 $3 \times 3$ 的卷积得到 $\mathbf{y}_2$，而 $\mathbf{y}_2$ 会作为 $\mathbf{K}_3$ 的输入，再次经过1个 $3 \times 3$ 的卷积。2次 $3 \times 3$ 的卷积相当于1个 $5 \times 5$ 的卷积，因此，$\mathbf{K}_3$ 融合了 $3 \times 3$ 的感受野的特征 和 $5 \times 5$ 的感受野的特征。以此类推。得到的 $\mathbf{y}$ 可以表征多尺度的特征。</p>
@@ -378,7 +377,7 @@ $$\mathbf{y}_i= \begin{cases}\mathbf{x}_i & i=1 \\ \mathbf{K}_i\left(\mathbf{x}_
 </li>
 </ul>
 </li>
-</i></li></ul>
+</ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
             </div>
@@ -433,13 +432,12 @@ $$\mathbf{y}_i= \begin{cases}\mathbf{x}_i & i=1 \\ \mathbf{K}_i\left(\mathbf{x}_
     <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
                 <div class="card-title">
-                    <a href="/blog/ji-qi-xue-xi/cnn/res2net/"> Res2Net</a>
+                    <a href="/blog/ji-qi-xue-xi/cnn/senet/"> SENet</a>
                 </div>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
@@ -448,9 +446,9 @@ $$\mathbf{y}_i= \begin{cases}\mathbf{x}_i & i=1 \\ \mathbf{K}_i\left(\mathbf{x}_
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-07-26
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-07-30
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -463,15 +461,10 @@ $$\mathbf{y}_i= \begin{cases}\mathbf{x}_i & i=1 \\ \mathbf{K}_i\left(\mathbf{x}_
                                     CNN
                                 </a>
                             
-                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/CNN/Res2Net/" class="post-category">
-                                    Res2Net
-                                </a>
-                            
                             
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>

@@ -4,8 +4,19 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="分类: Res2Net, 梦园">
-    <meta name="description" content="梦园">
+    <meta name="keywords" content="SENet, 梦园">
+    <meta name="description" content="
+出发点：显式地建模通道间的相关性，自适应地对各个通道的feature map 重新加权。
+
+模块结构
+
+
+
+
+
+Squeeze
+global average pooling：分别计算每个通道的激活均值。
+$$ z_c&amp;#x3D;\math">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +30,7 @@
 
     
 
-    <title>分类: Res2Net | 梦园</title>
+    <title>SENet | 梦园</title>
     <link rel="icon" type="image/png" href="/blog/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/blog/libs/awesome/css/all.min.css">
@@ -232,7 +243,22 @@
 
 </header>
 
-    <div class="bg-cover pd-header about-cover">
+    
+<script src="/blog/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/blog/';
+            }
+        }
+    })();
+</script>
+
+
+<div class="bg-cover pd-header about-cover">
     <div class="container">
     <div class="row">
     <div class="col s10 offset-s1 m8 offset-m2 l8">
@@ -249,74 +275,350 @@
     </div>
 </div>
 
-<main class="content">
 
-    <div id="category-cloud" class="container chip-container">
+
+<main class="container content">
+
+    
+    <!-- 文章内容详情 -->
+<div id="artDetail">
     <div class="card">
-        <div class="card-content">
-            <div class="category-chips">
-                <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/">语音</a><span class="category-list-count">17</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/">语音识别</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E8%AF%84%E6%B5%8B/">语音评测</a><span class="category-list-count">8</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E8%AF%84%E6%B5%8B/%E8%AF%84%E5%88%86/">评分</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E8%AF%84%E6%B5%8B/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E8%AF%84%E6%B5%8B/%E7%89%B9%E5%BE%81/">特征</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E8%AF%84%E6%B5%8B/%E4%BA%A7%E5%93%81/">产品</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E5%AD%A6/">语音学</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E5%B7%A5%E5%85%B7%E5%8C%85/">工具包</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E5%B7%A5%E5%85%B7%E5%8C%85/WeNet/">WeNet</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E5%B7%A5%E5%85%B7%E5%8C%85/Kaldi/">Kaldi</a><span class="category-list-count">1</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%A7%86%E9%A2%91/">视频</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A1%86%E6%9E%B6/">框架</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/loss/">loss</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/CNN/">CNN</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/CNN/Res2Net/">Res2Net</a><span class="category-list-count">1</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E6%96%87%E5%AD%97/">文字</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E6%96%87%E5%AD%97/%E8%AF%97%E8%AF%8D/">诗词</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E4%B9%A6%E7%B1%8D/">书籍</a><span class="category-list-count">1</span></li></ul>
+        <div class="card-content article-info">
+            <div class="pd-header post-cover">
+                <div class="container" style="right: 0px;left: 0px;">
+                    <div class="row">
+                        <div class="col s12 m12 l12">
+                            <div class="brand">
+                                <h1 class="description center-align post-title">SENet</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row tag-cate">
+                <div class="right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                机器学习
+                            </a>
+                        
+                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/CNN/" class="post-category">
+                                CNN
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2023-07-30
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2023-07-30
+                </div>
+                
+
+                
+
+                
+
+                
             </div>
         </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/blog/libs/prism/prism.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <ul>
+<li><p><font color="red">出发点：显式地建模通道间的相关性，自适应地对各个通道的feature map 重新加权。</font></p>
+</li>
+<li><p>模块结构</p>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB4ed16068c8341262f00526b614216eb7?method=download&shareKey=2d73fbb8a7eb2bde12495222c2cfce0a" width="589">
+
+<img src="https://note.youdao.com/yws/api/personal/file/WEB56580c1f90254168b06438d27a116ece?method=download&shareKey=685a5692827f2751871a4000ab160045" width="462">
+
+<ul>
+<li><p>Squeeze</p>
+<p>global average pooling：分别计算每个通道的激活均值。</p>
+<p>$$ z_c&#x3D;\mathbf{F}<em>{s q}\left(\mathbf{u}<em>c\right)&#x3D;\frac{1}{H \times W} \sum</em>{i&#x3D;1}^H \sum</em>{j&#x3D;1}^W u_c(i, j) $$</p>
+</li>
+<li><p>Excitation</p>
+<p>自适应权重：</p>
+<p>$$\mathbf{s}&#x3D;\mathbf{F}_{e x}(\mathbf{z}, \mathbf{W})&#x3D;\sigma\left(\mathbf{W}_2 \delta\left(\mathbf{W}_1 \mathbf{z}\right)\right)$$</p>
+<p>其中，$\sigma$ 为 sigmoid 函数，$\delta$ 为ReLU，通过 $\mathbf{W}_1 \in \mathbb{R}^{\frac{C}{r} \times C}$、$\mathbf{W}_2 \in \mathbb{R}^{C \times \frac{C}{r}}$ bottleneck结构的两层全连接限定模型复杂度。</p>
+<p>加权：channel-wise 乘法</p>
+<p>$$\widetilde{\mathbf{x}}<em>c&#x3D;\mathbf{F}</em>{\text {scale }}\left(\mathbf{u}_c, s_c\right)&#x3D;s_c \cdot \mathbf{u}_c$$</p>
+<ul>
+<li>设计的考虑点<ul>
+<li>能学习到通道间非线性的相关性；</li>
+<li>允许多个通道同时被激励，而不是one hot的；</li>
+<li>每个通道的权重根据输入自适应地计算。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>性能</p>
+<ul>
+<li><p><font color="red">很容易与其它结构整合。在许多任务上都取得了性能提升。</font></p>
+</li>
+<li><p>CPU推理时间</p>
+<p>对于 $224 \times 224$ 的图像，ResNet-50 为164ms，SE-ResNet-50 为 167ms。</p>
+<p>* GPU库中 global pooling 未做优化</p>
+</li>
+<li><p>增加的参数量</p>
+<p>$$\frac{2}{r} \sum_{s&#x3D;1}^S N_s \cdot C_s^2$$</p>
+<p>其中，$S$ 为 stage 数，$N_s$ 为第s个stage的层数，这些层通道数相同，为$C_s$。</p>
+<p>通常，最后一个 stage 的 SE blocks 参数量相对较多，在参数量是关键考虑因素的场景下，可以移除该部分。可以实现参数量仅相对增加 4%，而相较于不移除，ImageNet 上的 top-1 error 仅下降 &lt;0.1%。</p>
+</li>
+</ul>
+</li>
+<li><p>实验</p>
+<ul>
+<li><p>模型的性能并不是随着 $r$ 的增加而单调提升，可能与 $r$ 过大时过拟合有关。设置 $r&#x3D;16$ 在模型准确度和复杂度之间取得了较好的权衡。</p>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB0b7c919f145654b8478606ddf3765ee0?method=download&shareKey=eb52f523ac477cb3a72e15b6f9dd5547" width="368">
+</li>
+<li><p>可视化</p>
+<p>从 ImageNet 中选取了语义、外观差异较大的4个类，每个类选取50个样本，计算每个阶段最后一个SE block 的平均激活，并将所有类的平均激活作为参考。</p>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB8d17a71ee60fac532851e3f7d0e2cf10?method=download&shareKey=fab4d939765032da527da4d78ab6b369" width="764">
+
+<ul>
+<li>SE_2_3、SE_3_4：较低的层中，各channel的重要性分布，对于不同的类几乎相同。即较低层的特征通常更一般，在分类任务中具有类别不可知性。</li>
+<li>SE_4_6、SE_5_1：更深的层中，各channel的重要性分布，对于不同的类差异较大。而通过 SE block 自适应地重新加权，有助于特征提取和专门化。</li>
+<li>SE_5_2、SE_5_3：在网络末端，各channel的重要性趋于相同。因此，在最后阶段删除SE block，可以显著地减少总体参数量，但性能损失很小。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>论文</p>
+<p>J. Hu, L. Shen, and G. Sun. Squeeze-and-excitation networks. In IEEE Conf. Comput. Vis. Pattern Recog., 2018.</p>
+</li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <i class="fas fa-exclamation-circle"></i>
+            <span>
+                本文不允许转载。
+            </span>
+        
     </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <div class="card-title">
+                    <a href="/blog/ji-qi-xue-xi/cnn/senet/"> SENet</a>
+                </div>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-07-30
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    机器学习
+                                </a>
+                            
+                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/CNN/" class="post-category">
+                                    CNN
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <div class="card-title">
+                    <a href="/blog/ji-qi-xue-xi/cnn/res2net/"> Res2Net</a>
+                </div>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-07-26
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    机器学习
+                                </a>
+                            
+                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/CNN/" class="post-category">
+                                    CNN
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
 </div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('50')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE' || selection.getRangeAt(0).commonAncestorContainer.nodeName === 'CODE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: 梦园<br />'
+            + '文章作者: nanyang<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/blog/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/blog/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/blog/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/blog/libs/codeBlock/codeShrink.js"></script>
 
 
     
 
-    <article id="articles" class="container articles">
-        <div class="row tags-posts">
-            
-            <div class="article tag-post col s12 m6 l4" >
-                <div class="card">
-                    <a href="/blog/ji-qi-xue-xi/cnn/res2net/">
-                        <div class=" card-content" >
-                            <span class="card-title" style="padding: 1px;font-size:20px;font-weight:700;height:80px;">Res2Net</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <!--<div class="summary block-with-text">
-                            
-                                
-出发点：表示多尺度的特征、增大感受野。
-
-$$\mathbf{y}_i= \begin{cases}\mathbf{x}_i & i=1 \\ \mathbf{K}_i\left(\mathbf{x}_i\right) & i=2 \\ 
-                            
-                        </div>-->
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-07-26
-                                <i class="far fa-edit fa-fw icon-date"></i>2023-07-26
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                    机器学习
-                                </a>
-                                
-                                <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/CNN/" class="post-category">
-                                    CNN
-                                </a>
-                                
-                                <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/CNN/Res2Net/" class="post-category">
-                                    Res2Net
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                </div>
-            </div>
-            
-        </div>
-    </article>
 </main>
 
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    });
+</script>
 
 
 
