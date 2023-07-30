@@ -4,19 +4,13 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="SENet, 梦园">
-    <meta name="description" content="
-出发点：显式地建模通道间的相关性，根据输入的全局特征，自适应地对各个通道的feature map 重新加权。
-
-模块结构
+    <meta name="keywords" content="ECAPA-TDNN, 梦园">
+    <meta name="description" content="1. 结构特点集成了计算机视觉领域最新的增强模块：Res2Net、SE block，聚合多层的特征，并采用 channel-dependent 帧注意力改进了统计池化模块。
+2. 系统结构
 
 
-
-
-
-Squeeze
-global average pooling：分别计算每个通道的激活均值。
-$$ z_c&amp;">
+3. 特征提取
+数据增强：为每句话生成6个额外">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -30,7 +24,7 @@ $$ z_c&amp;">
 
     
 
-    <title>SENet | 梦园</title>
+    <title>ECAPA-TDNN | 梦园</title>
     <link rel="icon" type="image/png" href="/blog/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/blog/libs/awesome/css/all.min.css">
@@ -277,10 +271,104 @@ $$ z_c&amp;">
 
 
 
-<main class="container content">
+<main class="post-container content">
 
     
-    <!-- 文章内容详情 -->
+    <link rel="stylesheet" href="/blog/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 200px);
+        overflow: scroll;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
 <div id="artDetail">
     <div class="card">
         <div class="card-content article-info">
@@ -289,7 +377,7 @@ $$ z_c&amp;">
                     <div class="row">
                         <div class="col s12 m12 l12">
                             <div class="brand">
-                                <h1 class="description center-align post-title">SENet</h1>
+                                <h1 class="description center-align post-title">ECAPA-TDNN</h1>
                             </div>
                         </div>
                     </div>
@@ -302,12 +390,12 @@ $$ z_c&amp;">
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                机器学习
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/" class="post-category">
+                                语音
                             </a>
                         
-                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/CNN/" class="post-category">
-                                CNN
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%AF%86%E5%88%AB/" class="post-category">
+                                说话人识别
                             </a>
                         
                     </div>
@@ -348,71 +436,87 @@ $$ z_c&amp;">
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <ul>
-<li><p><font color="red">出发点：显式地建模通道间的相关性，根据输入的全局特征，自适应地对各个通道的feature map 重新加权。</font></p>
-</li>
-<li><p>模块结构</p>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB4ed16068c8341262f00526b614216eb7?method=download&shareKey=2d73fbb8a7eb2bde12495222c2cfce0a" width="589">
+                <h1 id="结构特点">1. 结构特点</h1><p>集成了计算机视觉领域最新的增强模块：Res2Net、SE block，聚合多层的特征，并采用 channel-dependent 帧注意力改进了统计池化模块。</p>
+<h1 id="系统结构">2. 系统结构</h1><img src="https://note.youdao.com/yws/api/personal/file/WEBe03b7ab1ccd2402b22ce13eb3be6ce5a?method=download&shareKey=c864e0ebfeafd8d51f27e9d819df55e5" width="443">
+<img src="https://note.youdao.com/yws/api/personal/file/WEBb244ce5a3bcad0e1a25fa95a504b6f89?method=download&shareKey=3f37b0c013ccdeb9c16a91877158c65c" width="440">
 
-<img src="https://note.youdao.com/yws/api/personal/file/WEB56580c1f90254168b06438d27a116ece?method=download&shareKey=685a5692827f2751871a4000ab160045" width="462">
+<h1 id="特征提取">3. 特征提取</h1><ul>
+<li>数据增强：为每句话生成6个额外的样本<ul>
+<li>kaldi 加噪（MUSAN babble、noise）、加混响（RIR数据集[21]）</li>
+<li>SoX 变速（tempo up, tempo down）、FFmpeg 压缩（交替 opus 或 aac 压缩）</li>
+<li>speechbrain 实现<ul>
+<li>concat_augment：可选择多种数据增强方式 串行（样本量不变） 或 1个batch内并行（batch_size *&#x3D; X）</li>
+<li>时域增强<ul>
+<li>变速：采用基于sinc的插值进行重采样，比如重采样到原始音频长度的[90%, 100%, 110%]。<font color="green">注意：由于特征提取时默认所有信号为原始采样率，所以重采样到90%采样率的实际效果，为语速*1.11，音高*1.11 </font></li>
+<li>采用滤波器随机mask部分频带。<font color="red">作用：帮助模型学习到依赖所有频带，而不是其中的少部分</font></li>
+<li>随机mask部分音频片段，可选是否填充白噪声<code>4A * torch.rand() - 2A</code>，其中<code>A</code>为原始音频的平均幅值，默认全部置0。作用：帮助模型学习到依赖整个信号</li>
+<li>上述3种增强方式 可选是否添加，串行</li>
+</ul>
+</li>
+<li>环境扰动<ul>
+<li>加混响：采用room 冲击响应<ul>
+<li><a target="_blank" rel="noopener" href="http://www.openslr.org/resources/28/rirs_noises.zip">http://www.openslr.org/resources/28/rirs_noises.zip</a></li>
+</ul>
+</li>
+<li>加babble</li>
+<li>加噪</li>
+<li>上述3种增强方式 可选是否添加，串行</li>
+</ul>
+</li>
+<li>由此导致的音频长度改变 需要通过末尾截断 或 补0 来与原音频保持一致</li>
+<li>实现详见<code>speechbrain.processing.speech_augmentation</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>输入特征：80维 MFCCs，<font color="green">随机裁剪为2s的片段</font>，倒谱均值减法，不加VAD。<ul>
+<li>speechbrain 实现：60维 Fbank</li>
+</ul>
+</li>
+<li>SpecAugment</li>
+</ul>
+<h1 id="Res2Net">4. Res2Net</h1><p><a href="https://nanyang2015.github.io/blog/ji-qi-xue-xi/cnn/res2net/">Res2Net</a>：表示多尺度的特征，增大感受野。</p>
+<p>论文与 speechbrain 实现的差异：论文中 Res2 Dilated Conv1D 前后的dense layer，前一个 dense layer 降低通道维度，后一个 dense layer 恢复通道维度，从而控制参数量。</p>
+<h1 id="Squeeze-Excitation-Block">5. Squeeze-Excitation Block</h1><p><a href="https://nanyang2015.github.io/blog/ji-qi-xue-xi/cnn/senet/">SE Block</a>：显式地建模通道间的相关性，根据输入的全局特征，自适应地对各个通道的 feature map 重新加权。</p>
+<h1 id="多层特征聚合">6. 多层特征聚合</h1><p>出发点：浅层的特征也有助于更鲁棒的embedding。</p>
+<ul>
+<li>拼接所有SE-Res2Blocks的输出feature map，经过1层dense层。</li>
+<li>SE-Res2Block 的残差连接实现为前面所有SE-Res2Blocks的输出的和。求和，而不是拼接，用于约束模型参数量。（speechbrain 未实现）</li>
+</ul>
+<h1 id="channel-dependent-attentive-statistics-pooling">7. channel-dependent attentive statistics pooling</h1><ul>
+<li><font color="red">出发点：将时间注意力机制进一步扩展到通道维度，使得网络可以关注不会同时激活的说话人特征，如元音和辅音属性（不同 channel 的时间注意力系数不一样）。</font></li>
+<li>实现<ul>
+<li><p><font color="red">将 $\boldsymbol{h}_t$ 与其整句的 非加权的均值、标准差拼接（$C*&#x3D;3$），使得attention能自适应句子的全局属性，如噪声、录音环境。</font></p>
+</li>
+<li><p>channel attention：channel 维的 bottleneck 结构的两层全连接，所有时刻参数共享。</p>
+<ul>
+<li>speechbrain 实现<pre class="line-numbers language-none"><code class="language-none">self.tdnn &#x3D; TDNNBlock(channels * 3, attention_channels, 1, 1)  # 降维
+self.tanh &#x3D; nn.Tanh()
+self.conv &#x3D; Conv1d(in_channels&#x3D;attention_channels, out_channels&#x3D;channels, kernel_size&#x3D;1)  # 恢复原始形状
 
-<ul>
-<li><p>Squeeze</p>
-<p>global average pooling：分别计算每个通道的激活均值。</p>
-<p>$$ z_c&#x3D;\mathbf{F}<em>{s q}\left(\mathbf{u}<em>c\right)&#x3D;\frac{1}{H \times W} \sum</em>{i&#x3D;1}^H \sum</em>{j&#x3D;1}^W u_c(i, j) $$</p>
-</li>
-<li><p>Excitation</p>
-<p>自适应权重：</p>
-<p>$$\mathbf{s}&#x3D;\mathbf{F}_{e x}(\mathbf{z}, \mathbf{W})&#x3D;\sigma\left(\mathbf{W}_2 \delta\left(\mathbf{W}_1 \mathbf{z}\right)\right)$$</p>
-<p>其中，$\sigma$ 为 sigmoid 函数，$\delta$ 为ReLU，通过 $\mathbf{W}_1 \in \mathbb{R}^{\frac{C}{r} \times C}$、$\mathbf{W}_2 \in \mathbb{R}^{C \times \frac{C}{r}}$ bottleneck结构的两层全连接限定模型复杂度。</p>
-<p>加权：channel-wise 乘法</p>
-<p>$$\widetilde{\mathbf{x}}<em>c&#x3D;\mathbf{F}</em>{\text {scale }}\left(\mathbf{u}_c, s_c\right)&#x3D;s_c \cdot \mathbf{u}_c$$</p>
-<ul>
-<li>设计的考虑点<ul>
-<li>能学习到通道间非线性的相关性；</li>
-<li>允许多个通道同时被激励，而不是one hot的；</li>
-<li>每个通道的权重根据输入自适应地计算。</li>
+attn &#x3D; self.conv(self.tanh(self.tdnn(attn)))
+attn &#x3D; F.softmax(attn, dim&#x3D;2)  # 沿时间轴做softmax<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 </ul>
+</li>
+<li><p><font color="red">attentive statistics pooling：attention 到不同帧，类似VAD以检测无关的非语音帧。</font></p>
+<p>加权均值：<br>$$\tilde{\mu}<em>c&#x3D;\sum_t^T \alpha</em>{t, c} h_{t, c}$$</p>
+<p>加权标准差：<br>$$\tilde{\sigma}<em>c&#x3D;\sqrt{\sum_t^T \alpha</em>{t, c} (h_{t, c}-\tilde{\mu}<em>c)^2}&#x3D;\sqrt{\sum_t^T \alpha</em>{t, c} h_{t, c}^2-\tilde{\mu}_c^2}$$</p>
+<p>pooling层的输出为 $\tilde{\mu}$、$\tilde{\sigma}$ 拼接</p>
 </li>
 </ul>
 </li>
 </ul>
-</li>
-<li><p>性能</p>
-<ul>
-<li><p><font color="red">很容易与其它结构整合。在许多任务上都取得了性能提升。</font></p>
-</li>
-<li><p>CPU推理时间</p>
-<p>对于 $224 \times 224$ 的图像，ResNet-50 为164ms，SE-ResNet-50 为 167ms。</p>
-<p>* GPU库中 global pooling 未做优化</p>
-</li>
-<li><p>增加的参数量</p>
-<p>$$\frac{2}{r} \sum_{s&#x3D;1}^S N_s \cdot C_s^2$$</p>
-<p>其中，$S$ 为 stage 数，$N_s$ 为第s个stage的层数，这些层通道数相同，为$C_s$。</p>
-<p>通常，最后一个 stage 的 SE blocks 参数量相对较多，在参数量是关键考虑因素的场景下，可以移除该部分。可以实现参数量仅相对增加 4%，而相较于不移除，ImageNet 上的 top-1 error 仅下降 &lt;0.1%。</p>
-</li>
+<h1 id="bottleneck-结构的两层全连接">8. bottleneck 结构的两层全连接</h1><p>bottleneck 层的输出可以作为低维的说话人embedding。</p>
+<h1 id="训练">9. 训练</h1><ul>
+<li>采用参考文献[23]中的 triangular2 policy，循环学习率，[1e-8, 1e-3]，一次循环为 130k 迭代。</li>
+<li><font color="green">AAM-softmax，margin 0.2，softmax prescaling of 30 for 4 cycles。</font></li>
 </ul>
-</li>
-<li><p>实验</p>
-<ul>
-<li><p>模型的性能并不是随着 $r$ 的增加而单调提升，可能与 $r$ 过大时过拟合有关。设置 $r&#x3D;16$ 在模型准确度和复杂度之间取得了较好的权衡。</p>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB0b7c919f145654b8478606ddf3765ee0?method=download&shareKey=eb52f523ac477cb3a72e15b6f9dd5547" width="368">
-</li>
-<li><p>可视化</p>
-<p>从 ImageNet 中选取了语义、外观差异较大的4个类，每个类选取50个样本，计算每个阶段最后一个SE block 的平均激活，并将所有类的平均激活作为参考。</p>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB8d17a71ee60fac532851e3f7d0e2cf10?method=download&shareKey=fab4d939765032da527da4d78ab6b369" width="764">
+<h1 id="实验结果">10. 实验结果</h1><img src="https://note.youdao.com/yws/api/personal/file/WEBe9098186e1d400650ef1821ea33629ef?method=download&shareKey=f434762b2145eb1db885eb270b0c89d4" width="727">
 
-<ul>
-<li>SE_2_3、SE_3_4：较低的层中，各channel的重要性分布，对于不同的类几乎相同。即较低层的特征通常更一般，在分类任务中具有类别不可知性。</li>
-<li>SE_4_6、SE_5_1：更深的层中，各channel的重要性分布，对于不同的类差异较大。而通过 SE block 自适应地重新加权，有助于特征提取和专门化。</li>
-<li>SE_5_2、SE_5_3：在网络末端，各channel的重要性趋于相同。因此，在最后阶段删除SE block，可以显著地减少总体参数量，但性能损失很小。</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>论文</p>
-<p>J. Hu, L. Shen, and G. Sun. Squeeze-and-excitation networks. In IEEE Conf. Comput. Vis. Pattern Recog., 2018.</p>
-</li>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB08c933cf955a2b189352633460c292fb?method=download&shareKey=0a0a54795b59fa9de701da3df3d15f9e" width="350">
+
+<h1 id="论文">11. 论文</h1><ul>
+<li>Desplanques B, Thienpondt J, Demuynck K. ECAPA-TDNN: Emphasized channel attention, propagation and aggregation in TDNN based speaker verification[J]. arXiv preprint arXiv:2005.07143, 2020.</li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
@@ -468,9 +572,10 @@ $$ z_c&amp;">
     <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <div class="card-title">
                     <a href="/blog/yu-yin/shuo-hua-ren-shi-bie/ecapa-tdnn/"> ECAPA-TDNN</a>
@@ -482,9 +587,9 @@ $$ z_c&amp;">
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2023-07-30
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-07-30
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -501,6 +606,7 @@ $$ z_c&amp;">
                         </span>
                     </div>
                 </div>
+
                 
             </div>
         </div>
@@ -512,7 +618,7 @@ $$ z_c&amp;">
             </div>
             <div class="card">
                 <div class="card-title">
-                    <a href="/blog/ji-qi-xue-xi/cnn/res2net/"> Res2Net</a>
+                    <a href="/blog/ji-qi-xue-xi/cnn/senet/"> SENet</a>
                 </div>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
@@ -522,7 +628,7 @@ $$ z_c&amp;">
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-07-26
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-07-30
                             </span>
                         <span class="publish-author">
                             
@@ -605,6 +711,87 @@ $$ z_c&amp;">
 
 <script type="text/javascript" src="/blog/libs/codeBlock/codeShrink.js"></script>
 
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/blog/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('6'),
+            headingSelector: 'h1, h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
 
     
 
