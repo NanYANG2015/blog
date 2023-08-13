@@ -4,12 +4,12 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Res2Net, 梦园">
-    <meta name="description" content="
-出发点：表示多尺度的特征、增大感受野。
+    <meta name="keywords" content="HuBERT, 梦园">
+    <meta name="description" content="HuBERT: Hidden-Unit BERT，自监督语音表示学习，预测 masked 帧的声音单元，学习声学模型、语言模型的联合信息。
+创新点：
 
-
-$$\mathbf{y}_i&amp;#x3D; \begin{cases}\mathbf{x}_i &amp;amp; i &amp;#x3D; 1 \ \mathbf{K}_i\left(\mathbf{x}_i\">
+输入原始波形。
+离线 k-means 聚类生成预训练帧级对齐 label、聚类集成（Cl">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -23,7 +23,7 @@ $$\mathbf{y}_i&amp;#x3D; \begin{cases}\mathbf{x}_i &amp;amp; i &amp;#x3D; 1 \ \m
 
     
 
-    <title>Res2Net | 梦园</title>
+    <title>HuBERT | 梦园</title>
     <link rel="icon" type="image/png" href="/blog/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/blog/libs/awesome/css/all.min.css">
@@ -270,10 +270,104 @@ $$\mathbf{y}_i&amp;#x3D; \begin{cases}\mathbf{x}_i &amp;amp; i &amp;#x3D; 1 \ \m
 
 
 
-<main class="container content">
+<main class="post-container content">
 
     
-    <!-- 文章内容详情 -->
+    <link rel="stylesheet" href="/blog/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 200px);
+        overflow: scroll;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
 <div id="artDetail">
     <div class="card">
         <div class="card-content article-info">
@@ -282,7 +376,7 @@ $$\mathbf{y}_i&amp;#x3D; \begin{cases}\mathbf{x}_i &amp;amp; i &amp;#x3D; 1 \ \m
                     <div class="row">
                         <div class="col s12 m12 l12">
                             <div class="brand">
-                                <h1 class="description center-align post-title">Res2Net</h1>
+                                <h1 class="description center-align post-title">HuBERT</h1>
                             </div>
                         </div>
                     </div>
@@ -295,12 +389,12 @@ $$\mathbf{y}_i&amp;#x3D; \begin{cases}\mathbf{x}_i &amp;amp; i &amp;#x3D; 1 \ \m
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                机器学习
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/" class="post-category">
+                                语音
                             </a>
                         
-                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/CNN/" class="post-category">
-                                CNN
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E6%A8%A1%E5%9E%8B/" class="post-category">
+                                模型
                             </a>
                         
                     </div>
@@ -312,14 +406,14 @@ $$\mathbf{y}_i&amp;#x3D; \begin{cases}\mathbf{x}_i &amp;amp; i &amp;#x3D; 1 \ \m
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2023-07-26
+                    2023-08-14
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-07-30
+                    2023-08-14
                 </div>
                 
 
@@ -341,42 +435,187 @@ $$\mathbf{y}_i&amp;#x3D; \begin{cases}\mathbf{x}_i &amp;amp; i &amp;#x3D; 1 \ \m
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <ul>
-<li><p>出发点：表示多尺度的特征、增大感受野。</p>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB61ffb780869eb695d691e4d54876ac5b?method=download&shareKey=3f447136c62dbd906f1b59cde85798da" width="385">
+                <p>HuBERT: Hidden-Unit BERT，自监督语音表示学习，预测 masked 帧的声音单元，学习声学模型、语言模型的联合信息。</p>
+<p>创新点：</p>
+<ul>
+<li>输入原始波形。</li>
+<li>离线 k-means 聚类生成预训练帧级对齐 label、聚类集成（Cluster Ensembles）、聚类的迭代优化。</li>
+</ul>
+<h1 id="模型结构">1. 模型结构</h1><img src="https://note.youdao.com/yws/api/personal/file/WEBadb1556608d2e51b58df51ea434e174d?method=download&shareKey=86093c761ff02e4eafde0417da5672e7" width="389">
 
-<p>$$\mathbf{y}_i&#x3D; \begin{cases}\mathbf{x}_i &amp; i &#x3D; 1 \ \mathbf{K}_i\left(\mathbf{x}_i\right) &amp; i &#x3D; 2 \ \mathbf{K}_i\left(\mathbf{x}<em>i+\mathbf{y}</em>{i-1}\right) &amp; 2&lt;i \leqslant s\end{cases}$$</p>
+<ul>
+<li><p>输入原始波形。</p>
 </li>
-<li><p>名称由来：残差块里又有残差连接。</p>
+<li><p>wav2vec 2.0 结构</p>
+<p>16kHz 音频，CNN encoder 320倍降采样，即 20ms 帧率。</p>
 </li>
-<li><p>多尺度的理解：$\mathbf{x}_2$ 经过1个 $3 \times 3$ 的卷积得到 $\mathbf{y}_2$，而 $\mathbf{y}_2$ 会作为 $\mathbf{K}_3$ 的输入，再次经过1个 $3 \times 3$ 的卷积。2次 $3 \times 3$ 的卷积相当于1个 $5 \times 5$ 的卷积，因此，$\mathbf{K}_3$ 融合了 $3 \times 3$ 的感受野的特征 和 $5 \times 5$ 的感受野的特征。以此类推。得到的 $\mathbf{y}$ 可以表征多尺度的特征。</p>
+<li><p>mask</p>
+<p>随机选取 8% 的 CNN encoder 输出帧作为起点，长度为 10，替换为 <font color="green">mask embedding</font>。</p>
+</li>
+<li><p>参数量</p>
+<p>BASE 90M, LARGE 300M, X-LARGE 1B。</p>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB62034141a58deb24a0b36124dc89488b?method=download&shareKey=eddba0f9941fc84750712684dba6e17b" width="385"></li>
+</ul>
+<h1 id="预训练">2. 预训练</h1><ul>
+<li><p>label</p>
+<p>在 39 维 MFCC 上采用 k-means 聚为100类，作为第1次迭代的 label。由于隐含层特征维度更高，受内存限制，后续随机采样10%的训练数据，将隐含层表示聚为500类。</p>
+</li>
+<li><p>损失函数</p>
+<p>$$p_f^{(k)}(c \mid \tilde{X}, t)&#x3D;\frac{\exp \left(\operatorname{sim}\left(A^{(k)} o_t, e_c\right) &#x2F; \tau\right)}{\sum_{c^{\prime}&#x3D;1}^C \exp \left(\operatorname{sim}\left(A^{(k)} o_t, e_{c^{\prime}}\right) &#x2F; \tau\right)}$$</p>
+<p>其中，$A^{(k)}$ 为 第 $k$ 个聚类模型（聚类集成）的 projection 矩阵，$e_c$ 为 codeword c 的embedding，$sim(,)$ 计算两个向量的余弦相似度，$\tau&#x3D;0.1$（使 softmax 函数结果更尖锐）。</p>
+</li>
+<li><p>k-means</p>
+<p><font color="green">采用 scikit-learn 实现的 MiniBatchKMeans 算法，batch size 10k 帧。采用 k-means++ [57] with 20 random starts 进行初始化。</font></p>
+</li>
+<li><p>聚类集成</p>
+<p>利用多个 codebook size 不同的聚类模型，产生不同粒度的训练目标，类似多任务学习。</p>
+</li>
+<li><p>积量化（product quantization，PQ）[39]</p>
+<p>将特征空间分为多个子空间，每个子空间分别量化，则目标空间的理论大小为所有 codebook size 的乘积。对于高维特征、子空间尺度差异很大的异构特征，PQ 可以有效地实现基于欧氏距离的量化，如 k-means。</p>
+<ul>
+<li>采用 117 维 MFCC 特征，含上下文（3帧），0阶、1阶差分、2阶差分 分别被量化为 100 entries。</li>
+</ul>
+</li>
+<li><p>HuBERT BASE</p>
+<p>Librispeech，32GPU，每张卡 batch size 最多 87.5s，2次迭代，第1次迭代 250k 步，第2次迭代 400k 步，每 100k 步约 9.5h。第2次迭代采用第1次迭代模型第 6 个 transformer 层的输出进行聚类生成的 label 。</p>
+</li>
+<li><p>HuBERT LARGE、X-LARGE</p>
+<p>Libri-light，1次迭代，400k 步，128、256 GPU，每张卡 batch size 56.25s、22.5s。用 BASE 第2次迭代模型的 第9个 transformer 层的输出进行聚类。</p>
+</li>
+<li><p>优化器</p>
+<p>Adam $\beta&#x3D;(0.9,0.98)$ , 前 8% 步 warm up，BASE&#x2F;LARGE&#x2F;X-LARGE 的峰值学习率分别为 5e-4&#x2F;1.5e-3&#x2F;3e-3，学习率线性变化。</p>
+</li>
+<li><p>SOTA 模型对比</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>DiscreteBERT</th>
+<th>wav2vec 2.0</th>
+<th>HuBERT</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>输入</td>
+<td>量化单元，有损</td>
+<td>原始波形</td>
+<td>原始波形</td>
+</tr>
+<tr>
+<td>隐层表示</td>
+<td></td>
+<td>量化 waveform encoder 输出</td>
+<td>量化 transformer  层输出。消融实验表明性能更好，可能由于 CNN encoder 模型容量有限</td>
+</tr>
+<tr>
+<td>声学单元</td>
+<td>vq-wav2vec，单一、固定 label</td>
+<td></td>
+<td>k-means 聚类，聚类集成，迭代优化</td>
+</tr>
+<tr>
+<td>损失函数</td>
+<td>预测 masked 单元</td>
+<td>对比损失，需要仔细设计负样本采样；<br> auxiliary diversity loss；<br> 需要适当的Gumbel-softmax temperature annealing schedule</td>
+<td>预测 masked 单元</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<h1 id="fine-tuning">3. fine-tuning</h1><ul>
+<li><p>除了 CNN encoder，fine-tuning 其它参数，projection 层替换为随机初始化的 softmax 层。</p>
+<ul>
+<li>freeze-step：多少步 transformer 参数固定，仅训练新的 softmax 矩阵。</li>
+</ul>
+</li>
+<li><p>ASR CTC损失，预测26个英文字母、空格、撇号、blank。</p>
+</li>
+<li><p>采用 <font color="green">Fairseq wav2letter++ [59] beam search 解码器，结合LM </font></p>
+<p>$$\log p_{C T C}(Y \mid X)+w_1 \log P_{L M}(Y)+w_2 |Y|$$</p>
+<p>其中|Y| 为预测文本长度。</p>
+</li>
+</ul>
+<h1 id="实验">4. 实验</h1><ul>
+<li><p>数据集</p>
+<ul>
+<li>预训练：Librispeech (960h)、Libri-light (60kh)</li>
+<li>fine-tuning：Libri-light 10min, 1h, 10h, Librispeech train-clean-100 (100h), train-* (960h)<ul>
+<li>上述 Libri-light 的3个子集，均一半来自 Librispeech train-clean-*，剩下的来自 train-other-500。</li>
+</ul>
+</li>
+</ul>
 </li>
 <li><p>性能</p>
-<ul>
-<li><p>很容易与其它结构整合。</p>
-</li>
-<li><p>由于具有较强的多尺度特征表征能力，在许多任务上都取得了性能提升，如图片分类、目标检测、语义分割、显著目标检测等，对于不同尺寸的对象性能都有提升。</p>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB8f041f566f23b3eaa720ab325b3570c6?method=download&shareKey=8b34ae8793fd313603365c485b8a7c82" width="320">
-<img src="https://note.youdao.com/yws/api/personal/file/WEBad279f36483cb4953f11ee2987747fa1?method=download&shareKey=21ea4d5cec3f46fcf6856e76b1dc810a" width="377"></li>
-<li><p><font color="green">虽然 $\mathbf{y}_i$ 需要顺序计算，但Res2Net模块引入的额外运行时间通常可以忽略不计。</font></p>
-</li>
-<li><p>相较于模型深度 depth、1层的 channel 数 width、cardinality[68]，增加 scale 可以获得更快的性能提升。</p>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB0b0ad93f6733adeef588208ca17e008c?method=download&shareKey=3b201a76aede1628dec4ee4d9199853a" width="380">
+<img src="https://note.youdao.com/yws/api/personal/file/WEB77917921e6a0110c2b3e847fa89f3340?method=download&shareKey=ed8f6daceb889a07970c7b68f5cc10ae" width="794">
 
-<p>*scale为5、6时性能提升有限，可能由于CIFAR数据集中的图片太小（$32 \times 32$）。</p>
-<p>*当图片中的对象尺寸已经可以被Res2Net模块覆盖时，继续增加 scale ，性能提升有限；若固定模型复杂度，增加 scale 会导致每个感受野的通道数减少，可能会降低模型处理特定尺度特征的能力。</p>
-</li>
-</ul>
-</li>
-<li><p>论文<br>Gao S H, Cheng M M, Zhao K, et al. Res2net: A new multi-scale backbone architecture[J]. IEEE transactions on pattern analysis and machine intelligence, 2019, 43(2): 652-662.</p>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB71db9dc1a4c1dfe21877e48e90f50e43?method=download&shareKey=f5c82c973ca79a1b337bac7233b125e2" width="762">
+
 <ul>
-<li>第2章相关工作<ul>
-<li>计算机视觉领域的Backbone Networks：AlexNet、VGGNet、Network in Network、GoogLeNet、Inception、ResNet、DenseNet、DLA等。</li>
-<li>视觉任务的多尺度表示：spatial pyramid pooling、feature pyramid、atrous convolutional。</li>
+<li>对比了半监督算法（迭代伪标签IPL [12]、slimIPL [54]、noisy student[61]）、自监督算法（DeCoAR 2.0 [50], DiscreteBERT [51], wav2vec 2.0 [6]）</li>
+<li>与 SOTA 的 wav2vec 2.0 性能一致或有提升。</li>
 </ul>
+</li>
+<li><p>聚类 label $z_t$ 的评价指标<br>采用 ASR 模型强制对齐得到帧级音素label $y_t$，</p>
+<p>联合分布<br>$$p_{y z}(i, j)&#x3D;\frac{\sum_{t&#x3D;1}^T\left[y_t&#x3D;i \wedge z_t&#x3D;j\right]}{T}$$</p>
+<p>边缘概率<br>$$p_z(j)&#x3D;\sum_i p_{y z}(i, j)$$</p>
+<p>$$p_y(j)&#x3D;\sum_j p_{y z}(i, j)$$</p>
+<p>每个音素 $i$ 对应的最可能的聚类 label $j$<br>$$z^*(i)&#x3D;\arg \max <em>j p</em>{y z}(i, j)$$</p>
+<p>同理，<br>$$y^*(j)&#x3D;\arg \max <em>i p</em>{y z}(i, j)$$</p>
+<p>条件概率<br>$$p_{y \mid z}(i \mid j)&#x3D;p_{y z}(i, j) &#x2F; p_z(j)$$</p>
+<ul>
+<li><p>音素纯度<br>$$\mathbb{E}<em>{p_z(j)}\left[p</em>{y \mid z}\left(y^*(j) \mid j\right)\right]$$</p>
+<p>表示如果将 k-means label 替换为 它对应的最可能的音素，帧级音素准确率。若每个 k-means label 唯一对应 1个音素，则音素纯度为1。</p>
+</li>
+<li><p>聚类纯度</p>
+<p>$$\mathbb{E}<em>{p_y(i)}\left[p</em>{z \mid y}\left(z^*(i) \mid i\right)\right]$$</p>
+<p>聚类纯度越高，表明同一音素的帧更可能对应同一聚类 label。当聚类类别数增加时，该值会下降。</p>
+</li>
+<li><p>phone-normalized 互信息（PNMI）</p>
+<p>$$\begin{aligned} \frac{I(y ; z)}{H(y)} &amp; &#x3D;\frac{\sum_i \sum_j p_{y z}(i, j) \log \frac{p_{y z}(i, j)}{p_y(i) p_z(j)}}{\sum_i p_y(i) \log p_y(i)} \ &amp; &#x3D;1-\frac{H(y \mid z)}{H(y)}\end{aligned}$$</p>
+<p>已知 k-means label $z$，对音素 label $y$ 的熵的减少量。</p>
 </li>
 </ul>
 </li>
+<li><p>消融实验</p>
+<table>
+<thead>
+<tr>
+<th>实验</th>
+<th>结果</th>
+<th>结论</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>k-means 稳定性</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEBf4420dc406c6d88d2ada6590a849725b?method=download&shareKey=400d7143fa4a13c031033d7c9fd91198"></td>
+<td>同一参数、多次实验标准差很小；<br> 聚类模型训练集数据量提升PNMI会改善，但增益有限，因此采样部分训练集进行 k-means 聚类是可行的；<br> 相较于 MFCC，聚类迭代优化 PNMI 显著提升</td>
+</tr>
+<tr>
+<td>聚类所用特征的层数</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEB7325b2e4a53333be5d279ce50f0516b6?method=download&shareKey=e20622a825887ddf006978c23ed87980"> <br> 第0层表示 transformer 层的输入 <br> 基线：MFCC (cluster purity, phone purity, PNMI) &#x3D; (0.099, 0.335, 0.255) C &#x3D; 100，(0.031, 0.356, 0.287) C&#x3D;500</td>
+<td>BASE-it1 最后几个 transformer 层 用于聚类的效果急剧下降，可能和第1次迭代预训练标签质量较差有关。</td>
+</tr>
+<tr>
+<td>损失函数</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEB6f928f272cac99502c7161d5785de58f?method=download&shareKey=f4e6e8f390d7cfb1d4c2479dbb1e8d22"> <br> chenone[64]：基于字符，强制对齐生成标签</td>
+<td>若仅考虑未被 mask 的位置，该模型类似聚类模型&#x2F;声学模型。<br>仅考虑 masked 位置，驱使模型学习声学模型、语言模型的联合信息，效果最好。</td>
+</tr>
+<tr>
+<td>聚类集成</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEB20cc38279c55aac79d177009e320e25e?method=download&shareKey=d8d37bc6a4e4b85aab28715b10cf46b3"><br> 积量化：采用 117 维 MFCC 特征，含上下文（3帧），0阶、1阶差分、2阶差分 分别被量化为 100 entries</td>
+<td>对比表5、表6，聚类集成比单个聚类模型性能好</td>
+</tr>
+<tr>
+<td>超参数</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEB5fd73ef4bfe7b4a97b3a369b7e12b2d9?method=download&shareKey=9568d7ce1eb06efb3a6b492b4e39976b"> <img src="https://note.youdao.com/yws/api/personal/file/WEB02250c74874949959a7c9f96d27dd4b8?method=download&shareKey=692177e2e4ee1cee4326877ce335eb48"></td>
+<td>选取 8% 的帧作为 mask 起点性能较好；<br> 增大 batch size 可以显著提升性能；<br> 训练更长时间模型性能更好</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<h1 id="论文">5. 论文</h1><ul>
+<li>Hsu W N, Bolte B, Tsai Y H H, et al. Hubert: Self-supervised speech representation learning by masked prediction of hidden units[J]. IEEE&#x2F;ACM Transactions on Audio, Speech, and Language Processing, 2021, 29: 3451-3460.</li>
+<li>代码、预训练模型、fine-tuned 模型：<a target="_blank" rel="noopener" href="https://github.com/pytorch/fairseq/tree/master/examples/hubert">https://github.com/pytorch/fairseq/tree/master/examples/hubert</a></li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
@@ -432,12 +671,13 @@ $$\mathbf{y}_i&amp;#x3D; \begin{cases}\mathbf{x}_i &amp;amp; i &amp;#x3D; 1 \ \m
     <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <div class="card-title">
-                    <a href="/blog/ji-qi-xue-xi/cnn/senet/"> SENet</a>
+                    <a href="/blog/yu-yin/mo-xing/hubert/"> HuBERT</a>
                 </div>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
@@ -446,25 +686,26 @@ $$\mathbf{y}_i&amp;#x3D; \begin{cases}\mathbf{x}_i &amp;amp; i &amp;#x3D; 1 \ \m
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2023-07-30
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-08-14
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                    机器学习
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/" class="post-category">
+                                    语音
                                 </a>
                             
-                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/CNN/" class="post-category">
-                                    CNN
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E6%A8%A1%E5%9E%8B/" class="post-category">
+                                    模型
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
             </div>
         </div>
@@ -476,7 +717,7 @@ $$\mathbf{y}_i&amp;#x3D; \begin{cases}\mathbf{x}_i &amp;amp; i &amp;#x3D; 1 \ \m
             </div>
             <div class="card">
                 <div class="card-title">
-                    <a href="/blog/yu-yin/yu-yin-ping-ce/te-zheng/bu-dang-ting-dun/"> 不当停顿</a>
+                    <a href="/blog/nlp/mo-xing/bert/"> BERT</a>
                 </div>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
@@ -486,22 +727,18 @@ $$\mathbf{y}_i&amp;#x3D; \begin{cases}\mathbf{x}_i &amp;amp; i &amp;#x3D; 1 \ \m
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-01-02
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-08-06
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/" class="post-category">
-                                    语音
+                            <a href="/blog/categories/NLP/" class="post-category">
+                                    NLP
                                 </a>
                             
-                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E8%AF%84%E6%B5%8B/" class="post-category">
-                                    语音评测
-                                </a>
-                            
-                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E8%AF%84%E6%B5%8B/%E7%89%B9%E5%BE%81/" class="post-category">
-                                    特征
+                            <a href="/blog/categories/NLP/%E6%A8%A1%E5%9E%8B/" class="post-category">
+                                    模型
                                 </a>
                             
                             
@@ -573,6 +810,87 @@ $$\mathbf{y}_i&amp;#x3D; \begin{cases}\mathbf{x}_i &amp;amp; i &amp;#x3D; 1 \ \m
 
 <script type="text/javascript" src="/blog/libs/codeBlock/codeShrink.js"></script>
 
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/blog/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('6'),
+            headingSelector: 'h1, h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
 
     
 
