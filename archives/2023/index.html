@@ -434,8 +434,7 @@
                                     BERT: Bidirectional Encoder Representations from Transformers。无监督预训练的语言表示模型。
 创新点：
 
-
-双向性：采用 Transformer 的 Encoder 结构、mask
+双向性：采用 Transformer 的 Encoder 结构、maske
                                 
                             </div>
                             <div class="publish-info">
@@ -493,14 +492,12 @@
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                    1.  结构特点
-集成了计算机视觉领域最新的增强模块：Res2Net、SE block，聚合多层的特征，并采用 channel-dependent 帧注意力改进了统计池化模块。
-2.  系统结构
+                                    1. 结构特点集成了计算机视觉领域最新的增强模块：Res2Net、SE block，聚合多层的特征，并采用 channel-dependent 帧注意力改进了统计池化模块。
+2. 系统结构
 
 
-3.  特征提取
-
-数据增强：为每句话生
+3. 特征提取
+数据增强：为每句话生成6个额外
                                 
                             </div>
                             <div class="publish-info">
@@ -554,18 +551,17 @@
                             <div class="summary block-with-text">
                                 
                                     
-
 出发点：显式地建模通道间的相关性，根据输入的全局特征，自适应地对各个通道的feature map 重新加权。
-
 
 模块结构
 
 
 
 
+
 Squeeze
 global average pooling：分别计算每个通道的激活均值。
-zc=Fsq
+$$ z_c&
                                 
                             </div>
                             <div class="publish-info">
@@ -619,10 +615,10 @@ zc=Fsq
                             <div class="summary block-with-text">
                                 
                                     
-
 出发点：表示多尺度的特征、增大感受野。
 
-yi={xii=1Ki(xi)i=2Ki(xi+yi−1)2&lt;i⩽s\mathbf{y}_i= \begin{cases}\mathbf{x}_i &amp; i = 1 \\ \math
+
+$$\mathbf{y}_i&#x3D; \begin{cases}\mathbf{x}_i &amp; i &#x3D; 1 \ \mathbf{K}_i\left(\mathbf{x}_i\
                                 
                             </div>
                             <div class="publish-info">
@@ -681,13 +677,12 @@ yi={xii=1Ki(xi)i=2Ki(xi+yi−1)2&lt;i⩽s\mathbf{y}_i= \begin{cases}\mathbf{x}_i
                             <div class="summary block-with-text">
                                 
                                     
-感知停顿：令听者感到话语中断（、破坏语义/韵律单位）的语音现象
+感知停顿：令听者感到话语中断（、破坏语义&#x2F;韵律单位）的语音现象
 不当停顿与二语水平：不当停顿与学习者的单词辨认、意群划分、内容理解能力有关
 停顿时长阈值
-
 朗读、复述：100ms
 自发语音：200-300ms
-句间：400ms （取论文中
+句间：400ms （
                                 
                             </div>
                             <div class="publish-info">
@@ -744,9 +739,8 @@ yi={xii=1Ki(xi)i=2Ki(xi+yi−1)2&lt;i⩽s\mathbf{y}_i= \begin{cases}\mathbf{x}_i
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                    1.  Automated speaking assessment
-
-Automated speaking assessment: Using language technologies to score spontaneous speec
+                                    1. Automated speaking assessment
+Automated speaking assessment: Using language technologies to score spontaneous speech[
                                 
                             </div>
                             <div class="publish-info">
