@@ -4,12 +4,10 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="HuBERT, 梦园">
-    <meta name="description" content="HuBERT: Hidden-Unit BERT，自监督语音表示学习，预测 masked 帧的声音单元，学习声学模型、语言模型的联合信息。
-创新点：
+    <meta name="keywords" content="TTS数据集, 梦园">
+    <meta name="description" content="1. VCTK2. LJSpeech3. LibriTTS585h，2456 说话人，24kHz。音频和文本来自 Librispeech。
 
-输入原始波形。
-离线 k-means 聚类生成预训练帧级对齐 label、聚类集成（Cl">
+Zen H, Dang V, Clark R, et al. LibriTTS: A Corpus">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -23,7 +21,7 @@
 
     
 
-    <title>HuBERT | 梦园</title>
+    <title>TTS数据集 | 梦园</title>
     <link rel="icon" type="image/png" href="/blog/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/blog/libs/awesome/css/all.min.css">
@@ -376,7 +374,7 @@
                     <div class="row">
                         <div class="col s12 m12 l12">
                             <div class="brand">
-                                <h1 class="description center-align post-title">HuBERT</h1>
+                                <h1 class="description center-align post-title">TTS数据集</h1>
                             </div>
                         </div>
                     </div>
@@ -393,8 +391,8 @@
                                 语音
                             </a>
                         
-                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E6%A8%A1%E5%9E%8B/" class="post-category">
-                                模型
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E5%90%88%E6%88%90/" class="post-category">
+                                语音合成
                             </a>
                         
                     </div>
@@ -406,14 +404,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2023-08-14
+                    2023-11-01
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-08-14
+                    2023-11-01
                 </div>
                 
 
@@ -435,187 +433,58 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>HuBERT: Hidden-Unit BERT，自监督语音表示学习，预测 masked 帧的声音单元，学习声学模型、语言模型的联合信息。</p>
-<p>创新点：</p>
+                <h1 id="VCTK">1. VCTK</h1><h1 id="LJSpeech">2. LJSpeech</h1><h1 id="LibriTTS">3. LibriTTS</h1><p>585h，2456 说话人，24kHz。音频和文本来自 Librispeech。</p>
 <ul>
-<li>输入原始波形。</li>
-<li>离线 k-means 聚类生成预训练帧级对齐 label、聚类集成（Cluster Ensembles）、聚类的迭代优化。</li>
+<li>Zen H, Dang V, Clark R, et al. LibriTTS: A Corpus Derived from LibriSpeech for Text-to-Speech[J]. Interspeech 2019, 2019.</li>
 </ul>
-<h1 id="模型结构">1. 模型结构</h1><img src="https://note.youdao.com/yws/api/personal/file/WEBadb1556608d2e51b58df51ea434e174d?method=download&shareKey=86093c761ff02e4eafde0417da5672e7" width="389">
+<h1 id="LibriTTS-R">4. LibriTTS-R</h1><ul>
+<li><p>作者：Google, 2023</p>
+</li>
+<li><p>对 LibriTTS 应用 speech restoration（语音恢复），改善音质。主观实验表明，相较于 LibriTTS，采用 LibriTTS-R 训练的 TTS 模型的语音自然度较高，且与 ground-truth 语音自然度相当。</p>
+</li>
+<li><p>speech restoration: 将语音转换到录音室音质。</p>
+<p>模型：Miipher，text-informed 参数重合成语音恢复模型。采用说话人 encoder [20] 提取说话人 embedding（小于2s的音频重复后再提取），对原始音频降采样到 16kHz 提取 w2v-BERT 特征，采用基于 DF-Conformer 的特征 cleaner 预测干净音频的 w2v-BERT 特征，最后采用 WaveFit-5 神经声码器合成波形。</p>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB381bf104ea76767cf638a1047687becc?method=download&shareKey=5164aa5e618571c340fd77033b1a6d03" width="443">
 
 <ul>
-<li><p>输入原始波形。</p>
+<li><p>选择 Miipher 的原因：Miipher 采用 w2v-BERT 特征（在大量有损语音上训练）替代传统的 log-mel 谱，并利用文本信息，解决了噪声掩盖音素、音素缺失（非线性音频处理、下采样等可能导致音素的重要频率分量缺失）问题。</p>
 </li>
-<li><p>wav2vec 2.0 结构</p>
-<p>16kHz 音频，CNN encoder 320倍降采样，即 20ms 帧率。</p>
-</li>
-<li><p>mask</p>
-<p>随机选取 8% 的 CNN encoder 输出帧作为起点，长度为 10，替换为 <font color="green">mask embedding</font>。</p>
-</li>
-<li><p>参数量</p>
-<p>BASE 90M, LARGE 300M, X-LARGE 1B。</p>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB62034141a58deb24a0b36124dc89488b?method=download&shareKey=eddba0f9941fc84750712684dba6e17b" width="385"></li>
-</ul>
-<h1 id="预训练">2. 预训练</h1><ul>
-<li><p>label</p>
-<p>在 39 维 MFCC 上采用 k-means 聚为100类，作为第1次迭代的 label。由于隐含层特征维度更高，受内存限制，后续随机采样10%的训练数据，将隐含层表示聚为500类。</p>
-</li>
-<li><p>损失函数</p>
-<p>$$p_f^{(k)}(c \mid \tilde{X}, t)&#x3D;\frac{\exp \left(\operatorname{sim}\left(A^{(k)} o_t, e_c\right) &#x2F; \tau\right)}{\sum_{c^{\prime}&#x3D;1}^C \exp \left(\operatorname{sim}\left(A^{(k)} o_t, e_{c^{\prime}}\right) &#x2F; \tau\right)}$$</p>
-<p>其中，$A^{(k)}$ 为 第 $k$ 个聚类模型（聚类集成）的 projection 矩阵，$e_c$ 为 codeword c 的embedding，$sim(,)$ 计算两个向量的余弦相似度，$\tau&#x3D;0.1$（使 softmax 函数结果更尖锐）。</p>
-</li>
-<li><p>k-means</p>
-<p><font color="green">采用 scikit-learn 实现的 MiniBatchKMeans 算法，batch size 10k 帧。采用 k-means++ [57] with 20 random starts 进行初始化。</font></p>
-</li>
-<li><p>聚类集成</p>
-<p>利用多个 codebook size 不同的聚类模型，产生不同粒度的训练目标，类似多任务学习。</p>
-</li>
-<li><p>积量化（product quantization，PQ）[39]</p>
-<p>将特征空间分为多个子空间，每个子空间分别量化，则目标空间的理论大小为所有 codebook size 的乘积。对于高维特征、子空间尺度差异很大的异构特征，PQ 可以有效地实现基于欧氏距离的量化，如 k-means。</p>
+<li><p>训练</p>
 <ul>
-<li>采用 117 维 MFCC 特征，含上下文（3帧），0阶、1阶差分、2阶差分 分别被量化为 100 entries。</li>
+<li>私有数据集，含 2680h 含噪、录音室质量 音频对。<ul>
+<li>目标语音：670h 录音室录制的多语种音频，24kHz。</li>
+<li>噪声数据集：TAU Urban Audio-Visual Scenes 2021 dataset + 内部噪声集（咖啡馆、厨房、汽车等） + 噪声源。</li>
+<li>信噪比：[5, 30] dB</li>
+<li>采用随机 RIR 生成器。<ul>
+<li>J. B. Allen and D. A. Berkley, “Image method for efficiently simulating small-room acoustics,” J. Acoust. Soc. Am., 1979.</li>
 </ul>
 </li>
-<li><p>HuBERT BASE</p>
-<p>Librispeech，32GPU，每张卡 batch size 最多 87.5s，2次迭代，第1次迭代 250k 步，第2次迭代 400k 步，每 100k 步约 9.5h。第2次迭代采用第1次迭代模型第 6 个 transformer 层的输出进行聚类生成的 label 。</p>
-</li>
-<li><p>HuBERT LARGE、X-LARGE</p>
-<p>Libri-light，1次迭代，400k 步，128、256 GPU，每张卡 batch size 56.25s、22.5s。用 BASE 第2次迭代模型的 第9个 transformer 层的输出进行聚类。</p>
-</li>
-<li><p>优化器</p>
-<p>Adam $\beta&#x3D;(0.9,0.98)$ , 前 8% 步 warm up，BASE&#x2F;LARGE&#x2F;X-LARGE 的峰值学习率分别为 5e-4&#x2F;1.5e-3&#x2F;3e-3，学习率线性变化。</p>
-</li>
-<li><p>SOTA 模型对比</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>DiscreteBERT</th>
-<th>wav2vec 2.0</th>
-<th>HuBERT</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>输入</td>
-<td>量化单元，有损</td>
-<td>原始波形</td>
-<td>原始波形</td>
-</tr>
-<tr>
-<td>隐层表示</td>
-<td></td>
-<td>量化 waveform encoder 输出</td>
-<td>量化 transformer  层输出。消融实验表明性能更好，可能由于 CNN encoder 模型容量有限</td>
-</tr>
-<tr>
-<td>声学单元</td>
-<td>vq-wav2vec，单一、固定 label</td>
-<td></td>
-<td>k-means 聚类，聚类集成，迭代优化</td>
-</tr>
-<tr>
-<td>损失函数</td>
-<td>预测 masked 单元</td>
-<td>对比损失，需要仔细设计负样本采样；<br> auxiliary diversity loss；<br> 需要适当的Gumbel-softmax temperature annealing schedule</td>
-<td>预测 masked 单元</td>
-</tr>
-</tbody></table>
-</li>
-</ul>
-<h1 id="fine-tuning">3. fine-tuning</h1><ul>
-<li><p>除了 CNN encoder，fine-tuning 其它参数，projection 层替换为随机初始化的 softmax 层。</p>
-<ul>
-<li>freeze-step：多少步 transformer 参数固定，仅训练新的 softmax 矩阵。</li>
+<li>编解码：随机应用 MP3、Vorbis、A-law、Adaptive Multi-Rate Wideband (AMR-WB)、OPUS，随机比特率。</li>
+<li>参数详见 Miipher 论文。</li>
 </ul>
 </li>
-<li><p>ASR CTC损失，预测26个英文字母、空格、撇号、blank。</p>
-</li>
-<li><p>采用 <font color="green">Fairseq wav2letter++ [59] beam search 解码器，结合LM </font></p>
-<p>$$\log p_{C T C}(Y \mid X)+w_1 \log P_{L M}(Y)+w_2 |Y|$$</p>
-<p>其中|Y| 为预测文本长度。</p>
-</li>
+<li>先分别预训练特征 cleaner、声码器，再用特征 cleaner 的输出特征微调声码器。</li>
 </ul>
-<h1 id="实验">4. 实验</h1><ul>
-<li><p>数据集</p>
-<ul>
-<li>预训练：Librispeech (960h)、Libri-light (60kh)</li>
-<li>fine-tuning：Libri-light 10min, 1h, 10h, Librispeech train-clean-100 (100h), train-* (960h)<ul>
-<li>上述 Libri-light 的3个子集，均一半来自 Librispeech train-clean-*，剩下的来自 train-other-500。</li>
-</ul>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://google.github.io/df-conformer/miipher/">https://google.github.io/df-conformer/miipher/</a></p>
+</li>
+<li><p>非官方实现：<a target="_blank" rel="noopener" href="https://github.com/Wataru-Nakata/miipher">https://github.com/Wataru-Nakata/miipher</a></p>
 </li>
 </ul>
 </li>
-<li><p>性能</p>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB77917921e6a0110c2b3e847fa89f3340?method=download&shareKey=ed8f6daceb889a07970c7b68f5cc10ae" width="794">
+<li><p>通过 WER、同一数据集中同一说话人的不同语音的说话人 embedding 的余弦相似度，确认恢复语音的文本、说话人保持不变。</p>
+</li>
+<li><p>频谱对比</p>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB8ff5cc25e042746c395a209179d8c1a6?method=download&shareKey=1b4f0b727c64098047599feecf086e60" width="748">
 
-<img src="https://note.youdao.com/yws/api/personal/file/WEB71db9dc1a4c1dfe21877e48e90f50e43?method=download&shareKey=f5c82c973ca79a1b337bac7233b125e2" width="762">
-
-<ul>
-<li>对比了半监督算法（迭代伪标签IPL [12]、slimIPL [54]、noisy student[61]）、自监督算法（DeCoAR 2.0 [50], DiscreteBERT [51], wav2vec 2.0 [6]）</li>
-<li>与 SOTA 的 wav2vec 2.0 性能一致或有提升。</li>
-</ul>
+<p>从左到右，LibriTTS 中的样本分别受下采样、环境噪声、混响、非线性语音增强影响，LibriTTS-R 分别对其进行了恢复。</p>
 </li>
-<li><p>聚类 label $z_t$ 的评价指标<br>采用 ASR 模型强制对齐得到帧级音素label $y_t$，</p>
-<p>联合分布<br>$$p_{y z}(i, j)&#x3D;\frac{\sum_{t&#x3D;1}^T\left[y_t&#x3D;i \wedge z_t&#x3D;j\right]}{T}$$</p>
-<p>边缘概率<br>$$p_z(j)&#x3D;\sum_i p_{y z}(i, j)$$</p>
-<p>$$p_y(j)&#x3D;\sum_j p_{y z}(i, j)$$</p>
-<p>每个音素 $i$ 对应的最可能的聚类 label $j$<br>$$z^*(i)&#x3D;\arg \max <em>j p</em>{y z}(i, j)$$</p>
-<p>同理，<br>$$y^*(j)&#x3D;\arg \max <em>i p</em>{y z}(i, j)$$</p>
-<p>条件概率<br>$$p_{y \mid z}(i \mid j)&#x3D;p_{y z}(i, j) &#x2F; p_z(j)$$</p>
-<ul>
-<li><p>音素纯度<br>$$\mathbb{E}<em>{p_z(j)}\left[p</em>{y \mid z}\left(y^*(j) \mid j\right)\right]$$</p>
-<p>表示如果将 k-means label 替换为 它对应的最可能的音素，帧级音素准确率。若每个 k-means label 唯一对应 1个音素，则音素纯度为1。</p>
+<li><p>Koizumi Y, Zen H, Karita S, et al. LibriTTS-R: A Restored Multi-Speaker Text-to-Speech Corpus[J]. arXiv preprint arXiv:2305.18802, 2023.</p>
 </li>
-<li><p>聚类纯度</p>
-<p>$$\mathbb{E}<em>{p_y(i)}\left[p</em>{z \mid y}\left(z^*(i) \mid i\right)\right]$$</p>
-<p>聚类纯度越高，表明同一音素的帧更可能对应同一聚类 label。当聚类类别数增加时，该值会下降。</p>
+<li><p><a target="_blank" rel="noopener" href="http://www.openslr.org/141/">http://www.openslr.org/141/</a></p>
 </li>
-<li><p>phone-normalized 互信息（PNMI）</p>
-<p>$$\begin{aligned} \frac{I(y ; z)}{H(y)} &amp; &#x3D;\frac{\sum_i \sum_j p_{y z}(i, j) \log \frac{p_{y z}(i, j)}{p_y(i) p_z(j)}}{\sum_i p_y(i) \log p_y(i)} \ &amp; &#x3D;1-\frac{H(y \mid z)}{H(y)}\end{aligned}$$</p>
-<p>已知 k-means label $z$，对音素 label $y$ 的熵的减少量。</p>
+<li><p><a target="_blank" rel="noopener" href="https://google.github.io/df-conformer/librittsr/">https://google.github.io/df-conformer/librittsr/</a></p>
 </li>
-</ul>
-</li>
-<li><p>消融实验</p>
-<table>
-<thead>
-<tr>
-<th>实验</th>
-<th>结果</th>
-<th>结论</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>k-means 稳定性</td>
-<td><img src="https://note.youdao.com/yws/api/personal/file/WEBf4420dc406c6d88d2ada6590a849725b?method=download&shareKey=400d7143fa4a13c031033d7c9fd91198"></td>
-<td>同一参数、多次实验标准差很小；<br> 聚类模型训练集数据量提升PNMI会改善，但增益有限，因此采样部分训练集进行 k-means 聚类是可行的；<br> 相较于 MFCC，聚类迭代优化 PNMI 显著提升</td>
-</tr>
-<tr>
-<td>聚类所用特征的层数</td>
-<td><img src="https://note.youdao.com/yws/api/personal/file/WEB7325b2e4a53333be5d279ce50f0516b6?method=download&shareKey=e20622a825887ddf006978c23ed87980"> <br> 第0层表示 transformer 层的输入 <br> 基线：MFCC (cluster purity, phone purity, PNMI) &#x3D; (0.099, 0.335, 0.255) C &#x3D; 100，(0.031, 0.356, 0.287) C&#x3D;500</td>
-<td>BASE-it1 最后几个 transformer 层 用于聚类的效果急剧下降，可能和第1次迭代预训练标签质量较差有关。</td>
-</tr>
-<tr>
-<td>损失函数</td>
-<td><img src="https://note.youdao.com/yws/api/personal/file/WEB6f928f272cac99502c7161d5785de58f?method=download&shareKey=f4e6e8f390d7cfb1d4c2479dbb1e8d22"> <br> chenone[64]：基于字符，强制对齐生成标签</td>
-<td>若仅考虑未被 mask 的位置，该模型类似聚类模型&#x2F;声学模型。<br>仅考虑 masked 位置，驱使模型学习声学模型、语言模型的联合信息，效果最好。</td>
-</tr>
-<tr>
-<td>聚类集成</td>
-<td><img src="https://note.youdao.com/yws/api/personal/file/WEB20cc38279c55aac79d177009e320e25e?method=download&shareKey=d8d37bc6a4e4b85aab28715b10cf46b3"><br> 积量化：采用 117 维 MFCC 特征，含上下文（3帧），0阶、1阶差分、2阶差分 分别被量化为 100 entries</td>
-<td>对比表5、表6，聚类集成比单个聚类模型性能好</td>
-</tr>
-<tr>
-<td>超参数</td>
-<td><img src="https://note.youdao.com/yws/api/personal/file/WEB5fd73ef4bfe7b4a97b3a369b7e12b2d9?method=download&shareKey=9568d7ce1eb06efb3a6b492b4e39976b"> <img src="https://note.youdao.com/yws/api/personal/file/WEB02250c74874949959a7c9f96d27dd4b8?method=download&shareKey=692177e2e4ee1cee4326877ce335eb48"></td>
-<td>选取 8% 的帧作为 mask 起点性能较好；<br> 增大 batch size 可以显著提升性能；<br> 训练更长时间模型性能更好</td>
-</tr>
-</tbody></table>
-</li>
-</ul>
-<h1 id="论文">5. 论文</h1><ul>
-<li>Hsu W N, Bolte B, Tsai Y H H, et al. Hubert: Self-supervised speech representation learning by masked prediction of hidden units[J]. IEEE&#x2F;ACM Transactions on Audio, Speech, and Language Processing, 2021, 29: 3451-3460.</li>
-<li>代码、预训练模型、fine-tuned 模型：<a target="_blank" rel="noopener" href="https://github.com/pytorch/fairseq/tree/master/examples/hubert">https://github.com/pytorch/fairseq/tree/master/examples/hubert</a></li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
@@ -671,9 +540,10 @@
     <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <div class="card-title">
                     <a href="/blog/yu-yin/yu-yin-he-cheng/tts-shu-ju-ji/"> TTS数据集</a>
@@ -685,9 +555,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2023-11-01
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-11-01
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -704,6 +574,7 @@
                         </span>
                     </div>
                 </div>
+
                 
             </div>
         </div>
@@ -715,7 +586,7 @@
             </div>
             <div class="card">
                 <div class="card-title">
-                    <a href="/blog/nlp/mo-xing/bert/"> BERT</a>
+                    <a href="/blog/yu-yin/mo-xing/hubert/"> HuBERT</a>
                 </div>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
@@ -725,17 +596,17 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-08-06
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-08-14
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/blog/categories/NLP/" class="post-category">
-                                    NLP
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/" class="post-category">
+                                    语音
                                 </a>
                             
-                            <a href="/blog/categories/NLP/%E6%A8%A1%E5%9E%8B/" class="post-category">
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E6%A8%A1%E5%9E%8B/" class="post-category">
                                     模型
                                 </a>
                             
