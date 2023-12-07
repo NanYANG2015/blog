@@ -5,12 +5,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="TTS数据集, 梦园">
-    <meta name="description" content="1.  VCTK
-2.  LJSpeech
-3.  LibriTTS
-585h，2456 说话人，24kHz。音频和文本来自 Librispeech。
+    <meta name="description" content="1. VCTK2. LJSpeech3. LibriTTS585h，2456 说话人，24kHz。音频和文本来自 Librispeech。
 
-Zen H, Dang V, Clark R, et al. LibriTTS: A ">
+Zen H, Dang V, Clark R, et al. LibriTTS: A Corpus">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -436,39 +433,29 @@ Zen H, Dang V, Clark R, et al. LibriTTS: A ">
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="vctk">1.  VCTK</h1>
-<h1 id="ljspeech">2.  LJSpeech</h1>
-<h1 id="libritts">3.  LibriTTS</h1>
-<p>585h，2456 说话人，24kHz。音频和文本来自 Librispeech。</p>
+                <h1 id="VCTK">1. VCTK</h1><h1 id="LJSpeech">2. LJSpeech</h1><h1 id="LibriTTS">3. LibriTTS</h1><p>585h，2456 说话人，24kHz。音频和文本来自 Librispeech。</p>
 <ul>
 <li>Zen H, Dang V, Clark R, et al. LibriTTS: A Corpus Derived from LibriSpeech for Text-to-Speech[J]. Interspeech 2019, 2019.</li>
 </ul>
-<h1 id="libritts-r">4.  LibriTTS-R</h1>
-<ul>
-<li>
-<p>作者：Google, 2023</p>
+<h1 id="LibriTTS-R">4. LibriTTS-R</h1><ul>
+<li><p>作者：Google, 2023</p>
 </li>
-<li>
-<p>对 LibriTTS 应用 speech restoration（语音恢复），改善音质。主观实验表明，相较于 LibriTTS，采用 LibriTTS-R 训练的 TTS 模型的语音自然度较高，且与 ground-truth 语音自然度相当。</p>
+<li><p>对 LibriTTS 应用 speech restoration（语音恢复），改善音质。主观实验表明，相较于 LibriTTS，采用 LibriTTS-R 训练的 TTS 模型的语音自然度较高，且与 ground-truth 语音自然度相当。</p>
 </li>
-<li>
-<p>speech restoration: 将语音转换到录音室音质。</p>
+<li><p>speech restoration: 将语音转换到录音室音质。</p>
 <p>模型：Miipher，text-informed 参数重合成语音恢复模型。采用说话人 encoder [20] 提取说话人 embedding（小于2s的音频重复后再提取），对原始音频降采样到 16kHz 提取 w2v-BERT 特征，采用基于 DF-Conformer 的特征 cleaner 预测干净音频的 w2v-BERT 特征，最后采用 WaveFit-5 神经声码器合成波形。</p>
 <img src="https://note.youdao.com/yws/api/personal/file/WEB381bf104ea76767cf638a1047687becc?method=download&shareKey=5164aa5e618571c340fd77033b1a6d03" width="443">
+
 <ul>
-<li>
-<p>选择 Miipher 的原因：Miipher 采用 w2v-BERT 特征（在大量有损语音上训练）替代传统的 log-mel 谱，并利用文本信息，解决了噪声掩盖音素、音素缺失（非线性音频处理、下采样等可能导致音素的重要频率分量缺失）问题。</p>
+<li><p>选择 Miipher 的原因：Miipher 采用 w2v-BERT 特征（在大量有损语音上训练）替代传统的 log-mel 谱，并利用文本信息，解决了噪声掩盖音素、音素缺失（非线性音频处理、下采样等可能导致音素的重要频率分量缺失）问题。</p>
 </li>
-<li>
-<p>训练</p>
+<li><p>训练</p>
 <ul>
-<li>私有数据集，含 2680h 含噪、录音室质量 音频对。
-<ul>
+<li>私有数据集，含 2680h 含噪、录音室质量 音频对。<ul>
 <li>目标语音：670h 录音室录制的多语种音频，24kHz。</li>
 <li>噪声数据集：TAU Urban Audio-Visual Scenes 2021 dataset + 内部噪声集（咖啡馆、厨房、汽车等） + 噪声源。</li>
 <li>信噪比：[5, 30] dB</li>
-<li>采用随机 RIR 生成器。
-<ul>
+<li>采用随机 RIR 生成器。<ul>
 <li>J. B. Allen and D. A. Berkley, “Image method for efficiently simulating small-room acoustics,” J. Acoust. Soc. Am., 1979.</li>
 </ul>
 </li>
@@ -479,30 +466,24 @@ Zen H, Dang V, Clark R, et al. LibriTTS: A ">
 <li>先分别预训练特征 cleaner、声码器，再用特征 cleaner 的输出特征微调声码器。</li>
 </ul>
 </li>
-<li>
-<p><a target="_blank" rel="noopener" href="https://google.github.io/df-conformer/miipher/">https://google.github.io/df-conformer/miipher/</a></p>
+<li><p><a target="_blank" rel="noopener" href="https://google.github.io/df-conformer/miipher/">https://google.github.io/df-conformer/miipher/</a></p>
 </li>
-<li>
-<p>非官方实现：<a target="_blank" rel="noopener" href="https://github.com/Wataru-Nakata/miipher">https://github.com/Wataru-Nakata/miipher</a></p>
+<li><p>非官方实现：<a target="_blank" rel="noopener" href="https://github.com/Wataru-Nakata/miipher">https://github.com/Wataru-Nakata/miipher</a></p>
 </li>
 </ul>
 </li>
-<li>
-<p>通过 WER、同一数据集中同一说话人的不同语音的说话人 embedding 的余弦相似度，确认恢复语音的文本、说话人保持不变。</p>
+<li><p>通过 WER、同一数据集中同一说话人的不同语音的说话人 embedding 的余弦相似度，确认恢复语音的文本、说话人保持不变。</p>
 </li>
-<li>
-<p>频谱对比<br>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB8ff5cc25e042746c395a209179d8c1a6?method=download&shareKey=1b4f0b727c64098047599feecf086e60" width="748"></p>
+<li><p>频谱对比</p>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB8ff5cc25e042746c395a209179d8c1a6?method=download&shareKey=1b4f0b727c64098047599feecf086e60" width="748">
+
 <p>从左到右，LibriTTS 中的样本分别受下采样、环境噪声、混响、非线性语音增强影响，LibriTTS-R 分别对其进行了恢复。</p>
 </li>
-<li>
-<p>Koizumi Y, Zen H, Karita S, et al. LibriTTS-R: A Restored Multi-Speaker Text-to-Speech Corpus[J]. arXiv preprint arXiv:2305.18802, 2023.</p>
+<li><p>Koizumi Y, Zen H, Karita S, et al. LibriTTS-R: A Restored Multi-Speaker Text-to-Speech Corpus[J]. arXiv preprint arXiv:2305.18802, 2023.</p>
 </li>
-<li>
-<p><a target="_blank" rel="noopener" href="http://www.openslr.org/141/">http://www.openslr.org/141/</a></p>
+<li><p><a target="_blank" rel="noopener" href="http://www.openslr.org/141/">http://www.openslr.org/141/</a></p>
 </li>
-<li>
-<p><a target="_blank" rel="noopener" href="https://google.github.io/df-conformer/librittsr/">https://google.github.io/df-conformer/librittsr/</a></p>
+<li><p><a target="_blank" rel="noopener" href="https://google.github.io/df-conformer/librittsr/">https://google.github.io/df-conformer/librittsr/</a></p>
 </li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">

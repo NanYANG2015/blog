@@ -4,12 +4,11 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Res2Net, 梦园">
+    <meta name="keywords" content="LoRA, 梦园">
     <meta name="description" content="
-出发点：表示多尺度的特征、增大感受野。
+作者：微软
 
-
-$$\mathbf{y}_i&amp;#x3D; \begin{cases}\mathbf{x}_i &amp;amp; i &amp;#x3D; 1 \ \mathbf{K}_i\left(\mathbf{x}_i\">
+LoRA (Low-Rank Adaptation)：过参数化（over-parametrized）模型实际上是低秩的。假设：微调时，模型权重的变化量也是低秩的。通过学习权重变化的低秩分解矩阵，间接地微调权重参数，同时可以冻">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -23,7 +22,7 @@ $$\mathbf{y}_i&amp;#x3D; \begin{cases}\mathbf{x}_i &amp;amp; i &amp;#x3D; 1 \ \m
 
     
 
-    <title>Res2Net | 梦园</title>
+    <title>LoRA | 梦园</title>
     <link rel="icon" type="image/png" href="/blog/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/blog/libs/awesome/css/all.min.css">
@@ -270,10 +269,104 @@ $$\mathbf{y}_i&amp;#x3D; \begin{cases}\mathbf{x}_i &amp;amp; i &amp;#x3D; 1 \ \m
 
 
 
-<main class="container content">
+<main class="post-container content">
 
     
-    <!-- 文章内容详情 -->
+    <link rel="stylesheet" href="/blog/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 200px);
+        overflow: scroll;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
 <div id="artDetail">
     <div class="card">
         <div class="card-content article-info">
@@ -282,7 +375,7 @@ $$\mathbf{y}_i&amp;#x3D; \begin{cases}\mathbf{x}_i &amp;amp; i &amp;#x3D; 1 \ \m
                     <div class="row">
                         <div class="col s12 m12 l12">
                             <div class="brand">
-                                <h1 class="description center-align post-title">Res2Net</h1>
+                                <h1 class="description center-align post-title">LoRA</h1>
                             </div>
                         </div>
                     </div>
@@ -295,12 +388,12 @@ $$\mathbf{y}_i&amp;#x3D; \begin{cases}\mathbf{x}_i &amp;amp; i &amp;#x3D; 1 \ \m
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                机器学习
+                            <a href="/blog/categories/NLP/" class="post-category">
+                                NLP
                             </a>
                         
-                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/CNN/" class="post-category">
-                                CNN
+                            <a href="/blog/categories/NLP/%E6%A8%A1%E5%9E%8B/" class="post-category">
+                                模型
                             </a>
                         
                     </div>
@@ -312,14 +405,14 @@ $$\mathbf{y}_i&amp;#x3D; \begin{cases}\mathbf{x}_i &amp;amp; i &amp;#x3D; 1 \ \m
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2023-07-26
+                    2023-12-07
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-07-30
+                    2023-12-07
                 </div>
                 
 
@@ -342,40 +435,35 @@ $$\mathbf{y}_i&amp;#x3D; \begin{cases}\mathbf{x}_i &amp;amp; i &amp;#x3D; 1 \ \m
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <ul>
-<li><p>出发点：表示多尺度的特征、增大感受野。</p>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB61ffb780869eb695d691e4d54876ac5b?method=download&shareKey=3f447136c62dbd906f1b59cde85798da" width="385">
-
-<p>$$\mathbf{y}_i&#x3D; \begin{cases}\mathbf{x}_i &amp; i &#x3D; 1 \ \mathbf{K}_i\left(\mathbf{x}_i\right) &amp; i &#x3D; 2 \ \mathbf{K}_i\left(\mathbf{x}<em>i+\mathbf{y}</em>{i-1}\right) &amp; 2&lt;i \leqslant s\end{cases}$$</p>
+<li><p>作者：微软</p>
 </li>
-<li><p>名称由来：残差块里又有残差连接。</p>
-</li>
-<li><p>多尺度的理解：$\mathbf{x}_2$ 经过1个 $3 \times 3$ 的卷积得到 $\mathbf{y}_2$，而 $\mathbf{y}_2$ 会作为 $\mathbf{K}_3$ 的输入，再次经过1个 $3 \times 3$ 的卷积。2次 $3 \times 3$ 的卷积相当于1个 $5 \times 5$ 的卷积，因此，$\mathbf{K}_3$ 融合了 $3 \times 3$ 的感受野的特征 和 $5 \times 5$ 的感受野的特征。以此类推。得到的 $\mathbf{y}$ 可以表征多尺度的特征。</p>
-</li>
-<li><p>性能</p>
+<li><p>LoRA (Low-Rank Adaptation)：过参数化（over-parametrized）模型实际上是低秩的。假设：微调时，模型权重的变化量也是低秩的。通过学习权重变化的低秩分解矩阵，间接地微调权重参数，同时可以冻结预训练模型的参数。适用于任何模型中的 dense 层。<br>$$ h&#x3D;W_0 x+\Delta W x&#x3D;W_0 x+B A x $$</p>
+<p>其中，$W_0 \in \mathbb{R}^{d \times k}$ 为预训练模型的权重矩阵，$\Delta W$ 为微调时的累积梯度更新量，$B \in \mathbb{R}^{d \times r}$，$A \in \mathbb{R}^{r \times k}$，秩 $r \ll \min (d, k)$。A 随机高斯初始化，B 全0初始化，因此 BA 初始值为 0。</p>
+<p>$\alpha$：将 $\Delta W x$ 乘以 $\frac{\alpha}{r}$。采用 Adam 优化时，调 $\alpha$ 大致相当于调学习率，因此，改变 $r$ 时，$\alpha$ 保持不变，可以不需要调学习率。</p>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB2aee59d8c5388e3cfc72ca7667c87e1b?method=download&shareKey=7cbcb396b87afc011e77a682978176db" width="185"></li>
+<li><p>优点</p>
 <ul>
-<li><p>很容易与其它结构整合。</p>
-</li>
-<li><p>由于具有较强的多尺度特征表征能力，在许多任务上都取得了性能提升，如图片分类、目标检测、语义分割、显著目标检测等，对于不同尺寸的对象性能都有提升。</p>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB8f041f566f23b3eaa720ab325b3570c6?method=download&shareKey=8b34ae8793fd313603365c485b8a7c82" width="320">
-<img src="https://note.youdao.com/yws/api/personal/file/WEBad279f36483cb4953f11ee2987747fa1?method=download&shareKey=21ea4d5cec3f46fcf6856e76b1dc810a" width="377"></li>
-<li><p><font color="green">虽然 $\mathbf{y}_i$ 需要顺序计算，但Res2Net模块引入的额外运行时间通常可以忽略不计。</font></p>
-</li>
-<li><p>相较于模型深度 depth、1层的 channel 数 width、cardinality[68]，增加 scale 可以获得更快的性能提升。</p>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB0b0ad93f6733adeef588208ca17e008c?method=download&shareKey=3b201a76aede1628dec4ee4d9199853a" width="380">
-
-<p>*scale为5、6时性能提升有限，可能由于CIFAR数据集中的图片太小（$32 \times 32$）。</p>
-<p>*当图片中的对象尺寸已经可以被Res2Net模块覆盖时，继续增加 scale ，性能提升有限；若固定模型复杂度，增加 scale 会导致每个感受野的通道数减少，可能会降低模型处理特定尺度特征的能力。</p>
-</li>
+<li>相较于全参数微调，可训练参数量大大减少，显存需求更小（不需要存冻结参数的优化器状态），训练吞吐量更高，与微调效果相当或更好。多任务部署时，可共享预训练模型，存储需求减少。</li>
+<li>相较于添加 adapter 层（online 场景、短序列，引入的推理延迟可以高达30%；大 batch、长序列，延迟可缓解。），没有额外的推理延迟。<img src="https://note.youdao.com/yws/api/personal/file/WEB0e524e9faa8e881b669551004cc4f250?method=download&shareKey=0dff8368dd82d48ca0bc6c3128dd0401" width="613"></li>
+<li>prefix-tuning：在输入序列中插入特殊 token，占用了输入序列长度。且较难优化，性能不随可训练参数量单调变化，LoRA 的性能更稳定。<img src="https://note.youdao.com/yws/api/personal/file/WEB31a71baa655899064067e9a81fdc669d?method=download&shareKey=9e9533a65d6b74ed43f9777210e83dae" width="613"></li>
+<li>few-shot learning &#x2F; prompt engineering：适用于只有很少量训练样本的任务。在性能敏感的应用上，微调的性能是显著优于 few-shot learning 的。</li>
+<li>低数据量 adaption：相较于其它 adaption 方法，总体上 LoRA 性能更好。<img src="https://note.youdao.com/yws/api/personal/file/WEB9a387fd3333ff1bbce41861f856bbb0b?method=download&shareKey=d53d9ebc3f2e807487d509b8ab2f52cd" width="613"></li>
+<li>与其它微调方法正交，可以组合使用。</li>
+<li>部署：可以存储 $W&#x3D;W_0+B A$。当需要切换到另一个下游任务时，$-B A + B^{\prime} A^{\prime}$。</li>
 </ul>
 </li>
-<li><p>论文<br>Gao S H, Cheng M M, Zhao K, et al. Res2net: A new multi-scale backbone architecture[J]. IEEE transactions on pattern analysis and machine intelligence, 2019, 43(2): 652-662.</p>
+<li><p>符号表示：本文以 Transformer 为例，对每一个 Transformer 块中 self attention 模块的权重矩阵添加 LoRA 模块。<br>$d_model$：Transformer 层的输入、输出维度<br>$W_q$、$W_k$、$W_v$、$W_o$：self-attention 模块中的 query&#x2F;key&#x2F;value&#x2F;output projection 矩阵。<br>$d_{f f n}&#x3D;4 \times d_{\text {model }}$：feedforward 维度。</p>
+</li>
+<li><p>关键问题</p>
 <ul>
-<li>第2章相关工作<ul>
-<li>计算机视觉领域的Backbone Networks：AlexNet、VGGNet、Network in Network、GoogLeNet、Inception、ResNet、DenseNet、DLA等。</li>
-<li>视觉任务的多尺度表示：spatial pyramid pooling、feature pyramid、atrous convolutional。</li>
+<li>Q：限定可训练参数量，LoRA 应该添加到 Transformer 中的哪些权重矩阵？<img src="https://note.youdao.com/yws/api/personal/file/WEB97d91417122c14b9981324b9efd992c4?method=download&shareKey=553ea06f3618b8e05d81adb7f571d9cc" width="612"></li>
+<li>Q：最优的 $r$ 值。A：较小的值就可以达到较好的性能。<img src="https://note.youdao.com/yws/api/personal/file/WEB4eccb312371acf5b32d37751595194c1?method=download&shareKey=6e08e7b5862dde308043c1b03a0fabd9" width="611"></li>
+<li>Q：$\Delta W$ 与 $W$ 的关系？A：相较于随机矩阵，$\Delta W$ 与 $W$ 有更强的相关性。<font color="red"> $\Delta W$ 可能会放大预训练模型中已学习但未强调的特定下游任务的重要特征。</font></li>
 </ul>
 </li>
-</ul>
+<li><p>Hu E J, Shen Y, Wallis P, et al. Lora: Low-rank adaptation of large language models[J]. arXiv preprint arXiv:2106.09685, 2021.</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/microsoft/LoRA">https://github.com/microsoft/LoRA</a></p>
 </li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
@@ -432,12 +520,13 @@ $$\mathbf{y}_i&amp;#x3D; \begin{cases}\mathbf{x}_i &amp;amp; i &amp;#x3D; 1 \ \m
     <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <div class="card-title">
-                    <a href="/blog/ji-qi-xue-xi/cnn/senet/"> SENet</a>
+                    <a href="/blog/nlp/mo-xing/lora/"> LoRA</a>
                 </div>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
@@ -446,25 +535,26 @@ $$\mathbf{y}_i&amp;#x3D; \begin{cases}\mathbf{x}_i &amp;amp; i &amp;#x3D; 1 \ \m
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2023-07-30
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-12-07
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                    机器学习
+                            <a href="/blog/categories/NLP/" class="post-category">
+                                    NLP
                                 </a>
                             
-                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/CNN/" class="post-category">
-                                    CNN
+                            <a href="/blog/categories/NLP/%E6%A8%A1%E5%9E%8B/" class="post-category">
+                                    模型
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
             </div>
         </div>
@@ -476,7 +566,7 @@ $$\mathbf{y}_i&amp;#x3D; \begin{cases}\mathbf{x}_i &amp;amp; i &amp;#x3D; 1 \ \m
             </div>
             <div class="card">
                 <div class="card-title">
-                    <a href="/blog/yu-yin/yu-yin-ping-ce/te-zheng/bu-dang-ting-dun/"> 不当停顿</a>
+                    <a href="/blog/yu-yin/llm/salmonn/"> SALMONN</a>
                 </div>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
@@ -486,7 +576,7 @@ $$\mathbf{y}_i&amp;#x3D; \begin{cases}\mathbf{x}_i &amp;amp; i &amp;#x3D; 1 \ \m
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-01-02
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-12-07
                             </span>
                         <span class="publish-author">
                             
@@ -496,12 +586,8 @@ $$\mathbf{y}_i&amp;#x3D; \begin{cases}\mathbf{x}_i &amp;amp; i &amp;#x3D; 1 \ \m
                                     语音
                                 </a>
                             
-                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E8%AF%84%E6%B5%8B/" class="post-category">
-                                    语音评测
-                                </a>
-                            
-                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E8%AF%84%E6%B5%8B/%E7%89%B9%E5%BE%81/" class="post-category">
-                                    特征
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/LLM/" class="post-category">
+                                    LLM
                                 </a>
                             
                             
@@ -573,6 +659,87 @@ $$\mathbf{y}_i&amp;#x3D; \begin{cases}\mathbf{x}_i &amp;amp; i &amp;#x3D; 1 \ \m
 
 <script type="text/javascript" src="/blog/libs/codeBlock/codeShrink.js"></script>
 
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/blog/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('6'),
+            headingSelector: 'h1, h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
 
     
 
