@@ -5,17 +5,17 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="端到端语音评分, 梦园">
-    <meta name="description" content="1. 2022 Self-Supervised
+    <meta name="description" content="1.  2022 Self-Supervised
+
 作者：AI Lab, Kakao Enterprise（韩国公司）
 创新点：采用自监督学习模型提取深层声学表示
 
-1.1. 系统结构
+1.1.  系统结构
 
 
 
 
-
-*GAP：global average pool">
+*GAP：global average po">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -445,35 +445,40 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="2022-Self-Supervised">1. 2022 Self-Supervised</h1><ul>
+                <h1 id="2022-self-supervised">1.  2022 Self-Supervised</h1>
+<ul>
 <li>作者：AI Lab, Kakao Enterprise（韩国公司）</li>
 <li><font color="red">创新点：采用自监督学习模型提取深层声学表示</font></li>
 </ul>
-<h2 id="系统结构">1.1. 系统结构</h2><div style="display: inline-block; width: 60%;">
-
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB4422119d06867cb6f80ed36536834260?method=download&shareKey=74b198b7631782b93ae09c5a823fa71e" alt="系统结构"></p>
+<h2 id="系统结构">1.1.  系统结构</h2>
+<div style="display: inline-block; width: 60%;">
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB4422119d06867cb6f80ed36536834260?method=download&amp;shareKey=74b198b7631782b93ae09c5a823fa71e" alt="系统结构"></p>
 </div>
-
 <div style="display: inline-block; vertical-align: bottom; width: 39%;">
 *GAP：global average pooling
-
 <ul>
 <li>用L2数据+CTC fine-tune 自监督学习模型（wav2vec 2.0、HuBERT）</li>
 <li>取各transformer层的上下文表示的均值</li>
-<li>输入文本字符序列，采用BLSTM评分</li></ul></div>
-
-<h2 id="评价">1.2. 评价</h2><ul>
+<li>输入文本字符序列，采用BLSTM评分</li>
+</ul>
+</div>
+<h2 id="评价">1.2.  评价</h2>
+<ul>
 <li>数据集：KESL（韩国英语二语学习者，根据发音、准确度、重音、停顿、语调等评总分）、Speechocean762</li>
-<li>基线<ul>
+<li>基线
+<ul>
 <li>自研DNN-HMM AM</li>
 <li>Agg: SpeechRater time-aggregated特征。Seq: 时间序列特征，eGeMAPS set[33]（包含MFCC、响度、音调、jitter、shimmer）的均值、方差，各特征均值方差归一化，采用OpenSmile提取</li>
 <li>评分模型：2层全连接</li>
 </ul>
 </li>
-<li>自监督学习模型：采用Fairseq上的，finetune 150k步，batch size&#x3D;8</li>
+<li>自监督学习模型：采用Fairseq上的，finetune 150k步，batch size=8</li>
 <li>评分模型：embedding 64维，BLSTM 1层，128维</li>
-<li><img src="https://note.youdao.com/yws/api/personal/file/WEB7540a07fff0e50902ae1f03f916265d2?method=download&shareKey=a683224dcdddbd810b26b9422f1bc3ee" width="383px"></li>
-<li>实验结论<ul>
+<li>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB7540a07fff0e50902ae1f03f916265d2?method=download&shareKey=a683224dcdddbd810b26b9422f1bc3ee" width="383px">
+</li>
+<li>实验结论
+<ul>
 <li>相较于传统评分模型，本文提出的模型在各测试集上的评分效果有一致的提升。其中finetune之后的HuBERT Large模型效果最好</li>
 <li>相较于采用自监督学习模型的CNN层特征、较高层的特征表示，采用各transformer层的上下文表示的均值，效果较好</li>
 <li>相较于线性回归、MLP，BLSTM模型评分效果较好，可以学习时间序列特征</li>
@@ -481,117 +486,121 @@
 </li>
 <li><font color="green">存在的问题：无Speechocean762 准确度、完整度、总分评分效果</font></li>
 </ul>
-<h2 id="其它">1.3. 其它</h2><ul>
+<h2 id="其它">1.3.  其它</h2>
+<ul>
 <li>Kim E, Jeon J J, Seo H, et al. Automatic Pronunciation Assessment using Self-Supervised Speech Representation Learning[J]. arXiv preprint arXiv:2204.03863, 2022.</li>
 </ul>
-<h1 id="2021-Multi-Encoder">2. 2021 Multi-Encoder</h1><ul>
+<h1 id="2021-multi-encoder">2.  2021 Multi-Encoder</h1>
+<ul>
 <li>作者：腾讯智能平台产品部</li>
 <li>发表信息：ICASSP 2021</li>
 <li>被引用次数：2</li>
 <li><font color="red">创新点：端到端朗读评分，输出句子级、单词级分数</font></li>
 </ul>
-<h2 id="系统结构-1">2.1. 系统结构</h2><div style="display: inline-block; width: 50%;">
-
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEBa24e448d76d182c1bf2d2df35649895b?method=download&shareKey=161bc7c16a5682e139a3565471ea8c50" alt="系统结构"></p>
+<h2 id="系统结构-2">2.1.  系统结构</h2>
+<div style="display: inline-block; width: 50%;">
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBa24e448d76d182c1bf2d2df35649895b?method=download&amp;shareKey=161bc7c16a5682e139a3565471ea8c50" alt="系统结构"></p>
 </div>
-
 <div style="display: inline-block; vertical-align: bottom; width: 49%;">
-
 <ul>
-<li><p>音频encoder</p>
+<li>音频encoder
 <ul>
 <li>输入：80维Mel-filterbank + 1阶差分 + 2阶差分 + pitch + 位置embedding</li>
 <li>CNN（提取局部特征、降采样） + transformer（每一层transformer由1层multi-head attention + 1层position-wise全连接组成），12层</li>
 </ul>
 </li>
-<li><p>文本encoder</p>
+<li>文本encoder
 <ul>
 <li>输入：采用sentencepiece生成的子词序列 + 位置embedding</li>
 <li>vanilla transformer encoder结构，2层</li>
 </ul>
 </li>
-<li><p>词级表示 $h1_{word\left ( i \right ) }&#x3D;Attention \left ( h_{word\left ( i \right ) }, h_{audio}, h_{audio} \right ) + h_{word\left ( i \right ) } $</p>
-</li>
-<li><p>单词评分：1层全连接 + sigmoid</p>
-</li>
-<li><p>句子评分</p>
+<li>词级表示 $h1_{word\left ( i \right ) }=Attention \left ( h_{word\left ( i \right ) }, h_{audio}, h_{audio} \right ) + h_{word\left ( i \right ) } $</li>
+<li>单词评分：1层全连接 + sigmoid</li>
+<li>句子评分
 <ul>
 <li>输入：所有单词表示的average pooling，拼接所有单词的平均分</li>
-<li>1层全连接 + ReLU + 1层全连接 + sigmoid</li></ul></li></ul></div>
-
-
-<li><p>训练流程</p>
+<li>1层全连接 + ReLU + 1层全连接 + sigmoid</li>
+</ul>
+</li>
+</ul>
+</div>
+<ul>
+<li>训练流程
 <ul>
 <li>audio encoder + decoder，ASR训练。训练集：960h LibriSpeech + 1000h L2</li>
 <li>冻结audio encoder，预训练。将上述训练集中的词随机替换40%为口语考试中的高频词，不匹配的单词label为0，否则为1。</li>
 <li>采用专家标注数据finetune，采用multi-task学习（单词评分、句子评分）。训练集：10000句、15000词；测试集：1000句、1000词。3位专家打分，1-5，归一化为0-1</li>
 </ul>
 </li>
-
-<h2 id="实验结果">2.2. 实验结果</h2><ul>
-<li>基线<ul>
+</ul>
+<h2 id="实验结果">2.2.  实验结果</h2>
+<ul>
+<li>基线
+<ul>
 <li>GBT，输入特征为各音素的平均GOP分、各音素在句中的平均位置（B-1，I-2，E-3，S-4）、各音素的数量、句中元音时长的平均差</li>
 <li>BD-LSTM with attention，声学特征为音素GOP、元音时长的平均差，文本特征为音素embedding、音素位置embedding、预训练的GloVe word embedding</li>
 </ul>
 </li>
 </ul>
 <img src="https://note.youdao.com/yws/api/personal/file/WEB3897f724e308dd3f11f1d5bd91998a10?method=download&shareKey=43276c4d04b452c03fa73d45cb868411" width="393px">
-
-<h2 id="其它-1">2.3. 其它</h2><ul>
-<li>Lin B, Wang L. Attention-Based Multi-Encoder Automatic Pronunciation Assessment[C]&#x2F;&#x2F;ICASSP 2021-2021 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP). IEEE, 2021: 7743-7747.</li>
+<h2 id="其它-2">2.3.  其它</h2>
+<ul>
+<li>Lin B, Wang L. Attention-Based Multi-Encoder Automatic Pronunciation Assessment[C]//ICASSP 2021-2021 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP). IEEE, 2021: 7743-7747.</li>
 </ul>
-<h1 id="2021-Transfer-Learning">3. 2021 Transfer Learning</h1><ul>
+<h1 id="2021-transfer-learning">3.  2021 Transfer Learning</h1>
+<ul>
 <li>作者：腾讯智能平台产品部</li>
 <li>发表信息：Interspeech 2021</li>
 <li>被引用次数：6</li>
 <li><font color="red">创新点：当前基于DNN-HMM的GOP计算存在许多局限性。相较于传统方案采用ASR AM计算GOP等评分特征，提出直接采用AM提取的深层特征进行评分。迁移学习：采用ASR预训练模型，用评分任务fine-tune。相较于AM参数量，可采用特定的评分任务快速fine tune评分模型</font></li>
 </ul>
-<h2 id="系统结构-2">3.1. 系统结构</h2><div style="display: inline-block; width: 50%;">
-
+<h2 id="系统结构-3">3.1.  系统结构</h2>
+<div style="display: inline-block; width: 50%;">
 <img src="https://note.youdao.com/yws/api/personal/file/WEBe06a9dd97f1e8da8052a976b113ce875?method=download&shareKey=398ca0c53b023a081355e6265d4e5e4c">
 </div>
-
 <div style="display: inline-block; vertical-align: bottom; width: 49%;">
-
 <ul>
-<li><p>输入：ASR AM提取的深层特征、<font color="red">强制对齐信息</font></p>
-</li>
-<li><p>基于强制对齐，对于各音素，对应帧的深层特征取均值，+ phone embedding</p>
-</li>
-<li><p>multi-head self-attention + 非线性变换，得到词级表示</p>
-</li>
-<li><p>self-attention + 非线性变换，得到句级表示</p>
-</li>
-<li><p>sigmoid，输出句级评分</p>
-</li></ul></div>
-
-<li><p>训练流程</p>
+<li>输入：ASR AM提取的深层特征、<font color="red">强制对齐信息</font></li>
+<li>基于强制对齐，对于各音素，对应帧的深层特征取均值，+ phone embedding</li>
+<li>multi-head self-attention + 非线性变换，得到词级表示</li>
+<li>self-attention + 非线性变换，得到句级表示</li>
+<li>sigmoid，输出句级评分</li>
+</ul>
+</div>
+<ul>
+<li>训练流程
 <ul>
 <li>预训练11层TDNN-HMM ASR声学模型，深层特征256维，非线性变换降为32维</li>
 <li>采用大量合成数据，用基于GOP的评分模型打分（low-quality），预训练评分模型</li>
 <li>采用少量指定任务的专家标注数据fine-tune</li>
 </ul>
 </li>
-
-<h2 id="评价-1">3.2. 评价</h2><ul>
-<li><p>数据集</p>
+</ul>
+<h2 id="评价-2">3.2.  评价</h2>
+<ul>
+<li>
+<p>数据集</p>
 <ul>
 <li>ASR：960h LibriSpeech + 1000h L2</li>
 <li>合成数据：50000句</li>
-<li>fine tune数据<ul>
+<li>fine tune数据
+<ul>
 <li>11000句（含1000句测试集），平均词数13，3位专家打分1-5</li>
 <li>Speechocean762（50%用作测试集，分数缩放至0-1）</li>
 </ul>
 </li>
 </ul>
 </li>
-<li><p>模型</p>
+<li>
+<p>模型</p>
 <ul>
 <li>LayerNorm</li>
 <li>参数量：AM 8165047；评分模型 20289</li>
 </ul>
 </li>
-<li><p>实验结果</p>
+<li>
+<p>实验结果</p>
 <table>
 <thead>
 <tr>
@@ -600,14 +609,15 @@
 <th>实验结论</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>对比基于GOP的SOTA：<br>输入音素GOP、embedding，2层BLSTM+MLP；<br>输入音素GOP均值、各音素的平均位置（BIES）、句子音素总数，GBT</td>
-<td><img src="https://note.youdao.com/yws/api/personal/file/WEB2584d9889200577d4e05c1c40b773378?method=download&shareKey=2ff0f42e16e7e3bd70ff3579ca55fa1d" alt="table2"></td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEB2584d9889200577d4e05c1c40b773378?method=download&amp;shareKey=2ff0f42e16e7e3bd70ff3579ca55fa1d" alt="table2"></td>
 <td></td>
 </tr>
 <tr>
 <td>对比输入特征<br>STPs：考虑转移概率</td>
-<td><img src="https://note.youdao.com/yws/api/personal/file/WEB41fd8d0028b57c6ac522716778d9bf76?method=download&shareKey=640db70f420eb058d02bf9acf6e4736c" alt="table3"></td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEB41fd8d0028b57c6ac522716778d9bf76?method=download&amp;shareKey=640db70f420eb058d02bf9acf6e4736c" alt="table3"></td>
 <td><font color="green">采用音素GOP特征，当前模型效果差于2BLSTM+MLP？</font></td>
 </tr>
 <tr>
@@ -617,50 +627,68 @@
 </tr>
 <tr>
 <td>self-attention机制：对比替换为平均</td>
-<td><img src="https://note.youdao.com/yws/api/personal/file/WEB448228dfdb5c057f5ff3834eb5266409?method=download&shareKey=a776ada79534cc24c131ec6d40c2d626" alt="table6"></td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEB448228dfdb5c057f5ff3834eb5266409?method=download&amp;shareKey=a776ada79534cc24c131ec6d40c2d626" alt="table6"></td>
 <td></td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 </li>
 </ul>
-<h2 id="其它-2">3.3. 其它</h2><ul>
-<li>Lin B, Wang L. Deep Feature Transfer Learning for Automatic Pronunciation Assessment[C]&#x2F;&#x2F;Interspeech. 2021: 4438-4442.</li>
+<h2 id="其它-3">3.3.  其它</h2>
+<ul>
+<li>Lin B, Wang L. Deep Feature Transfer Learning for Automatic Pronunciation Assessment[C]//Interspeech. 2021: 4438-4442.</li>
 </ul>
-<h1 id="2020-Multi-Modal">4. 2020 Multi Modal</h1><ul>
+<h1 id="2020-multi-modal">4.  2020 Multi Modal</h1>
+<ul>
 <li>作者：印度、哥伦比亚大学、SLTI公司</li>
 <li>被引用次数：9</li>
 <li><font color="red">创新点：提出了基于注意力融合的多模态端到端自发语音评分</font></li>
 </ul>
-<h2 id="系统结构-3">4.1. 系统结构</h2><img src="https://note.youdao.com/yws/api/personal/file/WEB4b48b1cf6ca4f879e1ddd50f955e5c96?method=download&shareKey=b833b0104a23cae2ad5f1e60d0e4287a" width="740px">
-
+<h2 id="系统结构-4">4.1.  系统结构</h2>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB4b48b1cf6ca4f879e1ddd50f955e5c96?method=download&shareKey=b833b0104a23cae2ad5f1e60d0e4287a" width="740px">
 <ul>
-<li>音频<ul>
+<li>音频
+<ul>
 <li>输入：log-scaled mel谱，采样频率16000Hz，帧长2048、hop size 512，mel band 128个，归一化，切分为固定帧数（128）的段</li>
 <li>CNN+BLSTM，每组(2*Conv1D+MaxPooling)后，filters数目double</li>
 </ul>
 </li>
-<li>文本<ul>
+<li>文本
+<ul>
 <li>non-native ASR，word embedding：300维glove embedding初始化，OOV词初始化为全0向量，模型训练时优化</li>
 </ul>
 </li>
-<li>拼接音频、文本表示<font color="red">（识别时需要输出单词起止时间）</font>，$h^{m}&#x3D;[h^{a}, h^{t}]$，attention<br>$$e_{t}&#x3D;h_{t}^{m} w_{a} ; a_{t}^{m}&#x3D;\frac{\exp \left(e_{t}\right)}{\sum_{i&#x3D;1}^{T} \exp \left(e_{i}\right)} ; c^{m}&#x3D;\sum_{t&#x3D;1}^{T} a_{t}^{m} h_{t}^{m}$$</li>
+<li>拼接音频、文本表示<font color="red">（识别时需要输出单词起止时间）</font>，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>h</mi><mi>m</mi></msup><mo>=</mo><mo stretchy="false">[</mo><msup><mi>h</mi><mi>a</mi></msup><mo separator="true">,</mo><msup><mi>h</mi><mi>t</mi></msup><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">h^{m}=[h^{a}, h^{t}]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">h</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">m</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.043556em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord"><span class="mord mathdefault">h</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">a</span></span></span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">h</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7935559999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">t</span></span></span></span></span></span></span></span></span><span class="mclose">]</span></span></span></span>，attention<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>e</mi><mi>t</mi></msub><mo>=</mo><msubsup><mi>h</mi><mi>t</mi><mi>m</mi></msubsup><msub><mi>w</mi><mi>a</mi></msub><mo separator="true">;</mo><msubsup><mi>a</mi><mi>t</mi><mi>m</mi></msubsup><mo>=</mo><mfrac><mrow><mi>exp</mi><mo>⁡</mo><mrow><mo fence="true">(</mo><msub><mi>e</mi><mi>t</mi></msub><mo fence="true">)</mo></mrow></mrow><mrow><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>T</mi></munderover><mi>exp</mi><mo>⁡</mo><mrow><mo fence="true">(</mo><msub><mi>e</mi><mi>i</mi></msub><mo fence="true">)</mo></mrow></mrow></mfrac><mo separator="true">;</mo><msup><mi>c</mi><mi>m</mi></msup><mo>=</mo><munderover><mo>∑</mo><mrow><mi>t</mi><mo>=</mo><mn>1</mn></mrow><mi>T</mi></munderover><msubsup><mi>a</mi><mi>t</mi><mi>m</mi></msubsup><msubsup><mi>h</mi><mi>t</mi><mi>m</mi></msubsup></mrow><annotation encoding="application/x-tex">e_{t}=h_{t}^{m} w_{a} ; a_{t}^{m}=\frac{\exp \left(e_{t}\right)}{\sum_{i=1}^{T} \exp \left(e_{i}\right)} ; c^{m}=\sum_{t=1}^{T} a_{t}^{m} h_{t}^{m}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">e</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">t</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9613919999999999em;vertical-align:-0.247em;"></span><span class="mord"><span class="mord mathdefault">h</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.7143919999999999em;"><span style="top:-2.4530000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">m</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.247em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">a</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">;</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.7143919999999999em;"><span style="top:-2.4530000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">m</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.247em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.597941em;vertical-align:-1.170941em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.427em;"><span style="top:-2.128769em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mop"><span class="mop op-symbol small-op" style="position:relative;top:-0.0000050000000000050004em;">∑</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.981231em;"><span style="top:-2.40029em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.2029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.29971000000000003em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop">exp</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;">(</span><span class="mord"><span class="mord mathdefault">e</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;">)</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mop">exp</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;">(</span><span class="mord"><span class="mord mathdefault">e</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">t</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.170941em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mpunct">;</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">c</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7143919999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">m</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:3.0954490000000003em;vertical-align:-1.267113em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.8283360000000002em;"><span style="top:-1.882887em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">t</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.050005em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.3000050000000005em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.267113em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.7143919999999999em;"><span style="top:-2.4530000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">m</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.247em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault">h</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.7143919999999999em;"><span style="top:-2.4530000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">m</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.247em;"><span></span></span></span></span></span></span></span></span></span></span></p>
+</li>
 </ul>
-<h2 id="实验结果-1">4.2. 实验结果</h2><ul>
-<li><p>数据集：题目难度、评分标准遵循Common European Framework of Reference (CEFR)标准，英语口语等级A2-C1（根据题目难度确定可以得到的最高分），人工分包含5个等级：A2、LB1、HB1、LB2、HB2，其中L、H分别表示low、high</p>
+<h2 id="实验结果-2">4.2.  实验结果</h2>
+<ul>
+<li>
+<p>数据集：题目难度、评分标准遵循Common European Framework of Reference (CEFR)标准，英语口语等级A2-C1（根据题目难度确定可以得到的最高分），人工分包含5个等级：A2、LB1、HB1、LB2、HB2，其中L、H分别表示low、high</p>
 </li>
-<li><p>为每个题目分别训练模型</p>
+<li>
+<p>为每个题目分别训练模型</p>
 </li>
-<li><p>评价指标：Quadratic Weighted Kappa (QWK)，衡量两个序列间的一致性。通常取值范围为0-1，若两者一致性低于随机分布，也可以为负数。</p>
-<p>$$\kappa&#x3D;1-\frac{\sum_{i, j} W_{i, j} O_{i, j}}{\sum_{i, j} W_{i, j} E_{i, j}}$$</p>
-<p>其中，$W$、$O$、$E$ 均为$N\times N$的矩阵，$N$为评分类别数，$W_{i, j}&#x3D;\frac{(i-j)^{2}}{(N-1)^{2}}$，$O_{i, j}$表示评分为$i$、人工分为$j$的样本数，<font color="green"> $E_{i, j}$表示分数期望的histogram矩阵（计算方式：人工分的histogram向量与机器分的histogram向量的外积，归一化使其与矩阵$O$有相同的和）。QWK不适用于类别不均衡的数据，对样本数少的类特别敏感</font>。</p>
+<li>
+<p>评价指标：Quadratic Weighted Kappa (QWK)，衡量两个序列间的一致性。通常取值范围为0-1，若两者一致性低于随机分布，也可以为负数。</p>
+<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>κ</mi><mo>=</mo><mn>1</mn><mo>−</mo><mfrac><mrow><munder><mo>∑</mo><mrow><mi>i</mi><mo separator="true">,</mo><mi>j</mi></mrow></munder><msub><mi>W</mi><mrow><mi>i</mi><mo separator="true">,</mo><mi>j</mi></mrow></msub><msub><mi>O</mi><mrow><mi>i</mi><mo separator="true">,</mo><mi>j</mi></mrow></msub></mrow><mrow><munder><mo>∑</mo><mrow><mi>i</mi><mo separator="true">,</mo><mi>j</mi></mrow></munder><msub><mi>W</mi><mrow><mi>i</mi><mo separator="true">,</mo><mi>j</mi></mrow></msub><msub><mi>E</mi><mrow><mi>i</mi><mo separator="true">,</mo><mi>j</mi></mrow></msub></mrow></mfrac></mrow><annotation encoding="application/x-tex">\kappa=1-\frac{\sum_{i, j} W_{i, j} O_{i, j}}{\sum_{i, j} W_{i, j} E_{i, j}}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">κ</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:2.697636em;vertical-align:-1.1218180000000002em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.575818em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mop"><span class="mop op-symbol small-op" style="position:relative;top:-0.0000050000000000050004em;">∑</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.16195399999999993em;"><span style="top:-2.40029em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mpunct mtight">,</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.43581800000000004em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">W</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mpunct mtight">,</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mpunct mtight">,</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.825818em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mop"><span class="mop op-symbol small-op" style="position:relative;top:-0.0000050000000000050004em;">∑</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.16195399999999993em;"><span style="top:-2.40029em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mpunct mtight">,</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.43581800000000004em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">W</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mpunct mtight">,</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mpunct mtight">,</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.1218180000000002em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+<p>其中，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>W</mi></mrow><annotation encoding="application/x-tex">W</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">W</span></span></span></span>、<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi></mrow><annotation encoding="application/x-tex">O</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span></span></span></span>、<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>E</mi></mrow><annotation encoding="application/x-tex">E</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span></span></span></span> 均为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>N</mi><mo>×</mo><mi>N</mi></mrow><annotation encoding="application/x-tex">N\times N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span></span></span></span>的矩阵，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span></span></span></span>为评分类别数，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>W</mi><mrow><mi>i</mi><mo separator="true">,</mo><mi>j</mi></mrow></msub><mo>=</mo><mfrac><mrow><mo stretchy="false">(</mo><mi>i</mi><mo>−</mo><mi>j</mi><msup><mo stretchy="false">)</mo><mn>2</mn></msup></mrow><mrow><mo stretchy="false">(</mo><mi>N</mi><mo>−</mo><mn>1</mn><msup><mo stretchy="false">)</mo><mn>2</mn></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">W_{i, j}=\frac{(i-j)^{2}}{(N-1)^{2}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">W</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mpunct mtight">,</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.62892em;vertical-align:-0.52em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.10892em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mopen mtight">(</span><span class="mord mathdefault mtight" style="margin-right:0.10903em;">N</span><span class="mbin mtight">−</span><span class="mord mtight">1</span><span class="mclose mtight"><span class="mclose mtight">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7463142857142857em;"><span style="top:-2.786em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.485em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mopen mtight">(</span><span class="mord mathdefault mtight">i</span><span class="mbin mtight">−</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span><span class="mclose mtight"><span class="mclose mtight">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8913142857142857em;"><span style="top:-2.931em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.52em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span>，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>O</mi><mrow><mi>i</mi><mo separator="true">,</mo><mi>j</mi></mrow></msub></mrow><annotation encoding="application/x-tex">O_{i, j}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mpunct mtight">,</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>表示评分为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span>、人工分为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span></span></span></span>的样本数，<font color="green"> <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>E</mi><mrow><mi>i</mi><mo separator="true">,</mo><mi>j</mi></mrow></msub></mrow><annotation encoding="application/x-tex">E_{i, j}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mpunct mtight">,</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>表示分数期望的histogram矩阵（计算方式：人工分的histogram向量与机器分的histogram向量的外积，归一化使其与矩阵<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi></mrow><annotation encoding="application/x-tex">O</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span></span></span></span>有相同的和）。QWK不适用于类别不均衡的数据，对样本数少的类特别敏感</font>。</p>
 </li>
-<li><p>采用hyperopt包优化每个分数之间round的阈值，以最大化QWK</p>
+<li>
+<p>采用hyperopt包优化每个分数之间round的阈值，以最大化QWK</p>
 </li>
-<li><p>实验结果<br><img src="https://note.youdao.com/yws/api/personal/file/WEB17d08d0c67c81e666db7ed3145e80ade?method=download&shareKey=0f1ddebcfd19bc8468516e55f866ff3e" alt="实验结果"><br>*MMAF: Multi-modal with Attention Fusion； BDRCNNAttn [A]、BDLSTMAttn  [T]：单模态基线，attention权重仅赋予音频或文本</p>
+<li>
+<p>实验结果<br>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB17d08d0c67c81e666db7ed3145e80ade?method=download&amp;shareKey=0f1ddebcfd19bc8468516e55f866ff3e" alt="实验结果"><br>
+*MMAF: Multi-modal with Attention Fusion； BDRCNNAttn [A]、BDLSTMAttn  [T]：单模态基线，attention权重仅赋予音频或文本</p>
 </li>
-<li><p>实验结论：多模态注意力融合比单模态网络效果更好</p>
+<li>
+<p>实验结论：多模态注意力融合比单模态网络效果更好</p>
 </li>
-<li><p>存在的问题：未与SOTA基线对比</p>
+<li>
+<p>存在的问题：未与SOTA基线对比</p>
 </li>
 </ul>
 <table>
@@ -671,18 +699,21 @@
 <th>实验结论</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>attention分布、与题目难度的关系</td>
-<td><img src="https://note.youdao.com/yws/api/personal/file/WEBc6463effb413ddf4d7584db5ddd33cd9?method=download&shareKey=52862b06a3026ef3a7ef93d9430d3785" alt="attention分布1"></td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEBc6463effb413ddf4d7584db5ddd33cd9?method=download&amp;shareKey=52862b06a3026ef3a7ef93d9430d3785" alt="attention分布1"></td>
 <td>文本:音频attention权重比约为85:15 <br> 低难度题目（prompt 1），attention权重向音频特征倾斜；高难度题目（prompt 4），attention权重向识别文本特征倾斜 <br> 评分越高，attention权重越向识别文本特征倾斜</td>
 </tr>
 <tr>
 <td>attention分布定性分析</td>
-<td><img src="https://note.youdao.com/yws/api/personal/file/WEBfafd3a21834490651a22fd68420efd64?method=download&shareKey=8958497f6fba8feaa1a0a1dd1eee2f86" alt="attention分布2"></td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEBfafd3a21834490651a22fd68420efd64?method=download&amp;shareKey=8958497f6fba8feaa1a0a1dd1eee2f86" alt="attention分布2"></td>
 <td>对含uh、um等填充词，false starts，停顿的片段，attention权重偏向音频，对含关键信息的流利片段，attention权重偏向文本，如图2（prompt 4主题为smoking）</td>
 </tr>
-</tbody></table>
-<h2 id="其它-3">4.3. 其它</h2><ul>
+</tbody>
+</table>
+<h2 id="其它-4">4.3.  其它</h2>
+<ul>
 <li>Grover M S, Kumar Y, Sarin S, et al. Multi-modal automated speech scoring using attention fusion[J]. arXiv preprint arXiv:2005.08182, 2020.</li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
@@ -744,7 +775,7 @@
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
                 <div class="card-title">
-                    <a href="/blog/yu-yin/yu-yin-ping-ce/ping-fen/shen-du-xue-xi/"> 基于深度学习的语音评分</a>
+                    <a href="/blog/yu-yin/gong-ju-bao/wenet/dai-ma/"> WeNet代码</a>
                 </div>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
@@ -754,7 +785,7 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-07-23
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-08-12
                         </span>
                         <span class="publish-author">
                             
@@ -764,12 +795,12 @@
                                     语音
                                 </a>
                             
-                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E8%AF%84%E6%B5%8B/" class="post-category">
-                                    语音评测
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E5%B7%A5%E5%85%B7%E5%8C%85/" class="post-category">
+                                    工具包
                                 </a>
                             
-                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E8%AF%84%E6%B5%8B/%E8%AF%84%E5%88%86/" class="post-category">
-                                    评分
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E5%B7%A5%E5%85%B7%E5%8C%85/WeNet/" class="post-category">
+                                    WeNet
                                 </a>
                             
                             
@@ -787,7 +818,7 @@
             </div>
             <div class="card">
                 <div class="card-title">
-                    <a href="/blog/yu-yin/yu-yin-ping-ce/ping-fen/duo-wei-du-duo-li-du/"> 多维度、多粒度语音评分</a>
+                    <a href="/blog/yu-yin/yu-yin-ping-ce/ping-fen/shen-du-xue-xi/"> 基于深度学习的语音评分</a>
                 </div>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
