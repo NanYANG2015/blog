@@ -8,9 +8,8 @@
     <meta name="description" content="
 作者：中科院、阿里达摩院
 创新点
-
 采用冻结语音 encoder (Whisper-small)、指令跟随 LLM (Llama-2-7B)，学习轻量级的 modality adapter 的方式，使 LLM 具有处理语音输入的能力。
-由">
+由于">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -438,59 +437,48 @@
             <div id="articleContent">
                 <ul>
 <li>作者：中科院、阿里达摩院</li>
-<li><font color="red">创新点
-<ul>
+<li><font color="red">创新点<ul>
 <li>采用冻结语音 encoder (Whisper-small)、指令跟随 LLM (Llama-2-7B)，学习轻量级的 modality adapter 的方式，使 LLM 具有处理语音输入的能力。</li>
 <li>由于直接采用 ASR 任务训练 adapter，结果 LLM 只能完成 ASR 任务，失去了遵循指令的能力。</li>
 <li>提出采用文本续写任务训练 adapter，认为输入音频、或对应的转写文本，LLM 应输出一致的续写文本。</li>
 <li>实验表明，在语音识别、语音翻译、情感识别、语音对话、非英语语音输入任务上，模型表现出一定的处理能力，但与 SOTA 仍有差距。</li></ul></font></li>
 </ul>
 
-<li>系统结构<br>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB3858aaf55d71d711a78baf0eb73813d8?method=download&shareKey=4523899aea7ad97a70e028be48838e5e" width="612"></li>
-<li>训练
-<ul>
+<li>系统结构<img src="https://note.youdao.com/yws/api/personal/file/WEB3858aaf55d71d711a78baf0eb73813d8?method=download&shareKey=4523899aea7ad97a70e028be48838e5e" width="612"></li>
+<li>训练<ul>
 <li>LLM 指令跟随：采用指令集 Alpaca-52K 微调 Llama-2 3 epoch。相较于直接使用 Llama-2 Chat，后续可将指令集改为多模态指令集。</li>
-<li>先输入转写文本，提示 LLM 续写。将上述数据作为监督数据集（8.8M 对），输入 encoder 输出的语音表示，要求 LLM 续写出相同的文本。训练 adapter 1 epoch。
-<ul>
-<li>ASR 数据集：LibriSpeech + GigaSpeech + Common Voice 2.0</li>
-</ul>
-<pre class="line-numbers language-none"><code class="language-none">###[Human]:Continue the following text in a coherent and engaging style with less than 40 words.
+<li>先输入转写文本，提示 LLM 续写。将上述数据作为监督数据集（8.8M 对），输入 encoder 输出的语音表示，要求 LLM 续写出相同的文本。训练 adapter 1 epoch。<ul>
+<li>ASR 数据集：LibriSpeech + GigaSpeech + Common Voice 2.0<pre class="line-numbers language-none"><code class="language-none">###[Human]:Continue the following text in a coherent and engaging style with less than 40 words.
 &lt;transcript&gt;\n\n\n###[Assistant]:
 
 ###[Human]:Continue the following text in a coherent and engaging style with less than 40 words.
-&lt;speech features&gt;\n\n\n###[Assistant]:&lt;text continuation&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+&lt;speech features&gt;\n\n\n###[Assistant]:&lt;text continuation&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
 </li>
 </ul>
 </li>
-<li>模型结构
-<ul>
-<li>adapter: subsampler + bottleneck + layernorm
-<ul>
+<li>模型结构<ul>
+<li>adapter: subsampler + bottleneck + layernorm<ul>
 <li>subsampler: 3层 Conv1d (kernel 5, pad 2, stride 2)，8倍降采样。</li>
 <li>bottleneck: 2层全连接，512。</li>
 </ul>
 </li>
 </ul>
 </li>
-<li>实验：zero-shot 语音识别、语音翻译、口语理解（情感识别）、语音对话、非英语语音输入。
-<ul>
-<li>
-<p>语音识别</p>
+<li>实验：zero-shot 语音识别、语音翻译、口语理解（情感识别）、语音对话、非英语语音输入。<ul>
+<li><p>语音识别</p>
 <img src="https://note.youdao.com/yws/api/personal/file/WEB76e3822331bf8b29f0666cddf0f531d6?method=download&shareKey=fdc6b928064ccf8b3495df340176046a" width="460">
 \*BERTScore: 评价语义相似度。
+
 <p>续写任务倾向于语义层面的对齐。BLSP 可以正确识别大多数单词，但并不忠实，比如由于 LLM，插入语音中漏掉的介词。</p>
 </li>
-<li>
-<p>在情感识别任务上，BLSP 比 ASR + LLM 性能更好，与 text + LLM 性能相当。</p>
+<li><p>在情感识别任务上，BLSP 比 ASR + LLM 性能更好，与 text + LLM 性能相当。</p>
 </li>
-<li>
-<p>可以输入中文语音进行多轮对话，但响应总是英文的，因为训练集是纯英文的。</p>
+<li><p>可以输入中文语音进行多轮对话，但响应总是英文的，因为训练集是纯英文的。</p>
 </li>
 </ul>
 </li>
-<li>展望
-<ul>
+<li>展望<ul>
 <li>减小性能差距。</li>
 <li>利用说话人识别、情感识别等任务，使模型学习音调、情感等副语言信息。</li>
 </ul>

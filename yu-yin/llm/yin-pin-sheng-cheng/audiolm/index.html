@@ -4,10 +4,12 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Qwen-Audio, 梦园">
+    <meta name="keywords" content="AudioLM, 梦园">
     <meta name="description" content="
-作者：阿里
-创新点：Qwen-Audio 训练集涵盖30多个任务、各种音频类型（如语音、自然声音、音乐、歌曲）、8个语种，以提高通用音频理解能力。设计了多任务训练框架，通过共享、特定的标签分别实现知识共享、避免任务间的干扰。进一步采用有监">
+作者：Google, 2022.09。
+功能：输入 prompt 音频（3s），生成延续，在语法、语义上连贯，同时保持说话人的音色、韵律、录音环境。还能扩展到钢琴音乐延续。
+创新点
+音频表示同时采用语义 token、声学 token，兼顾">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -21,7 +23,7 @@
 
     
 
-    <title>Qwen-Audio | 梦园</title>
+    <title>AudioLM | 梦园</title>
     <link rel="icon" type="image/png" href="/blog/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/blog/libs/awesome/css/all.min.css">
@@ -374,7 +376,7 @@
                     <div class="row">
                         <div class="col s12 m12 l12">
                             <div class="brand">
-                                <h1 class="description center-align post-title">Qwen-Audio</h1>
+                                <h1 class="description center-align post-title">AudioLM</h1>
                             </div>
                         </div>
                     </div>
@@ -395,6 +397,10 @@
                                 LLM
                             </a>
                         
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/LLM/%E9%9F%B3%E9%A2%91%E7%94%9F%E6%88%90/" class="post-category">
+                                音频生成
+                            </a>
+                        
                     </div>
                     
                 </div>
@@ -404,14 +410,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2023-12-01
+                    2024-05-22
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-12-01
+                    2024-05-22
                 </div>
                 
 
@@ -434,54 +440,131 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <ul>
-<li>作者：阿里</li>
-<li><font color="red">创新点：Qwen-Audio 训练集涵盖30多个任务、各种音频类型（如语音、自然声音、音乐、歌曲）、8个语种，以提高通用音频理解能力。设计了多任务训练框架，通过共享、特定的标签分别实现知识共享、避免任务间的干扰。进一步采用有监督指令微调，训练了 Qwen-Audio-Chat。</font></li>
+<li>作者：Google, 2022.09。</li>
+<li><font color="red">功能：输入 prompt 音频（3s），生成延续，在语法、语义上连贯，同时保持说话人的音色、韵律、录音环境。还能扩展到钢琴音乐延续。</font></li>
+<li>创新点<ul>
+<li>音频表示同时采用语义 token、声学 token，兼顾了长时结构的一致性（如语音中的语法、语义，音乐中的旋律、和弦、节奏）、高合成质量。</li>
+<li>采用3阶段 decoder-only Transformer LM，分别建模语义、粗粒度声学表示、细粒度声学表示。每个阶段的 token 序列长度更小。</li>
 </ul>
-<h1 id="模型结构">1. 模型结构</h1><img src="https://note.youdao.com/yws/api/personal/file/WEB504c00474c558ba31347a1440867047a?method=download&shareKey=7adde9d8895020edc12151aa6d99d123" width="877">
+</li>
+<li>优点<ul>
+<li>不需要带标注的训练音频。</li>
+</ul>
+</li>
+</ul>
+<h1 id="系统结构">1. 系统结构</h1><ul>
+<li>音频表示：离散 token<br>语义 token：采用自监督表示学习 w2v-BERT，表征局部内容、长时结构；<br>声学 token：采用 neural audio codec SoundStream，实现高质量的合成。<img src="https://note.youdao.com/yws/api/personal/file/WEB7e9ed734208fcc5c20f2e283870071c9?method=download&shareKey=48506717ee8cd986aeb067812c47179c" width="584"></li>
+<li>w2v-BERT XL 0.6B<ul>
+<li>基于 Conformer，MLM loss + 对比 loss。40ms 帧率。</li>
+<li>中间层表示（MLM 第7层）k-means 聚类。聚类前进行归一化（各维 0均值、单位方差）可以显著地提高音素区分性。</li>
+</ul>
+</li>
+<li>SoundStream<ul>
+<li>residual vector quantizer (RVQ) 由 Q 个词表为 N 的量化器组成。16kHz、20ms 帧率，比特率为 $50 * Q * \log_{2}{N} \mathrm{bps}$。</li>
+<li>重建损失 + 对抗损失，端到端训练。</li>
+</ul>
+</li>
+<li>decoder-only Transformer 自回归 LM。</li>
+</ul>
+<h2 id="3-阶段建模">1.1. 3 阶段建模</h2><img src="https://note.youdao.com/yws/api/personal/file/WEB5478fde1b8235d245d20aa9cfba1f22e?method=download&shareKey=b38bac8bd4dceef3a7d5dd174c1b2a58" width="1184">
 
+<p>3 个 decoder-only Transformer。</p>
+<ol>
+<li>语义建模：自回归预测语义 token $p\left(z_t \mid z_{&lt;t}\right)$。</li>
+<li>粗声学建模：以语义 token 为条件，只建模粗声学 token（前 $Q^{\prime}$ 个量化器），恢复说话人、录音环境等声学特性。token 序列为 $\left(z_1, z_2, \ldots, z_{T_S}, y_1^1, y_1^2, \ldots, y_1^{Q^{\prime}}, y_2^1, y_2^2, \ldots,, y_2^{Q^{\prime}}, \ldots, y_{T_A}^{Q^{\prime}}\right)$，建模 $p\left(y_t^q \mid z, y_{&lt;t}^{\leq Q^{\prime}}, y_t^{&lt;q}\right)$ $q \leq Q^{\prime}$，其中，$y$ 序列为 $y+o$，$o_i&#x3D;(i-1 \bmod Q^{\prime}) \cdot N$。<font color="green">训练时 $y_1^1$ 为第一个预测的 token。</font></li>
+<li>细粒度声学建模：$p\left(y_t^q \mid y^{\leq Q^{\prime}}, y_{&lt;t}^{&gt;Q^{\prime}}, y_t^{&lt;q}\right)$ $q &gt; Q^{\prime}$，去除第二阶段有损压缩导致的 artifacts。<br>由于细粒度声学 token 由粗粒度 token 局部确定，在 3s 的非重叠块上执行。因此，第3阶段不受目标音频序列长度影响，且可以采用更大的 Q 来实现更高的质量。</li>
+</ol>
 <ul>
-<li><p>音频 encoder：Whisper Large-V2 初始化，640M 参数。</p>
-</li>
-<li><p>LLM:  Qwen-7B 初始化。</p>
-</li>
-<li><p>&lt;|startoftranscripts|&gt;: 包括识别、翻译任务。否则为  &lt;|startofanalysis|&gt;。</p>
-</li>
-<li><p>冻结 LLM，只优化音频 encoder。</p>
-</li>
-<li><p>训练集</p>
-<img src="https://note.youdao.com/yws/api/personal/file/WEBbb6e381801187354e2e02066512ab25a?method=download&shareKey=fef1c2e90d12a751e920547b681c1389" width="712"></li>
-<li><p><font color="red">ASR、词级时间戳预测联合训练，可以改善相关的 QA 任务及 ASR 的性能。</font></p>
-</li>
+<li>条件独立假设：语义 token 与 声学 token 条件独立；细粒度声学 token 与语义 token 条件独立。</li>
+<li>优点：相较于语义 token、声学 token 交替，合并第2、第3阶段，该方案每个阶段的 token 序列长度减小了，计算更高效。</li>
 </ul>
-<h1 id="Qwen-Audio-Chat-有监督指令微调">2. Qwen-Audio-Chat 有监督指令微调</h1><ul>
-<li>数据集构建<ul>
-<li>为每个任务创建示例。</li>
-<li>采用 GPT-3.5 根据原始文本 label 生成问题、答案。</li>
-<li>自建音频对话数据集，引入推理、故事生成、多音频理解能力。</li>
+<h2 id="推理">1.2. 推理</h2><ul>
+<li>无条件生成。无条件采样语义 token。可以生成具有不同说话人、韵律、声学环境特征的，语法、语义一致的，多样化的语音。</li>
+<li>声学生成。给定语义 token，合成语音的文本一致，具有不同的声学特征。</li>
+<li>延续。输入简短的 prompt 音频。</li>
+</ul>
+<h1 id="实验">2. 实验</h1><ul>
+<li>训练集<br>AudioLM 所有组件（w2v-BERT、k-means、SoundStream、decoder-only Transformer）的训练集都为 Libri-Light  unlab-60k（英语）。</li>
+<li>SoundStream<br>$Q&#x3D;12$，$N&#x3D;1024$，$Q^{\prime}&#x3D;4$。4个卷积 block stride (2,4,5,8)，音频采样率 16kHz，帧率 20ms。</li>
+<li>decoder-only Transformer<ul>
+<li>3个阶段的模型结构一致，各 0.3B，参数详见论文。</li>
+<li>3个阶段，音频随机裁剪到 30s、10s、3s。删除语义 token 的连续重复。</li>
 </ul>
 </li>
-<li>格式<ul>
-<li>ChatML (Openai) 格式<img src="https://note.youdao.com/yws/api/personal/file/WEB59837adac081c0166d448d0d4a7c5d88?method=download&shareKey=bc6f79f88bb206809638b622c991f35f" width="767"></li>
-<li>采用 “Audio id:” 标记音频，其中 id 为对话中音频输入的顺序，以处理多个音频输入。</li>
+<li>训练<br>训练音频 encoder、decoder -&gt; 冻结，训练 LM。解耦、简化训练流程。</li>
+<li>推理<br>3个阶段均采用采样，温度系数分别为0.6、0.8、0.6，权衡生成语音的多样性、语义一致性。</li>
+<li>对比语义 token、声学 token<ul>
+<li>音素区分性<ul>
+<li>方式：将 w2v-BERT k-means 聚类质心表示、SoundStream encoder 输出，转换为 RVQ embedding，计算 ABX 错误率。</li>
+<li>评价指标：ABX 错误率。考虑仅中心 phone 不同的 triphone，ABX 错误率为 X 更接近 B（中心 phone 不同）而不是 A（中心 phone 相同）的比例。<ul>
+<li>within-speaker: A、B、X 来自同一说话人。</li>
+<li>across-speaker: A、B 来自同一说话人，X 来自另一说话人。</li>
 </ul>
 </li>
-<li>数据量：20k。</li>
-<li>冻结音频 encoder，只优化 LLM。</li>
 </ul>
-<h1 id="评价">3. 评价</h1><img src="https://note.youdao.com/yws/api/personal/file/WEB179553178f47a6f5aaee68d39d93ca85?method=download&shareKey=afbf31c256b2649745c9243ff185b8ba" width="621">
-
-<img src="https://note.youdao.com/yws/api/personal/file/WEBd1efb096bb8bf2830b4a7eb1786c71f7?method=download&shareKey=a09a3b51187c841e1d8fdad55fdafdf5" width="767">
-
-<ul>
-<li><font color="red">应用Demo <a target="_blank" rel="noopener" href="https://qwen-audio.github.io/Qwen-Audio/">https://qwen-audio.github.io/Qwen-Audio/</a> </font></li>
+</li>
+<li>重建质量<ul>
+<li>方式：训练 SoundStream decoder，输入 token 重建音频。</li>
+<li>评价指标：ViSQOL score，参考音频、重建音频之间的感知相似度。</li>
 </ul>
+</li>
+<li>训练 decoder-only Transformer，采用输出 token 合成音频。<ul>
+<li>采用语义 token，音频合成质量很差。</li>
+<li>采用声学 token，保留了说话人特征、录音环境，但内容往往类似于 babbling。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>实验</th>
+<th>结果</th>
+<th>结论</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>对比语义 token、声学 token</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEB83e195cc1dc022a6ca8f7ed21ba07560?method=download&shareKey=ac47314155debfbd09bb877c610ad6c1" width="1176"></td>
+<td>语义 token 包含了长时结构，声学 token 保留了说话人特征、录音环境。<br> 相较于 $Q&#x3D;4$（2000bps），$Q&#x3D;12$（6000bps）显著提高了生成音频的质量。</td>
+</tr>
+<tr>
+<td>语义建模超参数选择</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEB02ac67da6a5c3ae42d72104b22d776ba?method=download&shareKey=81e7f0785a75b8a07730ff360d98fd14" width="582"><br>* 另外，主观评价不同超参数下生成的音频。</td>
+<td>采用 w2v-BERT XL 0.6B MLM 第7层的表示；<br>k-means 聚类 $K&#x3D;1024$。</td>
+</tr>
+<tr>
+<td>语义 token<br>给定语义 token 生成音频，ASR</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEB1f0c712205e17dfe0dd6bf60b00b639f?method=download&shareKey=181dadfdba4ff4d82fc6d21b074b6155" width="550"></td>
+<td>CER、WER 较低：语言内容被语义 token 完全表示。<br> AudioLM WER&#x2F;CER 相对较高，而SoundStream 重建音频与原始音频的 WER&#x2F;CER 接近：AudioLM WER&#x2F;CER 主要来源于语义 token 到声学 token 的映射。<br>WER 的主要来源：专有名词合成、&lt;eos&gt;。</td>
+</tr>
+<tr>
+<td>声学 token<br>说话人分类</td>
+<td>上一实验中，给定语义 token，多次采样，说话人、录音环境变化较大，韵律、语调变化较小。<br><img src="https://note.youdao.com/yws/api/personal/file/WEB4b8cffc907ad2ecacc2d2f04142be561?method=download&shareKey=4fdf85b21ff4a1f7d34537a84c9a97e3" width="564"></td>
+<td>说话人、录音环境信息由声学 token 表示。</td>
+</tr>
+<tr>
+<td>语义 token LM 的语言学知识<br>sWUGGY：给定单词、发音相近的 non-word，模型是否对正确单词有更高的概率。<br>sBLIMP：给定语法正确的句子、语法不正确的相似的句子，模型对前者概率更高的比例。</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEBdc9cb9b175df27d911ee93bd08b6c3c8?method=download&shareKey=03cee79773d8ba262c19f6cacdcae155" width="580"></td>
+<td>不需要文本有监督数据，语义 token LM 词法、句法判断能力较强。</td>
+</tr>
+<tr>
+<td>主观评价<br>区分原始录音与AudioLM 生成的延续。原始录音也经过 SoundStream 压缩。</td>
+<td>人工区分正确率 51.2%，接近随机猜。</td>
+<td></td>
+</tr>
+<tr>
+<td>钢琴延续<br>在钢琴音乐数据集上重训所有组件。Q&#x3D;3, N&#x3D;16384，不需要第3阶段。<br>主观评价：对仅基于声学 token 生成的延续、AudioLM 生成的偏好</td>
+<td>83.3% 偏好 AudioLM 的生成。</td>
+<td></td>
+</tr>
+</tbody></table>
+<h1 id="安全性">3. 安全性</h1><p>训练了分类器区分 AudioLM 生成的语音、压缩后的真实录音，准确率 98.6%。</p>
 <h1 id="其它">4. 其它</h1><ul>
-<li>Chu Y, Xu J, Zhou X, et al. Qwen-Audio: Advancing Universal Audio Understanding via Unified Large-Scale Audio-Language Models[J]. arXiv preprint arXiv:2311.07919, 2023.</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/QwenLM/Qwen-Audio">https://github.com/QwenLM/Qwen-Audio</a></li>
-<li>Qwen-Audio-Chat 微调：<a target="_blank" rel="noopener" href="https://github.com/modelscope/swift/tree/main/examples/pytorch/llm/scripts/qwen_audio_chat/lora">https://github.com/modelscope/swift/tree/main/examples/pytorch/llm/scripts/qwen_audio_chat/lora</a></li>
-</ul>
-<h1 id="代码">5. 代码</h1><ul>
-<li>长序列：<code>use_dynamc_ntk=true</code> <code>use_logn_attn=true</code></li>
+<li>Borsos Z, Marinier R, Vincent D, et al. Audiolm: a language modeling approach to audio generation[J]. IEEE&#x2F;ACM Transactions on Audio, Speech, and Language Processing, 2023.</li>
+<li><a target="_blank" rel="noopener" href="https://google-research.github.io/seanet/audiolm/examples">https://google-research.github.io/seanet/audiolm/examples</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/lucidrains/audiolm-pytorch">https://github.com/lucidrains/audiolm-pytorch</a></li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
@@ -537,51 +620,13 @@
     <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
-            <div class="card">
-                <div class="card-title">
-                    <a href="/blog/yu-yin/llm/pengi/"> Pengi</a>
-                </div>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2023-12-01
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/" class="post-category">
-                                    语音
-                                </a>
-                            
-                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/LLM/" class="post-category">
-                                    LLM
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
             </div>
             <div class="card">
                 <div class="card-title">
-                    <a href="/blog/yu-yin/llm/blsp/"> BLSP</a>
+                    <a href="/blog/yu-yin/llm/yin-pin-sheng-cheng/audiolm/"> AudioLM</a>
                 </div>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
@@ -591,7 +636,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-11-24
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-05-22
                             </span>
                         <span class="publish-author">
                             
@@ -603,6 +648,54 @@
                             
                             <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/LLM/" class="post-category">
                                     LLM
+                                </a>
+                            
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/LLM/%E9%9F%B3%E9%A2%91%E7%94%9F%E6%88%90/" class="post-category">
+                                    音频生成
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <div class="card-title">
+                    <a href="/blog/yu-yin/llm/yin-pin-sheng-cheng/audiopalm/"> AudioPaLM</a>
+                </div>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-05-10
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/" class="post-category">
+                                    语音
+                                </a>
+                            
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/LLM/" class="post-category">
+                                    LLM
+                                </a>
+                            
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/LLM/%E9%9F%B3%E9%A2%91%E7%94%9F%E6%88%90/" class="post-category">
+                                    音频生成
                                 </a>
                             
                             
