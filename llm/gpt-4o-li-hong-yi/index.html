@@ -4,15 +4,11 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="AudioPaLM, 梦园">
-    <meta name="description" content="
-作者：Google，2023.06。
-功能：speech-to-speech translation、speech-to-text translation、ASR、MT、TTS，多语种。
+    <meta name="keywords" content="李宏毅老师 《GPT-4o 背后可能的语音技术猜测》, 梦园">
+    <meta name="description" content="视频地址 https://www.youtube.com/watch?v=CgQ3lUOpXgc&amp;amp;ab_channel=Hung-yiLee
+1.  audio tokenization
 
-1.  系统结构
-
-
-输入：在输入前加任务 ta">
+audio encoder + codeb">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -26,7 +22,7 @@
 
     
 
-    <title>AudioPaLM | 梦园</title>
+    <title>李宏毅老师 《GPT-4o 背后可能的语音技术猜测》 | 梦园</title>
     <link rel="icon" type="image/png" href="/blog/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/blog/libs/awesome/css/all.min.css">
@@ -379,7 +375,7 @@
                     <div class="row">
                         <div class="col s12 m12 l12">
                             <div class="brand">
-                                <h1 class="description center-align post-title">AudioPaLM</h1>
+                                <h1 class="description center-align post-title">李宏毅老师 《GPT-4o 背后可能的语音技术猜测》</h1>
                             </div>
                         </div>
                     </div>
@@ -392,16 +388,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/" class="post-category">
-                                语音
-                            </a>
-                        
-                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/LLM/" class="post-category">
+                            <a href="/blog/categories/LLM/" class="post-category">
                                 LLM
-                            </a>
-                        
-                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/LLM/%E9%9F%B3%E9%A2%91%E7%94%9F%E6%88%90/" class="post-category">
-                                音频生成
                             </a>
                         
                     </div>
@@ -413,14 +401,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2024-05-10
+                    2024-05-23
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-05-22
+                    2024-05-26
                 </div>
                 
 
@@ -442,156 +430,87 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <ul>
-<li>作者：Google，2023.06。</li>
-<li>功能：speech-to-speech translation、speech-to-text translation、ASR、MT、TTS，多语种。</li>
-</ul>
-<h1 id="系统结构">1.  系统结构</h1>
-<img src="https://note.youdao.com/yws/api/personal/file/WEBf8e7c81e1d1e383223684f3e4e69f8b9?method=download&shareKey=6f0854513c1b21d961fdf2ba3169b85e" width="572">
+                <p>视频地址 <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=CgQ3lUOpXgc&amp;ab_channel=Hung-yiLee">https://www.youtube.com/watch?v=CgQ3lUOpXgc&amp;ab_channel=Hung-yiLee</a></p>
+<h1 id="audio-tokenization">1.  audio tokenization</h1>
 <ul>
-<li>输入：在输入前加任务 tag 前缀，以及输入语种、输出语种（可选，若与输入语种不一致）。任务 tag 采用 normal text，而非 special tokens。输入语种对低资源语种有益。</li>
-<li>audio encoder：USM-v2，相较于 USM-v1 2B，<font color="green">用辅助 ASR 损失训练、微调</font>。</li>
-<li>文本 tokenizer：SentencePiece。</li>
-<li>LLM：PaLM-2 8B。</li>
-<li>audio 合成：SoundStorm 或 AudioLM。</li>
-</ul>
-<h2 id="audio-encoder">1.1.  audio encoder</h2>
+<li>audio encoder + codebook，表征语音、人声（喘息声、笑声等）、声音事件等各类声音。</li>
+<li>【宏毅老师猜想】混合 token：text token + 非语音 audio token
 <ul>
-<li>从 audio encoder 中提取 embedding，并通过 k-means 量化为离散 token。25Hz，词汇表大小 1024。</li>
-<li>与原始 AudioLM 的区别：在多语种数据上训练 w2v-BERT；k-means 聚类前未对 embedding 归一化，归一化降低性能。</li>
-</ul>
-<h2 id="llm">1.2.  LLM</h2>
-<ul>
-<li>用 PaLM-2 8B 初始化，扩充 embedding 矩阵维度，audio embedding 全 0 初始化，输入、输出 embedding 矩阵共享，训练所有模型参数。</li>
-</ul>
-<h2 id="audio-合成">1.3.  audio 合成</h2>
-<ul>
-<li>自回归解码：AudioLM stage2+3，stage2 输入 LLM 生成的 token 及说话人语音 condition，自回归生成粗粒度 SoundStream token；stage3 进一步生成细粒度 SoundStream token。</li>
-<li>非自回归解码：SoundStorm，并行处理所有 token。相较于 AudioLM，音质相当，语音、声学环境的一致性更高，合成速度快2个数量级。</li>
-<li>上述两种方案，均先将音频 token 转换为 SoundStream token，然后采用卷积 decoder 转换为波形。</li>
-<li>将 3s 长的语音作为 condition，以保留说话人的声音；若语音小于3s，重复音频。</li>
-<li>在 Multilingual LibriSpeech 上训练。</li>
-</ul>
-<h1 id="数据集">2.  数据集</h1>
-<h2 id="训练集">2.1.  训练集</h2>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB9e357b70a5077239eaf78eb3ab5835dc?method=download&shareKey=e70deebc5c4a4e7022dc884177bff018" width="777">
-<img src="https://note.youdao.com/yws/api/personal/file/WEB87c96e0ca1227cf785897d6239419c11?method=download&shareKey=ec681948f088f08a2de5f2cc41220d51" width="533">
-<ul>
-<li>CVSS：扩展了CoVoST2，合成了目标文本的语音。CVSS-C：采用1个标准说话人的声音；CVSS-T：采用源语音的声音。</li>
-<li>VoxPopuli：转写翻译音频。</li>
-<li>conversational dataset：众包朗读 西班牙语-英语机器翻译 中的西班牙语部分。
-<ul>
-<li>Leveraging weakly supervised data to improve end-to-end speech-to-text translation</li>
+<li>出发点：若 speech token、text token 独立，有冗余。</li>
+<li><font color="green">【个人想法】若要对齐语音 token 与 text token，需要转写音频数据集，强制对齐音频 token、text token，且会丢失语音段内的非文本信息。</font></li>
 </ul>
 </li>
-<li>YouTube ASR：采用 USM-2B ASR 模型转写。</li>
-<li>WMT/TED TTS：采用 WMT、TED 文本翻译数据集，TTS 引擎合成成对音频。</li>
-<li>PaLM MT TTS：采用 PaLM-2 将 YouTube、Common Voice、Babel 数据集翻译为英文，再采用 AudioPaLM 8B S2ST 模型合成语音。</li>
+<li>speaker diarization<br>
+<img src="https://note.youdao.com/yws/api/personal/file/WEBae527fb0aa9425b44ef473c9e772e3bd?method=download&shareKey=3ed39e1c632228d0f7022ee3b35a49b3" width="634"></li>
 </ul>
-<h2 id="测试集">2.2.  测试集</h2>
+<h1 id="audio-encoder-decoder">2.  audio encoder-decoder</h1>
+<img src="https://note.youdao.com/yws/api/personal/file/WEBe699e9ea92a55945fe75445390f396ef?method=download&shareKey=21783fbd1e3ff344b285cf74182711f7" width="1806">
+<h1 id="预训练">3.  预训练</h1>
 <ul>
-<li>AST：CoVoST2、FLEURS，SacreBLEU corpusBLEU，不进行任何 TN。</li>
-<li>ASR：VoxPopuli、CoVoST2，JiWER，忽略大小写、标点，日文、中文评价 CER。</li>
-<li>S2ST：CVSS，将模型输出的音频输入 ASR 模型，计算识别文本与 ground truth 文本的 BLEU 分。</li>
-</ul>
-<h1 id="评价">3.  评价</h1>
+<li>音频自回归生成 LM<br>
+由于预训练所需音频量较大、音频的录音环境等非常多样，生成音频可能自带 BGM（it is not a bug, it is a feature）。</li>
+<li>结合文本数据
 <ul>
-<li>模型
+<li>由于相较于文本数据，现有的音频数据包含的文本内容（知识）较少，LLM 预训练仍需要结合文本数据。</li>
+<li>结合方式：用 LLM 初始化；音频、文本混合训练等。
 <ul>
-<li>AST 模型：ASR + AST</li>
-<li>S2ST 模型：ASR + AST + TTS + S2ST</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2310.08715">https://arxiv.org/abs/2310.08715</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2402.05755">https://arxiv.org/abs/2402.05755</a></li>
 </ul>
 </li>
-<li>训练参数：Adafactor 优化器、常数学习率 5e-5。</li>
 </ul>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>结果</th>
-<th>结论</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>文本质量</td>
-<td><img src="https://note.youdao.com/yws/api/personal/file/WEBe2e51f03912514c250a0c16ed128b967?method=download&shareKey=90c23706c2326c1693f9e55848267982" width="592"> <br> 级联方法：采用 AudioPaLM-2 ASR 模型 + 另一个仅采用 CoVoST2 T2T 翻译微调了的 AudioPaLM-2 模型。</td>
-<td>AST、S2ST 优于基线；ASR competitive。</td>
-</tr>
-<tr>
-<td>语音质量</td>
-<td><img src="https://note.youdao.com/yws/api/personal/file/WEBe2b6b307b86bd3e71d799180740dffe4?method=download&shareKey=d85007be4798bd877da13aaa567d9834" width="568"> <br> 客观评价：<br>  音质：no-reference MOS estimator [Reddy et al., 2021]；<br>  语音相似度：采用说话人确认模型，计算 embedding 的余弦相似度，<font color="green">源语音采用 SoundStream 编码/解码；</font><br>  声学一致性：采用 [Borsos et al., 2023]，判断音频片段是否属于同一录音的模型，计算 embedding 的余弦相似度。</td>
-<td>相较于 Translatotron 2、CVSS-T ground truth 合成音频，MOS 得分显著地更高。<br> 对于高资源语种、低资源语种，上述指标无明显差异。</td>
-</tr>
-<tr>
-<td>zero-shot</td>
-<td><img src="https://note.youdao.com/yws/api/personal/file/WEB6148011005b539bbef9de61656f3fc83?method=download&shareKey=e7bd6009b65c4042c065be1ed0019a8c" width="644"></td>
-<td>AudioPaLM-2 的文本翻译能力迁移到了音频域。</td>
-</tr>
-</tbody>
-</table>
-<h2 id="消融实验">3.1.  消融实验</h2>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>结果</th>
-<th>结论</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>多任务训练</td>
-<td><img src="https://note.youdao.com/yws/api/personal/file/WEBe069326885d5afd70dd8ac8afd631841?method=download&shareKey=9cd1b8ec11cf68f04a1ad7149b978648" width="572"></td>
-<td>ASR 任务有助于提升 AST 性能。</td>
-</tr>
-<tr>
-<td>Training from scratch vs. finetuning</td>
-<td><img src="https://note.youdao.com/yws/api/personal/file/WEBcccb3d9e145b59dac919c89c57cbca2b?method=download&shareKey=7556a0b766ee6662167a3dbb6c6ee721" width="571"></td>
-<td>微调的性能显著较好。</td>
-</tr>
-<tr>
-<td>audio tokenizer</td>
-<td><img src="https://note.youdao.com/yws/api/personal/file/WEB547dd86064321314e50095cbf2a3aa10?method=download&shareKey=4d4c78d8b9c370524a3942627e674c94" width="571"></td>
-<td><font color="red">USM-v2 &gt; USM-v1 &gt; W2V-BERT</font></td>
-</tr>
-<tr>
-<td>组合任务</td>
-<td><img src="https://note.youdao.com/yws/api/personal/file/WEBcd00edf5576cf91c7c0a87d1c7102065?method=download&shareKey=8bad4740b40c0386d372825e0ade9120" width="573"></td>
-<td><font color="red">对于复杂的组合任务（如AST、S2ST），类似 chain of thought prompting，使模型也输出中间结果，如：将 [S2ST English French] 任务扩展为 [ASR AST S2ST English French]。<br>组合任务可以提高目标任务的性能，模型可以关注输入 + 前面的解码结果。</font><br> ASR 性能降低：可能和 checkpoint 选取等因素有关。</td>
-</tr>
-<tr>
-<td>S2ST</td>
-<td><img src="https://note.youdao.com/yws/api/personal/file/WEB7a214a52bcafe15c4a286c217c3bc32c?method=download&shareKey=b5906af303f620d8a39bb3cc192f5e6e" width="574"></td>
-<td>添加 S2ST 任务，ASR、AST 任务性能略有下降。模型容量有限，必须学习输出音频。</td>
-</tr>
-<tr>
-<td>扩充训练集</td>
-<td></td>
-<td>性能提升。由于 checkpoint 选取等因素，ASR 性能略有下降。</td>
-</tr>
-<tr>
-<td>音频解码（从音频 token 重建波形）</td>
-<td><img src="https://note.youdao.com/yws/api/personal/file/WEB789310e16259581827f0511556ed58b7?method=download&shareKey=d50e5641e25bea7f1def3b9a7199a231" width="567"></td>
-<td><font color="red">SoundStorm &gt; AudioLM，相较于 AudioLM，SoundStorm 产生更可懂的语音。</font></td>
-</tr>
-<tr>
-<td>PaLM vs PaLM 2（在翻译数据上进行了训练）</td>
-<td><img src="https://note.youdao.com/yws/api/personal/file/WEB6f54aa0d466520551a60d5a8c7be41cc?method=download&shareKey=a4c499964a37a0fc59f8465411e7d7d7" width="542"></td>
-<td>AST 性能变好；ASR 性能变化不一致。</td>
-</tr>
-<tr>
-<td>模型大小</td>
-<td><img src="https://note.youdao.com/yws/api/personal/file/WEB1efc7d6d4941df506617b8eb0fa04134?method=download&shareKey=8f46427826aec75908b3e36acdece7e8" width="569"></td>
-<td>性能随模型尺寸的增大而提高。</td>
-</tr>
-</tbody>
-</table>
-<h1 id="其它">4.  其它</h1>
+</li>
+</ul>
+<h1 id="alignment">4.  alignment</h1>
 <ul>
-<li>Rubenstein P K, Asawaroengchai C, Nguyen D D, et al. Audiopalm: A large language model that can speak and listen[J]. arXiv preprint arXiv:2306.12925, 2023.</li>
-<li><a target="_blank" rel="noopener" href="https://google-research.github.io/seanet/audiopalm/examples">https://google-research.github.io/seanet/audiopalm/examples</a></li>
-<li>speech-to-speech translation：级联系统的缺陷：副语言信息、计算效率、累积错误等。</li>
+<li>
+<p>训练数据：用户-AI 对话数据</p>
+<ul>
+<li>若想生成固定音色，可能不需要大量该音色的训练数据。也可以采用语音转换生成大量指定音色的数据。</li>
+</ul>
+</li>
+<li>
+<p>语音合成</p>
+<ul>
+<li>当有大量的合成训练数据时，合成的声音不再平淡，而是能根据文本内容调整音色。<br>
+BASE TTS (Amazon)：100kh，1B 参数</li>
+</ul>
+</li>
+<li>
+<p>开始说话、停止说话的判断<br>
+停止说话：听到人声就停止不是最佳方案，比如人与 AI 合唱。</p>
+<ul>
+<li>同时输入麦克风输入、历史生成，用户说话时生成 silence，自动预测何时开始说话生成声音 token，用户打断时停止说话。<br>
+<img src="https://note.youdao.com/yws/api/personal/file/WEBa91a9bc7be198bae13fc8b07f3071511?method=download&shareKey=97b422cb52543f4f04e7b8b506e70981" width="610"></li>
+</ul>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB404e59229702978d347f587d8590746b?method=download&shareKey=d4fe70c6a16687f7db1826c264dee318" width="603">
+</li>
+</ul>
+<h1 id="其它">5.  其它</h1>
+<ul>
+<li>Speech/Audio LLM 论文合集<br>
+<a target="_blank" rel="noopener" href="https://github.com/ga642381/speech-trident">https://github.com/ga642381/speech-trident</a></li>
+<li>LLM 训练的3阶段
+<ul>
+<li>无标注数据 预训练</li>
+<li>有标注数据 微调（对齐）</li>
+<li>RLHF 用户反馈微调（对齐）</li>
+</ul>
+</li>
+<li>ASR + 情绪识别 + LLM
+<ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2402.12786">https://arxiv.org/abs/2402.12786</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2312.15316">https://arxiv.org/abs/2312.15316</a></li>
+</ul>
+</li>
+<li>带指令的合成，控制音色
+<ul>
+<li>suno-ai/bark</li>
+<li>audiobox meta</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2309.14324">https://arxiv.org/abs/2309.14324</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2211.12171">https://arxiv.org/abs/2211.12171</a></li>
+</ul>
+</li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
@@ -647,9 +566,46 @@
     <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <div class="card-title">
+                    <a href="/blog/llm/gpt-4o-li-hong-yi/"> 李宏毅老师 《GPT-4o 背后可能的语音技术猜测》</a>
+                </div>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-05-23
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/blog/categories/LLM/" class="post-category">
+                                    LLM
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
             <div class="card">
                 <div class="card-title">
                     <a href="/blog/yu-yin/llm/yin-pin-sheng-cheng/audiolm/"> AudioLM</a>
@@ -661,9 +617,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2024-05-22
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-05-22
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -678,45 +634,6 @@
                             
                             <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/LLM/%E9%9F%B3%E9%A2%91%E7%94%9F%E6%88%90/" class="post-category">
                                     音频生成
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <div class="card-title">
-                    <a href="/blog/yu-yin/llm/sparks-of-large-audio-models/"> Sparks of Large Audio Models- A Survey and Outlook</a>
-                </div>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-12-07
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/" class="post-category">
-                                    语音
-                                </a>
-                            
-                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/LLM/" class="post-category">
-                                    LLM
                                 </a>
                             
                             
