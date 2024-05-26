@@ -6,9 +6,8 @@
     <meta charset="utf-8">
     <meta name="keywords" content="李宏毅老师 《GPT-4o 背后可能的语音技术猜测》, 梦园">
     <meta name="description" content="视频地址 https://www.youtube.com/watch?v=CgQ3lUOpXgc&amp;amp;ab_channel=Hung-yiLee
-1.  audio tokenization
-
-audio encoder + codeb">
+1. audio tokenization
+audio encoder + codeboo">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -431,29 +430,22 @@ audio encoder + codeb">
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>视频地址 <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=CgQ3lUOpXgc&amp;ab_channel=Hung-yiLee">https://www.youtube.com/watch?v=CgQ3lUOpXgc&amp;ab_channel=Hung-yiLee</a></p>
-<h1 id="audio-tokenization">1.  audio tokenization</h1>
-<ul>
+<h1 id="audio-tokenization">1. audio tokenization</h1><ul>
 <li>audio encoder + codebook，表征语音、人声（喘息声、笑声等）、声音事件等各类声音。</li>
-<li>【宏毅老师猜想】混合 token：text token + 非语音 audio token
-<ul>
+<li>【宏毅老师猜想】混合 token：text token + 非语音 audio token<ul>
 <li>出发点：若 speech token、text token 独立，有冗余。</li>
 <li><font color="green">【个人想法】若要对齐语音 token 与 text token，需要转写音频数据集，强制对齐音频 token、text token，且会丢失语音段内的非文本信息。</font></li>
 </ul>
 </li>
-<li>speaker diarization<br>
-<img src="https://note.youdao.com/yws/api/personal/file/WEBae527fb0aa9425b44ef473c9e772e3bd?method=download&shareKey=3ed39e1c632228d0f7022ee3b35a49b3" width="634"></li>
+<li>speaker diarization<img src="https://note.youdao.com/yws/api/personal/file/WEBae527fb0aa9425b44ef473c9e772e3bd?method=download&shareKey=3ed39e1c632228d0f7022ee3b35a49b3" width="634"></li>
 </ul>
-<h1 id="audio-encoder-decoder">2.  audio encoder-decoder</h1>
-<img src="https://note.youdao.com/yws/api/personal/file/WEBe699e9ea92a55945fe75445390f396ef?method=download&shareKey=21783fbd1e3ff344b285cf74182711f7" width="1806">
-<h1 id="预训练">3.  预训练</h1>
-<ul>
-<li>音频自回归生成 LM<br>
-由于预训练所需音频量较大、音频的录音环境等非常多样，生成音频可能自带 BGM（it is not a bug, it is a feature）。</li>
-<li>结合文本数据
-<ul>
+<h1 id="audio-encoder-decoder">2. audio encoder-decoder</h1><img src="https://note.youdao.com/yws/api/personal/file/WEBe699e9ea92a55945fe75445390f396ef?method=download&shareKey=21783fbd1e3ff344b285cf74182711f7" width="1806">
+
+<h1 id="预训练">3. 预训练</h1><ul>
+<li>音频自回归生成 LM<br>由于预训练所需音频量较大、音频的录音环境等非常多样，生成音频可能自带 BGM（it is not a bug, it is a feature）。</li>
+<li>结合文本数据<ul>
 <li>由于相较于文本数据，现有的音频数据包含的文本内容（知识）较少，LLM 预训练仍需要结合文本数据。</li>
-<li>结合方式：用 LLM 初始化；音频、文本混合训练等。
-<ul>
+<li>结合方式：用 LLM 初始化；音频、文本混合训练等。<ul>
 <li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2310.08715">https://arxiv.org/abs/2310.08715</a></li>
 <li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2402.05755">https://arxiv.org/abs/2402.05755</a></li>
 </ul>
@@ -461,51 +453,38 @@ audio encoder + codeb">
 </ul>
 </li>
 </ul>
-<h1 id="alignment">4.  alignment</h1>
-<ul>
-<li>
-<p>训练数据：用户-AI 对话数据</p>
+<h1 id="alignment">4. alignment</h1><ul>
+<li><p>训练数据：用户-AI 对话数据</p>
 <ul>
 <li>若想生成固定音色，可能不需要大量该音色的训练数据。也可以采用语音转换生成大量指定音色的数据。</li>
 </ul>
 </li>
-<li>
-<p>语音合成</p>
+<li><p>语音合成</p>
 <ul>
-<li>当有大量的合成训练数据时，合成的声音不再平淡，而是能根据文本内容调整音色。<br>
-BASE TTS (Amazon)：100kh，1B 参数</li>
+<li>当有大量的合成训练数据时，合成的声音不再平淡，而是能根据文本内容调整音色。<br>BASE TTS (Amazon)：100kh，1B 参数</li>
 </ul>
 </li>
-<li>
-<p>开始说话、停止说话的判断<br>
-停止说话：听到人声就停止不是最佳方案，比如人与 AI 合唱。</p>
+<li><p>开始说话、停止说话的判断<br>停止说话：听到人声就停止不是最佳方案，比如人与 AI 合唱。</p>
 <ul>
-<li>同时输入麦克风输入、历史生成，用户说话时生成 silence，自动预测何时开始说话生成声音 token，用户打断时停止说话。<br>
-<img src="https://note.youdao.com/yws/api/personal/file/WEBa91a9bc7be198bae13fc8b07f3071511?method=download&shareKey=97b422cb52543f4f04e7b8b506e70981" width="610"></li>
+<li>同时输入麦克风输入、历史生成，用户说话时生成 silence，自动预测何时开始说话生成声音 token，用户打断时停止说话。<img src="https://note.youdao.com/yws/api/personal/file/WEBa91a9bc7be198bae13fc8b07f3071511?method=download&shareKey=97b422cb52543f4f04e7b8b506e70981" width="610"></li>
 </ul>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB404e59229702978d347f587d8590746b?method=download&shareKey=d4fe70c6a16687f7db1826c264dee318" width="603">
-</li>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB404e59229702978d347f587d8590746b?method=download&shareKey=d4fe70c6a16687f7db1826c264dee318" width="603"></li>
 </ul>
-<h1 id="其它">5.  其它</h1>
-<ul>
-<li>Speech/Audio LLM 论文合集<br>
-<a target="_blank" rel="noopener" href="https://github.com/ga642381/speech-trident">https://github.com/ga642381/speech-trident</a></li>
-<li>LLM 训练的3阶段
-<ul>
+<h1 id="其它">5. 其它</h1><ul>
+<li>Speech&#x2F;Audio LLM 论文合集<br><a target="_blank" rel="noopener" href="https://github.com/ga642381/speech-trident">https://github.com/ga642381/speech-trident</a></li>
+<li>LLM 训练的3阶段<ul>
 <li>无标注数据 预训练</li>
 <li>有标注数据 微调（对齐）</li>
 <li>RLHF 用户反馈微调（对齐）</li>
 </ul>
 </li>
-<li>ASR + 情绪识别 + LLM
-<ul>
+<li>ASR + 情绪识别 + LLM<ul>
 <li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2402.12786">https://arxiv.org/abs/2402.12786</a></li>
 <li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2312.15316">https://arxiv.org/abs/2312.15316</a></li>
 </ul>
 </li>
-<li>带指令的合成，控制音色
-<ul>
-<li>suno-ai/bark</li>
+<li>带指令的合成，控制音色<ul>
+<li>suno-ai&#x2F;bark</li>
 <li>audiobox meta</li>
 <li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2309.14324">https://arxiv.org/abs/2309.14324</a></li>
 <li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2211.12171">https://arxiv.org/abs/2211.12171</a></li>
@@ -566,13 +545,12 @@ BASE TTS (Amazon)：100kh，1B 参数</li>
     <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
                 <div class="card-title">
-                    <a href="/blog/llm/gpt-4o-li-hong-yi/"> 李宏毅老师 《GPT-4o 背后可能的语音技术猜测》</a>
+                    <a href="/blog/yu-yin/yu-yin-shi-bie/whisper/"> Whisper</a>
                 </div>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
@@ -581,22 +559,25 @@ BASE TTS (Amazon)：100kh，1B 参数</li>
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-05-23
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-05-26
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/blog/categories/LLM/" class="post-category">
-                                    LLM
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/" class="post-category">
+                                    语音
+                                </a>
+                            
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/" class="post-category">
+                                    语音识别
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>
