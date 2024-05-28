@@ -467,7 +467,7 @@
 <li>unit 时长与 unit 本身高度相关。</li>
 </ul>
 <p>采用 Edge Unit Prediction (CE loss) + <font color="red">Delayed</font> Duration Prediction（连续值，L1 损失）。</p>
-<p>$$ \mathcal{L}<em>{E U}&#x3D;\sum</em>{c&#x3D;1}^2 \sum_{\substack{t \ u_t^{(c)} \neq u_{t-1}^{(c)}}} \log p\left(u_t^{(c)} \mid u_{1: t-1}^{(1,2)} ; \theta\right)$$<br>$$ \mathcal{L}<em>{E D}&#x3D;\sum</em>{c&#x3D;1}^2 \sum_{\substack{t \ u_t^{(c)} \neq u_{t-1}^{(c)}}}\left|d_t^{(c)}-\hat{d}<em>t^{(c)}\left(u</em>{1: t-1+\Delta}^{(1,2)} ; \theta\right)\right| $$<br>$$ \mathcal{L}<em>{D L M}&#x3D;\mathcal{L}</em>{E U}+\mathcal{L}_{E D} $$</p>
+<p>$$\mathcal{L}_{EU}&#x3D;\sum_{c&#x3D;1}^2\sum_{\substack{t \\ u_t^{(c)} \neq u_{t-1}^{(c)}}} \log p\left(u_t^{(c)} \mid u_{1: t-1}^{(1,2)} ; \theta\right)$$<br>$$\mathcal{L}_{ED}&#x3D;\sum_{c&#x3D;1}^2 \sum_{\substack{t \\ u_t^{(c)} \neq u_{t-1}^{(c)}}}\left|d_t^{(c)}-\hat{d}_t^{(c)}\left(u_{1: t-1+\Delta}^{(1,2)} ; \theta\right)\right|$$<br>$$\mathcal{L}_{DLM}&#x3D;\mathcal{L}_{EU}+\mathcal{L}_{ED}$$</p>
 <p>其中，$c$ 表示通道，$t$ 表示时间，$\theta$ 表示模型参数，<font color="red">$\Delta$ 表示延迟因子</font>，$d_t^{(c)}$ 为边界 unit $u_t^{(c)}$ 重复的次数。</p>
 <p><font color="green">若 $\Delta$ 足够大，则 $u_{1: t-1+\Delta}^{(1,2)}$ 已知时长。并且，若 $\Delta&gt;2$ 则来不及修改预测的 unit，如：$\Delta&#x3D;3$，unit 预测：t 时刻为 A，t+1 时刻为B，t+2 时刻为C，时长预测需要输入ABC，若预测值&#x3D;1，已无法修改 unit 自回归序列中的B，但仍可修改输入 audio decoder 的 unit 序列。</font></p>
 <h2 id="生成">1.2. 生成</h2><p><font color="red">依照预测的时长（四舍五入），修改预测的 unit，作为 LM 自回归的输入。</font></p>
@@ -478,9 +478,9 @@
 <li>模型结构同 HuBERT Base，12 层 Transformer，训练同 HuBERT Large，3次迭代。训练结束后，将最后一层 Transformer 特征量化为 <font color="red">500 units</font>。</li>
 </ul>
 </li>
-<li>modified HifiGAN[^modifiedHifiGAN]<ul>
+<li>modified HifiGAN [^modifiedHifiGAN]<ul>
 <li>输入为 HuBERT 离散单元 + 数据集中的 one-hot <font color="red">说话人</font>。生成时，说话人选自 HifiGAN 训练集。</li>
-<li>训练集：Fisher 子集，120 个说话人，每人10分钟。<br>说话人挑选：用在 100h Librispeech clean 上训练的音素识别器[^音素识别器]，基于平均困惑度，挑选可懂度高的说话人。</li>
+<li>训练集：Fisher 子集，120 个说话人，每人10分钟。<br>说话人挑选：用在 100h Librispeech clean 上训练的音素识别器 [^音素识别器]，基于平均困惑度，挑选可懂度高的说话人。</li>
 </ul>
 </li>
 <li>DLM (Dialogue Transformer Language Model)<ul>
@@ -488,7 +488,7 @@
 <li>具体训练参数详见论文。</li>
 </ul>
 </li>
-<li>Multi-Stream Transformer Language Model (MS-TLM)[^MS-TLM]<ul>
+<li>Multi-Stream Transformer Language Model (MS-TLM) [^MS-TLM]<ul>
 <li>embedding 层 concat 两个 channel 的表示，两个softmax 输出层。</li>
 </ul>
 </li>
@@ -557,7 +557,7 @@
 </tr>
 <tr>
 <td>自然对话事件统计</td>
-<td>1. WPM, words per minute<br>2. LPM, laughs per minute<br>&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;laugh 检测 <a target="_blank" rel="noopener" href="https://github.com/jrgillick/laughter-detection">https://github.com/jrgillick/laughter-detection</a><br>3. FWR, filler words per 100 words<br>&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;filler: uh, um, like, i mean, you know</td>
+<td>1. WPM, words per minute<br>2. LPM, laughs per minute<br>    laugh 检测 <a target="_blank" rel="noopener" href="https://github.com/jrgillick/laughter-detection">https://github.com/jrgillick/laughter-detection</a><br>3. FWR, filler words per 100 words<br>    filler: uh, um, like, i mean, you know</td>
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEB60ba6477214883d49caa5befe9028bc3?method=download&shareKey=509b61613b5fb78264053021533bc4d1" width="794"></td>
 <td>没有 edge unit 预测的模型（MS-TLM、DLM 1-2）比有 edge unit 预测的模型（DLM 3-5）更倾向于生成 语速更慢、笑声更少、filler 更多的对话。<br> DLM 3-&gt;5，逐渐接近 ground truth。</td>
 </tr>
@@ -569,13 +569,13 @@
 </tr>
 <tr>
 <td>语义</td>
-<td>1. 识别生成的对话，采用 <a target="_blank" rel="noopener" href="https://huggingface.co/microsoft/DialoGPT-medium">DialoGPT</a> 计算文本 PPL。<br>&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;说话人 token 替换为 &lt;endoftext&gt;。<br>&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;对于条件生成，concat prompt 与生成文件，计算 PPL。<br><font color="green">2. VERT-4、self-BLEU、 auto-BLEU<br>&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;由于对话文本有较多重复，采用 VERT-4 指标而不是 VERT-2。</font></td>
+<td>1. 识别生成的对话，采用 <a target="_blank" rel="noopener" href="https://huggingface.co/microsoft/DialoGPT-medium">DialoGPT</a> 计算文本 PPL。<br>    说话人 token 替换为 &lt;endoftext&gt;。<br>    对于条件生成，concat prompt 与生成文件，计算 PPL。<br><font color="green">2. VERT-4、self-BLEU、 auto-BLEU<br>    由于对话文本有较多重复，采用 VERT-4 指标而不是 VERT-2。</font></td>
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEB65bda35114b4377602b6137193abb90d?method=download&shareKey=50d8f63335b51756d742d486f984538f" width="806"><br><img src="https://note.youdao.com/yws/api/personal/file/WEB54756f354878e4007d4f7a3e8fdde74b?method=download&shareKey=d98ccc776571f207454816b78ca547b0" width="794"></td>
 <td>1. 部分模型无法计算 PPL@GT，由于它们生成重复单元，合成音频全为噪声。<br>2. 相较于级联模型，对话模型生成的语音 PPL 较高，语义不连贯。</td>
 </tr>
 <tr>
 <td>主观评价</td>
-<td>1. N-MOS：对话的自然度、流畅、turn-taking conversationality，说话人的表现力。<br>2. M-MOS：语义连贯、有意义。<br>1-5（非常好）。<br>众包标注，CrowdMOS package 统计，检测和丢弃不准确的分数。<br>&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;排除与平均分相关系数&lt;<font color="green">0.6</font>的评分员。</td>
+<td>1. N-MOS：对话的自然度、流畅、turn-taking conversationality，说话人的表现力。<br>2. M-MOS：语义连贯、有意义。<br>1-5（非常好）。<br>众包标注，CrowdMOS package 统计，检测和丢弃不准确的分数。<br>    排除与平均分相关系数&lt;<font color="green">0.6</font>的评分员。</td>
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEB3ffba27af7a30f51b72b2483073a6291?method=download&shareKey=221560e47809cbb17dc777593509d9b4" width="800"></td>
 <td>1. 级联模型生成的音频自然度较差。<br>2. 所有对话模型中，DLM-5 效果最好。<br>3. DLM-5 生成的对话语义连贯性较差，但自然度相较于 ground truth 差距最小。</td>
 </tr>
