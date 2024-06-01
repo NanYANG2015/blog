@@ -4,8 +4,12 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="DeepSpeed Compression, 梦园">
-    <meta name="description" content="https://www.microsoft.com/en-us/research/blog/deepspeed-compression-a-composable-library-for-extreme-compression-and-zer">
+    <meta name="keywords" content="AnyGPT, 梦园">
+    <meta name="description" content="
+作者：复旦大学等。
+贡献
+基于离散 token，实现了 any-to-any 多模态 LLM，即支持理解、生成各种模态，包含语音、文本、图像、音乐。以文本为中心，通过将其它模态与文本对齐，实现所有模态之间的相互对齐。
+any-to-any">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +23,7 @@
 
     
 
-    <title>DeepSpeed Compression | 梦园</title>
+    <title>AnyGPT | 梦园</title>
     <link rel="icon" type="image/png" href="/blog/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/blog/libs/awesome/css/all.min.css">
@@ -372,7 +376,7 @@
                     <div class="row">
                         <div class="col s12 m12 l12">
                             <div class="brand">
-                                <h1 class="description center-align post-title">DeepSpeed Compression</h1>
+                                <h1 class="description center-align post-title">AnyGPT</h1>
                             </div>
                         </div>
                     </div>
@@ -385,16 +389,12 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                机器学习
+                            <a href="/blog/categories/LLM/" class="post-category">
+                                LLM
                             </a>
                         
-                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%B7%A5%E5%85%B7%E5%8C%85/" class="post-category">
-                                工具包
-                            </a>
-                        
-                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%B7%A5%E5%85%B7%E5%8C%85/DeepSpeed/" class="post-category">
-                                DeepSpeed
+                            <a href="/blog/categories/LLM/%E5%A4%9A%E6%A8%A1%E6%80%81/" class="post-category">
+                                多模态
                             </a>
                         
                     </div>
@@ -406,14 +406,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2024-05-29
+                    2024-06-01
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-05-29
+                    2024-06-01
                 </div>
                 
 
@@ -435,69 +435,216 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p><font color="green"><a target="_blank" rel="noopener" href="https://www.microsoft.com/en-us/research/blog/deepspeed-compression-a-composable-library-for-extreme-compression-and-zero-cost-quantization/">https://www.microsoft.com/en-us/research/blog/deepspeed-compression-a-composable-library-for-extreme-compression-and-zero-cost-quantization/</a></font></p>
-<p>支持的量化技术包含：</p>
-<h1 id="减少层数">1. 减少层数</h1><ul>
-<li>可选是否采用知识蒸馏。</li>
-<li>收益：推理延迟线性减小。</li>
-</ul>
-<h1 id="权重量化">2. 权重量化</h1><ul>
-<li>支持分组权重量化。<ul>
-<li>Shen S, Dong Z, Ye J, et al. Q-bert: Hessian based ultra low precision quantization of bert[C]&#x2F;&#x2F;Proceedings of the AAAI Conference on Artificial Intelligence. 2020, 34(05): 8815-8821.</li>
+                <ul>
+<li>作者：复旦大学等。</li>
+<li>贡献<ul>
+<li>基于离散 token，实现了 any-to-any 多模态 LLM，即支持理解、生成各种模态，包含语音、文本、图像、音乐。以文本为中心，通过将其它模态与文本对齐，实现所有模态之间的相互对齐。</li>
+<li>any-to-any 多模态交叉指令数据集 AnyInstruct-108k：108k 多轮对话样本，交替各种模态，约 205k 图像、503k 语音、113k 音乐。</li>
+<li>zero-shot 性能接近各模态的专业模型（可能的优化方案：MOE）。</li>
+<li>指令集、模型、推理代码 <a target="_blank" rel="noopener" href="https://junzhan2000.github.io/AnyGPT.github.io/">https://junzhan2000.github.io/AnyGPT.github.io/</a></li>
 </ul>
 </li>
 </ul>
-<h1 id="激活量化">3. 激活量化</h1><ul>
-<li><font color="green"><a target="_blank" rel="noopener" href="https://medium.com/@joel_34050/quantization-in-deep-learning-478417eab72b">https://medium.com/@joel_34050/quantization-in-deep-learning-478417eab72b</a></font></li>
+<h1 id="系统结构">1. 系统结构</h1><img src="https://note.youdao.com/yws/api/personal/file/WEB436e3f864d535f6b821f2f970b44e0ef?method=download&shareKey=c11e72ae89e80223520d040165dd091b" width="715">
+
+<h2 id="Tokenization">1.1. Tokenization</h2><ul>
+<li><font color="red">图像：SEED + diffusion</font></li>
+<li><font color="red">语音：SpeechTokenizer + SoundStorm</font><ul>
+<li>SpeechTokenizer<ul>
+<li>residual vector quantization (RVQ) 结构，<font color="green">第一层捕捉语义，第 2-8 层编码副语言细节。LLM 只对语义 token 进行建模，语音词表大小 1024。副语言信息采用 voice clone 模型。AnyGPT 可以根据 3s 的语音提示复制任意说话人的声音。</font></li>
+<li>在 Commonvoice、Librispeech 上预训练。20ms 帧率。</li>
 </ul>
-<h1 id="剪枝">4. 剪枝</h1><p>通过删除模型连接来减少计算量。</p>
-<h2 id="稀疏剪枝">4.1. 稀疏剪枝</h2><ul>
-<li>将权重矩阵中的某些元素置为 0。可以<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1506.02626">基于权重的绝对值</a> 或<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1810.02340">基于权重被 mask 时 loss 的变化</a>。</li>
-<li><font color="green">支持的方法：L1 norm, topk, snip_momentum。</font></li>
+</li>
+<li>SoundStorm<ul>
+<li>MLM，根据 SpeechTokenizer 的语义 token 生成声学 token。然后 SpeechTokenizer decoder 将所有语音 token 转换为 raw 音频。</li>
+<li>在 Multilingual LibriSpeech 上训练。</li>
 </ul>
-<h2 id="行剪枝">4.2. 行剪枝</h2><ul>
-<li>将权重矩阵中某些行的所有元素置为零。</li>
-<li>相较于稀疏剪枝，有利于硬件加速，但准确率损失可能更大。</li>
+</li>
 </ul>
-<h2 id="head-剪枝">4.3. head 剪枝</h2><blockquote>
-<p>训练模型后，测试时删除许多 head，没有显著影响性能，甚至在某些情况下，删除少量 head 性能更好。<br><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1905.09418">https://arxiv.org/abs/1905.09418</a></p>
-</blockquote>
+</li>
+<li><font color="red">音乐：<a target="_blank" rel="noopener" href="https://huggingface.co/facebook/encodec_32khz">Encodec</a></font>，卷积自编码器，encoder + decoder，RVQ 潜空间量化。<ul>
+<li>在 2w 乐曲上预训练，输入 32k 单声道音乐，20ms 帧率。RVQ 量化，4 * 2048。</li>
+<li><font color="green">音乐生成限制为 5s。</font></li>
+</ul>
+</li>
+<li>离散 token 过滤了高频的、特定模态的感知信息，保留了必要的低频语义信息。</li>
+</ul>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB2fa1bf645d5680429cfba93adc3cafc2?method=download&shareKey=067c38c16000dadd9331d733a4e8f494" width="258">
+
+<h2 id="LLM">1.2. LLM</h2><p><font color="red">LLaMA-2 7B</font></p>
+<h1 id="数据集">2. 数据集</h1><h2 id="多模态对齐预训练">2.1. 多模态对齐预训练</h2><table>
+<thead>
+<tr>
+<th>模态</th>
+<th></th>
+<th>数据集</th>
+<th>数据量</th>
+<th>描述</th>
+<th>采样概率</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>图片 - 文本</td>
+<td>低质量</td>
+<td>LAION-2B</td>
+<td>2B</td>
+<td>从网上获取的 noisy alt-text</td>
+<td>0.3</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>LAION-COCO</td>
+<td>600M</td>
+<td>LAION-2B 的子集，用 BLIP 生成字幕</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>高质量<br>用于提高图像生成的保真度</td>
+<td>JouneyDB</td>
+<td>4429K</td>
+<td>Midjourney 生成</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>LAION-Aesthetics</td>
+<td>-</td>
+<td>LAION 5B 的高质量子集</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>模态交错</td>
+<td>MMC4-core-ff (Multimodal-C4)</td>
+<td>7.3M 文档</td>
+<td>从 Common Crawl 收集的 101M 图文交错的文档</td>
+<td>0.05</td>
+</tr>
+<tr>
+<td>语音-文本</td>
+<td>英语 ASR</td>
+<td>Multilingual LibriSpeech</td>
+<td>4.4wh</td>
+<td></td>
+<td>0.13</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Common Voice</td>
+<td>3kh</td>
+<td></td>
+<td>0.27</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Gigaspeech</td>
+<td>1wh</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>音乐-文本</td>
+<td></td>
+<td>Youtube-Music-1M</td>
+<td>100M</td>
+<td>Spotify，收集音乐音频、视频标题、描述、关键词、播放列表名称、歌词。将上述元数据输入 GPT-4，生成简洁、连贯的标题，减少幻觉。</td>
+<td>0.25</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>MusicGen-Synthesis</td>
+<td>20k</td>
+<td>来自 AnyInstruct-108k 数据集</td>
+<td></td>
+</tr>
+</tbody></table>
 <ul>
-<li>涉及 multi-head attention 中的 QKV、输出矩阵。</li>
+<li>图片 - 文本 低质量数据集 数据清洗<br>根据文本质量、图像 aspect ratio、clip score 等，产生 300M 对。</li>
 </ul>
-<h2 id="channel-剪枝">4.4. channel 剪枝</h2><p>应用于卷积层。</p>
-<h1 id="zero-cost-quantization-ZeroQuant">5. zero-cost quantization (ZeroQuant)</h1><ul>
-<li>包含权重、激活量化。支持 INT8、INT4&#x2F;INT8 混合精度量化。</li>
-<li>逐层知识蒸馏。</li>
-<li><font color="red">训练后量化，不需要量化感知训练。</font></li>
-<li><font color="green"><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2206.01861">https://arxiv.org/abs/2206.01861</a></font></li>
-</ul>
-<h1 id="extreme-compression-XTC">6. extreme compression (XTC)</h1><ul>
-<li><font color="red">极低 bit 量化。训练中量化。</font>比如对激活应用 8bit 量化，QKV、feedforward 权重、embedding 应用 1bit 量化。</li>
-<li>支持层减少，1bit、2bit 量化。</li>
-<li><font color="red">发现 FP16 训练下，<code>quantize_groups</code> 较小时（如1、2）训练可能不稳定，建议设为较大值，如 64。</font></li>
-<li><font color="green"><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2206.01859">https://arxiv.org/abs/2206.01859</a></font></li>
-</ul>
-<h1 id="Mixture-of-Quantization-MoQ">7. Mixture-of-Quantization (MoQ)</h1><ul>
-<li><font color="red">在量化感知训练中，先以高精度量化模型，然后按预定义的计划降低精度，直到达到目标量化位数。</font></li>
-<li>支持使用模型参数的二阶信息分别动态调整各层（可指定部分层）的量化计划，以充分地适应性训练。默认为指定减少 bit 数的训练步数 <code>quantize_period</code>，每减少 1bit 上述步数加倍。<ul>
-<li>训练速度将变慢。</li>
-<li>动态调整至多将所需的步数增大到5倍，当与原本的“每减少 1bit 步数加倍”结合时，可能变得非常大。因此，建议设置相对较小的 <code>quantize_period</code>，以在训练结束前经历所有的精度减少阶段。</li>
+<h2 id="dataloader">2.2. dataloader</h2><ul>
+<li>对数据量少的模态过采样。</li>
+<li>同一数据集的样本拼接为长序列，直到最大序列长度。</li>
+<li>模板<ul>
+<li>由 GPT-4 生成数百条双向指令，多样化，如  <code>Please generate an image based on the provided text.</code>。</li>
+<li>格式<br><code>[Human]: &#123;I&#125;.&#123;S&#125;&lt;eoh&gt;. [AnyGPT]: &#123;T&#125;&lt;eos&gt;</code><br><code>[Human]: &#123;I&#125;. This is input:&#123;T&#125;&lt;eoh&gt;. [AnyGPT]: &#123;S&#125;&lt;eos&gt;</code><br>其中，I 表示指令，S 表示非文本 token，T 表示文本。<ul>
+<li>图文交错的文档，直接用 token 序列替换非文本内容。</li>
 </ul>
 </li>
-<li><font color="green"><a target="_blank" rel="noopener" href="https://www.deepspeed.ai/2021/05/04/MoQ.html">https://www.deepspeed.ai/2021/05/04/MoQ.html</a></font></li>
-</ul>
-<h1 id="配置">8. 配置</h1><ul>
-<li>权重量化<ul>
-<li><font color="green">对称或非对称量化</font></li>
-</ul>
-</li>
-<li>激活量化<ul>
-<li><font color="green">动态或静态。</font></li>
+<li>非文本模态 token 首尾有 special token。</li>
 </ul>
 </li>
 </ul>
-<h1 id="其它">9. 其它</h1><p><font color="green">结合 DeepSpeed 高度优化的推理引擎，消除量化&#x2F;反量化开销。</font></p>
+<h2 id="指令集">2.3. 指令集</h2><img src="https://note.youdao.com/yws/api/personal/file/WEB60ebd3a144c7cf7c44a0bc0148a7d925?method=download&shareKey=d653d84b187f916aece00b1519b24c7a" width="1810">
+
+<ul>
+<li>【主题】基于与视听相关的100个元主题，采用 GPT-4 扩展到 2w 个。<img src="https://note.youdao.com/yws/api/personal/file/WEBdcd33d92f7fc311374afbc87ff508c33?method=download&shareKey=47cb053ecdd3bba7dfad5d6fe2910556" width="711"></li>
+<li>【场景】准备包含尽可能多的模态组合的示例，采样，作为示例提示 LLM 生成基于主题的对话场景。<img src="https://note.youdao.com/yws/api/personal/file/WEBf5dabb56f4f3541e19537c261990be15?method=download&shareKey=bdc90db057c01773833b46d22d633c47" width="712"></li>
+<li>【对话】提供示例，用 GPT-4 生成基于场景的多轮对话，图像、音乐等用详细的文本描绘。<img src="https://note.youdao.com/yws/api/personal/file/WEB4276f1e30d2eb13305f5960512634fd5?method=download&shareKey=0731046843fa6e3ac456f88f0ea9e0d4" width="536"></li>
+<li>【Text-to-Multimodality 转换】<ul>
+<li>OpenAI DALL-E-3 生成图像</li>
+<li>MusicGen 音乐作曲</li>
+<li>Microsoft Azure TTS 合成用户指令、模型的响应。</li>
+</ul>
+</li>
+<li>从现有的纯文本指令数据集中提取适合口语的对话，TTS，100k。</li>
+</ul>
+<h1 id="训练">3. 训练</h1><p>由于训练数据含噪声，影响生成质量，在预训练后，采用高质量数据继续预训练 4k 步。</p>
+<ul>
+<li>文本 - 图片：JouneyDB、LAION-Aesthetics。</li>
+<li>图片 - 文本：LAION-COCO。</li>
+<li>音乐：AnyInstruct-108k<img src="https://note.youdao.com/yws/api/personal/file/WEBbbb79fe94bfc41ec8a7113ba7364bac5?method=download&shareKey=fac4dccc7555914869ae0cf95384561e" width="474"></li>
+</ul>
+<h1 id="评价">4. 评价</h1><ul>
+<li>解码策略<img src="https://note.youdao.com/yws/api/personal/file/WEB2f2b9467db62d315cdd387f572d53592?method=download&shareKey=a81f36c8b17e86b51d8557dfecbb98cb" width="532"></li>
+<li>zero-shot</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>任务</th>
+<th>测试集</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>图像理解</td>
+<td>MS-COCO 2014 captioning benchmark Karpathy split testset</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEB2e82bda53cca725a5866d7ffea287c8c?method=download&shareKey=64b7b3a67bd313eee2fa202482eca5db" width="570"></td>
+</tr>
+<tr>
+<td>图像生成</td>
+<td>MS-COCO validation set，随机选 30k 图像</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEB665e85fd658b9c419d393aa4e2f133f0?method=download&shareKey=a5bd2764ef2fe772ef3a19a54032da47" width="569"><br>*采用 CLIP-ViT-L</td>
+</tr>
+<tr>
+<td>ASR</td>
+<td>LibriSpeech test-clean</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEBcf059c83c071d9a8c3d44afb529f8bdf?method=download&shareKey=9a01191a580d1e231699bd38d77f7720" width="507"></td>
+</tr>
+<tr>
+<td>TTS</td>
+<td>VCTK<br>3s 的说话人语音提示</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEBa9ca38ee011dfd8f2c22d4efd8e0843b?method=download&shareKey=f3666e9f88ba06e029ca837cc69bf3a4" width="277"><br>*WER：采用 Whisper medium 识别<br>*SIM：说话人相似度，采用 <a target="_blank" rel="noopener" href="https://github.com/yangdongchao/UniAudio/blob/main/UniAudio/tools/evaluation/compute_similarity_vc.py">WavLM-TDNN</a> 提取说话人 embedding，计算余弦相似度。</td>
+</tr>
+<tr>
+<td>音乐理解、生成</td>
+<td>MusicCaps</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEBdf9303d7cff4d6dd1d0bf4cab1ca5316?method=download&shareKey=ca0b11bbd70ef45bfae6b116704c5f86" width="571"></td>
+</tr>
+</tbody></table>
+<h1 id="未来工作">5. 未来工作</h1><ul>
+<li>相较于单模态，性能有损。可能的优化方案：MOE。</li>
+<li><font color="red">tokenizer 的质量设定了模型理解、生成潜力的上限。</font></li>
+</ul>
+<h1 id="其它">6. 其它</h1><ul>
+<li>Zhan J, Dai J, Ye J, et al. AnyGPT: Unified Multimodal LLM with Discrete Sequence Modeling[J]. arXiv preprint arXiv:2402.12226, 2024.</li>
+</ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
             </div>
@@ -552,9 +699,10 @@
     <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <div class="card-title">
                     <a href="/blog/llm/duo-mo-tai/anygpt/"> AnyGPT</a>
@@ -566,9 +714,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2024-06-01
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-06-01
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -585,6 +733,7 @@
                         </span>
                     </div>
                 </div>
+
                 
             </div>
         </div>
@@ -596,7 +745,7 @@
             </div>
             <div class="card">
                 <div class="card-title">
-                    <a href="/blog/ji-qi-xue-xi/gong-ju-bao/transformers/streamer/"> transformers Streamer</a>
+                    <a href="/blog/ji-qi-xue-xi/gong-ju-bao/deepspeed/compression/"> DeepSpeed Compression</a>
                 </div>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
@@ -620,8 +769,8 @@
                                     工具包
                                 </a>
                             
-                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%B7%A5%E5%85%B7%E5%8C%85/transformers/" class="post-category">
-                                    transformers
+                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%B7%A5%E5%85%B7%E5%8C%85/DeepSpeed/" class="post-category">
+                                    DeepSpeed
                                 </a>
                             
                             
@@ -779,6 +928,13 @@
 
 </main>
 
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    });
+</script>
 
 
 
