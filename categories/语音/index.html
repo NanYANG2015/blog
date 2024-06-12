@@ -279,12 +279,10 @@
                             
                                 
 作者：Meta AI 等。
-功能：生成自然的口语对话音频（双通道）。
-示例：https://speechbot.github.io/dgslm/
+功能：生成自然的口语对话音频（双通道）。示例：https://speechbot.github.io/dgslm/
 特点
-
 采用 cross attention 结构，能同时听+说。
-能同时生成语音、back
+能同时生成语音、backch
                             
                         </div>-->
                         <div class="publish-info">
@@ -368,8 +366,7 @@ wav2vec 2.0 等无监督预训练的语音编码器，需要有监督训练解�
 作者：Google, 2022.09。
 功能：输入 prompt 音频（3s），生成延续，在语法、语义上连贯，同时保持说话人的音色、韵律、录音环境。还能扩展到钢琴音乐延续。
 创新点
-
-音频表示同时采用语义 token、声学 token，兼
+音频表示同时采用语义 token、声学 token，兼顾
                             
                         </div>-->
                         <div class="publish-info">
@@ -416,10 +413,10 @@ wav2vec 2.0 等无监督预训练的语音编码器，需要有监督训练解�
 作者：Google，2023.06。
 功能：speech-to-speech translation、speech-to-text translation、ASR、MT、TTS，多语种。
 
-1.  系统结构
+1. 系统结构
 
 
-输入：在输入前加任务 ta
+输入：在输入前加任务 tag
                             
                         </div>-->
                         <div class="publish-info">
@@ -466,17 +463,17 @@ wav2vec 2.0 等无监督预训练的语音编码器，需要有监督训练解�
 
 
 
-0.1.  挑战及相关研究
 
+
+
+
+0.1. 挑战及相关研究
 数据
-
 数据污染
 响应可能暴露个人身份信息
 多领域数据集加权
-
 Task2Vec 多样性系数
-
-Beyond scale: the diversity coefficient as a data qua
+Beyond scale: the diversity coefficient as a data qual
                             
                         </div>-->
                         <div class="publish-info">
@@ -519,10 +516,10 @@ Beyond scale: the diversity coefficient as a data qua
 作者：清华、字节
 SALMONN（speech audio language music open neural network），通用音频理解 LLM，支持开放式任务。
 
-1.  模型结构
+1. 模型结构
 
 
-BEATs: 迭代自监督训练，提取非语音的
+BEATs: 迭代自监督训练，提取非语音的音
                             
                         </div>-->
                         <div class="publish-info">
@@ -565,10 +562,10 @@ BEATs: 迭代自监督训练，提取非语音的
 作者：微软、CMU
 创新点：将所有音频任务构建为文本生成任务：输入音频、文本，输出文本。支持封闭式和开放式音频任务。
 
-1.  模型结构
+1. 模型结构
 
 
-学习 HTSAT (hierarchical token-semantic audio tran
+学习 HTSAT (hierarchical token-semantic audio trans
                             
                         </div>-->
                         <div class="publish-info">
@@ -651,9 +648,8 @@ BEATs: 迭代自监督训练，提取非语音的
                                 
 作者：中科院、阿里达摩院
 创新点
-
 采用冻结语音 encoder (Whisper-small)、指令跟随 LLM (Llama-2-7B)，学习轻量级的 modality adapter 的方式，使 LLM 具有处理语音输入的能力。
-由
+由于
                             
                         </div>-->
                         <div class="publish-info">
@@ -692,12 +688,9 @@ BEATs: 迭代自监督训练，提取非语音的
                     <div class="card-content article-content">
                         <!--<div class="summary block-with-text">
                             
-                                1.  VCTK
-2.  LJSpeech
-3.  LibriTTS
-585h，2456 说话人，24kHz。音频和文本来自 Librispeech。
+                                1. VCTK2. LJSpeech3. LibriTTS585h，2456 说话人，24kHz。音频和文本来自 Librispeech。
 
-Zen H, Dang V, Clark R, et al. LibriTTS: A 
+Zen H, Dang V, Clark R, et al. LibriTTS: A Corpus
                             
                         </div>-->
                         <div class="publish-info">
@@ -779,14 +772,12 @@ Zen H, Dang V, Clark R, et al. LibriTTS: A
                     <div class="card-content article-content">
                         <!--<div class="summary block-with-text">
                             
-                                1.  结构特点
-集成了计算机视觉领域最新的增强模块：Res2Net、SE block，聚合多层的特征，并采用 channel-dependent 帧注意力改进了统计池化模块。
-2.  系统结构
+                                1. 结构特点集成了计算机视觉领域最新的增强模块：Res2Net、SE block，聚合多层的特征，并采用 channel-dependent 帧注意力改进了统计池化模块。
+2. 系统结构
 
 
-3.  特征提取
-
-数据增强：为每句话生
+3. 特征提取
+数据增强：为每句话生成6个额外
                             
                         </div>-->
                         <div class="publish-info">
@@ -826,13 +817,12 @@ Zen H, Dang V, Clark R, et al. LibriTTS: A
                         <!--<div class="summary block-with-text">
                             
                                 
-感知停顿：令听者感到话语中断（、破坏语义/韵律单位）的语音现象
+感知停顿：令听者感到话语中断（、破坏语义&#x2F;韵律单位）的语音现象
 不当停顿与二语水平：不当停顿与学习者的单词辨认、意群划分、内容理解能力有关
 停顿时长阈值
-
 朗读、复述：100ms
 自发语音：200-300ms
-句间：400ms （取论文中
+句间：400ms （
                             
                         </div>-->
                         <div class="publish-info">
@@ -875,9 +865,8 @@ Zen H, Dang V, Clark R, et al. LibriTTS: A
                     <div class="card-content article-content">
                         <!--<div class="summary block-with-text">
                             
-                                1.  Automated speaking assessment
-
-Automated speaking assessment: Using language technologies to score spontaneous speec
+                                1. Automated speaking assessment
+Automated speaking assessment: Using language technologies to score spontaneous speech[
                             
                         </div>-->
                         <div class="publish-info">
@@ -917,13 +906,11 @@ Automated speaking assessment: Using language technologies to score spontaneous 
                         <!--<div class="summary block-with-text">
                             
                                 
-
 n-ŋ
 
 sin     sing
 thin    thing
 ran     rang
-
 
 
 eɪ-iː
@@ -932,7 +919,7 @@ fate    feat
 way     we
 say     see
 
-区分eɪ和iː https://www.ximala
+区分eɪ和iː https://www.ximalaya
                             
                         </div>-->
                         <div class="publish-info">
@@ -971,9 +958,7 @@ say     see
                     <div class="card-content article-content">
                         <!--<div class="summary block-with-text">
                             
-                                1.  送气 -&gt; 不送气（浊化）
-重读音节中，/s/+清辅音/t/ /p/ /k/ /tr/+元音，清辅音发音为对应的浊辅音/d/ /b/ /g/ /dr/，如student、speak、sky、strict 
-讲解及示例见：htt
+                                1. 送气 -&gt; 不送气（浊化）重读音节中，&#x2F;s&#x2F;+清辅音&#x2F;t&#x2F; &#x2F;p&#x2F; &#x2F;k&#x2F; &#x2F;tr&#x2F;+元音，清辅音发音为对应的浊辅音&#x2F;
                             
                         </div>-->
                         <div class="publish-info">
@@ -1012,17 +997,15 @@ say     see
                     <div class="card-content article-content">
                         <!--<div class="summary block-with-text">
                             
-                                1.  数据预处理
-
+                                1. 数据预处理
 compute_cmvn_stats：生成global_cmvn
-
 mean_stat：训练集上各维特征的总和
 var_stat：训练集上各维特征的平方和
 frame_num：训练集总帧数
 
 
 
-2.  Iterabl
+2. IterableDat
                             
                         </div>-->
                         <div class="publish-info">
@@ -1065,11 +1048,10 @@ frame_num：训练集总帧数
                     <div class="card-content article-content">
                         <!--<div class="summary block-with-text">
                             
-                                1.  2018 ETS acoustics + transcription
-
+                                1. 2018 ETS acoustics + transcription
 作者：ETS
 发表信息：ICASSP 2018
-创新点：提示无关的神经网络评分模型（BD-LSTM + attention），输入识别文本word embedd
+创新点：提示无关的神经网络评分模型（BD-LSTM + attention），输入识别文本word embeddin
                             
                         </div>-->
                         <div class="publish-info">

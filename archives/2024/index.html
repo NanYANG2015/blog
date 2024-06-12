@@ -378,11 +378,12 @@
 作者：腾讯
 MM-LLMs：利用预训练的 LLM，添加多模态理解、生成能力，以节省训练成本。
 
-1.  模型架构
+1. 模型架构
 
 
 通常模态 encoder、LLM backbone、模态生成器 参数冻结，重点优化输入、输出投影层。
-1.1.  模态e
+
+1.1. 模态en
                                 
                             </div>
                             <div class="publish-info">
@@ -439,8 +440,7 @@ MM-LLMs：利用预训练的 LLM，添加多模态理解、生成能力，以节
 作者：NVIDIA 等
 功能：支持 文本、图像、视频、音频 理解、推理与生成。
 创新点
-
-在 vision-to-vision 生成任务中，由于将 visual encoder 表示投影到 LLM 的表示空间, 而 LLM 更倾向于表征语
+在 vision-to-vision 生成任务中，由于将 visual encoder 表示投影到 LLM 的表示空间, 而 LLM 更倾向于表征语义
                                 
                             </div>
                             <div class="publish-info">
@@ -496,9 +496,8 @@ MM-LLMs：利用预训练的 LLM，添加多模态理解、生成能力，以节
                                     
 作者：复旦大学等。
 贡献
-
 基于离散 token，实现了 any-to-any 多模态 LLM，即支持理解、生成各种模态，包含语音、文本、图像、音乐。以文本为中心，通过将其它模态与文本对齐，实现所有模态之间的相互对齐。
-any-to-an
+any-to-any
                                 
                             </div>
                             <div class="publish-info">
@@ -614,13 +613,10 @@ any-to-an
                             <div class="summary block-with-text">
                                 
                                     不能用于 beam search。
-1.  TextStreamer
-若输出 token 构成完整单词，立即打印到 stdout。
-skip_prompt：若为 True，则第一次调用 put(input_ids) 不打印。
+1. TextStreamer若输出 token 构成完整单词，立即打印到 stdout。skip_prompt：若为 True，则第一次调用 put(input_ids) 不打印。
 
 put
-
-若
+若生成 t
                                 
                             </div>
                             <div class="publish-info">
@@ -679,12 +675,10 @@ put
                                 
                                     
 作者：Meta AI 等。
-功能：生成自然的口语对话音频（双通道）。
-示例：https://speechbot.github.io/dgslm/
+功能：生成自然的口语对话音频（双通道）。示例：https://speechbot.github.io/dgslm/
 特点
-
 采用 cross attention 结构，能同时听+说。
-能同时生成语音、back
+能同时生成语音、backch
                                 
                             </div>
                             <div class="publish-info">
@@ -793,9 +787,8 @@ wav2vec 2.0 等无监督预训练的语音编码器，需要有监督训练解�
                             <div class="summary block-with-text">
                                 
                                     视频地址 https://www.youtube.com/watch?v=CgQ3lUOpXgc&amp;ab_channel=Hung-yiLee
-1.  audio tokenization
-
-audio encoder + codeb
+1. audio tokenization
+audio encoder + codeboo
                                 
                             </div>
                             <div class="publish-info">
@@ -848,8 +841,7 @@ audio encoder + codeb
 作者：Google, 2022.09。
 功能：输入 prompt 音频（3s），生成延续，在语法、语义上连贯，同时保持说话人的音色、韵律、录音环境。还能扩展到钢琴音乐延续。
 创新点
-
-音频表示同时采用语义 token、声学 token，兼
+音频表示同时采用语义 token、声学 token，兼顾
                                 
                             </div>
                             <div class="publish-info">
@@ -910,10 +902,10 @@ audio encoder + codeb
 作者：Google，2023.06。
 功能：speech-to-speech translation、speech-to-text translation、ASR、MT、TTS，多语种。
 
-1.  系统结构
+1. 系统结构
 
 
-输入：在输入前加任务 ta
+输入：在输入前加任务 tag
                                 
                             </div>
                             <div class="publish-info">
