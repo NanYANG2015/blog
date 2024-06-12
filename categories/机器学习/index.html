@@ -321,10 +321,13 @@
                         <!--<div class="summary block-with-text">
                             
                                 不能用于 beam search。
-1. TextStreamer若输出 token 构成完整单词，立即打印到 stdout。skip_prompt：若为 True，则第一次调用 put(input_ids) 不打印。
+1.  TextStreamer
+若输出 token 构成完整单词，立即打印到 stdout。
+skip_prompt：若为 True，则第一次调用 put(input_ids) 不打印。
 
 put
-若生成 t
+
+若
                             
                         </div>-->
                         <div class="publish-info">
@@ -368,17 +371,18 @@ put
                         <!--<div class="summary block-with-text">
                             
                                 
+
 出发点：显式地建模通道间的相关性，根据输入的全局特征，自适应地对各个通道的feature map 重新加权。
+
 
 模块结构
 
 
 
 
-
 Squeeze
 global average pooling：分别计算每个通道的激活均值。
-$$ z_c&
+zc=Fsq
                             
                         </div>-->
                         <div class="publish-info">
@@ -418,10 +422,10 @@ $$ z_c&
                         <!--<div class="summary block-with-text">
                             
                                 
+
 出发点：表示多尺度的特征、增大感受野。
 
-
-$$\mathbf{y}_i&#x3D; \begin{cases}\mathbf{x}_i &amp; i &#x3D; 1 \ \mathbf{K}_i\left(\mathbf{x}_i\
+yi={xii=1Ki(xi)i=2Ki(xi+yi−1)2&lt;i⩽s\mathbf{y}_i= \begin{cases}\mathbf{x}_i &amp; i = 1 \\ \math
                             
                         </div>-->
                         <div class="publish-info">
