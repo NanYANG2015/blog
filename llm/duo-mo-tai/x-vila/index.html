@@ -9,8 +9,7 @@
 作者：NVIDIA 等
 功能：支持 文本、图像、视频、音频 理解、推理与生成。
 创新点
-
-在 vision-to-vision 生成任务中，由于将 visual encoder 表示投影到 LLM 的表示空间, 而 LLM 更倾向于表征语">
+在 vision-to-vision 生成任务中，由于将 visual encoder 表示投影到 LLM 的表示空间, 而 LLM 更倾向于表征语义">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -439,90 +438,69 @@
                 <ul>
 <li>作者：NVIDIA 等</li>
 <li>功能：支持 文本、图像、视频、音频 理解、推理与生成。</li>
-<li>创新点
-<ul>
+<li>创新点<ul>
 <li>在 vision-to-vision 生成任务中，由于将 visual encoder 表示投影到 LLM 的表示空间, 而 LLM 更倾向于表征语义概念，丢失了视觉细节。提出 Visual Embedding Highway (VEH)，连接 visual encoder 与 decoder，以增强 visual 输入、输出的一致性。</li>
 <li><a href="#instruct_dataset">any-to-any 模态交错的指令集</a>。</li>
-<li><a href="#train">3 阶段对齐训练、指令微调。</a></li>
+<li><a href="#%E8%AE%AD%E7%BB%83">3 阶段对齐训练、指令微调。</a></li>
 </ul>
 </li>
 </ul>
-<h1 id="系统结构">1.  系统结构</h1>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB9d99b9b65dc88c3ec1e3b28ad5ce1ec3?method=download&shareKey=95341e0ffefe6bb7900c741d0c313e2b" width="1030">
+<h1 id="系统结构">1. 系统结构</h1><img src="https://note.youdao.com/yws/api/personal/file/WEB9d99b9b65dc88c3ec1e3b28ad5ce1ec3?method=download&shareKey=95341e0ffefe6bb7900c741d0c313e2b" width="1030">
+
 <ul>
-<li>encoder
-<ul>
+<li>encoder<ul>
 <li>文本：tokenizer</li>
 <li>音频、图像、视频：<font color="green">ImageBind</font></li>
 </ul>
 </li>
 <li>LLM：Vicuna-7B-1.5</li>
-<li><font color="red">decoder：扩充 LLM 词表，添加特定模态的 token。提取生成的 token 序列对应的 embedding 序列，通过 transformer 层投影到 decoder 的文本 encoder 特征空间。decoder 为 diffusion 模型</font>，cross attention 文本 encoder 表示。
-<ul>
+<li><font color="red">decoder：扩充 LLM 词表，添加特定模态的 token。提取生成的 token 序列对应的 embedding 序列，通过 transformer 层投影到 decoder 的文本 encoder 特征空间。decoder 为 diffusion 模型</font>，cross attention 文本 encoder 表示。<ul>
 <li><font color="green">音频：AudioLDM</font></li>
 <li>图像：Stable Diffusion 1.5</li>
 <li>视频：VideoCrafter2</li>
 </ul>
 </li>
 </ul>
-<h2 id="veh">1.1.  VEH</h2>
-<img src="https://note.youdao.com/yws/api/personal/file/WEBf0203e20225b1c4579eca4f628a80d0a?method=download&shareKey=9cc440fa7e2132b78148bcd00bc230de" width="370">
+<h2 id="VEH">1.1. VEH</h2><img src="https://note.youdao.com/yws/api/personal/file/WEBf0203e20225b1c4579eca4f628a80d0a?method=download&shareKey=9cc440fa7e2132b78148bcd00bc230de" width="370">
+
 <ul>
-<li>
-<p>VEH embedding <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi mathvariant="bold">E</mi><mrow><mi mathvariant="normal">v</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">s</mi></mrow></msup></mrow><annotation encoding="application/x-tex">\mathbf{E}^{\mathrm{vis}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.830502em;vertical-align:0em;"></span><span class="mord"><span class="mord"><span class="mord mathbf">E</span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.830502em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight" style="margin-right:0.01389em;">v</span><span class="mord mathrm mtight">i</span><span class="mord mathrm mtight">s</span></span></span></span></span></span></span></span></span></span></span></span></span>：visual encoder feature map 逐层相加。</p>
+<li><p>VEH embedding $\mathbf{E}^{\mathrm{vis}}$：visual encoder feature map 逐层相加。</p>
 </li>
-<li>
-<p>RB：2个残差卷积。</p>
+<li><p>RB：2个残差卷积。</p>
 </li>
-<li>
-<p>ZC：全0初始化，生成输出控制信号。</p>
+<li><p>ZC：全0初始化，生成输出控制信号。</p>
 </li>
-<li>
-<p>visual decoder 在 reverse step <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">t</span></span></span></span>：</p>
-<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>ϵ</mi><mi>p</mi></msup><mo>=</mo><mrow><mo fence="true">{</mo><mtable rowspacing="0.15999999999999992em" columnalign="left left" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><msub><mrow><mi mathvariant="normal">U</mi><mo>−</mo><mi mathvariant="normal">N</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">t</mi></mrow><mi>m</mi></msub><mrow><mo fence="true">(</mo><mi>z</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo separator="true">,</mo><msub><mi mathvariant="normal">VisCtrl</mi><mo>⁡</mo><mi>m</mi></msub><mrow><mo fence="true">(</mo><msup><mi mathvariant="bold">E</mi><mtext>vis</mtext></msup><mo fence="true">)</mo></mrow><mo separator="true">,</mo><msubsup><mi mathvariant="bold">E</mi><mi>m</mi><mtext>text</mtext></msubsup><mo fence="true">)</mo></mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mtext> if </mtext><mi>t</mi><mo>&lt;</mo><mi>T</mi><mo>×</mo><mi>α</mi></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><msub><mrow><mi mathvariant="normal">U</mi><mo>−</mo><mi mathvariant="normal">N</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">t</mi></mrow><mi>m</mi></msub><mrow><mo fence="true">(</mo><mi>z</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo separator="true">,</mo><mtext>Null</mtext><mo separator="true">,</mo><msubsup><mi mathvariant="bold">E</mi><mi>m</mi><mtext>text</mtext></msubsup><mo fence="true">)</mo></mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mtext> if </mtext><mi>t</mi><mo>≥</mo><mi>T</mi><mo>×</mo><mi>α</mi></mrow></mstyle></mtd></mtr></mtable><mo separator="true">,</mo><mi>m</mi><mo>∈</mo><mo stretchy="false">{</mo><mtext>’image’, ’video’ </mtext><mo stretchy="false">}</mo></mrow></mrow><annotation encoding="application/x-tex">\epsilon^p=\left\{\begin{array}{ll}\mathrm{U-Net}_m\left(z(t), \operatorname{VisCtrl}_m\left(\mathbf{E}^{\text {vis}}\right), \mathbf{E}_m^{\text {text}}\right) &amp; \text { if } t&lt;T \times \alpha \\ \mathrm{U-Net}_m\left(z(t), \text {Null}, \mathbf{E}_m^{\text {text}}\right) &amp; \text { if } t \geq T \times \alpha\end{array}, m \in\{\text {&#x27;image&#x27;, &#x27;video&#x27; }\}\right. 
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.714392em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">ϵ</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.714392em;"><span style="top:-3.1130000000000004em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">p</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.41em;vertical-align:-0.9550000000000003em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">{</span></span><span class="mord"><span class="mtable"><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.4549999999999998em;"><span style="top:-3.6049999999999995em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord"><span class="mord mathrm">U</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord mathrm">N</span><span class="mord mathrm">e</span><span class="mord mathrm">t</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">m</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size1">(</span></span><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="mopen">(</span><span class="mord mathdefault">t</span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop"><span class="mop"><span class="mord mathrm" style="margin-right:0.01389em;">V</span><span class="mord mathrm">i</span><span class="mord mathrm">s</span><span class="mord mathrm">C</span><span class="mord mathrm">t</span><span class="mord mathrm">r</span><span class="mord mathrm">l</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">m</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size1">(</span></span><span class="mord"><span class="mord"><span class="mord mathbf">E</span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.830502em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">vis</span></span></span></span></span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size1">)</span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord"><span class="mord mathbf">E</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.7935559999999999em;"><span style="top:-2.4530000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">m</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">text</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.247em;"><span></span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size1">)</span></span></span></span></span><span style="top:-2.405em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord"><span class="mord mathrm">U</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord mathrm">N</span><span class="mord mathrm">e</span><span class="mord mathrm">t</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">m</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;">(</span><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="mopen">(</span><span class="mord mathdefault">t</span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord text"><span class="mord">Null</span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord"><span class="mord mathbf">E</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.7935559999999999em;"><span style="top:-2.4530000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">m</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">text</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.247em;"><span></span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.9550000000000003em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.4549999999999998em;"><span style="top:-3.6049999999999995em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord"> if </span></span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord mathdefault" style="margin-right:0.0037em;">α</span></span></span><span style="top:-2.405em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord"> if </span></span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord mathdefault" style="margin-right:0.0037em;">α</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.9550000000000003em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">m</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mopen">{</span><span class="mord text"><span class="mord">’image’, ’video’ </span></span><span class="mclose">}</span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
-<p>其中，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>ϵ</mi><mi>p</mi></msup></mrow><annotation encoding="application/x-tex">\epsilon^p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.664392em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">ϵ</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">p</span></span></span></span></span></span></span></span></span></span></span> 为预测的 noise，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>z</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">z(t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="mopen">(</span><span class="mord mathdefault">t</span><span class="mclose">)</span></span></span></span> 为输入 latent，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span></span> 为 diffusion 步数，NULL 表示不输入 VEH 特征。</p>
+<li><p>visual decoder 在 reverse step $t$：<br>$$ \epsilon^p&#x3D;\left{\begin{array}{ll}\mathrm{U-Net}_m\left(z(t), \operatorname{VisCtrl}_m\left(\mathbf{E}^{\text {vis}}\right), \mathbf{E}_m^{\text {text}}\right) &amp; \text { if } t&lt;T \times \alpha \ \mathrm{U-Net}_m\left(z(t), \text {Null}, \mathbf{E}_m^{\text {text}}\right) &amp; \text { if } t \geq T \times \alpha\end{array}, m \in{\text {‘image’, ‘video’ }}\right. $$</p>
+<p>其中，$\epsilon^p$ 为预测的 noise，$z(t)$ 为输入 latent，$T$ 为 diffusion 步数，NULL 表示不输入 VEH 特征。</p>
 </li>
-<li>
-<p>效果<br>
-<img src="https://note.youdao.com/yws/api/personal/file/WEBab15e28c59214dd907bfd0b9763dfe71?method=download&shareKey=eb425ec05d0a5b98fe4dc1cc09e23bdd" width="391"></p>
-</li>
-<li>
-<p><font color="green">参考文献</font></p>
+<li><p>效果</p>
+<img src="https://note.youdao.com/yws/api/personal/file/WEBab15e28c59214dd907bfd0b9763dfe71?method=download&shareKey=eb425ec05d0a5b98fe4dc1cc09e23bdd" width="391"></li>
+<li><p><font color="green">参考文献</font></p>
 <ul>
-<li>Mou C, Wang X, Xie L, et al. T2i-adapter: Learning adapters to dig out more controllable ability for text-to-image diffusion models[C]//Proceedings of the AAAI Conference on Artificial Intelligence. 2024, 38(5): 4296-4304.</li>
-<li>Zhang L, Rao A, Agrawala M. Adding conditional control to text-to-image diffusion models[C]//Proceedings of the IEEE/CVF International Conference on Computer Vision. 2023: 3836-3847.</li>
+<li>Mou C, Wang X, Xie L, et al. T2i-adapter: Learning adapters to dig out more controllable ability for text-to-image diffusion models[C]&#x2F;&#x2F;Proceedings of the AAAI Conference on Artificial Intelligence. 2024, 38(5): 4296-4304.</li>
+<li>Zhang L, Rao A, Agrawala M. Adding conditional control to text-to-image diffusion models[C]&#x2F;&#x2F;Proceedings of the IEEE&#x2F;CVF International Conference on Computer Vision. 2023: 3836-3847.</li>
 </ul>
 </li>
 </ul>
-<h1 id="训练a-idtraina">2.  训练</h1>
-<ul>
-<li>encoder-LLM-decoder 文本对齐训练
-<ul>
+<h1 id="训练">2. 训练</h1><ul>
+<li>encoder-LLM-decoder 文本对齐训练<ul>
 <li>数据集：LLaVA-pretrain, cc3m, WebVid, AudioCaps, WavCaps，X-text 对，字幕。</li>
 <li>可训练参数：输入投影层、LLM embedding、输出投影层。进行 X-to-text、text-to-X 训练。</li>
 <li>训练目标：text-to-X：最小化输出投影层表示、diffusion 模型原始预训练的 text encoder 的表示的距离。</li>
 </ul>
 </li>
-<li>模态交错数据 预训练
-<ul>
-<li>数据集：MMC4 图文交错、ActivityNet Captions
-<ul>
-<li>
-<p>ActivityNet Captions：视频，自建多模态交错数据，构建方式如下图。</p>
-<img src="https://note.youdao.com/yws/api/personal/file/WEBa1497bae535b465bb7784eacb6ee2d02?method=download&shareKey=79116eda43cb8ef2c05e9bbbcefcf990" width="649">
-</li>
+<li>模态交错数据 预训练<ul>
+<li>数据集：MMC4 图文交错、ActivityNet Captions<ul>
+<li><p>ActivityNet Captions：视频，自建多模态交错数据，构建方式如下图。</p>
+<img src="https://note.youdao.com/yws/api/personal/file/WEBa1497bae535b465bb7784eacb6ee2d02?method=download&shareKey=79116eda43cb8ef2c05e9bbbcefcf990" width="649"></li>
 </ul>
 </li>
 <li>训练：输入投影层、输出投影层、LLM LoRA。</li>
 <li><font color="green">作用：减轻灾难性遗忘、长上下文理解能力。</font></li>
 </ul>
 </li>
-<li>X-to-X 跨模态指令微调
-<ul>
-<li>
-<p><span id="instruct_dataset">数据集</span>：基于视频字幕数据集构建。每个对话包含至少 1个跨模态问答对。</p>
-<table>
+<li>X-to-X 跨模态指令微调<ul>
+<li><span id="instruct_dataset">数据集</span>：基于视频字幕数据集构建。每个对话包含至少 1个跨模态问答对。<table>
 <thead>
 <tr>
 <th>数据集</th>
@@ -531,8 +509,7 @@
 <th>验证集样本量</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>WebVid <br> 随机挑选 500k 训练样本</td>
 <td>image-to-video</td>
 <td>499915</td>
@@ -610,22 +587,16 @@
 <td></td>
 <td></td>
 </tr>
-</tbody>
-</table>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB4735c9f0925926c3c85afc30f6d1280a?method=download&shareKey=bb8dc0f892221a6f9eaa77a1d0eea502" width="778">
-</li>
-<li>
-<p>训练：两阶段</p>
+</tbody></table>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB4735c9f0925926c3c85afc30f6d1280a?method=download&shareKey=bb8dc0f892221a6f9eaa77a1d0eea502" width="778"></li>
+<li>训练：两阶段<ul>
+<li><p>文本对齐</p>
 <ul>
-<li>
-<p>文本对齐</p>
-<ul>
-<li>对于图像、视频、音频输出，优化模型生成的 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msubsup><mi mathvariant="bold">E</mi><mi>m</mi><mtext>text</mtext></msubsup></mrow><annotation encoding="application/x-tex">\mathbf{E}_m^{\text {text}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.040556em;vertical-align:-0.247em;"></span><span class="mord"><span class="mord"><span class="mord mathbf">E</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.7935559999999999em;"><span style="top:-2.4530000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">m</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">text</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.247em;"><span></span></span></span></span></span></span></span></span></span> 与 diffusion 模型 encoder 表示的距离。</li>
+<li>对于图像、视频、音频输出，优化模型生成的 $\mathbf{E}_m^{\text {text}}$ 与 diffusion 模型 encoder 表示的距离。</li>
 <li>可训练参数：输入投影层、输出投影层、LLM embedding、LoRA。</li>
 </ul>
 </li>
-<li>
-<p>视觉对齐</p>
+<li><p>视觉对齐</p>
 <ul>
 <li>可训练参数：视觉控制模块、视觉 decoder。</li>
 </ul>
@@ -635,10 +606,8 @@
 </ul>
 </li>
 </ul>
-<h1 id="评价">3.  评价</h1>
-<ul>
-<li>评价指标：X-to-X Alignment Score (<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi mathvariant="normal">X</mi><mn>2</mn></msup><mi mathvariant="normal">A</mi></mrow><annotation encoding="application/x-tex">\mathrm{X}^2 \mathrm{A}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord"><span class="mord mathrm">X</span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mord"><span class="mord mathrm">A</span></span></span></span></span> Score)
-<ul>
+<h1 id="评价">3. 评价</h1><ul>
+<li>评价指标：X-to-X Alignment Score ($\mathrm{X}^2 \mathrm{A}$ Score)<ul>
 <li>采用 ImageBind transformer 分别提取 ground truth、预测的 embedding，计算余弦相似度。</li>
 </ul>
 </li>
@@ -651,8 +620,7 @@
 <th>结论</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>多模态 benchmark</td>
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEB688b94d613792e64417bc362b6fe82a4?method=download&shareKey=0a80ba2459e08fa3fbfd75d15b61093a" width="394"></td>
 <td>与专门的 VLM 性能接近。</td>
@@ -663,28 +631,24 @@
 <td>相较于 Next-GPT，有显著的性能提升。<br> 添加 VEH，图像、视频生成的一致性增强。</td>
 </tr>
 <tr>
-<td>VEH <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>α</mi></mrow><annotation encoding="application/x-tex">\alpha</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.0037em;">α</span></span></span></span></td>
+<td>VEH $\alpha$</td>
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEBb96e2ea75316d7d157b1b324eb4f153f?method=download&shareKey=56833094bdbf4ed2fde13ca7804c8ad0" width="780"></td>
-<td>随 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>α</mi></mrow><annotation encoding="application/x-tex">\alpha</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.0037em;">α</span></span></span></span> 增大，生成图像的一致性增强。</td>
+<td>随 $\alpha$ 增大，生成图像的一致性增强。</td>
 </tr>
 <tr>
 <td>LLM 输出与 decoder 对齐<br>1. 文本对齐：LLM 生成文本描述；<br>2.Text-Embed-Aligned: LLM 生成特定模态的 token，取对应的 embedding；<br>3.+ VEH</td>
 <td>结果见上图</td>
 <td>文本对齐：纯文本描述很难传达视觉风格、对象外观、精确的人类动作等具体细节。embedding 提供了更大的信息量。</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <ul>
-<li>涌现能力
-<ul>
+<li>涌现能力<ul>
 <li>组合不同模态的多个输入，生成一致的内容。</li>
-<li>图像-音频、音频-图像 生成。<br>
-<img src="https://note.youdao.com/yws/api/personal/file/WEBe5c1c82d29016e1453ae88b47be94b4d?method=download&shareKey=a0aa13c498058a8ec161d097eb5b28bd" width="781"></li>
+<li>图像-音频、音频-图像 生成。<img src="https://note.youdao.com/yws/api/personal/file/WEBe5c1c82d29016e1453ae88b47be94b4d?method=download&shareKey=a0aa13c498058a8ec161d097eb5b28bd" width="781"></li>
 </ul>
 </li>
 </ul>
-<h1 id="其它">4.  其它</h1>
-<ul>
+<h1 id="其它">4. 其它</h1><ul>
 <li>Ye H, Huang D A, Lu Y, et al. X-VILA: Cross-Modality Alignment for Large Language Model[J]. arXiv preprint arXiv:2405.19335, 2024.</li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
@@ -746,7 +710,7 @@
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
                 <div class="card-title">
-                    <a href="/blog/llm/duo-mo-tai/mm-llms/"> 【综述】</a>
+                    <a href="/blog/llm/duo-mo-tai/mm-llms/"> 【综述】MM-LLMs</a>
                 </div>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">

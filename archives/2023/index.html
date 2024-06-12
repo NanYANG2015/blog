@@ -378,17 +378,17 @@
 
 
 
-0.1.  挑战及相关研究
 
+
+
+
+0.1. 挑战及相关研究
 数据
-
 数据污染
 响应可能暴露个人身份信息
 多领域数据集加权
-
 Task2Vec 多样性系数
-
-Beyond scale: the diversity coefficient as a data qua
+Beyond scale: the diversity coefficient as a data qual
                                 
                             </div>
                             <div class="publish-info">
@@ -442,11 +442,9 @@ Beyond scale: the diversity coefficient as a data qua
                             <div class="summary block-with-text">
                                 
                                     
-
 作者：微软
 
-
-LoRA (Low-Rank Adaptation)：过参数化（over-parametrized）模型实际上是低秩的。假设：微调时，模型权重的变化量也是低秩的。通过学习权重变化的低秩分解矩阵，间接地微调权重参数，同时可
+LoRA (Low-Rank Adaptation)：过参数化（over-parametrized）模型实际上是低秩的。假设：微调时，模型权重的变化量也是低秩的。通过学习权重变化的低秩分解矩阵，间接地微调权重参数，同时可以冻
                                 
                             </div>
                             <div class="publish-info">
@@ -503,10 +501,10 @@ LoRA (Low-Rank Adaptation)：过参数化（over-parametrized）模型实际上�
 作者：清华、字节
 SALMONN（speech audio language music open neural network），通用音频理解 LLM，支持开放式任务。
 
-1.  模型结构
+1. 模型结构
 
 
-BEATs: 迭代自监督训练，提取非语音的
+BEATs: 迭代自监督训练，提取非语音的音
                                 
                             </div>
                             <div class="publish-info">
@@ -563,10 +561,10 @@ BEATs: 迭代自监督训练，提取非语音的
 作者：微软、CMU
 创新点：将所有音频任务构建为文本生成任务：输入音频、文本，输出文本。支持封闭式和开放式音频任务。
 
-1.  模型结构
+1. 模型结构
 
 
-学习 HTSAT (hierarchical token-semantic audio tran
+学习 HTSAT (hierarchical token-semantic audio trans
                                 
                             </div>
                             <div class="publish-info">
@@ -682,9 +680,8 @@ BEATs: 迭代自监督训练，提取非语音的
                                     
 作者：中科院、阿里达摩院
 创新点
-
 采用冻结语音 encoder (Whisper-small)、指令跟随 LLM (Llama-2-7B)，学习轻量级的 modality adapter 的方式，使 LLM 具有处理语音输入的能力。
-由
+由于
                                 
                             </div>
                             <div class="publish-info">
@@ -737,12 +734,9 @@ BEATs: 迭代自监督训练，提取非语音的
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                    1.  VCTK
-2.  LJSpeech
-3.  LibriTTS
-585h，2456 说话人，24kHz。音频和文本来自 Librispeech。
+                                    1. VCTK2. LJSpeech3. LibriTTS585h，2456 说话人，24kHz。音频和文本来自 Librispeech。
 
-Zen H, Dang V, Clark R, et al. LibriTTS: A 
+Zen H, Dang V, Clark R, et al. LibriTTS: A Corpus
                                 
                             </div>
                             <div class="publish-info">
@@ -860,8 +854,7 @@ Zen H, Dang V, Clark R, et al. LibriTTS: A
                                     BERT: Bidirectional Encoder Representations from Transformers。无监督预训练的语言表示模型。
 创新点：
 
-
-双向性：采用 Transformer 的 Encoder 结构、mask
+双向性：采用 Transformer 的 Encoder 结构、maske
                                 
                             </div>
                             <div class="publish-info">
@@ -919,14 +912,12 @@ Zen H, Dang V, Clark R, et al. LibriTTS: A
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                    1.  结构特点
-集成了计算机视觉领域最新的增强模块：Res2Net、SE block，聚合多层的特征，并采用 channel-dependent 帧注意力改进了统计池化模块。
-2.  系统结构
+                                    1. 结构特点集成了计算机视觉领域最新的增强模块：Res2Net、SE block，聚合多层的特征，并采用 channel-dependent 帧注意力改进了统计池化模块。
+2. 系统结构
 
 
-3.  特征提取
-
-数据增强：为每句话生
+3. 特征提取
+数据增强：为每句话生成6个额外
                                 
                             </div>
                             <div class="publish-info">
@@ -980,18 +971,17 @@ Zen H, Dang V, Clark R, et al. LibriTTS: A
                             <div class="summary block-with-text">
                                 
                                     
-
 出发点：显式地建模通道间的相关性，根据输入的全局特征，自适应地对各个通道的feature map 重新加权。
-
 
 模块结构
 
 
 
 
+
 Squeeze
 global average pooling：分别计算每个通道的激活均值。
-zc=Fsq
+$$ z_c&
                                 
                             </div>
                             <div class="publish-info">
@@ -1045,10 +1035,10 @@ zc=Fsq
                             <div class="summary block-with-text">
                                 
                                     
-
 出发点：表示多尺度的特征、增大感受野。
 
-yi={xii=1Ki(xi)i=2Ki(xi+yi−1)2&lt;i⩽s\mathbf{y}_i= \begin{cases}\mathbf{x}_i &amp; i = 1 \\ \math
+
+$$\mathbf{y}_i&#x3D; \begin{cases}\mathbf{x}_i &amp; i &#x3D; 1 \ \mathbf{K}_i\left(\mathbf{x}_i\
                                 
                             </div>
                             <div class="publish-info">
@@ -1107,13 +1097,12 @@ yi={xii=1Ki(xi)i=2Ki(xi+yi−1)2&lt;i⩽s\mathbf{y}_i= \begin{cases}\mathbf{x}_i
                             <div class="summary block-with-text">
                                 
                                     
-感知停顿：令听者感到话语中断（、破坏语义/韵律单位）的语音现象
+感知停顿：令听者感到话语中断（、破坏语义&#x2F;韵律单位）的语音现象
 不当停顿与二语水平：不当停顿与学习者的单词辨认、意群划分、内容理解能力有关
 停顿时长阈值
-
 朗读、复述：100ms
 自发语音：200-300ms
-句间：400ms （取论文中
+句间：400ms （
                                 
                             </div>
                             <div class="publish-info">
@@ -1170,9 +1159,8 @@ yi={xii=1Ki(xi)i=2Ki(xi+yi−1)2&lt;i⩽s\mathbf{y}_i= \begin{cases}\mathbf{x}_i
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                    1.  Automated speaking assessment
-
-Automated speaking assessment: Using language technologies to score spontaneous speec
+                                    1. Automated speaking assessment
+Automated speaking assessment: Using language technologies to score spontaneous speech[
                                 
                             </div>
                             <div class="publish-info">
