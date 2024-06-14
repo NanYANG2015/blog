@@ -418,7 +418,7 @@ MM-LLMs：利用预训练的 LLM，添加多模态理解、生成能力，以节
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-06-13
+                    2024-06-14
                 </div>
                 
 
@@ -480,7 +480,7 @@ MM-LLMs：利用预训练的 LLM，添加多模态理解、生成能力，以节
 <h2 id="输入投影层">1.2. 输入投影层</h2><ul>
 <li><p>线性层、MLP、cross-attention、Q-Former、P-Former、MQ-Former 等。</p>
 </li>
-<li><p>训练：采用 X-text 数据集，最小化文本生成损失。<br>$$ \boldsymbol{P}<em>X&#x3D;\boldsymbol{\Theta}</em>{X \rightarrow T}\left(\boldsymbol{F}_X\right) $$</p>
+<li><p>训练：采用 X-text 数据集，最小化文本生成损失。<br>$$ \boldsymbol{P}_X&#x3D;\boldsymbol{\Theta}_{X \rightarrow T}\left(\boldsymbol{F}_X\right) $$</p>
 <p>$$ \underset{\Theta_{X \rightarrow T}}{\arg \min } \mathcal{L}_{\text {txt-gen}}\left(\operatorname{LLM}\left(\boldsymbol{P}_X, \boldsymbol{F}_T\right), t\right) $$</p>
 <p>其中，$\boldsymbol{F}_X$ 为其它模态 encoder 的特征，$\boldsymbol{P}_X$ 为输入投影层的表示，$\boldsymbol{F}_T$ 为输入的文本特征，$t$ 为文本 label。</p>
 </li>
@@ -489,7 +489,7 @@ MM-LLMs：利用预训练的 LLM，添加多模态理解、生成能力，以节
 <li>Parameter-Efficient Fine-Tuning (PEFT)：Prefix-tuning、Adapter、LoRA、LayerNorm tuning 等。</li>
 </ul>
 <h2 id="输出投影层">1.4. 输出投影层</h2><ul>
-<li>训练：采用 X-text 数据集，最小化输出投影层的表示、模态生成器的 textual condition encoder 的表示的距离。<br>$$ \underset{\boldsymbol{\Theta}<em>{T \rightarrow X}}{\arg \min } \mathcal{L}</em>{\mathrm{mse}}\left(\boldsymbol{H}_X, \tau_X(t)\right) $$</li>
+<li>训练：采用 X-text 数据集，最小化输出投影层的表示、模态生成器的 textual condition encoder 的表示的距离。<br>$$ \underset{\boldsymbol{\Theta}_{T \rightarrow X}}{\arg \min } \mathcal{L}_{\mathrm{mse}}\left(\boldsymbol{H}_X, \tau_X(t)\right) $$</li>
 </ul>
 <h2 id="模态生成器">1.5. 模态生成器</h2><ul>
 <li><p>Latent Diffusion Models (LDMs)</p>
@@ -500,7 +500,7 @@ MM-LLMs：利用预训练的 LLM，添加多模态理解、生成能力，以节
 </ul>
 </li>
 <li><p>训练<br>将 ground truth 通过预训练的 VAE 转换为 latent 特征 $z_0$，加噪 $\epsilon$，得到噪声 latent 特征 $z_t$，采用预训练的 Unet，通过优化损失</p>
-<p>$$ \mathcal{L}<em>{\mathrm{X} \text {-gen}}:&#x3D;\mathbb{E}</em>{\epsilon \sim \mathcal{N}(0,1), t}\left|\epsilon-\epsilon_X\left(z_t, t, \boldsymbol{H}_X\right)\right|_2^2 $$</p>
+<p>$$ \mathcal{L}_{\mathrm{X} \text {-gen}}:&#x3D;\mathbb{E}_{\epsilon \sim \mathcal{N}(0,1), t}\left|\epsilon-\epsilon_X\left(z_t, t, \boldsymbol{H}_X\right)\right|_2^2 $$</p>
 <p>来优化参数 $\Theta_{X \rightarrow T}$、$\Theta_{T \rightarrow X}$。</p>
 </li>
 </ul>

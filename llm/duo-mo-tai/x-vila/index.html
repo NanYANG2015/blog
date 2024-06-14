@@ -413,7 +413,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-06-13
+                    2024-06-14
                 </div>
                 
 
@@ -445,7 +445,7 @@
 </ul>
 </li>
 </ul>
-<h1 id="系统结构">1. 系统结构</h1><img src="https://note.youdao.com/yws/api/personal/file/WEBb19b3e46908c9bb83c27339692e38f64?method=download&shareKey=fe233bdf660dfb24a41a92f6d16653bc" width="1376">
+<h1 id="系统结构">1. 系统结构</h1><img src="https://note.youdao.com/yws/api/personal/file/WEBb19b3e46908c9bb83c27339692e38f64?method=download&shareKey=fe233bdf660dfb24a41a92f6d16653bc" width="688">
 
 <ul>
 <li>encoder<ul>
@@ -470,7 +470,7 @@
 </li>
 <li><p>ZC：全0初始化，生成输出控制信号。</p>
 </li>
-<li><p>visual decoder 在 reverse step $t$：<br>$$ \epsilon^p&#x3D;\left{\begin{array}{ll}\mathrm{U-Net}_m\left(z(t), \operatorname{VisCtrl}_m\left(\mathbf{E}^{\text {vis}}\right), \mathbf{E}_m^{\text {text}}\right) &amp; \text { if } t&lt;T \times \alpha \ \mathrm{U-Net}_m\left(z(t), \text {Null}, \mathbf{E}_m^{\text {text}}\right) &amp; \text { if } t \geq T \times \alpha\end{array}, m \in{\text {‘image’, ‘video’ }}\right. $$</p>
+<li><p>visual decoder 在 reverse step $t$：<br>$$ \epsilon^p&#x3D;\left\{\begin{array}{ll}\mathrm{U-Net}_m\left(z(t), \operatorname{VisCtrl}_m\left(\mathbf{E}^{\text {vis}}\right), \mathbf{E}_m^{\text {text}}\right) &amp; \text { if } t&lt;T \times \alpha \\ \mathrm{U-Net}_m\left(z(t), \text {Null}, \mathbf{E}_m^{\text {text}}\right) &amp; \text { if } t \geq T \times \alpha\end{array}, m \in{\text {‘image’, ‘video’ }}\right. $$</p>
 <p>其中，$\epsilon^p$ 为预测的 noise，$z(t)$ 为输入 latent，$T$ 为 diffusion 步数，NULL 表示不输入 VEH 特征。</p>
 </li>
 <li><p>效果</p>
@@ -492,7 +492,7 @@
 <li>模态交错数据 预训练<ul>
 <li>数据集：MMC4 图文交错、ActivityNet Captions<ul>
 <li><p>ActivityNet Captions：视频，自建多模态交错数据，构建方式如下图。</p>
-<img src="https://note.youdao.com/yws/api/personal/file/WEBa3ccea66726fe842f39040d5d087b095?method=download&shareKey=7cc2c07cac8ce92b2956346088ebc51e" width="1166"></li>
+<img src="https://note.youdao.com/yws/api/personal/file/WEBa3ccea66726fe842f39040d5d087b095?method=download&shareKey=7cc2c07cac8ce92b2956346088ebc51e" width="583"></li>
 </ul>
 </li>
 <li>训练：输入投影层、输出投影层、LLM LoRA。</li>
@@ -588,7 +588,7 @@
 <td></td>
 </tr>
 </tbody></table>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB8ab6731ea1ed8be193524079981dd8a6?method=download&shareKey=caff80afacfc351248f2ab9a71d2e21f" width="1360"></li>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB8ab6731ea1ed8be193524079981dd8a6?method=download&shareKey=caff80afacfc351248f2ab9a71d2e21f" width="680"></li>
 <li>训练：两阶段<ul>
 <li><p>文本对齐</p>
 <ul>
@@ -622,7 +622,7 @@
 </thead>
 <tbody><tr>
 <td>多模态 benchmark</td>
-<td><img src="https://note.youdao.com/yws/api/personal/file/WEB54d5bdba1496d0df7462af0fc904f899?method=download&shareKey=80351389a42037c388d6e3fef707d998" width="692"></td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEB54d5bdba1496d0df7462af0fc904f899?method=download&shareKey=80351389a42037c388d6e3fef707d998" width="346"></td>
 <td>与专门的 VLM 性能接近。</td>
 </tr>
 <tr>
@@ -644,7 +644,7 @@
 <ul>
 <li>涌现能力<ul>
 <li>组合不同模态的多个输入，生成一致的内容。</li>
-<li>图像-音频、音频-图像 生成。<img src="https://note.youdao.com/yws/api/personal/file/WEB9dcee95ecfbee6f329ee2b83e9a9ae28?method=download&shareKey=5eaebb20c7d59f98b27d75d1b6afc4b3" width="1384"></li>
+<li>图像-音频、音频-图像 生成。<img src="https://note.youdao.com/yws/api/personal/file/WEB9dcee95ecfbee6f329ee2b83e9a9ae28?method=download&shareKey=5eaebb20c7d59f98b27d75d1b6afc4b3" width="692"></li>
 </ul>
 </li>
 </ul>
