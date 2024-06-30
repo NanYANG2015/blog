@@ -7,10 +7,12 @@
     <meta name="keywords" content="DLM, 梦园">
     <meta name="description" content="
 作者：Meta AI 等。
-功能：生成自然的口语对话音频（双通道）。示例：https://speechbot.github.io/dgslm/
+功能：生成自然的口语对话音频（双通道）。
+示例：https://speechbot.github.io/dgslm/
 特点
+
 采用 cross attention 结构，能同时听+说。
-能同时生成语音、backch">
+能同时生成语音、back">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -438,85 +440,109 @@
             <div id="articleContent">
                 <ul>
 <li>作者：Meta AI 等。</li>
-<li>功能：生成自然的口语对话音频（双通道）。<br>示例：<a target="_blank" rel="noopener" href="https://speechbot.github.io/dgslm/">https://speechbot.github.io/dgslm/</a></li>
-<li>特点<ul>
+<li>功能：生成自然的口语对话音频（双通道）。<br>
+示例：<a target="_blank" rel="noopener" href="https://speechbot.github.io/dgslm/">https://speechbot.github.io/dgslm/</a></li>
+<li>特点
+<ul>
 <li><font color="red">采用 cross attention 结构，能同时听+说。</font></li>
 <li>能同时生成语音、backchannels、笑声、其它副语言信号。</li>
 <li>相较于 ASR+LM+TTS 级联模型，生成的对话 turn 更自然、流畅，但语义连贯性较差。</li>
 <li>textless: 训练数据不包含文本。</li>
 </ul>
 </li>
-<li>发现<ul>
+<li>发现
+<ul>
 <li><font color="red">相较于 next token 预测，同时学习内容+时长，edge unit 预测 + 时长预测 性能更好。且 next token 预测容易重复单元生成，导致长静音。</font></li>
 <li><font color="red">相较于朗读语音，对话语音包含随意的表达（如 hmm 等填充词）、非语言声音（如笑声），在对话数据上训练 HuBERT，以学习合适的语音表示。</font></li>
 <li><font color="red">说话人内的停顿（pause）通常比说话人之间的停顿（gap）持续时间长。因此，停顿不是表明 turn change 的充分信号。</font></li>
 </ul>
 </li>
 </ul>
-<h1 id="系统结构">1. 系统结构</h1><img src="https://note.youdao.com/yws/api/personal/file/WEB55a14acc3b1c2a30d02061ba230a4a9d?method=download&shareKey=d9d28e36de91c3acfa464cd1309ee15b" width="254">
-
+<h1 id="系统结构">1.  系统结构</h1>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB55a14acc3b1c2a30d02061ba230a4a9d?method=download&shareKey=d9d28e36de91c3acfa464cd1309ee15b" width="254">
 <img src="https://note.youdao.com/yws/api/personal/file/WEBff57a2a82bec9b1b2e8e183e77e7cd92?method=download&shareKey=a6de0282150ada47bdfb8e47f2be5150" width="1039">
-
 <ul>
 <li><font color="green">权重共享：speaker independent。</font></li>
 <li><font color="red">Cross-attention。</font></li>
 </ul>
-<h2 id="训练目标">1.1. 训练目标</h2><p>由于</p>
+<h2 id="训练目标">1.1.  训练目标</h2>
+<p>由于</p>
 <ul>
 <li>直接预测非去重的声学 unit，同时学习内容、时长，模型性能较差。</li>
 <li>unit 时长与 unit 本身高度相关。</li>
 </ul>
 <p>采用 Edge Unit Prediction (CE loss) + <font color="red">Delayed</font> Duration Prediction（连续值，L1 损失）。</p>
-<p>$$\mathcal{L}_{EU}&#x3D;\sum_{c&#x3D;1}^2\sum_{\substack{t \\ u_t^{(c)} \neq u_{t-1}^{(c)}}} \log p\left(u_t^{(c)} \mid u_{1: t-1}^{(1,2)} ; \theta\right)$$<br>$$\mathcal{L}_{ED}&#x3D;\sum_{c&#x3D;1}^2 \sum_{\substack{t \\ u_t^{(c)} \neq u_{t-1}^{(c)}}}\left|d_t^{(c)}-\hat{d}_t^{(c)}\left(u_{1: t-1+\Delta}^{(1,2)} ; \theta\right)\right|$$<br>$$\mathcal{L}_{DLM}&#x3D;\mathcal{L}_{EU}+\mathcal{L}_{ED}$$</p>
-<p>其中，$c$ 表示通道，$t$ 表示时间，$\theta$ 表示模型参数，<font color="red">$\Delta$ 表示延迟因子</font>，$d_t^{(c)}$ 为边界 unit $u_t^{(c)}$ 重复的次数。</p>
-<p><font color="green">若 $\Delta$ 足够大，则 $u_{1: t-1+\Delta}^{(1,2)}$ 已知时长。并且，若 $\Delta&gt;2$ 则来不及修改预测的 unit，如：$\Delta&#x3D;3$，unit 预测：t 时刻为 A，t+1 时刻为B，t+2 时刻为C，时长预测需要输入ABC，若预测值&#x3D;1，已无法修改 unit 自回归序列中的B，但仍可修改输入 audio decoder 的 unit 序列。</font></p>
-<h2 id="生成">1.2. 生成</h2><p><font color="red">依照预测的时长（四舍五入），修改预测的 unit，作为 LM 自回归的输入。</font></p>
-<h1 id="数据集">2. 数据集</h1><p>Fisher: 双通道电话对话音频，英语、含转写，16000 多个对话，2000h，各种主题。</p>
-<h1 id="训练">3. 训练</h1><ul>
+<p class="katex-block katex-error" title="ParseError: KaTeX parse error: Undefined control sequence: \substack at position 39: …_{c=1}^2\sum\_{\̲s̲u̲b̲s̲t̲a̲c̲k̲{t \\\\ u\_t^{(…">\mathcal{L}\_{EU}=\sum\_{c=1}^2\sum\_{\substack{t \\\\ u\_t^{(c)} \neq u\_{t-1}^{(c)}}} \log p\left(u\_t^{(c)} \mid u\_{1: t-1}^{(1,2)} ; \theta\right)
+</p>
+<p class="katex-block katex-error" title="ParseError: KaTeX parse error: Undefined control sequence: \substack at position 40: …{c=1}^2 \sum\_{\̲s̲u̲b̲s̲t̲a̲c̲k̲{t \\\\ u\_t^{(…">\mathcal{L}\_{ED}=\sum\_{c=1}^2 \sum\_{\substack{t \\\\ u\_t^{(c)} \neq u\_{t-1}^{(c)}}}\left|d\_t^{(c)}-\hat{d}\_t^{(c)}\left(u\_{1: t-1+\Delta}^{(1,2)} ; \theta\right)\right|
+</p>
+<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="script">L</mi><mi mathvariant="normal">_</mi><mrow><mi>D</mi><mi>L</mi><mi>M</mi></mrow><mo>=</mo><mi mathvariant="script">L</mi><mi mathvariant="normal">_</mi><mrow><mi>E</mi><mi>U</mi></mrow><mo>+</mo><mi mathvariant="script">L</mi><mi mathvariant="normal">_</mi><mrow><mi>E</mi><mi>D</mi></mrow></mrow><annotation encoding="application/x-tex">\mathcal{L}\_{DLM}=\mathcal{L}\_{EU}+\mathcal{L}\_{ED}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.99333em;vertical-align:-0.31em;"></span><span class="mord"><span class="mord mathcal">L</span></span><span class="mord" style="margin-right:0.02778em;">_</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="mord mathdefault">L</span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.99333em;vertical-align:-0.31em;"></span><span class="mord"><span class="mord mathcal">L</span></span><span class="mord" style="margin-right:0.02778em;">_</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mord mathdefault" style="margin-right:0.10903em;">U</span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.99333em;vertical-align:-0.31em;"></span><span class="mord"><span class="mord mathcal">L</span></span><span class="mord" style="margin-right:0.02778em;">_</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span></span></span></span></span></span></p>
+<p>其中，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>c</mi></mrow><annotation encoding="application/x-tex">c</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">c</span></span></span></span> 表示通道，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">t</span></span></span></span> 表示时间，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span></span></span></span> 表示模型参数，<font color="red"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">Δ</mi></mrow><annotation encoding="application/x-tex">\Delta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">Δ</span></span></span></span> 表示延迟因子</font>，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msubsup><mi>d</mi><mi>t</mi><mrow><mo stretchy="false">(</mo><mi>c</mi><mo stretchy="false">)</mo></mrow></msubsup></mrow><annotation encoding="application/x-tex">d_t^{(c)}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.2905559999999998em;vertical-align:-0.24575599999999992em;"></span><span class="mord"><span class="mord mathdefault">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.0448em;"><span style="top:-2.454244em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span><span style="top:-3.2197999999999998em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mopen mtight">(</span><span class="mord mathdefault mtight">c</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.24575599999999992em;"><span></span></span></span></span></span></span></span></span></span> 为边界 unit <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msubsup><mi>u</mi><mi>t</mi><mrow><mo stretchy="false">(</mo><mi>c</mi><mo stretchy="false">)</mo></mrow></msubsup></mrow><annotation encoding="application/x-tex">u_t^{(c)}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.2905559999999998em;vertical-align:-0.24575599999999992em;"></span><span class="mord"><span class="mord mathdefault">u</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.0448em;"><span style="top:-2.454244em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span><span style="top:-3.2197999999999998em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mopen mtight">(</span><span class="mord mathdefault mtight">c</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.24575599999999992em;"><span></span></span></span></span></span></span></span></span></span> 重复的次数。</p>
+<p><font color="green">若 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">Δ</mi></mrow><annotation encoding="application/x-tex">\Delta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">Δ</span></span></span></span> 足够大，则 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msubsup><mi>u</mi><mrow><mn>1</mn><mo>:</mo><mi>t</mi><mo>−</mo><mn>1</mn><mo>+</mo><mi mathvariant="normal">Δ</mi></mrow><mrow><mo stretchy="false">(</mo><mn>1</mn><mo separator="true">,</mo><mn>2</mn><mo stretchy="false">)</mo></mrow></msubsup></mrow><annotation encoding="application/x-tex">u_{1: t-1+\Delta}^{(1,2)}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.3966619999999998em;vertical-align:-0.3518619999999999em;"></span><span class="mord"><span class="mord mathdefault">u</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.0448em;"><span style="top:-2.4064690000000004em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mrel mtight">:</span><span class="mord mathdefault mtight">t</span><span class="mbin mtight">−</span><span class="mord mtight">1</span><span class="mbin mtight">+</span><span class="mord mtight">Δ</span></span></span></span><span style="top:-3.2198em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mopen mtight">(</span><span class="mord mtight">1</span><span class="mpunct mtight">,</span><span class="mord mtight">2</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3518619999999999em;"><span></span></span></span></span></span></span></span></span></span> 已知时长。并且，若 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">Δ</mi><mo>&gt;</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">\Delta&gt;2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72243em;vertical-align:-0.0391em;"></span><span class="mord">Δ</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span> 则来不及修改预测的 unit，如：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">Δ</mi><mo>=</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">\Delta=3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">Δ</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span></span></span></span>，unit 预测：t 时刻为 A，t+1 时刻为B，t+2 时刻为C，时长预测需要输入ABC，若预测值=1，已无法修改 unit 自回归序列中的B，但仍可修改输入 audio decoder 的 unit 序列。</font></p>
+<h2 id="生成">1.2.  生成</h2>
+<p><font color="red">依照预测的时长（四舍五入），修改预测的 unit，作为 LM 自回归的输入。</font></p>
+<h1 id="数据集">2.  数据集</h1>
+<p>Fisher: 双通道电话对话音频，英语、含转写，16000 多个对话，2000h，各种主题。</p>
+<h1 id="训练">3.  训练</h1>
+<ul>
 <li>HuBERT+kmeans、HifiGAN 在 Fisher 的单通道语音段上训练。</li>
-<li><a href="https://nanyang2015.github.io/blog/yu-yin/mo-xing/hubert/">HuBERT</a><ul>
+<li><a href="https://nanyang2015.github.io/blog/yu-yin/mo-xing/hubert/">HuBERT</a>
+<ul>
 <li>模型结构同 HuBERT Base，12 层 Transformer，训练同 HuBERT Large，3次迭代。训练结束后，将最后一层 Transformer 特征量化为 <font color="red">500 units</font>。</li>
 </ul>
 </li>
-<li>modified HifiGAN [^modifiedHifiGAN]<ul>
+<li>modified HifiGAN <sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>
+<ul>
 <li>输入为 HuBERT 离散单元 + 数据集中的 one-hot <font color="red">说话人</font>。生成时，说话人选自 HifiGAN 训练集。</li>
-<li>训练集：Fisher 子集，120 个说话人，每人10分钟。<br>说话人挑选：用在 100h Librispeech clean 上训练的音素识别器 [^音素识别器]，基于平均困惑度，挑选可懂度高的说话人。</li>
+<li>训练集：Fisher 子集，120 个说话人，每人10分钟。<br>
+说话人挑选：用在 100h Librispeech clean 上训练的音素识别器 <sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup>，基于平均困惑度，挑选可懂度高的说话人。</li>
 </ul>
 </li>
-<li>DLM (Dialogue Transformer Language Model)<ul>
+<li>DLM (Dialogue Transformer Language Model)
+<ul>
 <li>6 层 Transformer，head 8，embedding 512，cross attention 加到前4层。</li>
 <li>具体训练参数详见论文。</li>
 </ul>
 </li>
-<li>Multi-Stream Transformer Language Model (MS-TLM) [^MS-TLM]<ul>
+<li>Multi-Stream Transformer Language Model (MS-TLM) <sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup>
+<ul>
 <li>embedding 层 concat 两个 channel 的表示，两个softmax 输出层。</li>
 </ul>
 </li>
-<li>ASR+LM+TTS 级联模型<ul>
-<li>ASR<ul>
+<li>ASR+LM+TTS 级联模型
+<ul>
+<li>ASR
+<ul>
 <li>Switchboard 上微调的 wav2vec2-large +  Switchboard 上训练的 4-gram KenLM。</li>
 </ul>
 </li>
-<li>LM<ul>
+<li>LM
+<ul>
 <li>6层 Transformer。</li>
-<li>训练时忽略被其它 turn 完全包含的 turn。<br>样本示例：<code>&lt;A&gt; hi &lt;B&gt; hi how you doing &lt;A&gt; great &lt;B&gt; good good my name is marine</code></li>
+<li>训练时忽略被其它 turn 完全包含的 turn。<br>
+样本示例：<code>&lt;A&gt; hi &lt;B&gt; hi how you doing &lt;A&gt; great &lt;B&gt; good good my name is marine</code></li>
 </ul>
 </li>
 <li>Google TTS API</li>
 </ul>
 </li>
 </ul>
-<h1 id="实验">4. 实验</h1><ul>
-<li><p>turn 定义</p>
+<h1 id="实验">4.  实验</h1>
+<ul>
+<li>
+<p>turn 定义</p>
 <ul>
 <li>对对话音频进行 VAD（pyannote）。</li>
 <li>IPU：语音段，两侧有超过 200ms 的静音。</li>
-<li>silence：两个通道都没有语音。<ul>
+<li>silence：两个通道都没有语音。
+<ul>
 <li>gaps：不同说话人 IPU 之间。</li>
 <li>pauses: 同一说话人 IPU 之间。</li>
 </ul>
 </li>
-<li>overlap：两个通道都为语音。<ul>
+<li>overlap：两个通道都为语音。
+<ul>
 <li>backchannel：短 IPU，在另一个说话人的语音段内。</li>
 <li>interruption：在另一个说话人的语音段内开始，在其结束后仍继续。</li>
 <li>确切的定义取决于语言内容。</li>
@@ -524,11 +550,15 @@
 </li>
 <li>turn：同一说话人，由 pause 间隔的连续 IPUs。</li>
 </ul>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB1326ad8836e5da1613c8e0280978bee2?method=download&shareKey=e0fce1af11ab415e5580dca3c7093254" width="592"></li>
-<li><p>评价<br>对从开发集选取的117个 30s 的提示生成 90s 的 continuations。temperature&#x3D;1，topK&#x3D;20。</p>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB1326ad8836e5da1613c8e0280978bee2?method=download&shareKey=e0fce1af11ab415e5580dca3c7093254" width="592">
+</li>
+<li>
+<p>评价<br>
+对从开发集选取的117个 30s 的提示生成 90s 的 continuations。temperature=1，topK=20。</p>
 </li>
 </ul>
-<h2 id="结果">4.1. 结果</h2><table>
+<h2 id="结果">4.1.  结果</h2>
+<table>
 <thead>
 <tr>
 <th>实验</th>
@@ -537,7 +567,8 @@
 <th>分析</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>内容 + 时长建模</td>
 <td>NLL: Negative Log-Likelihood<br>MAE: 1 代表 20ms</td>
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEB16c0d8a9434fbd2c5822bb39c1c7e801?method=download&shareKey=334f61a18237825d2e3ae897dc4a560f" width="398"><br>未采用时长预测的模型均包含 next token 预测；否则不包含。</td>
@@ -591,18 +622,32 @@
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEB5b9e0d244a75443c0e8aca4cfeba04a7?method=download&shareKey=0b7c34eea5c6788aa6a31bc690883073" width="400"></td>
 <td>4 层、6层效果相当。</td>
 </tr>
-</tbody></table>
-<h1 id="其它">5. 其它</h1><ul>
+</tbody>
+</table>
+<h1 id="其它">5.  其它</h1>
+<ul>
 <li>Nguyen T A, Kharitonov E, Copet J, et al. Generative spoken dialogue language modeling[J]. Transactions of the Association for Computational Linguistics, 2023, 11: 250-266.</li>
 <li>代码、模型 <a target="_blank" rel="noopener" href="https://github.com/facebookresearch/fairseq/tree/main/examples/textless_nlp/dgslm">https://github.com/facebookresearch/fairseq/tree/main/examples/textless_nlp/dgslm</a></li>
 <li>扩展：每个说话人有自己的通道。</li>
-<li>文本对话生成<ul>
+<li>文本对话生成
+<ul>
 <li>【长上下文、多方对话】Xu J, Szlam A, Weston J. Beyond goldfish memory: Long-term open-domain conversation[J]. arXiv preprint arXiv:2107.07567, 2021.</li>
-<li>【利用互联网最新信息进行增强】Komeili M, Shuster K, Weston J. Internet-augmented dialogue generation[J]. arXiv preprint arXiv:2107.07566, 2021.<br>Shuster K, Komeili M, Adolphs L, et al. Language models that seek for knowledge: Modular search &amp; generation for dialogue and prompt completion[J]. arXiv preprint arXiv:2203.13224, 2022.</li>
+<li>【利用互联网最新信息进行增强】Komeili M, Shuster K, Weston J. Internet-augmented dialogue generation[J]. arXiv preprint arXiv:2107.07566, 2021.<br>
+Shuster K, Komeili M, Adolphs L, et al. Language models that seek for knowledge: Modular search &amp; generation for dialogue and prompt completion[J]. arXiv preprint arXiv:2203.13224, 2022.</li>
 </ul>
 </li>
 </ul>
-<p>[^modifiedHifiGAN]: Polyak A, Adi Y, Copet J, et al. Speech resynthesis from discrete disentangled self-supervised representations[J]. arXiv preprint arXiv:2104.00355, 2021.<br>[^MS-TLM]: Kharitonov E, Lee A, Polyak A, et al. Text-free prosody-aware generative spoken language modeling[J]. arXiv preprint arXiv:2109.03264, 2021.<br>[^音素识别器]: Rivière M, Dupoux E. Towards unsupervised learning of speech features in the wild[C]&#x2F;&#x2F;2021 IEEE Spoken Language Technology Workshop (SLT). IEEE, 2021: 156-163.</p>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>Polyak A, Adi Y, Copet J, et al. Speech resynthesis from discrete disentangled self-supervised representations[J]. arXiv preprint arXiv:2104.00355, 2021. <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p>Rivière M, Dupoux E. Towards unsupervised learning of speech features in the wild[C]//2021 IEEE Spoken Language Technology Workshop (SLT). IEEE, 2021: 156-163. <a href="#fnref2" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn3" class="footnote-item"><p>Kharitonov E, Lee A, Polyak A, et al. Text-free prosody-aware generative spoken language modeling[J]. arXiv preprint arXiv:2109.03264, 2021. <a href="#fnref3" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
             </div>
