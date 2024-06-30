@@ -4,15 +4,13 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="SALMONN, 梦园">
+    <meta name="keywords" content="BLSP, 梦园">
     <meta name="description" content="
-作者：清华、字节
-SALMONN（speech audio language music open neural network），通用音频理解 LLM，支持开放式任务。
+作者：中科院、阿里达摩院
+创新点
 
-1.  模型结构
-
-
-BEATs: 迭代自监督训练，提取非语音的">
+采用冻结语音 encoder (Whisper-small)、指令跟随 LLM (Llama-2-7B)，学习轻量级的 modality adapter 的方式，使 LLM 具有处理语音输入的能力。
+由">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -26,7 +24,7 @@ BEATs: 迭代自监督训练，提取非语音的">
 
     
 
-    <title>SALMONN | 梦园</title>
+    <title>BLSP | 梦园</title>
     <link rel="icon" type="image/png" href="/blog/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/blog/libs/awesome/css/all.min.css">
@@ -379,7 +377,7 @@ BEATs: 迭代自监督训练，提取非语音的">
                     <div class="row">
                         <div class="col s12 m12 l12">
                             <div class="brand">
-                                <h1 class="description center-align post-title">SALMONN</h1>
+                                <h1 class="description center-align post-title">BLSP</h1>
                             </div>
                         </div>
                     </div>
@@ -392,12 +390,12 @@ BEATs: 迭代自监督训练，提取非语音的">
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/" class="post-category">
-                                语音
+                            <a href="/blog/categories/LLM/" class="post-category">
+                                LLM
                             </a>
                         
-                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/LLM/" class="post-category">
-                                LLM
+                            <a href="/blog/categories/LLM/%E9%9F%B3%E9%A2%91%E7%90%86%E8%A7%A3/" class="post-category">
+                                音频理解
                             </a>
                         
                     </div>
@@ -409,14 +407,14 @@ BEATs: 迭代自监督训练，提取非语音的">
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2023-12-07
+                    2023-11-24
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-12-07
+                    2024-06-30
                 </div>
                 
 
@@ -439,209 +437,69 @@ BEATs: 迭代自监督训练，提取非语音的">
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <ul>
-<li>作者：清华、字节</li>
-<li>SALMONN（speech audio language music open neural network），通用音频理解 LLM，支持开放式任务。</li>
-</ul>
-<h1 id="模型结构">1.  模型结构</h1>
-<img src="https://note.youdao.com/yws/api/personal/file/WEBf6075a53c97667aa0b28cdda5ea6916a?method=download&shareKey=e655798e9ffe9b7c0249c679bfdb065a" width="615">
+<li>作者：中科院、阿里达摩院</li>
+<li><font color="red">创新点
 <ul>
-<li>BEATs: 迭代自监督训练，提取非语音的音频语义信息。</li>
-<li>Whisper-Large-v2、Fine-tuned BEATs iter3+ (AS2M) (cpt2): 输出均为 50Hz 帧率。帧级 concat。</li>
-<li><font color="red">Window-level Q-Former：将 encoder 输出每 L=17 帧转为长为 N=1 的 token（30s 音频 88 tokens）。保留了变长表示、时序性。</font></li>
-<li>vicuna-13b-v1.1：指令跟随微调的 LLaMA。</li>
-<li>LoRA：用于 Vicuna 中 self-attention 模块的 Q、V 权重矩阵。rank=8，缩放系数=4.0。</li>
+<li>采用冻结语音 encoder (Whisper-small)、指令跟随 LLM (Llama-2-7B)，学习轻量级的 modality adapter 的方式，使 LLM 具有处理语音输入的能力。</li>
+<li>由于直接采用 ASR 任务训练 adapter，结果 LLM 只能完成 ASR 任务，失去了遵循指令的能力。</li>
+<li>提出采用文本续写任务训练 adapter，认为输入音频、或对应的转写文本，LLM 应输出一致的续写文本。</li>
+<li>实验表明，在语音识别、语音翻译、情感识别、语音对话、非英语语音输入任务上，模型表现出一定的处理能力，但与 SOTA 仍有差距。</li></ul></font></li>
 </ul>
-<h1 id="训练">2.  训练</h1>
+
+<li>系统结构<br>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB3858aaf55d71d711a78baf0eb73813d8?method=download&shareKey=4523899aea7ad97a70e028be48838e5e" width="612"></li>
+<li>训练
+<ul>
+<li>LLM 指令跟随：采用指令集 Alpaca-52K 微调 Llama-2 3 epoch。相较于直接使用 Llama-2 Chat，后续可将指令集改为多模态指令集。</li>
+<li>先输入转写文本，提示 LLM 续写。将上述数据作为监督数据集（8.8M 对），输入 encoder 输出的语音表示，要求 LLM 续写出相同的文本。训练 adapter 1 epoch。
+<ul>
+<li>ASR 数据集：LibriSpeech + GigaSpeech + Common Voice 2.0</li>
+</ul>
+<pre class="line-numbers language-none"><code class="language-none">###[Human]:Continue the following text in a coherent and engaging style with less than 40 words.
+&lt;transcript&gt;\n\n\n###[Assistant]:
+
+###[Human]:Continue the following text in a coherent and engaging style with less than 40 words.
+&lt;speech features&gt;\n\n\n###[Assistant]:&lt;text continuation&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+</ul>
+</li>
+<li>模型结构
+<ul>
+<li>adapter: subsampler + bottleneck + layernorm
+<ul>
+<li>subsampler: 3层 Conv1d (kernel 5, pad 2, stride 2)，8倍降采样。</li>
+<li>bottleneck: 2层全连接，512。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>实验：zero-shot 语音识别、语音翻译、口语理解（情感识别）、语音对话、非英语语音输入。
 <ul>
 <li>
-<p>3 阶段训练</p>
-<ul>
-<li>跨模态预训练：语音识别 + 音频字幕（captioning）任务。分别包含语音、非语音信息，且不需要复杂的推理，用于学习音频、文本信息对齐。</li>
-<li>指令微调。任务选择：任务的重要性、具有该能力的必要性。</li>
-<li><font color="red">few-shot 自监督 activation tuning：修复（过拟合导致的缺失）指令跟随、涌现能力。采用 SALMONN（减小 了 LoRA 的缩放系数）生成的 12 个音频故事，训练 12 步，每一步采用 1 个故事样本。</font></li>
-</ul>
+<p>语音识别</p>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB76e3822331bf8b29f0666cddf0f531d6?method=download&shareKey=fdc6b928064ccf8b3495df340176046a" width="460">
+\*BERTScore: 评价语义相似度。
+<p>续写任务倾向于语义层面的对齐。BLSP 可以正确识别大多数单词，但并不忠实，比如由于 LLM，插入语音中漏掉的介词。</p>
 </li>
 <li>
-<p>数据集</p>
-<table>
-<thead>
-<tr>
-<th>阶段</th>
-<th>任务</th>
-<th>数据集</th>
-<th>时长(h)</th>
-<th>样本量</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>跨模态预训练</td>
-<td>自动语音识别 ASR</td>
-<td>LibriSpeech + GigaSpeech M</td>
-<td>1960</td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td>音频字幕（automatic audio captioning，AAC）</td>
-<td>WavCaps + AudioCaps + Clotho</td>
-<td>2800</td>
-<td></td>
-</tr>
-<tr>
-<td>指令微调</td>
-<td>自动语音识别 ASR</td>
-<td>LibriSpeech + GigaSpeech</td>
-<td>960+220</td>
-<td>280K+200K</td>
-</tr>
-<tr>
-<td></td>
-<td>自动语音翻译 En2Zh</td>
-<td>CoVoST2-En2Zh</td>
-<td>430</td>
-<td>290K</td>
-</tr>
-<tr>
-<td></td>
-<td>音频字幕 AAC</td>
-<td>AudioCaps + Clotho</td>
-<td>130+24</td>
-<td>48K+4K</td>
-</tr>
-<tr>
-<td></td>
-<td>音素识别 PR</td>
-<td>LibriSpeech</td>
-<td>960</td>
-<td>280K</td>
-</tr>
-<tr>
-<td></td>
-<td>情感识别 ER</td>
-<td>IEMOCAP Session 1-4</td>
-<td>5</td>
-<td>4K</td>
-</tr>
-<tr>
-<td></td>
-<td>音乐字幕 MC</td>
-<td>MusicCaps</td>
-<td>14</td>
-<td>3K</td>
-</tr>
-<tr>
-<td></td>
-<td>重叠语音识别（overlapped，OSR）</td>
-<td>LibriMix</td>
-<td>260</td>
-<td>64K</td>
-</tr>
-<tr>
-<td></td>
-<td>说话人确认（speaker verificatio，SV）</td>
-<td>VoxCeleb1</td>
-<td>1200</td>
-<td>520K</td>
-</tr>
-<tr>
-<td></td>
-<td>性别识别 GR</td>
-<td>LibriSpeech</td>
-<td>100</td>
-<td>28K</td>
-</tr>
-<tr>
-<td></td>
-<td>语音问答 SQA</td>
-<td>LibriSpeech</td>
-<td>960</td>
-<td>280K</td>
-</tr>
-<tr>
-<td></td>
-<td>音频问答 AQA</td>
-<td>WavCaps + AudioCaps</td>
-<td>760+130</td>
-<td>270K+48K</td>
-</tr>
-<tr>
-<td></td>
-<td>音乐问答 MQA</td>
-<td>MillionSong + MusicNet</td>
-<td>400+3</td>
-<td>48K+0.3K</td>
-</tr>
-<tr>
-<td></td>
-<td>Total</td>
-<td></td>
-<td>≈4400</td>
-<td>≈2.3M</td>
-</tr>
-<tr>
-<td>activation tuning</td>
-<td>根据音频讲故事</td>
-<td>SALMONN 生成的音频故事</td>
-<td></td>
-<td>12</td>
-</tr>
-</tbody>
-</table>
-<p>其中，语音问答、音频问答、音乐问答数据集中的问题、答案由 GPT-3.5 根据音频对应的文本 label 生成。音素识别采用 CMU 音素集，有重音标记、无位置标记，含 sil （待确认：论文示例中 sil 仅出现在音频首尾）。</p>
+<p>在情感识别任务上，BLSP 比 ASR + LLM 性能更好，与 text + LLM 性能相当。</p>
 </li>
 <li>
-<p>任务示例<br>
-<img src="https://note.youdao.com/yws/api/personal/file/WEBe9b0891635beaa55785f18c01540943a?method=download&shareKey=1fac350781cf998b49e191c86699a853" width="608"><br>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB35b007c2b891a12cb7ebf334cd324da9?method=download&shareKey=0bb3af88456422190ec71845fa151712" width="614"></p>
-</li>
-</ul>
-<h1 id="评价">3.  评价</h1>
-<ul>
-<li>3 个 level 的测试任务
-<ul>
-<li>level 1：指令调优训练中的任务。</li>
-<li>level 2 基于语音的 NLP 任务：语音翻译（未训练过的语种对）、关键字提取（keyword extracting，KE）、spoken-query-based QA（SQQA）、基于语音的填空（slot filling，SF，通常是命名实体）。</li>
-<li>level 3：根据音频讲故事（Story）、语音-音频协同推理（speech audio co-reasoning，SAC，理解音频信息，回答语音问题）。不仅需要理解语音，还需要理解非语音听觉信息。</li>
-</ul>
-</li>
-<li>评价指标
-<ul>
-<li>Following rate (FR)：遵循了指令的占比。
-<ul>
-<li>SQQA、SF：若 response 与语音 WER &lt; 30%，则认为未遵循指令。</li>
-<li>Story：设置输出 token 的最大长度为 200。若 response &lt; 50 词，则认为未遵循指令。</li>
-</ul>
-</li>
-<li>ACC
-<ul>
-<li>根据音频讲故事：只评价了 unique 单词的数量，而没有评价正确性。</li>
-<li>SQQA：采用 GPT-3.5 判断准确性。</li>
-<li>SAC：采用 GPT-3.5 判断是否遵循指令，输入背景音频字幕、问题来判断回答是否正确。</li>
-</ul>
+<p>可以输入中文语音进行多轮对话，但响应总是英文的，因为训练集是纯英文的。</p>
 </li>
 </ul>
 </li>
-</ul>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB56b8141722ab7f918c5aa38d181eda80?method=download&shareKey=3e625bfdbb102db169b4949240255791" width="618">
-<img src="https://note.youdao.com/yws/api/personal/file/WEBffd3a29225cf12b998490d8426253b05?method=download&shareKey=230db00446336a0021a7ac2b07e62afc" width="615">
+<li>展望
 <ul>
-<li>有/无 activation tuning，level 1 的任务性能差异较小。而没有 activation tuning 时，level 2、3 的任务性能很差。</li>
+<li>减小性能差距。</li>
+<li>利用说话人识别、情感识别等任务，使模型学习音调、情感等副语言信息。</li>
 </ul>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB7d4db89b4c5658bfd92e661fc81c8ac7?method=download&shareKey=d39468c63479cb514c27f2ee2b6c3150" width="613">
-<ul>
-<li>测试时直接减小 LoRA 的缩放系数：当降到 2 时，模型恢复了指令跟随、涌现能力，但 ASR 性能显著下降。</li>
-</ul>
-<img src="https://note.youdao.com/yws/api/personal/file/WEBc3a769675a3e23ca4f216c9a00d7ff58?method=download&shareKey=0573ee2163719831057407fe49f9a5d8" width="615">
-<ul>
-<li>activation tuning 中的任务：采用 response 更长、更丰富的任务微调。</li>
-</ul>
-<h1 id="其它">4.  其它</h1>
-<ul>
-<li>Tang C, Yu W, Sun G, et al. SALMONN: Towards Generic Hearing Abilities for Large Language Models[J]. arXiv preprint arXiv:2310.13289, 2023.</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/bytedance/SALMONN">https://github.com/bytedance/SALMONN</a></li>
-<li>音频事件输入：不需建模时间相关性，通常视为固定大小的语谱图。</li>
-</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/cwang621/blsp">https://github.com/cwang621/blsp</a></li>
+<li><a target="_blank" rel="noopener" href="https://cwang621.github.io/blsp.github.io">https://cwang621.github.io/blsp.github.io</a></li>
+<li>模型 <a target="_blank" rel="noopener" href="https://www.modelscope.cn/models/damo/blsp_lslm_7b/summary">https://www.modelscope.cn/models/damo/blsp_lslm_7b/summary</a></li>
+<li>Wang C, Liao M, Huang Z, et al. BLSP: Bootstrapping Language-Speech Pre-training via Behavior Alignment of Continuation Writing[J]. arXiv preprint arXiv:2309.00916, 2023.</li>
+
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
             </div>
@@ -701,7 +559,7 @@ BEATs: 迭代自监督训练，提取非语音的">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
                 <div class="card-title">
-                    <a href="/blog/nlp/mo-xing/lora/"> LoRA</a>
+                    <a href="/blog/llm/yin-pin-li-jie/qwen-audio/"> Qwen-Audio</a>
                 </div>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
@@ -711,18 +569,18 @@ BEATs: 迭代自监督训练，提取非语音的">
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2023-12-07
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-12-01
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/blog/categories/NLP/" class="post-category">
-                                    NLP
+                            <a href="/blog/categories/LLM/" class="post-category">
+                                    LLM
                                 </a>
                             
-                            <a href="/blog/categories/NLP/%E6%A8%A1%E5%9E%8B/" class="post-category">
-                                    模型
+                            <a href="/blog/categories/LLM/%E9%9F%B3%E9%A2%91%E7%90%86%E8%A7%A3/" class="post-category">
+                                    音频理解
                                 </a>
                             
                             
@@ -740,7 +598,7 @@ BEATs: 迭代自监督训练，提取非语音的">
             </div>
             <div class="card">
                 <div class="card-title">
-                    <a href="/blog/yu-yin/llm/pengi/"> Pengi</a>
+                    <a href="/blog/yu-yin/yu-yin-he-cheng/tts-shu-ju-ji/"> TTS数据集</a>
                 </div>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
@@ -750,7 +608,7 @@ BEATs: 迭代自监督训练，提取非语音的">
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-12-01
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-11-01
                             </span>
                         <span class="publish-author">
                             
@@ -760,8 +618,8 @@ BEATs: 迭代自监督训练，提取非语音的">
                                     语音
                                 </a>
                             
-                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/LLM/" class="post-category">
-                                    LLM
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E5%90%88%E6%88%90/" class="post-category">
+                                    语音合成
                                 </a>
                             
                             

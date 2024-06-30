@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="分类: 模型, 梦园">
+    <meta name="keywords" content="分类: 音频理解, 梦园">
     <meta name="description" content="愿，彼此相伴，走过流年">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -19,7 +19,7 @@
 
     
 
-    <title>分类: 模型 | 梦园</title>
+    <title>分类: 音频理解 | 梦园</title>
     <link rel="icon" type="image/png" href="/blog/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/blog/libs/awesome/css/all.min.css">
@@ -269,36 +269,223 @@
             
             <div class="article tag-post col s12 m6 l4" >
                 <div class="card">
-                    <a href="/blog/yu-yin/mo-xing/hubert/">
+                    <a href="/blog/llm/yin-pin-li-jie/sparks-of-large-audio-models/">
                         <div class=" card-content" >
-                            <span class="card-title" style="padding: 1px;font-size:20px;font-weight:700;height:80px;">HuBERT</span>
+                            <span class="card-title" style="padding: 1px;font-size:20px;font-weight:700;height:80px;">Sparks of Large Audio Models- A Survey and Outlook</span>
                         </div>
                     </a>
                     <div class="card-content article-content">
                         <!--<div class="summary block-with-text">
                             
-                                HuBERT: Hidden-Unit BERT，自监督语音表示学习，预测 masked 帧的声音单元，学习声学模型、语言模型的联合信息。
-创新点：
+                                
 
-输入原始波形。
-离线 k-means 聚类生成预训练帧级对齐 label、聚类集成（Cl
+
+
+0.1.  挑战及相关研究
+
+数据
+
+数据污染
+响应可能暴露个人身份信息
+多领域数据集加权
+
+Task2Vec 多样性系数
+
+Beyond scale: the diversity coefficient as a data qua
                             
                         </div>-->
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-08-14
-                                <i class="far fa-edit fa-fw icon-date"></i>2023-08-14
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-12-07
+                                <i class="far fa-edit fa-fw icon-date"></i>2024-06-30
                             </span>
                             <span class="publish-author">
                                 
                                 <i class="fas fa-bookmark fa-fw icon-category"></i>
                                 
-                                <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/" class="post-category">
-                                    语音
+                                <a href="/blog/categories/LLM/" class="post-category">
+                                    LLM
                                 </a>
                                 
-                                <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E6%A8%A1%E5%9E%8B/" class="post-category">
-                                    模型
+                                <a href="/blog/categories/LLM/%E9%9F%B3%E9%A2%91%E7%90%86%E8%A7%A3/" class="post-category">
+                                    音频理解
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4" >
+                <div class="card">
+                    <a href="/blog/llm/yin-pin-li-jie/salmonn/">
+                        <div class=" card-content" >
+                            <span class="card-title" style="padding: 1px;font-size:20px;font-weight:700;height:80px;">SALMONN</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <!--<div class="summary block-with-text">
+                            
+                                
+作者：清华、字节
+SALMONN（speech audio language music open neural network），通用音频理解 LLM，支持开放式任务。
+
+1.  模型结构
+
+
+BEATs: 迭代自监督训练，提取非语音的
+                            
+                        </div>-->
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-12-07
+                                <i class="far fa-edit fa-fw icon-date"></i>2024-06-30
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/blog/categories/LLM/" class="post-category">
+                                    LLM
+                                </a>
+                                
+                                <a href="/blog/categories/LLM/%E9%9F%B3%E9%A2%91%E7%90%86%E8%A7%A3/" class="post-category">
+                                    音频理解
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4" >
+                <div class="card">
+                    <a href="/blog/llm/yin-pin-li-jie/pengi/">
+                        <div class=" card-content" >
+                            <span class="card-title" style="padding: 1px;font-size:20px;font-weight:700;height:80px;">Pengi</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <!--<div class="summary block-with-text">
+                            
+                                
+作者：微软、CMU
+创新点：将所有音频任务构建为文本生成任务：输入音频、文本，输出文本。支持封闭式和开放式音频任务。
+
+1.  模型结构
+
+
+学习 HTSAT (hierarchical token-semantic audio tran
+                            
+                        </div>-->
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-12-01
+                                <i class="far fa-edit fa-fw icon-date"></i>2024-06-30
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/blog/categories/LLM/" class="post-category">
+                                    LLM
+                                </a>
+                                
+                                <a href="/blog/categories/LLM/%E9%9F%B3%E9%A2%91%E7%90%86%E8%A7%A3/" class="post-category">
+                                    音频理解
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4" >
+                <div class="card">
+                    <a href="/blog/llm/yin-pin-li-jie/qwen-audio/">
+                        <div class=" card-content" >
+                            <span class="card-title" style="padding: 1px;font-size:20px;font-weight:700;height:80px;">Qwen-Audio</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <!--<div class="summary block-with-text">
+                            
+                                
+作者：阿里
+创新点：Qwen-Audio 训练集涵盖30多个任务、各种音频类型（如语音、自然声音、音乐、歌曲）、8个语种，以提高通用音频理解能力。设计了多任务训练框架，通过共享、特定的标签分别实现知识共享、避免任务间的干扰。进一步采用有监
+                            
+                        </div>-->
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-12-01
+                                <i class="far fa-edit fa-fw icon-date"></i>2024-06-30
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/blog/categories/LLM/" class="post-category">
+                                    LLM
+                                </a>
+                                
+                                <a href="/blog/categories/LLM/%E9%9F%B3%E9%A2%91%E7%90%86%E8%A7%A3/" class="post-category">
+                                    音频理解
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4" >
+                <div class="card">
+                    <a href="/blog/llm/yin-pin-li-jie/blsp/">
+                        <div class=" card-content" >
+                            <span class="card-title" style="padding: 1px;font-size:20px;font-weight:700;height:80px;">BLSP</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <!--<div class="summary block-with-text">
+                            
+                                
+作者：中科院、阿里达摩院
+创新点
+
+采用冻结语音 encoder (Whisper-small)、指令跟随 LLM (Llama-2-7B)，学习轻量级的 modality adapter 的方式，使 LLM 具有处理语音输入的能力。
+由
+                            
+                        </div>-->
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-11-24
+                                <i class="far fa-edit fa-fw icon-date"></i>2024-06-30
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/blog/categories/LLM/" class="post-category">
+                                    LLM
+                                </a>
+                                
+                                <a href="/blog/categories/LLM/%E9%9F%B3%E9%A2%91%E7%90%86%E8%A7%A3/" class="post-category">
+                                    音频理解
                                 </a>
                                 
                                 
