@@ -5,11 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="VAE, 梦园">
-    <meta name="description" content="论文：Kingma D P, Welling M. Auto-encoding variational bayes[J]. arXiv preprint arXiv:1312.6114, 2013.
-1. 问题场景
-
-
-有向概率图模型，独立">
+    <meta name="description" content="论文：Kingma D P, Welling M. Auto-encoding variational bayes[J]. arXiv preprint arXiv:1312.6114, 2013.核心思想：通过 Variational I">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -140,7 +136,7 @@
         <div class="logo-name">梦园</div>
         <div class="logo-desc">
             
-            Never really desperate, only the lost of the soul.
+            愿，彼此相伴，走过流年
             
         </div>
     </div>
@@ -413,7 +409,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-06-19
+                    2024-06-30
                 </div>
                 
 
@@ -435,7 +431,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>论文：Kingma D P, Welling M. Auto-encoding variational bayes[J]. arXiv preprint arXiv:1312.6114, 2013.</p>
+                <p>论文：Kingma D P, Welling M. Auto-encoding variational bayes[J]. arXiv preprint arXiv:1312.6114, 2013.<br><font color="red">核心思想：通过 Variational Inference，联合学习数据的 latent 表示、生成过程。重参数化 latent 后验分布，如高斯分布，引入独立的随机噪声 $\epsilon$，latent $z&#x3D;\mu+\sigma \epsilon$，$\epsilon \sim \mathcal{N}(0,1)$。可用随机梯度方法直接优化（<a href="#AEVB%E7%AE%97%E6%B3%95">AEVB算法</a>）。encoder、decoder 预测变分分布的参数，如高斯分布中的均值、方差。latent、数据重建通过采样得到。</font></p>
 <h1 id="问题场景">1. 问题场景</h1><img src="https://note.youdao.com/yws/api/personal/file/WEB11563930f8a4c84b9ea1cbc334aa6b2d?method=download&shareKey=ac5dca106e2bc8def89852403177a5aa" width="918">
 
 <ul>
@@ -453,7 +449,7 @@
 </ul>
 </li>
 </ul>
-<h1 id="变分下界】">2. 变分下界】</h1><p>目标函数<br>$$ \mathcal{L}\left(\boldsymbol{\theta}, \boldsymbol{\phi} ; \mathbf{x}^{(i)}\right)&#x3D;-D_{K L}\left(q_{\boldsymbol{\phi}}\left(\mathbf{z} \mid \mathbf{x}^{(i)}\right) | p_{\boldsymbol{\theta}}(\mathbf{z})\right)+\mathbb{E}_{q_{\boldsymbol{\phi}}\left(\mathbf{z} \mid \mathbf{x}^{(i)}\right)}\left[\log p_{\boldsymbol{\theta}}\left(\mathbf{x}^{(i)} \mid \mathbf{z}\right)\right] $$</p>
+<h1 id="变分下界">2. 变分下界</h1><p>目标函数<br>$$ \mathcal{L}\left(\boldsymbol{\theta}, \boldsymbol{\phi} ; \mathbf{x}^{(i)}\right)&#x3D;-D_{K L}\left(q_{\boldsymbol{\phi}}\left(\mathbf{z} \mid \mathbf{x}^{(i)}\right) | p_{\boldsymbol{\theta}}(\mathbf{z})\right)+\mathbb{E}_{q_{\boldsymbol{\phi}}\left(\mathbf{z} \mid \mathbf{x}^{(i)}\right)}\left[\log p_{\boldsymbol{\theta}}\left(\mathbf{x}^{(i)} \mid \mathbf{z}\right)\right] $$</p>
 <p>由于 KL 散度非负，所以 $\mathcal{L}\left(\boldsymbol{\theta}, \boldsymbol{\phi} ; \mathbf{x}^{(i)}\right)$ 称为 $\log p_{\boldsymbol{\theta}}\left(\mathbf{x}^{(i)}\right)$ 的变分下界。</p>
 <p>存在的问题：变分下界关于 $\phi$ 的梯度 $\nabla_\phi \mathbb{E}_{q_\phi(\mathbf{z})}[f(\mathbf{z})]$，若采用 Monte Carlo gradient estimator 通过采样的样本梯度的均值来近似，方差较大。</p>
 <h1 id="重参数化">3. 重参数化</h1><ul>
@@ -474,7 +470,7 @@
 </li>
 <li>$g_\phi(\boldsymbol{\epsilon}, \mathbf{x})$ 可微分，SGVB 可用随机梯度方法直接优化。</li>
 </ul>
-<h1 id="AEVB-算法">5. AEVB 算法</h1><img src="https://note.youdao.com/yws/api/personal/file/WEB7b6c74f67b0640b9303f5948dc9d61c9?method=download&shareKey=9b674c2c8117816d8b55fa94e88c25c3" width="916">
+<h1 id="AEVB算法">5. AEVB算法</h1><img src="https://note.youdao.com/yws/api/personal/file/WEB7b6c74f67b0640b9303f5948dc9d61c9?method=download&shareKey=9b674c2c8117816d8b55fa94e88c25c3" width="916">
 
 <ul>
 <li>只要 batch size 足够大（本文采用 $M&#x3D;100$），$L$ 可以为1。</li>
