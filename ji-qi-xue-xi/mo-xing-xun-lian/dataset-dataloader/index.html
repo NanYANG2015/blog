@@ -4,15 +4,9 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="SALMONN, 梦园">
-    <meta name="description" content="
-作者：清华、字节
-SALMONN（speech audio language music open neural network），通用音频理解 LLM，支持开放式任务。
-
-1.  模型结构
-
-
-BEATs: 迭代自监督训练，提取非语音的">
+    <meta name="keywords" content="Dataset &amp; DataLoader, 梦园">
+    <meta name="description" content="1. 音频读取
+采用 torchaudio，支持后缀为 wav、mp3（如 common voice）、flac（如 Librispeech）、raw、WAV（如 TIMIT）、mp4（如 MELD）、m4a（如 Voxceleb） 等的音">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -26,7 +20,7 @@ BEATs: 迭代自监督训练，提取非语音的">
 
     
 
-    <title>SALMONN | 梦园</title>
+    <title>Dataset &amp; DataLoader | 梦园</title>
     <link rel="icon" type="image/png" href="/blog/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/blog/libs/awesome/css/all.min.css">
@@ -379,7 +373,7 @@ BEATs: 迭代自监督训练，提取非语音的">
                     <div class="row">
                         <div class="col s12 m12 l12">
                             <div class="brand">
-                                <h1 class="description center-align post-title">SALMONN</h1>
+                                <h1 class="description center-align post-title">Dataset &amp; DataLoader</h1>
                             </div>
                         </div>
                     </div>
@@ -392,12 +386,12 @@ BEATs: 迭代自监督训练，提取非语音的">
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/blog/categories/LLM/" class="post-category">
-                                LLM
+                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                机器学习
                             </a>
                         
-                            <a href="/blog/categories/LLM/%E9%9F%B3%E9%A2%91%E7%90%86%E8%A7%A3/" class="post-category">
-                                音频理解
+                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83/" class="post-category">
+                                模型训练
                             </a>
                         
                     </div>
@@ -409,14 +403,14 @@ BEATs: 迭代自监督训练，提取非语音的">
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2023-12-07
+                    2024-07-01
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-06-30
+                    2024-07-01
                 </div>
                 
 
@@ -438,209 +432,62 @@ BEATs: 迭代自监督训练，提取非语音的">
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <ul>
-<li>作者：清华、字节</li>
-<li>SALMONN（speech audio language music open neural network），通用音频理解 LLM，支持开放式任务。</li>
+                <h1 id="音频读取">1. 音频读取</h1><ul>
+<li>采用 torchaudio，支持后缀为 wav、mp3（如 common voice）、flac（如 Librispeech）、raw、WAV（如 TIMIT）、mp4（如 MELD）、m4a（如 Voxceleb） 等的音频文件。</li>
+<li>截取指定时间段</li>
+<li>转单声道</li>
+<li>重采样</li>
+<li>加噪</li>
+<li>降噪（匹配业务处理）</li>
+<li>变速</li>
+<li>音量缩放</li>
+<li>……</li>
 </ul>
-<h1 id="模型结构">1.  模型结构</h1>
-<img src="https://note.youdao.com/yws/api/personal/file/WEBf6075a53c97667aa0b28cdda5ea6916a?method=download&shareKey=e655798e9ffe9b7c0249c679bfdb065a" width="615">
-<ul>
-<li>BEATs: 迭代自监督训练，提取非语音的音频语义信息。</li>
-<li>Whisper-Large-v2、Fine-tuned BEATs iter3+ (AS2M) (cpt2): 输出均为 50Hz 帧率。帧级 concat。</li>
-<li><font color="red">Window-level Q-Former：将 encoder 输出每 L=17 帧转为长为 N=1 的 token（30s 音频 88 tokens）。保留了变长表示、时序性。</font></li>
-<li>vicuna-13b-v1.1：指令跟随微调的 LLaMA。</li>
-<li>LoRA：用于 Vicuna 中 self-attention 模块的 Q、V 权重矩阵。rank=8，缩放系数=4.0。</li>
+<h1 id="特征提取">2. 特征提取</h1><ul>
+<li>直接输入原始波形 或 FBANK</li>
 </ul>
-<h1 id="训练">2.  训练</h1>
-<ul>
-<li>
-<p>3 阶段训练</p>
-<ul>
-<li>跨模态预训练：语音识别 + 音频字幕（captioning）任务。分别包含语音、非语音信息，且不需要复杂的推理，用于学习音频、文本信息对齐。</li>
-<li>指令微调。任务选择：任务的重要性、具有该能力的必要性。</li>
-<li><font color="red">few-shot 自监督 activation tuning：修复（过拟合导致的缺失）指令跟随、涌现能力。采用 SALMONN（减小 了 LoRA 的缩放系数）生成的 12 个音频故事，训练 12 步，每一步采用 1 个故事样本。</font></li>
+<h1 id="Dataset-amp-DataLoader">3. Dataset &amp; DataLoader</h1><ul>
+<li>相关实现<ul>
+<li><a target="_blank" rel="noopener" href="https://wenet.org.cn/wenet/UIO.html">WeNet UIO</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/PBq3p9RR9LwENAdQQOJimw">Lhotse</a></li>
 </ul>
 </li>
-<li>
-<p>数据集</p>
+</ul>
+<h2 id="Dataset">3.1. Dataset</h2><ul>
+<li><p>dataset 存储音频路径。</p>
 <table>
 <thead>
 <tr>
-<th>阶段</th>
-<th>任务</th>
-<th>数据集</th>
-<th>时长(h)</th>
-<th>样本量</th>
+<th>dataset</th>
+<th>缺点</th>
 </tr>
 </thead>
-<tbody>
-<tr>
-<td>跨模态预训练</td>
-<td>自动语音识别 ASR</td>
-<td>LibriSpeech + GigaSpeech M</td>
-<td>1960</td>
-<td></td>
+<tbody><tr>
+<td>音频路径</td>
+<td>训练时读大量小文件，频繁地寻址，随机读性能慢。</td>
 </tr>
 <tr>
-<td></td>
-<td>音频字幕（automatic audio captioning，AAC）</td>
-<td>WavCaps + AudioCaps + Clotho</td>
-<td>2800</td>
-<td></td>
+<td>原始波形或频谱特征</td>
+<td>占用另外的存储空间；<br>对于输入不同的模型需要分别准备数据；<br>训练时 shuffle，变回非连续存储，访问慢</td>
 </tr>
-<tr>
-<td>指令微调</td>
-<td>自动语音识别 ASR</td>
-<td>LibriSpeech + GigaSpeech</td>
-<td>960+220</td>
-<td>280K+200K</td>
-</tr>
-<tr>
-<td></td>
-<td>自动语音翻译 En2Zh</td>
-<td>CoVoST2-En2Zh</td>
-<td>430</td>
-<td>290K</td>
-</tr>
-<tr>
-<td></td>
-<td>音频字幕 AAC</td>
-<td>AudioCaps + Clotho</td>
-<td>130+24</td>
-<td>48K+4K</td>
-</tr>
-<tr>
-<td></td>
-<td>音素识别 PR</td>
-<td>LibriSpeech</td>
-<td>960</td>
-<td>280K</td>
-</tr>
-<tr>
-<td></td>
-<td>情感识别 ER</td>
-<td>IEMOCAP Session 1-4</td>
-<td>5</td>
-<td>4K</td>
-</tr>
-<tr>
-<td></td>
-<td>音乐字幕 MC</td>
-<td>MusicCaps</td>
-<td>14</td>
-<td>3K</td>
-</tr>
-<tr>
-<td></td>
-<td>重叠语音识别（overlapped，OSR）</td>
-<td>LibriMix</td>
-<td>260</td>
-<td>64K</td>
-</tr>
-<tr>
-<td></td>
-<td>说话人确认（speaker verificatio，SV）</td>
-<td>VoxCeleb1</td>
-<td>1200</td>
-<td>520K</td>
-</tr>
-<tr>
-<td></td>
-<td>性别识别 GR</td>
-<td>LibriSpeech</td>
-<td>100</td>
-<td>28K</td>
-</tr>
-<tr>
-<td></td>
-<td>语音问答 SQA</td>
-<td>LibriSpeech</td>
-<td>960</td>
-<td>280K</td>
-</tr>
-<tr>
-<td></td>
-<td>音频问答 AQA</td>
-<td>WavCaps + AudioCaps</td>
-<td>760+130</td>
-<td>270K+48K</td>
-</tr>
-<tr>
-<td></td>
-<td>音乐问答 MQA</td>
-<td>MillionSong + MusicNet</td>
-<td>400+3</td>
-<td>48K+0.3K</td>
-</tr>
-<tr>
-<td></td>
-<td>Total</td>
-<td></td>
-<td>≈4400</td>
-<td>≈2.3M</td>
-</tr>
-<tr>
-<td>activation tuning</td>
-<td>根据音频讲故事</td>
-<td>SALMONN 生成的音频故事</td>
-<td></td>
-<td>12</td>
-</tr>
-</tbody>
-</table>
-<p>其中，语音问答、音频问答、音乐问答数据集中的问题、答案由 GPT-3.5 根据音频对应的文本 label 生成。音素识别采用 CMU 音素集，有重音标记、无位置标记，含 sil （待确认：论文示例中 sil 仅出现在音频首尾）。</p>
+</tbody></table>
+<p>如 1wh 16kHz、16bit、单声道 采样点数据、80维 FBANK 均约为 1TB。<br><code>10000 h * 3600 s/h * 16000 samples/s * 2 byte/sample / (2 ** (10 * 4)) ~= 1.05 TB</code><br><code>10000 h * 3600 s/h * 100 frames/s * 80 dim/frame * 4 byte (float) / (2 ** (10 * 4)) ~= 1.05 TB</code></p>
 </li>
-<li>
-<p>任务示例<br>
-<img src="https://note.youdao.com/yws/api/personal/file/WEBe9b0891635beaa55785f18c01540943a?method=download&shareKey=1fac350781cf998b49e191c86699a853" width="608"><br>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB35b007c2b891a12cb7ebf334cd324da9?method=download&shareKey=0bb3af88456422190ec71845fa151712" width="614"></p>
+<li><p>另外，WeNet UIO 通过将数据集做成多个压缩包（含音频、文本），shuffle 压缩包，顺序读取一个压缩包内的数据，优化随机读性能慢的问题。</p>
 </li>
-</ul>
-<h1 id="评价">3.  评价</h1>
-<ul>
-<li>3 个 level 的测试任务
-<ul>
-<li>level 1：指令调优训练中的任务。</li>
-<li>level 2 基于语音的 NLP 任务：语音翻译（未训练过的语种对）、关键字提取（keyword extracting，KE）、spoken-query-based QA（SQQA）、基于语音的填空（slot filling，SF，通常是命名实体）。</li>
-<li>level 3：根据音频讲故事（Story）、语音-音频协同推理（speech audio co-reasoning，SAC，理解音频信息，回答语音问题）。不仅需要理解语音，还需要理解非语音听觉信息。</li>
-</ul>
+<li><p>dataset 采用 <a target="_blank" rel="noopener" href="https://huggingface.co/docs/datasets/about_arrow">🤗 Datasets，Arrow 格式</a>。</p>
+<p>优点：从磁盘进行内存映射，允许在设备内存相对较小的机器上使用大型数据集。</p>
+<p>存在的问题：<a target="_blank" rel="noopener" href="https://huggingface.co/docs/datasets/about_mapstyle_vs_iterable">🤗 Datasets 基于 Arrow，训练时 shuffle 可达10x 慢。<br>优化：采用 🤗 IterableDataset，shuffle shards。</a></p>
 </li>
-<li>评价指标
+<li><p>特征提取在生成 batch 时计算。</p>
 <ul>
-<li>Following rate (FR)：遵循了指令的占比。
-<ul>
-<li>SQQA、SF：若 response 与语音 WER &lt; 30%，则认为未遵循指令。</li>
-<li>Story：设置输出 token 的最大长度为 200。若 response &lt; 50 词，则认为未遵循指令。</li>
-</ul>
-</li>
-<li>ACC
-<ul>
-<li>根据音频讲故事：只评价了 unique 单词的数量，而没有评价正确性。</li>
-<li>SQQA：采用 GPT-3.5 判断准确性。</li>
-<li>SAC：采用 GPT-3.5 判断是否遵循指令，输入背景音频字幕、问题来判断回答是否正确。</li>
+<li>可通过 <code>Dataset.__getitem__</code> 或 <code>DataLoader.collate_fn</code> 实现。通常，batch 处理更高效，如 <a target="_blank" rel="noopener" href="https://huggingface.co/docs/datasets/v2.20.0/en/about_map_batch">🤗 Tokenizers</a>、<code>torch.stft</code> 支持 batch。</li>
+<li>FBANK 实现：🤗 transformers&gt;&#x3D;4.40.0 支持 <code>torch.stft</code> GPU batch 计算。</li>
 </ul>
 </li>
 </ul>
-</li>
-</ul>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB56b8141722ab7f918c5aa38d181eda80?method=download&shareKey=3e625bfdbb102db169b4949240255791" width="618">
-<img src="https://note.youdao.com/yws/api/personal/file/WEBffd3a29225cf12b998490d8426253b05?method=download&shareKey=230db00446336a0021a7ac2b07e62afc" width="615">
-<ul>
-<li>有/无 activation tuning，level 1 的任务性能差异较小。而没有 activation tuning 时，level 2、3 的任务性能很差。</li>
-</ul>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB7d4db89b4c5658bfd92e661fc81c8ac7?method=download&shareKey=d39468c63479cb514c27f2ee2b6c3150" width="613">
-<ul>
-<li>测试时直接减小 LoRA 的缩放系数：当降到 2 时，模型恢复了指令跟随、涌现能力，但 ASR 性能显著下降。</li>
-</ul>
-<img src="https://note.youdao.com/yws/api/personal/file/WEBc3a769675a3e23ca4f216c9a00d7ff58?method=download&shareKey=0573ee2163719831057407fe49f9a5d8" width="615">
-<ul>
-<li>activation tuning 中的任务：采用 response 更长、更丰富的任务微调。</li>
-</ul>
-<h1 id="其它">4.  其它</h1>
-<ul>
-<li>Tang C, Yu W, Sun G, et al. SALMONN: Towards Generic Hearing Abilities for Large Language Models[J]. arXiv preprint arXiv:2310.13289, 2023.</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/bytedance/SALMONN">https://github.com/bytedance/SALMONN</a></li>
-<li>音频事件输入：不需建模时间相关性，通常视为固定大小的语谱图。</li>
+<h2 id="DataLoader">3.2. DataLoader</h2><ul>
+<li><font color="green">动态 batch</font></li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
@@ -696,12 +543,13 @@ BEATs: 迭代自监督训练，提取非语音的">
     <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <div class="card-title">
-                    <a href="/blog/nlp/mo-xing/lora/"> LoRA</a>
+                    <a href="/blog/ji-qi-xue-xi/mo-xing-xun-lian/dataset-dataloader/"> Dataset &amp; DataLoader</a>
                 </div>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
@@ -710,25 +558,26 @@ BEATs: 迭代自监督训练，提取非语音的">
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2023-12-07
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-07-01
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/blog/categories/NLP/" class="post-category">
-                                    NLP
+                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    机器学习
                                 </a>
                             
-                            <a href="/blog/categories/NLP/%E6%A8%A1%E5%9E%8B/" class="post-category">
-                                    模型
+                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83/" class="post-category">
+                                    模型训练
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
             </div>
         </div>
@@ -740,7 +589,7 @@ BEATs: 迭代自监督训练，提取非语音的">
             </div>
             <div class="card">
                 <div class="card-title">
-                    <a href="/blog/llm/yin-pin-li-jie/pengi/"> Pengi</a>
+                    <a href="/blog/ji-qi-xue-xi/sheng-cheng-mo-xing/denoising-diffusion/"> denoising diffusion</a>
                 </div>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
@@ -750,18 +599,18 @@ BEATs: 迭代自监督训练，提取非语音的">
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-12-01
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-06-30
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/blog/categories/LLM/" class="post-category">
-                                    LLM
+                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    机器学习
                                 </a>
                             
-                            <a href="/blog/categories/LLM/%E9%9F%B3%E9%A2%91%E7%90%86%E8%A7%A3/" class="post-category">
-                                    音频理解
+                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B/" class="post-category">
+                                    生成模型
                                 </a>
                             
                             
@@ -919,13 +768,6 @@ BEATs: 迭代自监督训练，提取非语音的">
 
 </main>
 
-
-<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<script>
-    MathJax.Hub.Config({
-        tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
-    });
-</script>
 
 
 

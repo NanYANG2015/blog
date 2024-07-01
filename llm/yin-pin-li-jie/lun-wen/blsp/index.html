@@ -4,10 +4,12 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Qwen-Audio, 梦园">
+    <meta name="keywords" content="BLSP, 梦园">
     <meta name="description" content="
-作者：阿里
-创新点：Qwen-Audio 训练集涵盖30多个任务、各种音频类型（如语音、自然声音、音乐、歌曲）、8个语种，以提高通用音频理解能力。设计了多任务训练框架，通过共享、特定的标签分别实现知识共享、避免任务间的干扰。进一步采用有监">
+作者：中科院、阿里达摩院
+创新点
+采用冻结语音 encoder (Whisper-small)、指令跟随 LLM (Llama-2-7B)，学习轻量级的 modality adapter 的方式，使 LLM 具有处理语音输入的能力。
+由于">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -21,7 +23,7 @@
 
     
 
-    <title>Qwen-Audio | 梦园</title>
+    <title>BLSP | 梦园</title>
     <link rel="icon" type="image/png" href="/blog/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/blog/libs/awesome/css/all.min.css">
@@ -374,7 +376,7 @@
                     <div class="row">
                         <div class="col s12 m12 l12">
                             <div class="brand">
-                                <h1 class="description center-align post-title">Qwen-Audio</h1>
+                                <h1 class="description center-align post-title">BLSP</h1>
                             </div>
                         </div>
                     </div>
@@ -395,6 +397,10 @@
                                 音频理解
                             </a>
                         
+                            <a href="/blog/categories/LLM/%E9%9F%B3%E9%A2%91%E7%90%86%E8%A7%A3/%E8%AE%BA%E6%96%87/" class="post-category">
+                                论文
+                            </a>
+                        
                     </div>
                     
                 </div>
@@ -404,14 +410,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2023-12-01
+                    2023-11-24
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-06-30
+                    2024-07-01
                 </div>
                 
 
@@ -434,67 +440,58 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <ul>
-<li>作者：阿里</li>
-<li><font color="red">创新点：Qwen-Audio 训练集涵盖30多个任务、各种音频类型（如语音、自然声音、音乐、歌曲）、8个语种，以提高通用音频理解能力。设计了多任务训练框架，通过共享、特定的标签分别实现知识共享、避免任务间的干扰。进一步采用有监督指令微调，训练了 Qwen-Audio-Chat。</font></li>
+<li>作者：中科院、阿里达摩院</li>
+<li><font color="red">创新点<ul>
+<li>采用冻结语音 encoder (Whisper-small)、指令跟随 LLM (Llama-2-7B)，学习轻量级的 modality adapter 的方式，使 LLM 具有处理语音输入的能力。</li>
+<li>由于直接采用 ASR 任务训练 adapter，结果 LLM 只能完成 ASR 任务，失去了遵循指令的能力。</li>
+<li>提出采用文本续写任务训练 adapter，认为输入音频、或对应的转写文本，LLM 应输出一致的续写文本。</li>
+<li>实验表明，在语音识别、语音翻译、情感识别、语音对话、非英语语音输入任务上，模型表现出一定的处理能力，但与 SOTA 仍有差距。</li></ul></font></li>
 </ul>
-<h1 id="模型结构">1.  模型结构</h1>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB504c00474c558ba31347a1440867047a?method=download&shareKey=7adde9d8895020edc12151aa6d99d123" width="877">
-<ul>
-<li>
-<p>音频 encoder：Whisper Large-V2 初始化，640M 参数。</p>
-</li>
-<li>
-<p>LLM:  Qwen-7B 初始化。</p>
-</li>
-<li>
-<p>&lt;|startoftranscripts|&gt;: 包括识别、翻译任务。否则为  &lt;|startofanalysis|&gt;。</p>
-</li>
-<li>
-<p>冻结 LLM，只优化音频 encoder。</p>
-</li>
-<li>
-<p>训练集</p>
-<img src="https://note.youdao.com/yws/api/personal/file/WEBbb6e381801187354e2e02066512ab25a?method=download&shareKey=fef1c2e90d12a751e920547b681c1389" width="712">
-</li>
-<li>
-<p><font color="red">ASR、词级时间戳预测联合训练，可以改善相关的 QA 任务及 ASR 的性能。</font></p>
-</li>
-</ul>
-<h1 id="qwen-audio-chat-有监督指令微调">2.  Qwen-Audio-Chat 有监督指令微调</h1>
-<ul>
-<li>数据集构建
-<ul>
-<li>为每个任务创建示例。</li>
-<li>采用 GPT-3.5 根据原始文本 label 生成问题、答案。</li>
-<li>自建音频对话数据集，引入推理、故事生成、多音频理解能力。</li>
+
+<li>系统结构<img src="https://note.youdao.com/yws/api/personal/file/WEB3858aaf55d71d711a78baf0eb73813d8?method=download&shareKey=4523899aea7ad97a70e028be48838e5e" width="612"></li>
+<li>训练<ul>
+<li>LLM 指令跟随：采用指令集 Alpaca-52K 微调 Llama-2 3 epoch。相较于直接使用 Llama-2 Chat，后续可将指令集改为多模态指令集。</li>
+<li>先输入转写文本，提示 LLM 续写。将上述数据作为监督数据集（8.8M 对），输入 encoder 输出的语音表示，要求 LLM 续写出相同的文本。训练 adapter 1 epoch。<ul>
+<li>ASR 数据集：LibriSpeech + GigaSpeech + Common Voice 2.0<pre class="line-numbers language-none"><code class="language-none">###[Human]:Continue the following text in a coherent and engaging style with less than 40 words.
+&lt;transcript&gt;\n\n\n###[Assistant]:
+
+###[Human]:Continue the following text in a coherent and engaging style with less than 40 words.
+&lt;speech features&gt;\n\n\n###[Assistant]:&lt;text continuation&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 </ul>
 </li>
-<li>格式
-<ul>
-<li>ChatML (Openai) 格式<br>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB59837adac081c0166d448d0d4a7c5d88?method=download&shareKey=bc6f79f88bb206809638b622c991f35f" width="767"></li>
-<li>采用 “Audio id:” 标记音频，其中 id 为对话中音频输入的顺序，以处理多个音频输入。</li>
 </ul>
 </li>
-<li>数据量：20k。</li>
-<li>冻结音频 encoder，只优化 LLM。</li>
+<li>模型结构<ul>
+<li>adapter: subsampler + bottleneck + layernorm<ul>
+<li>subsampler: 3层 Conv1d (kernel 5, pad 2, stride 2)，8倍降采样。</li>
+<li>bottleneck: 2层全连接，512。</li>
 </ul>
-<h1 id="评价">3.  评价</h1>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB179553178f47a6f5aaee68d39d93ca85?method=download&shareKey=afbf31c256b2649745c9243ff185b8ba" width="621">
-<img src="https://note.youdao.com/yws/api/personal/file/WEBd1efb096bb8bf2830b4a7eb1786c71f7?method=download&shareKey=a09a3b51187c841e1d8fdad55fdafdf5" width="767">
-<ul>
-<li><font color="red">应用Demo <a target="_blank" rel="noopener" href="https://qwen-audio.github.io/Qwen-Audio/">https://qwen-audio.github.io/Qwen-Audio/</a> </font></li>
+</li>
 </ul>
-<h1 id="其它">4.  其它</h1>
-<ul>
-<li>Chu Y, Xu J, Zhou X, et al. Qwen-Audio: Advancing Universal Audio Understanding via Unified Large-Scale Audio-Language Models[J]. arXiv preprint arXiv:2311.07919, 2023.</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/QwenLM/Qwen-Audio">https://github.com/QwenLM/Qwen-Audio</a></li>
-<li>Qwen-Audio-Chat 微调：<a target="_blank" rel="noopener" href="https://github.com/modelscope/swift/tree/main/examples/pytorch/llm/scripts/qwen_audio_chat/lora">https://github.com/modelscope/swift/tree/main/examples/pytorch/llm/scripts/qwen_audio_chat/lora</a></li>
+</li>
+<li>实验：zero-shot 语音识别、语音翻译、口语理解（情感识别）、语音对话、非英语语音输入。<ul>
+<li><p>语音识别</p>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB76e3822331bf8b29f0666cddf0f531d6?method=download&shareKey=fdc6b928064ccf8b3495df340176046a" width="460">
+\*BERTScore: 评价语义相似度。
+
+<p>续写任务倾向于语义层面的对齐。BLSP 可以正确识别大多数单词，但并不忠实，比如由于 LLM，插入语音中漏掉的介词。</p>
+</li>
+<li><p>在情感识别任务上，BLSP 比 ASR + LLM 性能更好，与 text + LLM 性能相当。</p>
+</li>
+<li><p>可以输入中文语音进行多轮对话，但响应总是英文的，因为训练集是纯英文的。</p>
+</li>
 </ul>
-<h1 id="代码">5.  代码</h1>
-<ul>
-<li>长序列：<code>use_dynamc_ntk=true</code> <code>use_logn_attn=true</code></li>
+</li>
+<li>展望<ul>
+<li>减小性能差距。</li>
+<li>利用说话人识别、情感识别等任务，使模型学习音调、情感等副语言信息。</li>
 </ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/cwang621/blsp">https://github.com/cwang621/blsp</a></li>
+<li><a target="_blank" rel="noopener" href="https://cwang621.github.io/blsp.github.io">https://cwang621.github.io/blsp.github.io</a></li>
+<li>模型 <a target="_blank" rel="noopener" href="https://www.modelscope.cn/models/damo/blsp_lslm_7b/summary">https://www.modelscope.cn/models/damo/blsp_lslm_7b/summary</a></li>
+<li>Wang C, Liao M, Huang Z, et al. BLSP: Bootstrapping Language-Speech Pre-training via Behavior Alignment of Continuation Writing[J]. arXiv preprint arXiv:2309.00916, 2023.</li>
+
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
             </div>
@@ -554,7 +551,7 @@
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
                 <div class="card-title">
-                    <a href="/blog/llm/yin-pin-li-jie/pengi/"> Pengi</a>
+                    <a href="/blog/llm/yin-pin-li-jie/lun-wen/qwen-audio/"> Qwen-Audio</a>
                 </div>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
@@ -578,6 +575,10 @@
                                     音频理解
                                 </a>
                             
+                            <a href="/blog/categories/LLM/%E9%9F%B3%E9%A2%91%E7%90%86%E8%A7%A3/%E8%AE%BA%E6%96%87/" class="post-category">
+                                    论文
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -593,7 +594,7 @@
             </div>
             <div class="card">
                 <div class="card-title">
-                    <a href="/blog/llm/yin-pin-li-jie/blsp/"> BLSP</a>
+                    <a href="/blog/yu-yin/yu-yin-he-cheng/tts-shu-ju-ji/"> TTS数据集</a>
                 </div>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
@@ -603,18 +604,18 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-11-24
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-11-01
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/blog/categories/LLM/" class="post-category">
-                                    LLM
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/" class="post-category">
+                                    语音
                                 </a>
                             
-                            <a href="/blog/categories/LLM/%E9%9F%B3%E9%A2%91%E7%90%86%E8%A7%A3/" class="post-category">
-                                    音频理解
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E5%90%88%E6%88%90/" class="post-category">
+                                    语音合成
                                 </a>
                             
                             
