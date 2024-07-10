@@ -6,9 +6,8 @@
     <meta charset="utf-8">
     <meta name="keywords" content="李宏毅老师 《GPT-4o 背后可能的语音技术猜测》, 梦园">
     <meta name="description" content="视频地址 https://www.youtube.com/watch?v=CgQ3lUOpXgc&amp;amp;ab_channel=Hung-yiLee
-1.  audio tokenization
-
-audio encoder + codeb">
+1. audio tokenization
+audio encoder + codeboo">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -20,18 +19,36 @@ audio encoder + codeb">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    
-
     <title>李宏毅老师 《GPT-4o 背后可能的语音技术猜测》 | 梦园</title>
     <link rel="icon" type="image/png" href="/blog/favicon.png">
+    
 
-    <link rel="stylesheet" type="text/css" href="/blog/libs/awesome/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="/blog/libs/materialize/materialize.min.css">
-    <link rel="stylesheet" type="text/css" href="/blog/libs/aos/aos.css">
-    <link rel="stylesheet" type="text/css" href="/blog/libs/animate/animate.min.css">
-    <link rel="stylesheet" type="text/css" href="/blog/libs/lightGallery/css/lightgallery.min.css">
-    <link rel="stylesheet" type="text/css" href="/blog/css/matery.css">
-    <link rel="stylesheet" type="text/css" href="/blog/css/my.css">
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/blog/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/blog/css/my.css">
+<link rel="stylesheet" type="text/css" href="/blog/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/blog/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/blog/css/post.css">
+
+
+
+
+    
+
+
 
     <script src="/blog/libs/jquery/jquery-3.6.0.min.js"></script>
 
@@ -127,6 +144,11 @@ audio encoder + codeb">
       <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
     </a>
   </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
 </ul>
 
 
@@ -181,9 +203,9 @@ audio encoder + codeb">
               
                 <li>
 
-                  <a href="/blog/about " style="margin-left:50px">
+                  <a href="/blog/about " style="margin-left:75px">
 				  
-				   <i class="fa fas fa-user-circle" style="position: absolute;left:28px" ></i>
+				   <i class="fa fas fa-user-circle" style="position: absolute;left:50px" ></i>
 			      
 		          <span>我</span>
                   </a>
@@ -191,9 +213,9 @@ audio encoder + codeb">
               
                 <li>
 
-                  <a href="/blog/words " style="margin-left:50px">
+                  <a href="/blog/words " style="margin-left:75px">
 				  
-				   <i class="fa fas fa-pen" style="position: absolute;left:28px" ></i>
+				   <i class="fa fas fa-pen" style="position: absolute;left:50px" ></i>
 			      
 		          <span>文字</span>
                   </a>
@@ -201,9 +223,9 @@ audio encoder + codeb">
               
                 <li>
 
-                  <a href="/blog/books " style="margin-left:50px">
+                  <a href="/blog/books " style="margin-left:75px">
 				  
-				   <i class="fa fas fa-book" style="position: absolute;left:28px" ></i>
+				   <i class="fa fas fa-book" style="position: absolute;left:50px" ></i>
 			      
 		          <span>书</span>
                   </a>
@@ -211,9 +233,9 @@ audio encoder + codeb">
               
                 <li>
 
-                  <a href="/blog/videos " style="margin-left:50px">
+                  <a href="/blog/videos " style="margin-left:75px">
 				  
-				   <i class="fa fas fa-film" style="position: absolute;left:28px" ></i>
+				   <i class="fa fas fa-film" style="position: absolute;left:50px" ></i>
 			      
 		          <span>视频</span>
                   </a>
@@ -253,7 +275,7 @@ audio encoder + codeb">
 <div class="bg-cover pd-header about-cover">
     <div class="container">
     <div class="row">
-    <div class="col s10 offset-s1 m8 offset-m2 l8">
+    <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l1">
         <div class="brand">
             <div class="title">
                 
@@ -272,96 +294,10 @@ audio encoder + codeb">
 <main class="post-container content">
 
     
-    <link rel="stylesheet" href="/blog/libs/tocbot/tocbot.css">
-<style>
-    #articleContent h1::before,
-    #articleContent h2::before,
-    #articleContent h3::before,
-    #articleContent h4::before,
-    #articleContent h5::before,
-    #articleContent h6::before {
-        display: block;
-        content: " ";
-        height: 100px;
-        margin-top: -100px;
-        visibility: hidden;
-    }
-
-    #articleContent :focus {
-        outline: none;
-    }
-
-    .toc-fixed {
-        position: fixed;
-        top: 64px;
-    }
-
-    .toc-widget {
-        width: 345px;
-        padding-left: 20px;
-    }
-
-    .toc-widget .toc-title {
-        padding: 35px 0 15px 17px;
-        font-size: 1.5rem;
-        font-weight: bold;
-        line-height: 1.5rem;
-    }
-
-    .toc-widget ol {
-        padding: 0;
-        list-style: none;
-    }
-
+    <style>
+    /* 随视窗调整大小、滚动 */
     #toc-content {
         height: calc(100vh - 200px);
-        overflow: scroll;
-    }
-
-    #toc-content ol {
-        padding-left: 10px;
-    }
-
-    #toc-content ol li {
-        padding-left: 10px;
-    }
-
-    #toc-content .toc-link:hover {
-        color: #42b983;
-        font-weight: 700;
-        text-decoration: underline;
-    }
-
-    #toc-content .toc-link::before {
-        background-color: transparent;
-        max-height: 25px;
-
-        position: absolute;
-        right: 23.5vw;
-        display: block;
-    }
-
-    #toc-content .is-active-link {
-        color: #42b983;
-    }
-
-    #floating-toc-btn {
-        position: fixed;
-        right: 15px;
-        bottom: 76px;
-        padding-top: 15px;
-        margin-bottom: 0;
-        z-index: 998;
-    }
-
-    #floating-toc-btn .btn-floating {
-        width: 48px;
-        height: 48px;
-    }
-
-    #floating-toc-btn .btn-floating i {
-        line-height: 48px;
-        font-size: 1.4rem;
     }
 </style>
 <div class="row">
@@ -382,7 +318,7 @@ audio encoder + codeb">
                 </div>
             </div>
 
-            <div class="row tag-cate">
+            <div class="tag-cate">
                 <div class="right-align">
                     
                     <div class="post-cate">
@@ -431,7 +367,7 @@ audio encoder + codeb">
 
         
         <!-- 是否加载使用自带的 prismjs. -->
-        <link rel="stylesheet" href="/blog/libs/prism/prism.css">
+        <link rel="stylesheet" href="/blog/libs/prism/prism.min.css">
         
 
         
@@ -439,29 +375,22 @@ audio encoder + codeb">
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>视频地址 <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=CgQ3lUOpXgc&amp;ab_channel=Hung-yiLee">https://www.youtube.com/watch?v=CgQ3lUOpXgc&amp;ab_channel=Hung-yiLee</a></p>
-<h1 id="audio-tokenization">1.  audio tokenization</h1>
-<ul>
+<h1 id="audio-tokenization">1. audio tokenization</h1><ul>
 <li>audio encoder + codebook，表征语音、人声（喘息声、笑声等）、声音事件等各类声音。</li>
-<li>【宏毅老师猜想】混合 token：text token + 非语音 audio token
-<ul>
+<li>【宏毅老师猜想】混合 token：text token + 非语音 audio token<ul>
 <li>出发点：若 speech token、text token 独立，有冗余。</li>
 <li><font color="green">【个人想法】若要对齐语音 token 与 text token，需要转写音频数据集，强制对齐音频 token、text token，且会丢失语音段内的非文本信息。</font></li>
 </ul>
 </li>
-<li>speaker diarization<br>
-<img src="https://note.youdao.com/yws/api/personal/file/WEBae527fb0aa9425b44ef473c9e772e3bd?method=download&shareKey=3ed39e1c632228d0f7022ee3b35a49b3" width="634"></li>
+<li>speaker diarization<img src="https://note.youdao.com/yws/api/personal/file/WEBae527fb0aa9425b44ef473c9e772e3bd?method=download&shareKey=3ed39e1c632228d0f7022ee3b35a49b3" width="634"></li>
 </ul>
-<h1 id="audio-encoder-decoder">2.  audio encoder-decoder</h1>
-<img src="https://note.youdao.com/yws/api/personal/file/WEBe699e9ea92a55945fe75445390f396ef?method=download&shareKey=21783fbd1e3ff344b285cf74182711f7" width="1806">
-<h1 id="预训练">3.  预训练</h1>
-<ul>
-<li>音频自回归生成 LM<br>
-由于预训练所需音频量较大、音频的录音环境等非常多样，生成音频可能自带 BGM（it is not a bug, it is a feature）。</li>
-<li>结合文本数据
-<ul>
+<h1 id="audio-encoder-decoder">2. audio encoder-decoder</h1><img src="https://note.youdao.com/yws/api/personal/file/WEBe699e9ea92a55945fe75445390f396ef?method=download&shareKey=21783fbd1e3ff344b285cf74182711f7" width="1806">
+
+<h1 id="预训练">3. 预训练</h1><ul>
+<li>音频自回归生成 LM<br>由于预训练所需音频量较大、音频的录音环境等非常多样，生成音频可能自带 BGM（it is not a bug, it is a feature）。</li>
+<li>结合文本数据<ul>
 <li>由于相较于文本数据，现有的音频数据包含的文本内容（知识）较少，LLM 预训练仍需要结合文本数据。</li>
-<li>结合方式：用 LLM 初始化；音频、文本混合训练等。
-<ul>
+<li>结合方式：用 LLM 初始化；音频、文本混合训练等。<ul>
 <li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2310.08715">https://arxiv.org/abs/2310.08715</a></li>
 <li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2402.05755">https://arxiv.org/abs/2402.05755</a></li>
 </ul>
@@ -469,51 +398,38 @@ audio encoder + codeb">
 </ul>
 </li>
 </ul>
-<h1 id="alignment">4.  alignment</h1>
-<ul>
-<li>
-<p>训练数据：用户-AI 对话数据</p>
+<h1 id="alignment">4. alignment</h1><ul>
+<li><p>训练数据：用户-AI 对话数据</p>
 <ul>
 <li>若想生成固定音色，可能不需要大量该音色的训练数据。也可以采用语音转换生成大量指定音色的数据。</li>
 </ul>
 </li>
-<li>
-<p>语音合成</p>
+<li><p>语音合成</p>
 <ul>
-<li>当有大量的合成训练数据时，合成的声音不再平淡，而是能根据文本内容调整音色。<br>
-BASE TTS (Amazon)：100kh，1B 参数</li>
+<li>当有大量的合成训练数据时，合成的声音不再平淡，而是能根据文本内容调整音色。<br>BASE TTS (Amazon)：100kh，1B 参数</li>
 </ul>
 </li>
-<li>
-<p>开始说话、停止说话的判断<br>
-停止说话：听到人声就停止不是最佳方案，比如人与 AI 合唱。</p>
+<li><p>开始说话、停止说话的判断<br>停止说话：听到人声就停止不是最佳方案，比如人与 AI 合唱。</p>
 <ul>
-<li>同时输入麦克风输入、历史生成，用户说话时生成 silence，自动预测何时开始说话生成声音 token，用户打断时停止说话。<br>
-<img src="https://note.youdao.com/yws/api/personal/file/WEBa91a9bc7be198bae13fc8b07f3071511?method=download&shareKey=97b422cb52543f4f04e7b8b506e70981" width="610"></li>
+<li>同时输入麦克风输入、历史生成，用户说话时生成 silence，自动预测何时开始说话生成声音 token，用户打断时停止说话。<img src="https://note.youdao.com/yws/api/personal/file/WEBa91a9bc7be198bae13fc8b07f3071511?method=download&shareKey=97b422cb52543f4f04e7b8b506e70981" width="610"></li>
 </ul>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB404e59229702978d347f587d8590746b?method=download&shareKey=d4fe70c6a16687f7db1826c264dee318" width="603">
-</li>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB404e59229702978d347f587d8590746b?method=download&shareKey=d4fe70c6a16687f7db1826c264dee318" width="603"></li>
 </ul>
-<h1 id="其它">5.  其它</h1>
-<ul>
-<li>Speech/Audio LLM 论文合集<br>
-<a target="_blank" rel="noopener" href="https://github.com/ga642381/speech-trident">https://github.com/ga642381/speech-trident</a></li>
-<li>LLM 训练的3阶段
-<ul>
+<h1 id="其它">5. 其它</h1><ul>
+<li>Speech&#x2F;Audio LLM 论文合集<br><a target="_blank" rel="noopener" href="https://github.com/ga642381/speech-trident">https://github.com/ga642381/speech-trident</a></li>
+<li>LLM 训练的3阶段<ul>
 <li>无标注数据 预训练</li>
 <li>有标注数据 微调（对齐）</li>
 <li>RLHF 用户反馈微调（对齐）</li>
 </ul>
 </li>
-<li>ASR + 情绪识别 + LLM
-<ul>
+<li>ASR + 情绪识别 + LLM<ul>
 <li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2402.12786">https://arxiv.org/abs/2402.12786</a></li>
 <li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2312.15316">https://arxiv.org/abs/2312.15316</a></li>
 </ul>
 </li>
-<li>带指令的合成，控制音色
-<ul>
-<li>suno-ai/bark</li>
+<li>带指令的合成，控制音色<ul>
+<li>suno-ai&#x2F;bark</li>
 <li>audiobox meta</li>
 <li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2309.14324">https://arxiv.org/abs/2309.14324</a></li>
 <li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2211.12171">https://arxiv.org/abs/2211.12171</a></li>
@@ -569,8 +485,6 @@ BASE TTS (Amazon)：100kh，1B 参数</li>
 
     
 
-    
-
     <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
@@ -578,9 +492,11 @@ BASE TTS (Amazon)：100kh，1B 参数</li>
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <div class="card-title">
-                    <a href="/blog/yu-yin/yu-yin-shi-bie/whisper/"> Whisper</a>
-                </div>
+                <a href="/blog/yu-yin/yu-yin-shi-bie/whisper/">
+                    <div class="card-content">
+                        <span class="card-title">Whisper</span>
+                    </div>
+                </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
@@ -590,6 +506,7 @@ BASE TTS (Amazon)：100kh，1B 参数</li>
                     <div class="publish-info">
                         <span class="publish-date">
                             <i class="far fa-clock fa-fw icon-date"></i>2024-05-26
+                            <i class="far fa-edit fa-fw icon-date"></i>2024-05-26
                         </span>
                         <span class="publish-author">
                             
@@ -617,9 +534,11 @@ BASE TTS (Amazon)：100kh，1B 参数</li>
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <div class="card-title">
-                    <a href="/blog/llm/yin-pin-sheng-cheng/lun-wen/audiolm/"> AudioLM</a>
-                </div>
+                <a href="/blog/llm/yin-pin-sheng-cheng/lun-wen/audiolm/">
+                    <div class="card-content">
+                        <span class="card-title">AudioLM</span>
+                    </div>
+                </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
@@ -629,6 +548,7 @@ BASE TTS (Amazon)：100kh，1B 参数</li>
                     <div class="publish-info">
                             <span class="publish-date">
                                 <i class="far fa-clock fa-fw icon-date"></i>2024-05-22
+                                <i class="far fa-edit fa-fw icon-date"></i>2024-07-01
                             </span>
                         <span class="publish-author">
                             
@@ -701,6 +621,11 @@ BASE TTS (Amazon)：100kh，1B 参数</li>
 <!-- 代码块功能依赖 -->
 <script type="text/javascript" src="/blog/libs/codeBlock/codeBlockFuction.js"></script>
 
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/blog/libs/prism/prism.min.js"></script>
+
+
 <!-- 代码语言 -->
 
 <script type="text/javascript" src="/blog/libs/codeBlock/codeLang.js"></script>
@@ -714,6 +639,7 @@ BASE TTS (Amazon)：100kh，1B 参数</li>
 <!-- 代码块收缩 -->
 
 <script type="text/javascript" src="/blog/libs/codeBlock/codeShrink.js"></script>
+
 
 
     </div>
@@ -802,7 +728,7 @@ BASE TTS (Amazon)：100kh，1B 参数</li>
 </main>
 
 
-<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script>
     MathJax.Hub.Config({
         tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
@@ -878,6 +804,7 @@ BASE TTS (Amazon)：100kh，1B 参数</li>
             <a href="/blog/about" target="_blank">nanyang</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
             <br>
             
             
@@ -1029,6 +956,30 @@ $(function () {
 });
 </script>
 
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
     <!-- 回到顶部按钮 -->
 <div id="backTop" class="top-scroll">
     <a class="btn-floating btn-large waves-effect waves-light" href="#!">
@@ -1052,6 +1003,8 @@ $(function () {
             mermaid.initialize({theme: 'neutral'});
           }
         </script>
+    
+
     
 
     
@@ -1087,6 +1040,21 @@ $(function () {
     <script src="/blog/libs/instantpage/instantpage.js" type="module"></script>
     
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 
 </html>

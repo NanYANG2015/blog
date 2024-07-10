@@ -17,18 +17,36 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    
-
     <title>分类: 语音识别 | 梦园</title>
     <link rel="icon" type="image/png" href="/blog/favicon.png">
+    
 
-    <link rel="stylesheet" type="text/css" href="/blog/libs/awesome/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="/blog/libs/materialize/materialize.min.css">
-    <link rel="stylesheet" type="text/css" href="/blog/libs/aos/aos.css">
-    <link rel="stylesheet" type="text/css" href="/blog/libs/animate/animate.min.css">
-    <link rel="stylesheet" type="text/css" href="/blog/libs/lightGallery/css/lightgallery.min.css">
-    <link rel="stylesheet" type="text/css" href="/blog/css/matery.css">
-    <link rel="stylesheet" type="text/css" href="/blog/css/my.css">
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/blog/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/blog/css/my.css">
+<link rel="stylesheet" type="text/css" href="/blog/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/blog/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/blog/css/post.css">
+
+
+
+
+    
+
+
 
     <script src="/blog/libs/jquery/jquery-3.6.0.min.js"></script>
 
@@ -124,6 +142,11 @@
       <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
     </a>
   </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
 </ul>
 
 
@@ -178,9 +201,9 @@
               
                 <li>
 
-                  <a href="/blog/about " style="margin-left:50px">
+                  <a href="/blog/about " style="margin-left:75px">
 				  
-				   <i class="fa fas fa-user-circle" style="position: absolute;left:28px" ></i>
+				   <i class="fa fas fa-user-circle" style="position: absolute;left:50px" ></i>
 			      
 		          <span>我</span>
                   </a>
@@ -188,9 +211,9 @@
               
                 <li>
 
-                  <a href="/blog/words " style="margin-left:50px">
+                  <a href="/blog/words " style="margin-left:75px">
 				  
-				   <i class="fa fas fa-pen" style="position: absolute;left:28px" ></i>
+				   <i class="fa fas fa-pen" style="position: absolute;left:50px" ></i>
 			      
 		          <span>文字</span>
                   </a>
@@ -198,9 +221,9 @@
               
                 <li>
 
-                  <a href="/blog/books " style="margin-left:50px">
+                  <a href="/blog/books " style="margin-left:75px">
 				  
-				   <i class="fa fas fa-book" style="position: absolute;left:28px" ></i>
+				   <i class="fa fas fa-book" style="position: absolute;left:50px" ></i>
 			      
 		          <span>书</span>
                   </a>
@@ -208,9 +231,9 @@
               
                 <li>
 
-                  <a href="/blog/videos " style="margin-left:50px">
+                  <a href="/blog/videos " style="margin-left:75px">
 				  
-				   <i class="fa fas fa-film" style="position: absolute;left:28px" ></i>
+				   <i class="fa fas fa-film" style="position: absolute;left:50px" ></i>
 			      
 		          <span>视频</span>
                   </a>
@@ -235,7 +258,7 @@
     <div class="bg-cover pd-header about-cover">
     <div class="container">
     <div class="row">
-    <div class="col s10 offset-s1 m8 offset-m2 l8">
+    <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l1">
         <div class="brand">
             <div class="title">
                 
@@ -255,23 +278,21 @@
     <div class="card">
         <div class="card-content">
             <div class="category-chips">
-                <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/">语音</a><span class="category-list-count">22</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%AF%86%E5%88%AB/">说话人识别</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/">语音识别</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E8%AF%84%E6%B5%8B/">语音评测</a><span class="category-list-count">8</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E8%AF%84%E6%B5%8B/%E8%AF%84%E5%88%86/">评分</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E8%AF%84%E6%B5%8B/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E8%AF%84%E6%B5%8B/%E7%89%B9%E5%BE%81/">特征</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E8%AF%84%E6%B5%8B/%E4%BA%A7%E5%93%81/">产品</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/">语音对话</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E5%AD%A6/">语音学</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E5%90%88%E6%88%90/">语音合成</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E6%A8%A1%E5%9E%8B/">模型</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E5%B7%A5%E5%85%B7%E5%8C%85/">工具包</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E5%B7%A5%E5%85%B7%E5%8C%85/WeNet/">WeNet</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E5%B7%A5%E5%85%B7%E5%8C%85/Kaldi/">Kaldi</a><span class="category-list-count">1</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%A7%86%E9%A2%91/">视频</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a><span class="category-list-count">10</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B/">生成模型</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83/">模型训练</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A1%86%E6%9E%B6/">框架</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%B7%A5%E5%85%B7%E5%8C%85/">工具包</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%B7%A5%E5%85%B7%E5%8C%85/transformers/">transformers</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%B7%A5%E5%85%B7%E5%8C%85/DeepSpeed/">DeepSpeed</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/loss/">loss</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/CNN/">CNN</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E6%96%87%E5%AD%97/">文字</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E6%96%87%E5%AD%97/%E8%AF%97%E8%AF%8D/">诗词</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E4%B9%A6%E7%B1%8D/">书籍</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/NLP/">NLP</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/NLP/%E6%A8%A1%E5%9E%8B/">模型</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/LLM/">LLM</a><span class="category-list-count">12</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/LLM/%E9%9F%B3%E9%A2%91%E7%94%9F%E6%88%90/">音频生成</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/LLM/%E9%9F%B3%E9%A2%91%E7%94%9F%E6%88%90/%E8%AE%BA%E6%96%87/">论文</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/LLM/%E9%9F%B3%E9%A2%91%E7%90%86%E8%A7%A3/">音频理解</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/LLM/%E9%9F%B3%E9%A2%91%E7%90%86%E8%A7%A3/%E8%AE%BA%E6%96%87/">论文</a><span class="category-list-count">5</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/LLM/%E5%A4%9A%E6%A8%A1%E6%80%81/">多模态</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/LLM/%E5%A4%9A%E6%A8%A1%E6%80%81/%E8%AE%BA%E6%96%87/">论文</a><span class="category-list-count">4</span></li></ul></li></ul></li></ul>
+                <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E4%B9%A6%E7%B1%8D/">书籍</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%A7%86%E9%A2%91/">视频</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E6%96%87%E5%AD%97/">文字</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E6%96%87%E5%AD%97/%E8%AF%97%E8%AF%8D/">诗词</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/NLP/">NLP</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/NLP/%E6%A8%A1%E5%9E%8B/">模型</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a><span class="category-list-count">10</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/CNN/">CNN</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/loss/">loss</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B/">生成模型</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83/">模型训练</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A1%86%E6%9E%B6/">框架</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%B7%A5%E5%85%B7%E5%8C%85/">工具包</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%B7%A5%E5%85%B7%E5%8C%85/DeepSpeed/">DeepSpeed</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%B7%A5%E5%85%B7%E5%8C%85/transformers/">transformers</a><span class="category-list-count">1</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/">语音</a><span class="category-list-count">22</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E5%90%88%E6%88%90/">语音合成</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E6%A8%A1%E5%9E%8B/">模型</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E5%B7%A5%E5%85%B7%E5%8C%85/">工具包</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E5%B7%A5%E5%85%B7%E5%8C%85/Kaldi/">Kaldi</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E5%B7%A5%E5%85%B7%E5%8C%85/WeNet/">WeNet</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E5%AD%A6/">语音学</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E8%AF%84%E6%B5%8B/">语音评测</a><span class="category-list-count">8</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E8%AF%84%E6%B5%8B/%E8%AF%84%E5%88%86/">评分</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E8%AF%84%E6%B5%8B/%E7%89%B9%E5%BE%81/">特征</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E8%AF%84%E6%B5%8B/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E8%AF%84%E6%B5%8B/%E4%BA%A7%E5%93%81/">产品</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/">语音对话</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%AF%86%E5%88%AB/">说话人识别</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/">语音识别</a><span class="category-list-count">4</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/LLM/">LLM</a><span class="category-list-count">12</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/LLM/%E9%9F%B3%E9%A2%91%E7%90%86%E8%A7%A3/">音频理解</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/LLM/%E9%9F%B3%E9%A2%91%E7%90%86%E8%A7%A3/%E8%AE%BA%E6%96%87/">论文</a><span class="category-list-count">5</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/LLM/%E5%A4%9A%E6%A8%A1%E6%80%81/">多模态</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/LLM/%E5%A4%9A%E6%A8%A1%E6%80%81/%E8%AE%BA%E6%96%87/">论文</a><span class="category-list-count">4</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/LLM/%E9%9F%B3%E9%A2%91%E7%94%9F%E6%88%90/">音频生成</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/LLM/%E9%9F%B3%E9%A2%91%E7%94%9F%E6%88%90/%E8%AE%BA%E6%96%87/">论文</a><span class="category-list-count">3</span></li></ul></li></ul></li></ul>
             </div>
         </div>
     </div>
 </div>
 
 
-    
-
     <article id="articles" class="container articles">
         <div class="row tags-posts">
             
-            <div class="article tag-post col s12 m6 l4" >
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
                     <a href="/blog/yu-yin/yu-yin-shi-bie/whisper/">
-                        <div class=" card-content" >
-                            <span class="card-title" style="padding: 1px;font-size:20px;font-weight:700;height:80px;">Whisper</span>
+                        <div class="card-content" >
+                            <span class="card-title">Whisper</span>
                         </div>
                     </a>
                     <div class="card-content article-content">
@@ -308,11 +329,11 @@ wav2vec 2.0 等无监督预训练的语音编码器，需要有监督训练解�
                 </div>
             </div>
             
-            <div class="article tag-post col s12 m6 l4" >
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
                     <a href="/blog/yu-yin/yu-yin-shi-bie/xu-lie-qu-fen-xing-xun-lian/">
-                        <div class=" card-content" >
-                            <span class="card-title" style="padding: 1px;font-size:20px;font-weight:700;height:80px;">序列区分性训练</span>
+                        <div class="card-content" >
+                            <span class="card-title">序列区分性训练</span>
                         </div>
                     </a>
                     <div class="card-content article-content">
@@ -347,20 +368,19 @@ wav2vec 2.0 等无监督预训练的语音编码器，需要有监督训练解�
                 </div>
             </div>
             
-            <div class="article tag-post col s12 m6 l4" >
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
                     <a href="/blog/yu-yin/yu-yin-shi-bie/jie-ma-qi/">
-                        <div class=" card-content" >
-                            <span class="card-title" style="padding: 1px;font-size:20px;font-weight:700;height:80px;">解码器</span>
+                        <div class="card-content" >
+                            <span class="card-title">解码器</span>
                         </div>
                     </a>
                     <div class="card-content article-content">
                         <!--<div class="summary block-with-text">
                             
-                                1.  参数
-
-beam: 每一帧保留的token的cost 与当前帧最优cost的最大允许差值。越大，解码越慢，内存占用越大，但越准确。默认值16.0（即路径概率约为1.1e-07 = 1/exp(16) 倍）。
-max_active: 
+                                1. 参数
+beam: 每一帧保留的token的cost 与当前帧最优cost的最大允许差值。越大，解码越慢，内存占用越大，但越准确。默认值16.0（即路径概率约为1.1e-07 &#x3D; 1&#x2F;exp(16) 倍）。
+max_
                             
                         </div>-->
                         <div class="publish-info">
@@ -389,11 +409,11 @@ max_active:
                 </div>
             </div>
             
-            <div class="article tag-post col s12 m6 l4" >
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
                     <a href="/blog/yu-yin/yu-yin-shi-bie/yu-yan-mo-xing/">
-                        <div class=" card-content" >
-                            <span class="card-title" style="padding: 1px;font-size:20px;font-weight:700;height:80px;">语言模型</span>
+                        <div class="card-content" >
+                            <span class="card-title">语言模型</span>
                         </div>
                     </a>
                     <div class="card-content article-content">
@@ -502,6 +522,7 @@ max_active:
             <a href="/blog/about" target="_blank">nanyang</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
             <br>
             
             
@@ -653,6 +674,30 @@ $(function () {
 });
 </script>
 
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
     <!-- 回到顶部按钮 -->
 <div id="backTop" class="top-scroll">
     <a class="btn-floating btn-large waves-effect waves-light" href="#!">
@@ -676,6 +721,8 @@ $(function () {
             mermaid.initialize({theme: 'neutral'});
           }
         </script>
+    
+
     
 
     
@@ -711,6 +758,21 @@ $(function () {
     <script src="/blog/libs/instantpage/instantpage.js" type="module"></script>
     
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 
 </html>

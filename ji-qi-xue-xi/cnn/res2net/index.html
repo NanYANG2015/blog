@@ -6,10 +6,10 @@
     <meta charset="utf-8">
     <meta name="keywords" content="Res2Net, 梦园">
     <meta name="description" content="
-
 出发点：表示多尺度的特征、增大感受野。
 
-yi={xii=1Ki(xi)i=2Ki(xi+yi−1)2&amp;lt;i⩽s\mathbf{y}_i= \begin{cases}\mathbf{x}_i &amp;amp; i = 1 \\ \math">
+
+$$\mathbf{y}_i&amp;#x3D; \begin{cases}\mathbf{x}_i &amp;amp; i &amp;#x3D; 1 \ \mathbf{K}_i\left(\mathbf{x}_i\">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -21,18 +21,34 @@ yi={xii=1Ki(xi)i=2Ki(xi+yi−1)2&amp;lt;i⩽s\mathbf{y}_i= \begin{cases}\mathbf{
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    
-
     <title>Res2Net | 梦园</title>
     <link rel="icon" type="image/png" href="/blog/favicon.png">
+    
 
-    <link rel="stylesheet" type="text/css" href="/blog/libs/awesome/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="/blog/libs/materialize/materialize.min.css">
-    <link rel="stylesheet" type="text/css" href="/blog/libs/aos/aos.css">
-    <link rel="stylesheet" type="text/css" href="/blog/libs/animate/animate.min.css">
-    <link rel="stylesheet" type="text/css" href="/blog/libs/lightGallery/css/lightgallery.min.css">
-    <link rel="stylesheet" type="text/css" href="/blog/css/matery.css">
-    <link rel="stylesheet" type="text/css" href="/blog/css/my.css">
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/blog/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/blog/css/my.css">
+<link rel="stylesheet" type="text/css" href="/blog/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/blog/css/post.css">
+
+
+
+    
+
+
 
     <script src="/blog/libs/jquery/jquery-3.6.0.min.js"></script>
 
@@ -128,6 +144,11 @@ yi={xii=1Ki(xi)i=2Ki(xi+yi−1)2&amp;lt;i⩽s\mathbf{y}_i= \begin{cases}\mathbf{
       <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
     </a>
   </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
 </ul>
 
 
@@ -182,9 +203,9 @@ yi={xii=1Ki(xi)i=2Ki(xi+yi−1)2&amp;lt;i⩽s\mathbf{y}_i= \begin{cases}\mathbf{
               
                 <li>
 
-                  <a href="/blog/about " style="margin-left:50px">
+                  <a href="/blog/about " style="margin-left:75px">
 				  
-				   <i class="fa fas fa-user-circle" style="position: absolute;left:28px" ></i>
+				   <i class="fa fas fa-user-circle" style="position: absolute;left:50px" ></i>
 			      
 		          <span>我</span>
                   </a>
@@ -192,9 +213,9 @@ yi={xii=1Ki(xi)i=2Ki(xi+yi−1)2&amp;lt;i⩽s\mathbf{y}_i= \begin{cases}\mathbf{
               
                 <li>
 
-                  <a href="/blog/words " style="margin-left:50px">
+                  <a href="/blog/words " style="margin-left:75px">
 				  
-				   <i class="fa fas fa-pen" style="position: absolute;left:28px" ></i>
+				   <i class="fa fas fa-pen" style="position: absolute;left:50px" ></i>
 			      
 		          <span>文字</span>
                   </a>
@@ -202,9 +223,9 @@ yi={xii=1Ki(xi)i=2Ki(xi+yi−1)2&amp;lt;i⩽s\mathbf{y}_i= \begin{cases}\mathbf{
               
                 <li>
 
-                  <a href="/blog/books " style="margin-left:50px">
+                  <a href="/blog/books " style="margin-left:75px">
 				  
-				   <i class="fa fas fa-book" style="position: absolute;left:28px" ></i>
+				   <i class="fa fas fa-book" style="position: absolute;left:50px" ></i>
 			      
 		          <span>书</span>
                   </a>
@@ -212,9 +233,9 @@ yi={xii=1Ki(xi)i=2Ki(xi+yi−1)2&amp;lt;i⩽s\mathbf{y}_i= \begin{cases}\mathbf{
               
                 <li>
 
-                  <a href="/blog/videos " style="margin-left:50px">
+                  <a href="/blog/videos " style="margin-left:75px">
 				  
-				   <i class="fa fas fa-film" style="position: absolute;left:28px" ></i>
+				   <i class="fa fas fa-film" style="position: absolute;left:50px" ></i>
 			      
 		          <span>视频</span>
                   </a>
@@ -254,7 +275,7 @@ yi={xii=1Ki(xi)i=2Ki(xi+yi−1)2&amp;lt;i⩽s\mathbf{y}_i= \begin{cases}\mathbf{
 <div class="bg-cover pd-header about-cover">
     <div class="container">
     <div class="row">
-    <div class="col s10 offset-s1 m8 offset-m2 l8">
+    <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l1">
         <div class="brand">
             <div class="title">
                 
@@ -289,7 +310,7 @@ yi={xii=1Ki(xi)i=2Ki(xi+yi−1)2&amp;lt;i⩽s\mathbf{y}_i= \begin{cases}\mathbf{
                 </div>
             </div>
 
-            <div class="row tag-cate">
+            <div class="tag-cate">
                 <div class="right-align">
                     
                     <div class="post-cate">
@@ -334,7 +355,7 @@ yi={xii=1Ki(xi)i=2Ki(xi+yi−1)2&amp;lt;i⩽s\mathbf{y}_i= \begin{cases}\mathbf{
 
         
         <!-- 是否加载使用自带的 prismjs. -->
-        <link rel="stylesheet" href="/blog/libs/prism/prism.css">
+        <link rel="stylesheet" href="/blog/libs/prism/prism.min.css">
         
 
         
@@ -342,46 +363,35 @@ yi={xii=1Ki(xi)i=2Ki(xi+yi−1)2&amp;lt;i⩽s\mathbf{y}_i= \begin{cases}\mathbf{
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <ul>
-<li>
-<p>出发点：表示多尺度的特征、增大感受野。</p>
+<li><p>出发点：表示多尺度的特征、增大感受野。</p>
 <img src="https://note.youdao.com/yws/api/personal/file/WEB61ffb780869eb695d691e4d54876ac5b?method=download&shareKey=3f447136c62dbd906f1b59cde85798da" width="385">
-<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="bold">y</mi><mi>i</mi></msub><mo>=</mo><mrow><mo fence="true">{</mo><mtable rowspacing="0.3599999999999999em" columnalign="left left" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><msub><mi mathvariant="bold">x</mi><mi>i</mi></msub></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><msub><mi mathvariant="bold">K</mi><mi>i</mi></msub><mrow><mo fence="true">(</mo><msub><mi mathvariant="bold">x</mi><mi>i</mi></msub><mo fence="true">)</mo></mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mi>i</mi><mo>=</mo><mn>2</mn></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><msub><mi mathvariant="bold">K</mi><mi>i</mi></msub><mrow><mo fence="true">(</mo><msub><mi mathvariant="bold">x</mi><mi>i</mi></msub><mo>+</mo><msub><mi mathvariant="bold">y</mi><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow></msub><mo fence="true">)</mo></mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mn>2</mn><mo>&lt;</mo><mi>i</mi><mo>⩽</mo><mi>s</mi></mrow></mstyle></mtd></mtr></mtable></mrow></mrow><annotation encoding="application/x-tex">\mathbf{y}_i= \begin{cases}\mathbf{x}_i &amp; i = 1 \\ \mathbf{K}_i\left(\mathbf{x}_i\right) &amp; i = 2 \\ \mathbf{K}_i\left(\mathbf{x}_i+\mathbf{y}_{i-1}\right) &amp; 2&lt;i \leqslant s\end{cases}
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.63888em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord"><span class="mord mathbf" style="margin-right:0.01597em;">y</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:4.32em;vertical-align:-1.9099999999999997em;"></span><span class="minner"><span class="mopen"><span class="delimsizing mult"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.35002em;"><span style="top:-2.19999em;"><span class="pstrut" style="height:3.15em;"></span><span class="delimsizinginner delim-size4"><span>⎩</span></span></span><span style="top:-2.19999em;"><span class="pstrut" style="height:3.15em;"></span><span class="delimsizinginner delim-size4"><span>⎪</span></span></span><span style="top:-3.1500100000000004em;"><span class="pstrut" style="height:3.15em;"></span><span class="delimsizinginner delim-size4"><span>⎨</span></span></span><span style="top:-4.30001em;"><span class="pstrut" style="height:3.15em;"></span><span class="delimsizinginner delim-size4"><span>⎪</span></span></span><span style="top:-4.60002em;"><span class="pstrut" style="height:3.15em;"></span><span class="delimsizinginner delim-size4"><span>⎧</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.8500199999999998em;"><span></span></span></span></span></span></span><span class="mord"><span class="mtable"><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.41em;"><span style="top:-4.41em;"><span class="pstrut" style="height:3.008em;"></span><span class="mord"><span class="mord"><span class="mord"><span class="mord mathbf">x</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span><span style="top:-2.97em;"><span class="pstrut" style="height:3.008em;"></span><span class="mord"><span class="mord"><span class="mord"><span class="mord mathbf">K</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;">(</span><span class="mord"><span class="mord"><span class="mord mathbf">x</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;">)</span></span></span></span><span style="top:-1.5300000000000002em;"><span class="pstrut" style="height:3.008em;"></span><span class="mord"><span class="mord"><span class="mord"><span class="mord mathbf">K</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;">(</span><span class="mord"><span class="mord"><span class="mord mathbf">x</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord"><span class="mord mathbf" style="margin-right:0.01597em;">y</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.9099999999999997em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:1em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.41em;"><span style="top:-4.41em;"><span class="pstrut" style="height:3.008em;"></span><span class="mord"><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord">1</span></span></span><span style="top:-2.97em;"><span class="pstrut" style="height:3.008em;"></span><span class="mord"><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord">2</span></span></span><span style="top:-1.5300000000000002em;"><span class="pstrut" style="height:3.008em;"></span><span class="mord"><span class="mord">2</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel amsrm">⩽</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord mathdefault">s</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.9099999999999997em;"><span></span></span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+
+<p>$$\mathbf{y}_i&#x3D; \begin{cases}\mathbf{x}_i &amp; i &#x3D; 1 \ \mathbf{K}_i\left(\mathbf{x}_i\right) &amp; i &#x3D; 2 \ \mathbf{K}_i\left(\mathbf{x}<em>i+\mathbf{y}</em>{i-1}\right) &amp; 2&lt;i \leqslant s\end{cases}$$</p>
 </li>
-<li>
-<p>名称由来：残差块里又有残差连接。</p>
+<li><p>名称由来：残差块里又有残差连接。</p>
 </li>
-<li>
-<p>多尺度的理解：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="bold">x</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">\mathbf{x}_2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.59444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord"><span class="mord mathbf">x</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 经过1个 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn><mo>×</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">3 \times 3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">3</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span></span></span></span> 的卷积得到 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="bold">y</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">\mathbf{y}_2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.63888em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord"><span class="mord mathbf" style="margin-right:0.01597em;">y</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，而 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="bold">y</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">\mathbf{y}_2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.63888em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord"><span class="mord mathbf" style="margin-right:0.01597em;">y</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 会作为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="bold">K</mi><mn>3</mn></msub></mrow><annotation encoding="application/x-tex">\mathbf{K}_3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83611em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord"><span class="mord mathbf">K</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 的输入，再次经过1个 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn><mo>×</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">3 \times 3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">3</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span></span></span></span> 的卷积。2次 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn><mo>×</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">3 \times 3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">3</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span></span></span></span> 的卷积相当于1个 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>5</mn><mo>×</mo><mn>5</mn></mrow><annotation encoding="application/x-tex">5 \times 5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">5</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">5</span></span></span></span> 的卷积，因此，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="bold">K</mi><mn>3</mn></msub></mrow><annotation encoding="application/x-tex">\mathbf{K}_3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83611em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord"><span class="mord mathbf">K</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 融合了 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn><mo>×</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">3 \times 3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">3</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span></span></span></span> 的感受野的特征 和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>5</mn><mo>×</mo><mn>5</mn></mrow><annotation encoding="application/x-tex">5 \times 5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">5</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">5</span></span></span></span> 的感受野的特征。以此类推。得到的 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="bold">y</mi></mrow><annotation encoding="application/x-tex">\mathbf{y}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.63888em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathbf" style="margin-right:0.01597em;">y</span></span></span></span></span> 可以表征多尺度的特征。</p>
+<li><p>多尺度的理解：$\mathbf{x}_2$ 经过1个 $3 \times 3$ 的卷积得到 $\mathbf{y}_2$，而 $\mathbf{y}_2$ 会作为 $\mathbf{K}_3$ 的输入，再次经过1个 $3 \times 3$ 的卷积。2次 $3 \times 3$ 的卷积相当于1个 $5 \times 5$ 的卷积，因此，$\mathbf{K}_3$ 融合了 $3 \times 3$ 的感受野的特征 和 $5 \times 5$ 的感受野的特征。以此类推。得到的 $\mathbf{y}$ 可以表征多尺度的特征。</p>
 </li>
-<li>
-<p>性能</p>
+<li><p>性能</p>
 <ul>
-<li>
-<p>很容易与其它结构整合。</p>
+<li><p>很容易与其它结构整合。</p>
 </li>
-<li>
-<p>由于具有较强的多尺度特征表征能力，在许多任务上都取得了性能提升，如图片分类、目标检测、语义分割、显著目标检测等，对于不同尺寸的对象性能都有提升。<br>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB8f041f566f23b3eaa720ab325b3570c6?method=download&shareKey=8b34ae8793fd313603365c485b8a7c82" width="320"><br>
-<img src="https://note.youdao.com/yws/api/personal/file/WEBad279f36483cb4953f11ee2987747fa1?method=download&shareKey=21ea4d5cec3f46fcf6856e76b1dc810a" width="377"></p>
+<li><p>由于具有较强的多尺度特征表征能力，在许多任务上都取得了性能提升，如图片分类、目标检测、语义分割、显著目标检测等，对于不同尺寸的对象性能都有提升。</p>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB8f041f566f23b3eaa720ab325b3570c6?method=download&shareKey=8b34ae8793fd313603365c485b8a7c82" width="320">
+<img src="https://note.youdao.com/yws/api/personal/file/WEBad279f36483cb4953f11ee2987747fa1?method=download&shareKey=21ea4d5cec3f46fcf6856e76b1dc810a" width="377"></li>
+<li><p><font color="green">虽然 $\mathbf{y}_i$ 需要顺序计算，但Res2Net模块引入的额外运行时间通常可以忽略不计。</font></p>
 </li>
-<li>
-<p><font color="green">虽然 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="bold">y</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">\mathbf{y}_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.63888em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord"><span class="mord mathbf" style="margin-right:0.01597em;">y</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 需要顺序计算，但Res2Net模块引入的额外运行时间通常可以忽略不计。</font></p>
-</li>
-<li>
-<p>相较于模型深度 depth、1层的 channel 数 width、cardinality[68]，增加 scale 可以获得更快的性能提升。</p>
+<li><p>相较于模型深度 depth、1层的 channel 数 width、cardinality[68]，增加 scale 可以获得更快的性能提升。</p>
 <img src="https://note.youdao.com/yws/api/personal/file/WEB0b0ad93f6733adeef588208ca17e008c?method=download&shareKey=3b201a76aede1628dec4ee4d9199853a" width="380">
-<p>*scale为5、6时性能提升有限，可能由于CIFAR数据集中的图片太小（<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>32</mn><mo>×</mo><mn>32</mn></mrow><annotation encoding="application/x-tex">32 \times 32</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">3</span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span><span class="mord">2</span></span></span></span>）。</p>
+
+<p>*scale为5、6时性能提升有限，可能由于CIFAR数据集中的图片太小（$32 \times 32$）。</p>
 <p>*当图片中的对象尺寸已经可以被Res2Net模块覆盖时，继续增加 scale ，性能提升有限；若固定模型复杂度，增加 scale 会导致每个感受野的通道数减少，可能会降低模型处理特定尺度特征的能力。</p>
 </li>
 </ul>
 </li>
-<li>
-<p>论文<br>
-Gao S H, Cheng M M, Zhao K, et al. Res2net: A new multi-scale backbone architecture[J]. IEEE transactions on pattern analysis and machine intelligence, 2019, 43(2): 652-662.</p>
+<li><p>论文<br>Gao S H, Cheng M M, Zhao K, et al. Res2net: A new multi-scale backbone architecture[J]. IEEE transactions on pattern analysis and machine intelligence, 2019, 43(2): 652-662.</p>
 <ul>
-<li>第2章相关工作
-<ul>
+<li>第2章相关工作<ul>
 <li>计算机视觉领域的Backbone Networks：AlexNet、VGGNet、Network in Network、GoogLeNet、Inception、ResNet、DenseNet、DLA等。</li>
 <li>视觉任务的多尺度表示：spatial pyramid pooling、feature pyramid、atrous convolutional。</li>
 </ul>
@@ -438,8 +448,6 @@ Gao S H, Cheng M M, Zhao K, et al. Res2net: A new multi-scale backbone architect
 
     
 
-    
-
     <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
@@ -447,9 +455,11 @@ Gao S H, Cheng M M, Zhao K, et al. Res2net: A new multi-scale backbone architect
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <div class="card-title">
-                    <a href="/blog/ji-qi-xue-xi/cnn/senet/"> SENet</a>
-                </div>
+                <a href="/blog/ji-qi-xue-xi/cnn/senet/">
+                    <div class="card-content">
+                        <span class="card-title">SENet</span>
+                    </div>
+                </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
@@ -459,6 +469,7 @@ Gao S H, Cheng M M, Zhao K, et al. Res2net: A new multi-scale backbone architect
                     <div class="publish-info">
                         <span class="publish-date">
                             <i class="far fa-clock fa-fw icon-date"></i>2023-07-30
+                            <i class="far fa-edit fa-fw icon-date"></i>2023-07-30
                         </span>
                         <span class="publish-author">
                             
@@ -486,9 +497,11 @@ Gao S H, Cheng M M, Zhao K, et al. Res2net: A new multi-scale backbone architect
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <div class="card-title">
-                    <a href="/blog/yu-yin/yu-yin-ping-ce/te-zheng/bu-dang-ting-dun/"> 不当停顿</a>
-                </div>
+                <a href="/blog/yu-yin/yu-yin-ping-ce/te-zheng/bu-dang-ting-dun/">
+                    <div class="card-content">
+                        <span class="card-title">不当停顿</span>
+                    </div>
+                </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
@@ -498,6 +511,7 @@ Gao S H, Cheng M M, Zhao K, et al. Res2net: A new multi-scale backbone architect
                     <div class="publish-info">
                             <span class="publish-date">
                                 <i class="far fa-clock fa-fw icon-date"></i>2023-01-02
+                                <i class="far fa-edit fa-fw icon-date"></i>2023-01-02
                             </span>
                         <span class="publish-author">
                             
@@ -570,6 +584,11 @@ Gao S H, Cheng M M, Zhao K, et al. Res2net: A new multi-scale backbone architect
 <!-- 代码块功能依赖 -->
 <script type="text/javascript" src="/blog/libs/codeBlock/codeBlockFuction.js"></script>
 
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/blog/libs/prism/prism.min.js"></script>
+
+
 <!-- 代码语言 -->
 
 <script type="text/javascript" src="/blog/libs/codeBlock/codeLang.js"></script>
@@ -585,12 +604,13 @@ Gao S H, Cheng M M, Zhao K, et al. Res2net: A new multi-scale backbone architect
 <script type="text/javascript" src="/blog/libs/codeBlock/codeShrink.js"></script>
 
 
+
     
 
 </main>
 
 
-<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script>
     MathJax.Hub.Config({
         tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
@@ -666,6 +686,7 @@ Gao S H, Cheng M M, Zhao K, et al. Res2net: A new multi-scale backbone architect
             <a href="/blog/about" target="_blank">nanyang</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
             <br>
             
             
@@ -817,6 +838,30 @@ $(function () {
 });
 </script>
 
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
     <!-- 回到顶部按钮 -->
 <div id="backTop" class="top-scroll">
     <a class="btn-floating btn-large waves-effect waves-light" href="#!">
@@ -840,6 +885,8 @@ $(function () {
             mermaid.initialize({theme: 'neutral'});
           }
         </script>
+    
+
     
 
     
@@ -875,6 +922,21 @@ $(function () {
     <script src="/blog/libs/instantpage/instantpage.js" type="module"></script>
     
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 
 </html>

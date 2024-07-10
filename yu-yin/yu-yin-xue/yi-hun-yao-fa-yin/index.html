@@ -6,13 +6,11 @@
     <meta charset="utf-8">
     <meta name="keywords" content="易混淆发音, 梦园">
     <meta name="description" content="
-
 n-ŋ
 
 sin     sing
 thin    thing
 ran     rang
-
 
 
 eɪ-iː
@@ -21,7 +19,7 @@ fate    feat
 way     we
 say     see
 
-区分eɪ和iː https://www.ximala">
+区分eɪ和iː https://www.ximalaya">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -33,18 +31,34 @@ say     see
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    
-
     <title>易混淆发音 | 梦园</title>
     <link rel="icon" type="image/png" href="/blog/favicon.png">
+    
 
-    <link rel="stylesheet" type="text/css" href="/blog/libs/awesome/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="/blog/libs/materialize/materialize.min.css">
-    <link rel="stylesheet" type="text/css" href="/blog/libs/aos/aos.css">
-    <link rel="stylesheet" type="text/css" href="/blog/libs/animate/animate.min.css">
-    <link rel="stylesheet" type="text/css" href="/blog/libs/lightGallery/css/lightgallery.min.css">
-    <link rel="stylesheet" type="text/css" href="/blog/css/matery.css">
-    <link rel="stylesheet" type="text/css" href="/blog/css/my.css">
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/blog/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/blog/css/my.css">
+<link rel="stylesheet" type="text/css" href="/blog/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/blog/css/post.css">
+
+
+
+    
+
+
 
     <script src="/blog/libs/jquery/jquery-3.6.0.min.js"></script>
 
@@ -140,6 +154,11 @@ say     see
       <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
     </a>
   </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
 </ul>
 
 
@@ -194,9 +213,9 @@ say     see
               
                 <li>
 
-                  <a href="/blog/about " style="margin-left:50px">
+                  <a href="/blog/about " style="margin-left:75px">
 				  
-				   <i class="fa fas fa-user-circle" style="position: absolute;left:28px" ></i>
+				   <i class="fa fas fa-user-circle" style="position: absolute;left:50px" ></i>
 			      
 		          <span>我</span>
                   </a>
@@ -204,9 +223,9 @@ say     see
               
                 <li>
 
-                  <a href="/blog/words " style="margin-left:50px">
+                  <a href="/blog/words " style="margin-left:75px">
 				  
-				   <i class="fa fas fa-pen" style="position: absolute;left:28px" ></i>
+				   <i class="fa fas fa-pen" style="position: absolute;left:50px" ></i>
 			      
 		          <span>文字</span>
                   </a>
@@ -214,9 +233,9 @@ say     see
               
                 <li>
 
-                  <a href="/blog/books " style="margin-left:50px">
+                  <a href="/blog/books " style="margin-left:75px">
 				  
-				   <i class="fa fas fa-book" style="position: absolute;left:28px" ></i>
+				   <i class="fa fas fa-book" style="position: absolute;left:50px" ></i>
 			      
 		          <span>书</span>
                   </a>
@@ -224,9 +243,9 @@ say     see
               
                 <li>
 
-                  <a href="/blog/videos " style="margin-left:50px">
+                  <a href="/blog/videos " style="margin-left:75px">
 				  
-				   <i class="fa fas fa-film" style="position: absolute;left:28px" ></i>
+				   <i class="fa fas fa-film" style="position: absolute;left:50px" ></i>
 			      
 		          <span>视频</span>
                   </a>
@@ -266,7 +285,7 @@ say     see
 <div class="bg-cover pd-header about-cover">
     <div class="container">
     <div class="row">
-    <div class="col s10 offset-s1 m8 offset-m2 l8">
+    <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l1">
         <div class="brand">
             <div class="title">
                 
@@ -301,7 +320,7 @@ say     see
                 </div>
             </div>
 
-            <div class="row tag-cate">
+            <div class="tag-cate">
                 <div class="right-align">
                     
                     <div class="post-cate">
@@ -346,7 +365,7 @@ say     see
 
         
         <!-- 是否加载使用自带的 prismjs. -->
-        <link rel="stylesheet" href="/blog/libs/prism/prism.css">
+        <link rel="stylesheet" href="/blog/libs/prism/prism.min.css">
         
 
         
@@ -354,16 +373,14 @@ say     see
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <ul>
-<li>
-<p>n-ŋ</p>
+<li><p>n-ŋ</p>
 <ul>
 <li>sin     sing</li>
 <li>thin    thing</li>
 <li>ran     rang</li>
 </ul>
 </li>
-<li>
-<p>eɪ-iː</p>
+<li><p>eɪ-iː</p>
 <ul>
 <li>fate    feat</li>
 <li>way     we</li>
@@ -372,39 +389,33 @@ say     see
 <p>区分eɪ和iː <a target="_blank" rel="noopener" href="https://www.ximalaya.com/sound/69244789">https://www.ximalaya.com/sound/69244789</a></p>
 <p>区分eɪ和ɪ <a target="_blank" rel="noopener" href="https://www.ximalaya.com/sound/69243511">https://www.ximalaya.com/sound/69243511</a></p>
 </li>
-<li>
-<p>v-w</p>
+<li><p>v-w</p>
 <ul>
-<li>visit/view      we</li>
+<li>visit&#x2F;view      we</li>
 <li>very            well</li>
 <li>valid           wag</li>
 <li>vast            want</li>
 </ul>
 </li>
-<li>
-<p>h-f</p>
+<li><p>h-f</p>
 <ul>
 <li>have    five</li>
 </ul>
 </li>
-<li>
-<p>ʒ-ʃ</p>
+<li><p>ʒ-ʃ</p>
 <ul>
 <li>vision      version</li>
 <li>pleasure    fisher</li>
 </ul>
 </li>
-<li>
-<p>æ-aɪ</p>
+<li><p>æ-aɪ</p>
 <ul>
 <li>have    five</li>
 </ul>
 </li>
-<li>
-<p>l-r</p>
+<li><p>l-r</p>
 </li>
-<li>
-<p>l-n</p>
+<li><p>l-n</p>
 <ul>
 <li>light   night</li>
 <li>let     net</li>
@@ -413,8 +424,7 @@ say     see
 <li>laugh   nasty</li>
 </ul>
 </li>
-<li>
-<p>s-θ</p>
+<li><p>s-θ</p>
 <ul>
 <li>sin     thin</li>
 <li>sink    think</li>
@@ -423,14 +433,12 @@ say     see
 <li>pass    path</li>
 </ul>
 </li>
-<li>
-<p>ð-z</p>
+<li><p>ð-z</p>
 <ul>
 <li>that        zero</li>
 </ul>
 </li>
-<li>
-<p>æ-e</p>
+<li><p>æ-e</p>
 <ul>
 <li>bag     beg</li>
 <li>mat     met</li>
@@ -442,8 +450,7 @@ say     see
 <li>pan     pen</li>
 </ul>
 </li>
-<li>
-<p>ɪ-iː</p>
+<li><p>ɪ-iː</p>
 <ul>
 <li>ship    sheep</li>
 <li>sin     seen</li>
@@ -456,20 +463,17 @@ say     see
 </ul>
 <p>区分：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/av498505663/">https://www.bilibili.com/video/av498505663/</a></p>
 </li>
-<li>
-<p>p-pʊ</p>
+<li><p>p-pʊ</p>
 <ul>
 <li>please</li>
 </ul>
 </li>
-<li>
-<p>ʃ-ʃɪ</p>
+<li><p>ʃ-ʃɪ</p>
 <ul>
 <li>shrill</li>
 </ul>
 </li>
-<li>
-<p>k-kə</p>
+<li><p>k-kə</p>
 <ul>
 <li>clean</li>
 </ul>
@@ -524,8 +528,6 @@ say     see
 
     
 
-    
-
     <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
@@ -533,9 +535,11 @@ say     see
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <div class="card-title">
-                    <a href="/blog/yu-yin/yu-yin-ping-ce/ets-automated-speaking-assessment/"> ETS 《Automated Speaking Assessment》</a>
-                </div>
+                <a href="/blog/yu-yin/yu-yin-ping-ce/ets-automated-speaking-assessment/">
+                    <div class="card-content">
+                        <span class="card-title">ETS 《Automated Speaking Assessment》</span>
+                    </div>
+                </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
@@ -545,6 +549,7 @@ say     see
                     <div class="publish-info">
                         <span class="publish-date">
                             <i class="far fa-clock fa-fw icon-date"></i>2023-01-02
+                            <i class="far fa-edit fa-fw icon-date"></i>2023-01-02
                         </span>
                         <span class="publish-author">
                             
@@ -572,9 +577,11 @@ say     see
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <div class="card-title">
-                    <a href="/blog/yu-yin/yu-yin-xue/ying-yu-fa-yin-chang-jian-fa-yin-xian-xiang/"> 英语常见发音现象</a>
-                </div>
+                <a href="/blog/yu-yin/yu-yin-xue/ying-yu-fa-yin-chang-jian-fa-yin-xian-xiang/">
+                    <div class="card-content">
+                        <span class="card-title">英语常见发音现象</span>
+                    </div>
+                </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
@@ -584,6 +591,7 @@ say     see
                     <div class="publish-info">
                             <span class="publish-date">
                                 <i class="far fa-clock fa-fw icon-date"></i>2022-09-24
+                                <i class="far fa-edit fa-fw icon-date"></i>2022-09-24
                             </span>
                         <span class="publish-author">
                             
@@ -652,6 +660,11 @@ say     see
 <!-- 代码块功能依赖 -->
 <script type="text/javascript" src="/blog/libs/codeBlock/codeBlockFuction.js"></script>
 
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/blog/libs/prism/prism.min.js"></script>
+
+
 <!-- 代码语言 -->
 
 <script type="text/javascript" src="/blog/libs/codeBlock/codeLang.js"></script>
@@ -665,6 +678,7 @@ say     see
 <!-- 代码块收缩 -->
 
 <script type="text/javascript" src="/blog/libs/codeBlock/codeShrink.js"></script>
+
 
 
     
@@ -741,6 +755,7 @@ say     see
             <a href="/blog/about" target="_blank">nanyang</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
             <br>
             
             
@@ -892,6 +907,30 @@ $(function () {
 });
 </script>
 
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
     <!-- 回到顶部按钮 -->
 <div id="backTop" class="top-scroll">
     <a class="btn-floating btn-large waves-effect waves-light" href="#!">
@@ -915,6 +954,8 @@ $(function () {
             mermaid.initialize({theme: 'neutral'});
           }
         </script>
+    
+
     
 
     
@@ -950,6 +991,21 @@ $(function () {
     <script src="/blog/libs/instantpage/instantpage.js" type="module"></script>
     
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 
 </html>

@@ -17,18 +17,36 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    
-
     <title>books | 梦园</title>
     <link rel="icon" type="image/png" href="/blog/favicon.png">
+    
 
-    <link rel="stylesheet" type="text/css" href="/blog/libs/awesome/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="/blog/libs/materialize/materialize.min.css">
-    <link rel="stylesheet" type="text/css" href="/blog/libs/aos/aos.css">
-    <link rel="stylesheet" type="text/css" href="/blog/libs/animate/animate.min.css">
-    <link rel="stylesheet" type="text/css" href="/blog/libs/lightGallery/css/lightgallery.min.css">
-    <link rel="stylesheet" type="text/css" href="/blog/css/matery.css">
-    <link rel="stylesheet" type="text/css" href="/blog/css/my.css">
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/blog/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/blog/css/my.css">
+<link rel="stylesheet" type="text/css" href="/blog/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/blog/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/blog/css/post.css">
+
+
+
+
+    
+
+
 
     <script src="/blog/libs/jquery/jquery-3.6.0.min.js"></script>
 
@@ -124,6 +142,11 @@
       <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
     </a>
   </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
 </ul>
 
 
@@ -178,9 +201,9 @@
               
                 <li>
 
-                  <a href="/blog/about " style="margin-left:50px">
+                  <a href="/blog/about " style="margin-left:75px">
 				  
-				   <i class="fa fas fa-user-circle" style="position: absolute;left:28px" ></i>
+				   <i class="fa fas fa-user-circle" style="position: absolute;left:50px" ></i>
 			      
 		          <span>我</span>
                   </a>
@@ -188,9 +211,9 @@
               
                 <li>
 
-                  <a href="/blog/words " style="margin-left:50px">
+                  <a href="/blog/words " style="margin-left:75px">
 				  
-				   <i class="fa fas fa-pen" style="position: absolute;left:28px" ></i>
+				   <i class="fa fas fa-pen" style="position: absolute;left:50px" ></i>
 			      
 		          <span>文字</span>
                   </a>
@@ -198,9 +221,9 @@
               
                 <li>
 
-                  <a href="/blog/books " style="margin-left:50px">
+                  <a href="/blog/books " style="margin-left:75px">
 				  
-				   <i class="fa fas fa-book" style="position: absolute;left:28px" ></i>
+				   <i class="fa fas fa-book" style="position: absolute;left:50px" ></i>
 			      
 		          <span>书</span>
                   </a>
@@ -208,9 +231,9 @@
               
                 <li>
 
-                  <a href="/blog/videos " style="margin-left:50px">
+                  <a href="/blog/videos " style="margin-left:75px">
 				  
-				   <i class="fa fas fa-film" style="position: absolute;left:28px" ></i>
+				   <i class="fa fas fa-film" style="position: absolute;left:50px" ></i>
 			      
 		          <span>视频</span>
                   </a>
@@ -235,7 +258,7 @@
     <div class="bg-cover pd-header about-cover">
     <div class="container">
     <div class="row">
-    <div class="col s10 offset-s1 m8 offset-m2 l8">
+    <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l1">
         <div class="brand">
             <div class="title">
                 
@@ -248,40 +271,31 @@
 
     </div>
 </div>
-    
 <main class="content">
     <article id="articles" class="container articles">
         <div class="row article-row">
         
-            <div class="article col s12 m6 l4" >
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
                     <a href="/blog/books/xiao-fu-ren/">
-                        <div class=" card-content" >
-                            <span class="card-title" style="padding: 1px;font-size:20px;font-weight:700;height:80px;">小妇人</span>
+                        <div class="card-content">
+                            <span class="card-title">小妇人</span>
                         </div>
                     </a>
+
                     <div class="card-content article-content">
                         <div class="publish-info">
                             <span class="publish-date">
-                                
-                                <i class="fas fa-user fa-fw"></i>
-                                nanyang
-                                
-                            </span>   
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-05-04
+                                <i class="far fa-edit fa-fw icon-date"></i>2024-07-09
+                            </span>
                             <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/blog/categories/%E4%B9%A6%E7%B1%8D/" class="post-category">
-                                    书籍
-                                </a>
-                                
                                 
                             </span>
                         </div>
-                    </div>  
+                    </div>
                 </div>
-            </div>                    
+            </div>
         
         </div>
     </article>
@@ -357,6 +371,7 @@
             <a href="/blog/about" target="_blank">nanyang</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
             <br>
             
             
@@ -508,6 +523,30 @@ $(function () {
 });
 </script>
 
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
     <!-- 回到顶部按钮 -->
 <div id="backTop" class="top-scroll">
     <a class="btn-floating btn-large waves-effect waves-light" href="#!">
@@ -531,6 +570,8 @@ $(function () {
             mermaid.initialize({theme: 'neutral'});
           }
         </script>
+    
+
     
 
     
@@ -566,6 +607,21 @@ $(function () {
     <script src="/blog/libs/instantpage/instantpage.js" type="module"></script>
     
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 
 </html>

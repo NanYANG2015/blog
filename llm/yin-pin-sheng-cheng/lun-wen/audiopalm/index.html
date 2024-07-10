@@ -9,10 +9,10 @@
 作者：Google，2023.06。
 功能：speech-to-speech translation、speech-to-text translation、ASR、MT、TTS，多语种。
 
-1.  系统结构
+1. 系统结构
 
 
-输入：在输入前加任务 ta">
+输入：在输入前加任务 tag">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -24,18 +24,36 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    
-
     <title>AudioPaLM | 梦园</title>
     <link rel="icon" type="image/png" href="/blog/favicon.png">
+    
 
-    <link rel="stylesheet" type="text/css" href="/blog/libs/awesome/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="/blog/libs/materialize/materialize.min.css">
-    <link rel="stylesheet" type="text/css" href="/blog/libs/aos/aos.css">
-    <link rel="stylesheet" type="text/css" href="/blog/libs/animate/animate.min.css">
-    <link rel="stylesheet" type="text/css" href="/blog/libs/lightGallery/css/lightgallery.min.css">
-    <link rel="stylesheet" type="text/css" href="/blog/css/matery.css">
-    <link rel="stylesheet" type="text/css" href="/blog/css/my.css">
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/blog/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/blog/css/my.css">
+<link rel="stylesheet" type="text/css" href="/blog/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/blog/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/blog/css/post.css">
+
+
+
+
+    
+
+
 
     <script src="/blog/libs/jquery/jquery-3.6.0.min.js"></script>
 
@@ -131,6 +149,11 @@
       <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
     </a>
   </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
 </ul>
 
 
@@ -185,9 +208,9 @@
               
                 <li>
 
-                  <a href="/blog/about " style="margin-left:50px">
+                  <a href="/blog/about " style="margin-left:75px">
 				  
-				   <i class="fa fas fa-user-circle" style="position: absolute;left:28px" ></i>
+				   <i class="fa fas fa-user-circle" style="position: absolute;left:50px" ></i>
 			      
 		          <span>我</span>
                   </a>
@@ -195,9 +218,9 @@
               
                 <li>
 
-                  <a href="/blog/words " style="margin-left:50px">
+                  <a href="/blog/words " style="margin-left:75px">
 				  
-				   <i class="fa fas fa-pen" style="position: absolute;left:28px" ></i>
+				   <i class="fa fas fa-pen" style="position: absolute;left:50px" ></i>
 			      
 		          <span>文字</span>
                   </a>
@@ -205,9 +228,9 @@
               
                 <li>
 
-                  <a href="/blog/books " style="margin-left:50px">
+                  <a href="/blog/books " style="margin-left:75px">
 				  
-				   <i class="fa fas fa-book" style="position: absolute;left:28px" ></i>
+				   <i class="fa fas fa-book" style="position: absolute;left:50px" ></i>
 			      
 		          <span>书</span>
                   </a>
@@ -215,9 +238,9 @@
               
                 <li>
 
-                  <a href="/blog/videos " style="margin-left:50px">
+                  <a href="/blog/videos " style="margin-left:75px">
 				  
-				   <i class="fa fas fa-film" style="position: absolute;left:28px" ></i>
+				   <i class="fa fas fa-film" style="position: absolute;left:50px" ></i>
 			      
 		          <span>视频</span>
                   </a>
@@ -257,7 +280,7 @@
 <div class="bg-cover pd-header about-cover">
     <div class="container">
     <div class="row">
-    <div class="col s10 offset-s1 m8 offset-m2 l8">
+    <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l1">
         <div class="brand">
             <div class="title">
                 
@@ -276,96 +299,10 @@
 <main class="post-container content">
 
     
-    <link rel="stylesheet" href="/blog/libs/tocbot/tocbot.css">
-<style>
-    #articleContent h1::before,
-    #articleContent h2::before,
-    #articleContent h3::before,
-    #articleContent h4::before,
-    #articleContent h5::before,
-    #articleContent h6::before {
-        display: block;
-        content: " ";
-        height: 100px;
-        margin-top: -100px;
-        visibility: hidden;
-    }
-
-    #articleContent :focus {
-        outline: none;
-    }
-
-    .toc-fixed {
-        position: fixed;
-        top: 64px;
-    }
-
-    .toc-widget {
-        width: 345px;
-        padding-left: 20px;
-    }
-
-    .toc-widget .toc-title {
-        padding: 35px 0 15px 17px;
-        font-size: 1.5rem;
-        font-weight: bold;
-        line-height: 1.5rem;
-    }
-
-    .toc-widget ol {
-        padding: 0;
-        list-style: none;
-    }
-
+    <style>
+    /* 随视窗调整大小、滚动 */
     #toc-content {
         height: calc(100vh - 200px);
-        overflow: scroll;
-    }
-
-    #toc-content ol {
-        padding-left: 10px;
-    }
-
-    #toc-content ol li {
-        padding-left: 10px;
-    }
-
-    #toc-content .toc-link:hover {
-        color: #42b983;
-        font-weight: 700;
-        text-decoration: underline;
-    }
-
-    #toc-content .toc-link::before {
-        background-color: transparent;
-        max-height: 25px;
-
-        position: absolute;
-        right: 23.5vw;
-        display: block;
-    }
-
-    #toc-content .is-active-link {
-        color: #42b983;
-    }
-
-    #floating-toc-btn {
-        position: fixed;
-        right: 15px;
-        bottom: 76px;
-        padding-top: 15px;
-        margin-bottom: 0;
-        z-index: 998;
-    }
-
-    #floating-toc-btn .btn-floating {
-        width: 48px;
-        height: 48px;
-    }
-
-    #floating-toc-btn .btn-floating i {
-        line-height: 48px;
-        font-size: 1.4rem;
     }
 </style>
 <div class="row">
@@ -386,7 +323,7 @@
                 </div>
             </div>
 
-            <div class="row tag-cate">
+            <div class="tag-cate">
                 <div class="right-align">
                     
                     <div class="post-cate">
@@ -435,7 +372,7 @@
 
         
         <!-- 是否加载使用自带的 prismjs. -->
-        <link rel="stylesheet" href="/blog/libs/prism/prism.css">
+        <link rel="stylesheet" href="/blog/libs/prism/prism.min.css">
         
 
         
@@ -446,8 +383,8 @@
 <li>作者：Google，2023.06。</li>
 <li>功能：speech-to-speech translation、speech-to-text translation、ASR、MT、TTS，多语种。</li>
 </ul>
-<h1 id="系统结构">1.  系统结构</h1>
-<img src="https://note.youdao.com/yws/api/personal/file/WEBf8e7c81e1d1e383223684f3e4e69f8b9?method=download&shareKey=6f0854513c1b21d961fdf2ba3169b85e" width="572">
+<h1 id="系统结构">1. 系统结构</h1><img src="https://note.youdao.com/yws/api/personal/file/WEBf8e7c81e1d1e383223684f3e4e69f8b9?method=download&shareKey=6f0854513c1b21d961fdf2ba3169b85e" width="572">
+
 <ul>
 <li>输入：在输入前加任务 tag 前缀，以及输入语种、输出语种（可选，若与输入语种不一致）。任务 tag 采用 normal text，而非 special tokens。输入语种对低资源语种有益。</li>
 <li>audio encoder：USM-v2，相较于 USM-v1 2B，<font color="green">用辅助 ASR 损失训练、微调</font>。</li>
@@ -455,49 +392,42 @@
 <li>LLM：PaLM-2 8B。</li>
 <li>audio 合成：SoundStorm 或 AudioLM。</li>
 </ul>
-<h2 id="audio-encoder">1.1.  audio encoder</h2>
-<ul>
+<h2 id="audio-encoder">1.1. audio encoder</h2><ul>
 <li>从 audio encoder 中提取 embedding，并通过 k-means 量化为离散 token。25Hz，词汇表大小 1024。</li>
 <li>与原始 AudioLM 的区别：在多语种数据上训练 w2v-BERT；k-means 聚类前未对 embedding 归一化，归一化降低性能。</li>
 </ul>
-<h2 id="llm">1.2.  LLM</h2>
-<ul>
+<h2 id="LLM">1.2. LLM</h2><ul>
 <li>用 PaLM-2 8B 初始化，扩充 embedding 矩阵维度，audio embedding 全 0 初始化，输入、输出 embedding 矩阵共享，训练所有模型参数。</li>
 </ul>
-<h2 id="audio-合成">1.3.  audio 合成</h2>
-<ul>
+<h2 id="audio-合成">1.3. audio 合成</h2><ul>
 <li>自回归解码：AudioLM stage2+3，stage2 输入 LLM 生成的 token 及说话人语音 condition，自回归生成粗粒度 SoundStream token；stage3 进一步生成细粒度 SoundStream token。</li>
 <li>非自回归解码：SoundStorm，并行处理所有 token。相较于 AudioLM，音质相当，语音、声学环境的一致性更高，合成速度快2个数量级。</li>
 <li>上述两种方案，均先将音频 token 转换为 SoundStream token，然后采用卷积 decoder 转换为波形。</li>
 <li>将 3s 长的语音作为 condition，以保留说话人的声音；若语音小于3s，重复音频。</li>
 <li>在 Multilingual LibriSpeech 上训练。</li>
 </ul>
-<h1 id="数据集">2.  数据集</h1>
-<h2 id="训练集">2.1.  训练集</h2>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB9e357b70a5077239eaf78eb3ab5835dc?method=download&shareKey=e70deebc5c4a4e7022dc884177bff018" width="777">
+<h1 id="数据集">2. 数据集</h1><h2 id="训练集">2.1. 训练集</h2><img src="https://note.youdao.com/yws/api/personal/file/WEB9e357b70a5077239eaf78eb3ab5835dc?method=download&shareKey=e70deebc5c4a4e7022dc884177bff018" width="777">
+
 <img src="https://note.youdao.com/yws/api/personal/file/WEB87c96e0ca1227cf785897d6239419c11?method=download&shareKey=ec681948f088f08a2de5f2cc41220d51" width="533">
+
 <ul>
 <li>CVSS：扩展了CoVoST2，合成了目标文本的语音。CVSS-C：采用1个标准说话人的声音；CVSS-T：采用源语音的声音。</li>
 <li>VoxPopuli：转写翻译音频。</li>
-<li>conversational dataset：众包朗读 西班牙语-英语机器翻译 中的西班牙语部分。
-<ul>
+<li>conversational dataset：众包朗读 西班牙语-英语机器翻译 中的西班牙语部分。<ul>
 <li>Leveraging weakly supervised data to improve end-to-end speech-to-text translation</li>
 </ul>
 </li>
 <li>YouTube ASR：采用 USM-2B ASR 模型转写。</li>
-<li>WMT/TED TTS：采用 WMT、TED 文本翻译数据集，TTS 引擎合成成对音频。</li>
+<li>WMT&#x2F;TED TTS：采用 WMT、TED 文本翻译数据集，TTS 引擎合成成对音频。</li>
 <li>PaLM MT TTS：采用 PaLM-2 将 YouTube、Common Voice、Babel 数据集翻译为英文，再采用 AudioPaLM 8B S2ST 模型合成语音。</li>
 </ul>
-<h2 id="测试集">2.2.  测试集</h2>
-<ul>
+<h2 id="测试集">2.2. 测试集</h2><ul>
 <li>AST：CoVoST2、FLEURS，SacreBLEU corpusBLEU，不进行任何 TN。</li>
 <li>ASR：VoxPopuli、CoVoST2，JiWER，忽略大小写、标点，日文、中文评价 CER。</li>
 <li>S2ST：CVSS，将模型输出的音频输入 ASR 模型，计算识别文本与 ground truth 文本的 BLEU 分。</li>
 </ul>
-<h1 id="评价">3.  评价</h1>
-<ul>
-<li>模型
-<ul>
+<h1 id="评价">3. 评价</h1><ul>
+<li>模型<ul>
 <li>AST 模型：ASR + AST</li>
 <li>S2ST 模型：ASR + AST + TTS + S2ST</li>
 </ul>
@@ -512,15 +442,14 @@
 <th>结论</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>文本质量</td>
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEBe2e51f03912514c250a0c16ed128b967?method=download&shareKey=90c23706c2326c1693f9e55848267982" width="592"> <br> 级联方法：采用 AudioPaLM-2 ASR 模型 + 另一个仅采用 CoVoST2 T2T 翻译微调了的 AudioPaLM-2 模型。</td>
 <td>AST、S2ST 优于基线；ASR competitive。</td>
 </tr>
 <tr>
 <td>语音质量</td>
-<td><img src="https://note.youdao.com/yws/api/personal/file/WEBe2b6b307b86bd3e71d799180740dffe4?method=download&shareKey=d85007be4798bd877da13aaa567d9834" width="568"> <br> 客观评价：<br>  音质：no-reference MOS estimator [Reddy et al., 2021]；<br>  语音相似度：采用说话人确认模型，计算 embedding 的余弦相似度，<font color="green">源语音采用 SoundStream 编码/解码；</font><br>  声学一致性：采用 [Borsos et al., 2023]，判断音频片段是否属于同一录音的模型，计算 embedding 的余弦相似度。</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEBe2b6b307b86bd3e71d799180740dffe4?method=download&shareKey=d85007be4798bd877da13aaa567d9834" width="568"> <br> 客观评价：<br>  音质：no-reference MOS estimator [Reddy et al., 2021]；<br>  语音相似度：采用说话人确认模型，计算 embedding 的余弦相似度，<font color="green">源语音采用 SoundStream 编码&#x2F;解码；</font><br>  声学一致性：采用 [Borsos et al., 2023]，判断音频片段是否属于同一录音的模型，计算 embedding 的余弦相似度。</td>
 <td>相较于 Translatotron 2、CVSS-T ground truth 合成音频，MOS 得分显著地更高。<br> 对于高资源语种、低资源语种，上述指标无明显差异。</td>
 </tr>
 <tr>
@@ -528,10 +457,8 @@
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEB6148011005b539bbef9de61656f3fc83?method=download&shareKey=e7bd6009b65c4042c065be1ed0019a8c" width="644"></td>
 <td>AudioPaLM-2 的文本翻译能力迁移到了音频域。</td>
 </tr>
-</tbody>
-</table>
-<h2 id="消融实验">3.1.  消融实验</h2>
-<table>
+</tbody></table>
+<h2 id="消融实验">3.1. 消融实验</h2><table>
 <thead>
 <tr>
 <th></th>
@@ -539,8 +466,7 @@
 <th>结论</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>多任务训练</td>
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEBe069326885d5afd70dd8ac8afd631841?method=download&shareKey=9cd1b8ec11cf68f04a1ad7149b978648" width="572"></td>
 <td>ASR 任务有助于提升 AST 性能。</td>
@@ -585,10 +511,8 @@
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEB1efc7d6d4941df506617b8eb0fa04134?method=download&shareKey=8f46427826aec75908b3e36acdece7e8" width="569"></td>
 <td>性能随模型尺寸的增大而提高。</td>
 </tr>
-</tbody>
-</table>
-<h1 id="其它">4.  其它</h1>
-<ul>
+</tbody></table>
+<h1 id="其它">4. 其它</h1><ul>
 <li>Rubenstein P K, Asawaroengchai C, Nguyen D D, et al. Audiopalm: A large language model that can speak and listen[J]. arXiv preprint arXiv:2306.12925, 2023.</li>
 <li><a target="_blank" rel="noopener" href="https://google-research.github.io/seanet/audiopalm/examples">https://google-research.github.io/seanet/audiopalm/examples</a></li>
 <li>speech-to-speech translation：级联系统的缺陷：副语言信息、计算效率、累积错误等。</li>
@@ -642,8 +566,6 @@
 
     
 
-    
-
     <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
@@ -651,9 +573,11 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <div class="card-title">
-                    <a href="/blog/llm/yin-pin-sheng-cheng/lun-wen/audiolm/"> AudioLM</a>
-                </div>
+                <a href="/blog/llm/yin-pin-sheng-cheng/lun-wen/audiolm/">
+                    <div class="card-content">
+                        <span class="card-title">AudioLM</span>
+                    </div>
+                </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
@@ -663,6 +587,7 @@
                     <div class="publish-info">
                         <span class="publish-date">
                             <i class="far fa-clock fa-fw icon-date"></i>2024-05-22
+                            <i class="far fa-edit fa-fw icon-date"></i>2024-07-01
                         </span>
                         <span class="publish-author">
                             
@@ -694,9 +619,11 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <div class="card-title">
-                    <a href="/blog/llm/yin-pin-li-jie/lun-wen/sparks-of-large-audio-models/"> Sparks of Large Audio Models- A Survey and Outlook</a>
-                </div>
+                <a href="/blog/llm/yin-pin-li-jie/lun-wen/sparks-of-large-audio-models/">
+                    <div class="card-content">
+                        <span class="card-title">Sparks of Large Audio Models- A Survey and Outlook</span>
+                    </div>
+                </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
@@ -706,6 +633,7 @@
                     <div class="publish-info">
                             <span class="publish-date">
                                 <i class="far fa-clock fa-fw icon-date"></i>2023-12-07
+                                <i class="far fa-edit fa-fw icon-date"></i>2024-07-01
                             </span>
                         <span class="publish-author">
                             
@@ -778,6 +706,11 @@
 <!-- 代码块功能依赖 -->
 <script type="text/javascript" src="/blog/libs/codeBlock/codeBlockFuction.js"></script>
 
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/blog/libs/prism/prism.min.js"></script>
+
+
 <!-- 代码语言 -->
 
 <script type="text/javascript" src="/blog/libs/codeBlock/codeLang.js"></script>
@@ -791,6 +724,7 @@
 <!-- 代码块收缩 -->
 
 <script type="text/javascript" src="/blog/libs/codeBlock/codeShrink.js"></script>
+
 
 
     </div>
@@ -879,7 +813,7 @@
 </main>
 
 
-<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script>
     MathJax.Hub.Config({
         tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
@@ -955,6 +889,7 @@
             <a href="/blog/about" target="_blank">nanyang</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
             <br>
             
             
@@ -1106,6 +1041,30 @@ $(function () {
 });
 </script>
 
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
     <!-- 回到顶部按钮 -->
 <div id="backTop" class="top-scroll">
     <a class="btn-floating btn-large waves-effect waves-light" href="#!">
@@ -1129,6 +1088,8 @@ $(function () {
             mermaid.initialize({theme: 'neutral'});
           }
         </script>
+    
+
     
 
     
@@ -1164,6 +1125,21 @@ $(function () {
     <script src="/blog/libs/instantpage/instantpage.js" type="module"></script>
     
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 
 </html>

@@ -8,9 +8,8 @@
     <meta name="description" content="
 作者：中科院、阿里达摩院
 创新点
-
 采用冻结语音 encoder (Whisper-small)、指令跟随 LLM (Llama-2-7B)，学习轻量级的 modality adapter 的方式，使 LLM 具有处理语音输入的能力。
-由">
+由于">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -22,18 +21,36 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    
-
     <title>BLSP | 梦园</title>
     <link rel="icon" type="image/png" href="/blog/favicon.png">
+    
 
-    <link rel="stylesheet" type="text/css" href="/blog/libs/awesome/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="/blog/libs/materialize/materialize.min.css">
-    <link rel="stylesheet" type="text/css" href="/blog/libs/aos/aos.css">
-    <link rel="stylesheet" type="text/css" href="/blog/libs/animate/animate.min.css">
-    <link rel="stylesheet" type="text/css" href="/blog/libs/lightGallery/css/lightgallery.min.css">
-    <link rel="stylesheet" type="text/css" href="/blog/css/matery.css">
-    <link rel="stylesheet" type="text/css" href="/blog/css/my.css">
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/blog/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/blog/css/my.css">
+<link rel="stylesheet" type="text/css" href="/blog/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/blog/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/blog/css/post.css">
+
+
+
+
+    
+
+
 
     <script src="/blog/libs/jquery/jquery-3.6.0.min.js"></script>
 
@@ -129,6 +146,11 @@
       <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
     </a>
   </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
 </ul>
 
 
@@ -183,9 +205,9 @@
               
                 <li>
 
-                  <a href="/blog/about " style="margin-left:50px">
+                  <a href="/blog/about " style="margin-left:75px">
 				  
-				   <i class="fa fas fa-user-circle" style="position: absolute;left:28px" ></i>
+				   <i class="fa fas fa-user-circle" style="position: absolute;left:50px" ></i>
 			      
 		          <span>我</span>
                   </a>
@@ -193,9 +215,9 @@
               
                 <li>
 
-                  <a href="/blog/words " style="margin-left:50px">
+                  <a href="/blog/words " style="margin-left:75px">
 				  
-				   <i class="fa fas fa-pen" style="position: absolute;left:28px" ></i>
+				   <i class="fa fas fa-pen" style="position: absolute;left:50px" ></i>
 			      
 		          <span>文字</span>
                   </a>
@@ -203,9 +225,9 @@
               
                 <li>
 
-                  <a href="/blog/books " style="margin-left:50px">
+                  <a href="/blog/books " style="margin-left:75px">
 				  
-				   <i class="fa fas fa-book" style="position: absolute;left:28px" ></i>
+				   <i class="fa fas fa-book" style="position: absolute;left:50px" ></i>
 			      
 		          <span>书</span>
                   </a>
@@ -213,9 +235,9 @@
               
                 <li>
 
-                  <a href="/blog/videos " style="margin-left:50px">
+                  <a href="/blog/videos " style="margin-left:75px">
 				  
-				   <i class="fa fas fa-film" style="position: absolute;left:28px" ></i>
+				   <i class="fa fas fa-film" style="position: absolute;left:50px" ></i>
 			      
 		          <span>视频</span>
                   </a>
@@ -255,7 +277,7 @@
 <div class="bg-cover pd-header about-cover">
     <div class="container">
     <div class="row">
-    <div class="col s10 offset-s1 m8 offset-m2 l8">
+    <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l1">
         <div class="brand">
             <div class="title">
                 
@@ -274,96 +296,10 @@
 <main class="post-container content">
 
     
-    <link rel="stylesheet" href="/blog/libs/tocbot/tocbot.css">
-<style>
-    #articleContent h1::before,
-    #articleContent h2::before,
-    #articleContent h3::before,
-    #articleContent h4::before,
-    #articleContent h5::before,
-    #articleContent h6::before {
-        display: block;
-        content: " ";
-        height: 100px;
-        margin-top: -100px;
-        visibility: hidden;
-    }
-
-    #articleContent :focus {
-        outline: none;
-    }
-
-    .toc-fixed {
-        position: fixed;
-        top: 64px;
-    }
-
-    .toc-widget {
-        width: 345px;
-        padding-left: 20px;
-    }
-
-    .toc-widget .toc-title {
-        padding: 35px 0 15px 17px;
-        font-size: 1.5rem;
-        font-weight: bold;
-        line-height: 1.5rem;
-    }
-
-    .toc-widget ol {
-        padding: 0;
-        list-style: none;
-    }
-
+    <style>
+    /* 随视窗调整大小、滚动 */
     #toc-content {
         height: calc(100vh - 200px);
-        overflow: scroll;
-    }
-
-    #toc-content ol {
-        padding-left: 10px;
-    }
-
-    #toc-content ol li {
-        padding-left: 10px;
-    }
-
-    #toc-content .toc-link:hover {
-        color: #42b983;
-        font-weight: 700;
-        text-decoration: underline;
-    }
-
-    #toc-content .toc-link::before {
-        background-color: transparent;
-        max-height: 25px;
-
-        position: absolute;
-        right: 23.5vw;
-        display: block;
-    }
-
-    #toc-content .is-active-link {
-        color: #42b983;
-    }
-
-    #floating-toc-btn {
-        position: fixed;
-        right: 15px;
-        bottom: 76px;
-        padding-top: 15px;
-        margin-bottom: 0;
-        z-index: 998;
-    }
-
-    #floating-toc-btn .btn-floating {
-        width: 48px;
-        height: 48px;
-    }
-
-    #floating-toc-btn .btn-floating i {
-        line-height: 48px;
-        font-size: 1.4rem;
     }
 </style>
 <div class="row">
@@ -384,7 +320,7 @@
                 </div>
             </div>
 
-            <div class="row tag-cate">
+            <div class="tag-cate">
                 <div class="right-align">
                     
                     <div class="post-cate">
@@ -433,7 +369,7 @@
 
         
         <!-- 是否加载使用自带的 prismjs. -->
-        <link rel="stylesheet" href="/blog/libs/prism/prism.css">
+        <link rel="stylesheet" href="/blog/libs/prism/prism.min.css">
         
 
         
@@ -442,59 +378,48 @@
             <div id="articleContent">
                 <ul>
 <li>作者：中科院、阿里达摩院</li>
-<li><font color="red">创新点
-<ul>
+<li><font color="red">创新点<ul>
 <li>采用冻结语音 encoder (Whisper-small)、指令跟随 LLM (Llama-2-7B)，学习轻量级的 modality adapter 的方式，使 LLM 具有处理语音输入的能力。</li>
 <li>由于直接采用 ASR 任务训练 adapter，结果 LLM 只能完成 ASR 任务，失去了遵循指令的能力。</li>
 <li>提出采用文本续写任务训练 adapter，认为输入音频、或对应的转写文本，LLM 应输出一致的续写文本。</li>
 <li>实验表明，在语音识别、语音翻译、情感识别、语音对话、非英语语音输入任务上，模型表现出一定的处理能力，但与 SOTA 仍有差距。</li></ul></font></li>
 </ul>
 
-<li>系统结构<br>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB3858aaf55d71d711a78baf0eb73813d8?method=download&shareKey=4523899aea7ad97a70e028be48838e5e" width="612"></li>
-<li>训练
-<ul>
+<li>系统结构<img src="https://note.youdao.com/yws/api/personal/file/WEB3858aaf55d71d711a78baf0eb73813d8?method=download&shareKey=4523899aea7ad97a70e028be48838e5e" width="612"></li>
+<li>训练<ul>
 <li>LLM 指令跟随：采用指令集 Alpaca-52K 微调 Llama-2 3 epoch。相较于直接使用 Llama-2 Chat，后续可将指令集改为多模态指令集。</li>
-<li>先输入转写文本，提示 LLM 续写。将上述数据作为监督数据集（8.8M 对），输入 encoder 输出的语音表示，要求 LLM 续写出相同的文本。训练 adapter 1 epoch。
-<ul>
-<li>ASR 数据集：LibriSpeech + GigaSpeech + Common Voice 2.0</li>
-</ul>
-<pre class="line-numbers language-none"><code class="language-none">###[Human]:Continue the following text in a coherent and engaging style with less than 40 words.
+<li>先输入转写文本，提示 LLM 续写。将上述数据作为监督数据集（8.8M 对），输入 encoder 输出的语音表示，要求 LLM 续写出相同的文本。训练 adapter 1 epoch。<ul>
+<li>ASR 数据集：LibriSpeech + GigaSpeech + Common Voice 2.0<pre class="line-numbers language-none"><code class="language-none">###[Human]:Continue the following text in a coherent and engaging style with less than 40 words.
 &lt;transcript&gt;\n\n\n###[Assistant]:
 
 ###[Human]:Continue the following text in a coherent and engaging style with less than 40 words.
-&lt;speech features&gt;\n\n\n###[Assistant]:&lt;text continuation&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+&lt;speech features&gt;\n\n\n###[Assistant]:&lt;text continuation&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
 </li>
 </ul>
 </li>
-<li>模型结构
-<ul>
-<li>adapter: subsampler + bottleneck + layernorm
-<ul>
+<li>模型结构<ul>
+<li>adapter: subsampler + bottleneck + layernorm<ul>
 <li>subsampler: 3层 Conv1d (kernel 5, pad 2, stride 2)，8倍降采样。</li>
 <li>bottleneck: 2层全连接，512。</li>
 </ul>
 </li>
 </ul>
 </li>
-<li>实验：zero-shot 语音识别、语音翻译、口语理解（情感识别）、语音对话、非英语语音输入。
-<ul>
-<li>
-<p>语音识别</p>
+<li>实验：zero-shot 语音识别、语音翻译、口语理解（情感识别）、语音对话、非英语语音输入。<ul>
+<li><p>语音识别</p>
 <img src="https://note.youdao.com/yws/api/personal/file/WEB76e3822331bf8b29f0666cddf0f531d6?method=download&shareKey=fdc6b928064ccf8b3495df340176046a" width="460">
 \*BERTScore: 评价语义相似度。
+
 <p>续写任务倾向于语义层面的对齐。BLSP 可以正确识别大多数单词，但并不忠实，比如由于 LLM，插入语音中漏掉的介词。</p>
 </li>
-<li>
-<p>在情感识别任务上，BLSP 比 ASR + LLM 性能更好，与 text + LLM 性能相当。</p>
+<li><p>在情感识别任务上，BLSP 比 ASR + LLM 性能更好，与 text + LLM 性能相当。</p>
 </li>
-<li>
-<p>可以输入中文语音进行多轮对话，但响应总是英文的，因为训练集是纯英文的。</p>
+<li><p>可以输入中文语音进行多轮对话，但响应总是英文的，因为训练集是纯英文的。</p>
 </li>
 </ul>
 </li>
-<li>展望
-<ul>
+<li>展望<ul>
 <li>减小性能差距。</li>
 <li>利用说话人识别、情感识别等任务，使模型学习音调、情感等副语言信息。</li>
 </ul>
@@ -553,8 +478,6 @@
 
     
 
-    
-
     <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
@@ -562,9 +485,11 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <div class="card-title">
-                    <a href="/blog/llm/yin-pin-li-jie/lun-wen/qwen-audio/"> Qwen-Audio</a>
-                </div>
+                <a href="/blog/llm/yin-pin-li-jie/lun-wen/qwen-audio/">
+                    <div class="card-content">
+                        <span class="card-title">Qwen-Audio</span>
+                    </div>
+                </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
@@ -574,6 +499,7 @@
                     <div class="publish-info">
                         <span class="publish-date">
                             <i class="far fa-clock fa-fw icon-date"></i>2023-12-01
+                            <i class="far fa-edit fa-fw icon-date"></i>2024-07-01
                         </span>
                         <span class="publish-author">
                             
@@ -605,9 +531,11 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <div class="card-title">
-                    <a href="/blog/yu-yin/yu-yin-he-cheng/tts-shu-ju-ji/"> TTS数据集</a>
-                </div>
+                <a href="/blog/yu-yin/yu-yin-he-cheng/tts-shu-ju-ji/">
+                    <div class="card-content">
+                        <span class="card-title">TTS数据集</span>
+                    </div>
+                </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
@@ -617,6 +545,7 @@
                     <div class="publish-info">
                             <span class="publish-date">
                                 <i class="far fa-clock fa-fw icon-date"></i>2023-11-01
+                                <i class="far fa-edit fa-fw icon-date"></i>2023-11-01
                             </span>
                         <span class="publish-author">
                             
@@ -685,6 +614,11 @@
 <!-- 代码块功能依赖 -->
 <script type="text/javascript" src="/blog/libs/codeBlock/codeBlockFuction.js"></script>
 
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/blog/libs/prism/prism.min.js"></script>
+
+
 <!-- 代码语言 -->
 
 <script type="text/javascript" src="/blog/libs/codeBlock/codeLang.js"></script>
@@ -698,6 +632,7 @@
 <!-- 代码块收缩 -->
 
 <script type="text/javascript" src="/blog/libs/codeBlock/codeShrink.js"></script>
+
 
 
     </div>
@@ -786,7 +721,7 @@
 </main>
 
 
-<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script>
     MathJax.Hub.Config({
         tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
@@ -862,6 +797,7 @@
             <a href="/blog/about" target="_blank">nanyang</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
             <br>
             
             
@@ -1013,6 +949,30 @@ $(function () {
 });
 </script>
 
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
     <!-- 回到顶部按钮 -->
 <div id="backTop" class="top-scroll">
     <a class="btn-floating btn-large waves-effect waves-light" href="#!">
@@ -1036,6 +996,8 @@ $(function () {
             mermaid.initialize({theme: 'neutral'});
           }
         </script>
+    
+
     
 
     
@@ -1071,6 +1033,21 @@ $(function () {
     <script src="/blog/libs/instantpage/instantpage.js" type="module"></script>
     
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 
 </html>

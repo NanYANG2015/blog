@@ -19,18 +19,36 @@ wav2vec 2.0 等无监督预训练的语音编码器，需要有监督训练解�
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    
-
     <title>Whisper | 梦园</title>
     <link rel="icon" type="image/png" href="/blog/favicon.png">
+    
 
-    <link rel="stylesheet" type="text/css" href="/blog/libs/awesome/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="/blog/libs/materialize/materialize.min.css">
-    <link rel="stylesheet" type="text/css" href="/blog/libs/aos/aos.css">
-    <link rel="stylesheet" type="text/css" href="/blog/libs/animate/animate.min.css">
-    <link rel="stylesheet" type="text/css" href="/blog/libs/lightGallery/css/lightgallery.min.css">
-    <link rel="stylesheet" type="text/css" href="/blog/css/matery.css">
-    <link rel="stylesheet" type="text/css" href="/blog/css/my.css">
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/blog/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/blog/css/my.css">
+<link rel="stylesheet" type="text/css" href="/blog/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/blog/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/blog/css/post.css">
+
+
+
+
+    
+
+
 
     <script src="/blog/libs/jquery/jquery-3.6.0.min.js"></script>
 
@@ -126,6 +144,11 @@ wav2vec 2.0 等无监督预训练的语音编码器，需要有监督训练解�
       <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
     </a>
   </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
 </ul>
 
 
@@ -180,9 +203,9 @@ wav2vec 2.0 等无监督预训练的语音编码器，需要有监督训练解�
               
                 <li>
 
-                  <a href="/blog/about " style="margin-left:50px">
+                  <a href="/blog/about " style="margin-left:75px">
 				  
-				   <i class="fa fas fa-user-circle" style="position: absolute;left:28px" ></i>
+				   <i class="fa fas fa-user-circle" style="position: absolute;left:50px" ></i>
 			      
 		          <span>我</span>
                   </a>
@@ -190,9 +213,9 @@ wav2vec 2.0 等无监督预训练的语音编码器，需要有监督训练解�
               
                 <li>
 
-                  <a href="/blog/words " style="margin-left:50px">
+                  <a href="/blog/words " style="margin-left:75px">
 				  
-				   <i class="fa fas fa-pen" style="position: absolute;left:28px" ></i>
+				   <i class="fa fas fa-pen" style="position: absolute;left:50px" ></i>
 			      
 		          <span>文字</span>
                   </a>
@@ -200,9 +223,9 @@ wav2vec 2.0 等无监督预训练的语音编码器，需要有监督训练解�
               
                 <li>
 
-                  <a href="/blog/books " style="margin-left:50px">
+                  <a href="/blog/books " style="margin-left:75px">
 				  
-				   <i class="fa fas fa-book" style="position: absolute;left:28px" ></i>
+				   <i class="fa fas fa-book" style="position: absolute;left:50px" ></i>
 			      
 		          <span>书</span>
                   </a>
@@ -210,9 +233,9 @@ wav2vec 2.0 等无监督预训练的语音编码器，需要有监督训练解�
               
                 <li>
 
-                  <a href="/blog/videos " style="margin-left:50px">
+                  <a href="/blog/videos " style="margin-left:75px">
 				  
-				   <i class="fa fas fa-film" style="position: absolute;left:28px" ></i>
+				   <i class="fa fas fa-film" style="position: absolute;left:50px" ></i>
 			      
 		          <span>视频</span>
                   </a>
@@ -252,7 +275,7 @@ wav2vec 2.0 等无监督预训练的语音编码器，需要有监督训练解�
 <div class="bg-cover pd-header about-cover">
     <div class="container">
     <div class="row">
-    <div class="col s10 offset-s1 m8 offset-m2 l8">
+    <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l1">
         <div class="brand">
             <div class="title">
                 
@@ -271,96 +294,10 @@ wav2vec 2.0 等无监督预训练的语音编码器，需要有监督训练解�
 <main class="post-container content">
 
     
-    <link rel="stylesheet" href="/blog/libs/tocbot/tocbot.css">
-<style>
-    #articleContent h1::before,
-    #articleContent h2::before,
-    #articleContent h3::before,
-    #articleContent h4::before,
-    #articleContent h5::before,
-    #articleContent h6::before {
-        display: block;
-        content: " ";
-        height: 100px;
-        margin-top: -100px;
-        visibility: hidden;
-    }
-
-    #articleContent :focus {
-        outline: none;
-    }
-
-    .toc-fixed {
-        position: fixed;
-        top: 64px;
-    }
-
-    .toc-widget {
-        width: 345px;
-        padding-left: 20px;
-    }
-
-    .toc-widget .toc-title {
-        padding: 35px 0 15px 17px;
-        font-size: 1.5rem;
-        font-weight: bold;
-        line-height: 1.5rem;
-    }
-
-    .toc-widget ol {
-        padding: 0;
-        list-style: none;
-    }
-
+    <style>
+    /* 随视窗调整大小、滚动 */
     #toc-content {
         height: calc(100vh - 200px);
-        overflow: scroll;
-    }
-
-    #toc-content ol {
-        padding-left: 10px;
-    }
-
-    #toc-content ol li {
-        padding-left: 10px;
-    }
-
-    #toc-content .toc-link:hover {
-        color: #42b983;
-        font-weight: 700;
-        text-decoration: underline;
-    }
-
-    #toc-content .toc-link::before {
-        background-color: transparent;
-        max-height: 25px;
-
-        position: absolute;
-        right: 23.5vw;
-        display: block;
-    }
-
-    #toc-content .is-active-link {
-        color: #42b983;
-    }
-
-    #floating-toc-btn {
-        position: fixed;
-        right: 15px;
-        bottom: 76px;
-        padding-top: 15px;
-        margin-bottom: 0;
-        z-index: 998;
-    }
-
-    #floating-toc-btn .btn-floating {
-        width: 48px;
-        height: 48px;
-    }
-
-    #floating-toc-btn .btn-floating i {
-        line-height: 48px;
-        font-size: 1.4rem;
     }
 </style>
 <div class="row">
@@ -381,7 +318,7 @@ wav2vec 2.0 等无监督预训练的语音编码器，需要有监督训练解�
                 </div>
             </div>
 
-            <div class="row tag-cate">
+            <div class="tag-cate">
                 <div class="right-align">
                     
                     <div class="post-cate">
@@ -426,7 +363,7 @@ wav2vec 2.0 等无监督预训练的语音编码器，需要有监督训练解�
 
         
         <!-- 是否加载使用自带的 prismjs. -->
-        <link rel="stylesheet" href="/blog/libs/prism/prism.css">
+        <link rel="stylesheet" href="/blog/libs/prism/prism.min.css">
         
 
         
@@ -436,23 +373,21 @@ wav2vec 2.0 等无监督预训练的语音编码器，需要有监督训练解�
                 <ul>
 <li>作者：OpenAI</li>
 <li><font color="red">wav2vec 2.0 等无监督预训练的语音编码器，需要有监督训练解码器。Whisper 采用多语种、多任务训练，以及 68wh 大规模低质量弱监督训练集，可以在广泛的语音环境中鲁棒地工作，不需要特定数据集的微调、zero-shot 性能也较好。</font></li>
-<li><font color="red">创新点</font>
-<ul>
+<li><font color="red">创新点</font><ul>
 <li><font color="red">通过在 decoder 端添加任务提示，实现 multitask 训练。且验证了多任务、多语种训练有知识迁移正收益。</font></li>
 <li><font color="red">训练数据量大。</font></li>
 <li><font color="red">训练时以 50% 的概率将当前音频之前的转写文本添加到解码器的上下文中。实际应用中，推理时可输入上一窗口的识别结果用于长音频识别，或特定领域、特定任务的提示。</font></li>
 <li><font color="red">直接预测原始的转写文本，而不需要单独的 ITN 模块，简化了流程。</font></li>
 </ul>
 </li>
-<li><font color="red">发现</font>
-<ul>
+<li><font color="red">发现</font><ul>
 <li><font color="red">训练数据每增加16倍，WER 减半。</font></li>
 <li>采用对数概率作为得分。从温度0开始，即始终选择最高概率的token。当生成 token 的平均对数概率低于 -1，或生成文本的 gzip 压缩率大于2.4时，将温度提高 0.2 直到 1.0，最终为 5 beams 的 beam search。当温度低于 0.5 时，将前一个窗口的转写文本作为上文输入。<font color="red">可以减少贪婪解码中更频繁出现的重复循环。</font></li>
 </ul>
 </li>
 </ul>
-<h1 id="模型">1.  模型</h1>
-<img src="https://note.youdao.com/yws/api/personal/file/WEBbd20803d649ee1ac60ace53dfad2bb8e?method=download&shareKey=e472e659f0649f8ee4ad233b75a56240" width="991">
+<h1 id="模型">1. 模型</h1><img src="https://note.youdao.com/yws/api/personal/file/WEBbd20803d649ee1ac60ace53dfad2bb8e?method=download&shareKey=e472e659f0649f8ee4ad233b75a56240" width="991">
+
 <table>
 <thead>
 <tr>
@@ -465,8 +400,7 @@ wav2vec 2.0 等无监督预训练的语音编码器，需要有监督训练解�
 <th>Relative speed</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>tiny</td>
 <td>4</td>
 <td>384</td>
@@ -503,7 +437,7 @@ wav2vec 2.0 等无监督预训练的语音编码器，需要有监督训练解�
 <td>~2x</td>
 </tr>
 <tr>
-<td>large/large-v2/large-v3</td>
+<td>large&#x2F;large-v2&#x2F;large-v3</td>
 <td>32</td>
 <td>1280</td>
 <td>20</td>
@@ -511,50 +445,35 @@ wav2vec 2.0 等无监督预训练的语音编码器，需要有监督训练解�
 <td>~10 GB</td>
 <td>1x</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <ul>
-<li>
-<p>音频：30s。没有语音的片段 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>10</mn><mo>×</mo></mrow><annotation encoding="application/x-tex">10 \times</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">×</span></span></span></span> 下采样也加入训练。16kHz，80维FBank，25ms 窗长，10ms hop。</p>
+<li><p>音频：30s。没有语音的片段 $10 \times$ 下采样也加入训练。16kHz，80维FBank，25ms 窗长，10ms hop。</p>
 </li>
-<li>
-<p>特征归一化：[-1, 1]，零均值。</p>
+<li><p>特征归一化：[-1, 1]，零均值。</p>
 </li>
-<li>
-<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn><mo>×</mo><mi>C</mi><mi>o</mi><mi>n</mi><mi>v</mi><mn>1</mn><mi>D</mi></mrow><annotation encoding="application/x-tex">2 \times Conv1D</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mord">1</span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span></span></span></span>：kernel 3，第2层 stride 2。</p>
+<li><p>$2 \times Conv1D$：kernel 3，第2层 stride 2。</p>
 </li>
-<li>
-<p>encoder output + layer norm</p>
+<li><p>encoder output + layer norm</p>
 </li>
-<li>
-<p>文本：BPE tokenizer。</p>
+<li><p>文本：BPE tokenizer。</p>
 </li>
-<li>
-<p><font color="red">以 50% 的概率将当前音频之前的转写文本添加到解码器的上下文中。</font></p>
+<li><p><font color="red">以 50% 的概率将当前音频之前的转写文本添加到解码器的上下文中。</font></p>
 </li>
-<li>
-<p>时间戳预测：训练集中的时刻被量化为20ms分辨率。</p>
+<li><p>时间戳预测：训练集中的时刻被量化为20ms分辨率。</p>
 </li>
-<li>
-<p>存在音频截断时</p>
+<li><p>存在音频截断时</p>
 <ul>
 <li>预测时间戳：最后只预测起始时刻token。</li>
 <li>不预测时间戳：截断音频，使其不包含不完整的token。</li>
 </ul>
 </li>
-<li>
-<p><font color="red">多任务训练：口语语种识别、多语种语音识别、语音翻译、VAD。</font></p>
+<li><p><font color="red">多任务训练：口语语种识别、多语种语音识别、语音翻译、VAD。</font></p>
 </li>
-<li>
-<p>超参数</p>
-<img src="https://note.youdao.com/yws/api/personal/file/WEBac5a0219964b788e71002aeeb36a0ed2?method=download&shareKey=57995ce43c68a48fde48a34814cbb555" width="360">
-</li>
-<li>
-<p>Large V2</p>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB35781e40821ba56bc40ec46a18412a5a?method=download&shareKey=f15bc329d64997e2dbaeb9c11fcd173b" width="335">
-</li>
-<li>
-<p>Large V3</p>
+<li><p>超参数</p>
+<img src="https://note.youdao.com/yws/api/personal/file/WEBac5a0219964b788e71002aeeb36a0ed2?method=download&shareKey=57995ce43c68a48fde48a34814cbb555" width="360"></li>
+<li><p>Large V2</p>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB35781e40821ba56bc40ec46a18412a5a?method=download&shareKey=f15bc329d64997e2dbaeb9c11fcd173b" width="335"></li>
+<li><p>Large V3</p>
 <ul>
 <li>音频特征：128 维 FBank。</li>
 <li>训练集：100wh 弱标注数据 + 400wh 采用 Large V2 生成的伪标签数据。</li>
@@ -563,18 +482,15 @@ wav2vec 2.0 等无监督预训练的语音编码器，需要有监督训练解�
 </ul>
 </li>
 </ul>
-<h1 id="数据集">2.  数据集</h1>
-<ul>
+<h1 id="数据集">2. 数据集</h1><ul>
 <li>43.8wh 英语 ASR 数据（约占65%）</li>
 <li>11.7wh 其它 96 个语种的识别数据。</li>
-<li>12.6wh <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mo>→</mo><mtext>en</mtext></mrow><annotation encoding="application/x-tex">x \rightarrow \text {en}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord text"><span class="mord">en</span></span></span></span></span> 翻译数据。</li>
+<li>12.6wh $x \rightarrow \text {en}$ 翻译数据。</li>
 <li>各语种数据量详见附录E。</li>
 </ul>
-<h1 id="数据处理">3.  数据处理</h1>
-<ul>
+<h1 id="数据处理">3. 数据处理</h1><ul>
 <li><font color="red">直接预测原始的转写文本，而不需要单独的 ITN 模块，简化了流程。</font></li>
-<li>转写文本筛选
-<ul>
+<li>转写文本筛选<ul>
 <li>删除机器生成的转写文本（如不包含逗号、感叹号、问号等复杂的标点符号，全大写或全小写）。在人工和机器混合生成的数据集上训练，会显著地损害翻译系统的性能。</li>
 <li>语种检测。剔除音频、文本语种不匹配的，但保留文本为英语的作为翻译样本。</li>
 <li>文本模糊去重。</li>
@@ -584,35 +500,30 @@ wav2vec 2.0 等无监督预训练的语音编码器，需要有监督训练解�
 <li>避免污染：对训练集和重叠风险很高的测试集 TED-LIUM 3 进行文本去重。</li>
 <li>存在的问题：许多转写文本包含当前说话人的名字。Whisper 在不存在上述情况的子集上进行了微调。</li>
 </ul>
-<h1 id="zero-shot-评价">4.  zero-shot 评价</h1>
-<h2 id="tn">4.1.  TN</h2>
-<ul>
+<h1 id="zero-shot-评价">4. zero-shot 评价</h1><h2 id="TN">4.1. TN</h2><ul>
 <li>计算 WER 前进行 TN，以减少非语义差异的惩罚。</li>
 </ul>
-<h3 id="英语">4.1.1.  英语</h3>
-<ol start="0">
+<h3 id="英语">4.1.1. 英语</h3><ol start="0">
 <li>转小写</li>
 <li>删除[]中的内容</li>
 <li>删除()中的内容</li>
 <li>删除 hmm, mm, mhm, mmm, uh, um</li>
-<li>删除 ’ 前的 whitespace</li>
+<li>删除 ‘ 前的 whitespace</li>
 <li>将标准的或非正式的缩略形式转换为原始形式</li>
 <li>删除数字间的逗号</li>
 <li>删除其后不为数字的句号</li>
-<li>删除除句号、百分比、货币符号之外的 Unicode 类别以 M、S、P开头的字符
-<ul>
+<li>删除除句号、百分比、货币符号之外的 Unicode 类别以 M、S、P开头的字符<ul>
 <li>M：Miscellaneous Symbols，包含箭头、几何形状、星号、圆圈等，如➡、★、○ 等</li>
 <li>S：Symbols，包含货币符号、标点符号、数学符号、技术符号等，如$、%、℃ 等</li>
 <li>P：Punctuation，标点符号</li>
 </ul>
 </li>
-<li>将数字、货币转换为阿拉伯数字，如 Ten thousand dollars <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span> $10000</li>
+<li>将数字、货币转换为阿拉伯数字，如 Ten thousand dollars $\rightarrow$ $10000</li>
 <li>将英式拼写转换为美式拼写</li>
-<li>删除前/后不为数字的百分比、句号、货币符号</li>
+<li>删除前&#x2F;后不为数字的百分比、句号、货币符号</li>
 <li>将连续的 whitespace 替换为 1个空格</li>
 </ol>
-<h3 id="非英语">4.1.2.  非英语</h3>
-<ol>
+<h3 id="非英语">4.1.2. 非英语</h3><ol>
 <li>删除[]中的内容</li>
 <li>删除()中的内容</li>
 <li>将 NFKC-normalized 字符串中 Unicode 类别以 M、S、P 开头的字符替换为1个空格</li>
@@ -620,107 +531,91 @@ wav2vec 2.0 等无监督预训练的语音编码器，需要有监督训练解�
 <li>将连续的 whitespace 替换为 1个空格</li>
 <li>对于不以空格分隔单词的语种，每个 Unicode 字符间插入1个空格</li>
 </ol>
-<h2 id="英语语音识别">4.2.  英语语音识别</h2>
-<img src="https://note.youdao.com/yws/api/personal/file/WEBd35e737cea04cd547ac7bf9c27a2f70a?method=download&shareKey=8ff960ceb46e3ee800afe7f0f0cfecae" width="346">
+<h2 id="英语语音识别">4.2. 英语语音识别</h2><img src="https://note.youdao.com/yws/api/personal/file/WEBd35e737cea04cd547ac7bf9c27a2f70a?method=download&shareKey=8ff960ceb46e3ee800afe7f0f0cfecae" width="346">
+
 <ul>
 <li><font color="red">虽然在 LibriSpeech test-clean 上的 WER 高于 SOTA，但相较于在 LibriSpeech 上监督训练的模型，在其它测试集上的泛化性能更好。</font></li>
 </ul>
 <img src="https://note.youdao.com/yws/api/personal/file/WEB836ace73368a699aefd86ad561fadfd7?method=download&shareKey=5dc9e9a441ae3044b1319d39750e2934" width="912">
-<h2 id="多语种识别">4.3.  多语种识别</h2>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB849dfce200ed0c6e3d11466f25ca73d8?method=download&shareKey=987641e44832d417d9fefe85fe71cef4" width="408">
+
+<h2 id="多语种识别">4.3. 多语种识别</h2><img src="https://note.youdao.com/yws/api/personal/file/WEB849dfce200ed0c6e3d11466f25ca73d8?method=download&shareKey=987641e44832d417d9fefe85fe71cef4" width="408">
+
 <ul>
 <li>VoxPopuli 数据集上效果较差，可能由于它具有更多的监督数据，有利于微调。</li>
 </ul>
 <img src="https://note.youdao.com/yws/api/personal/file/WEB70ac88b46df672e6102bdd2b686554b3?method=download&shareKey=d23033c50f7911dad31a5f71d216021a" width="418">
+
 <ul>
 <li><font color="red">训练数据每增加16倍，WER 减半。</font>训练数据大多为印欧语系，中文（ZH）、韩语（KO）等语种与上述规律偏离较远，可能的原因：语系迁移、tokenizer、数据质量。</li>
 </ul>
-<h2 id="语音翻译">4.4.  语音翻译</h2>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB772cfc893a6086de48d06fa99f5d6062?method=download&shareKey=5716b9ec8d97207bc03856217ba4bd8a" width="409">
+<h2 id="语音翻译">4.4. 语音翻译</h2><img src="https://note.youdao.com/yws/api/personal/file/WEB772cfc893a6086de48d06fa99f5d6062?method=download&shareKey=5716b9ec8d97207bc03856217ba4bd8a" width="409">
+
 <ul>
-<li><font color="red"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mo>→</mo><mtext>en</mtext></mrow><annotation encoding="application/x-tex">x \rightarrow \text {en}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord text"><span class="mord">en</span></span></span></span></span> 翻译，在低资源语种上翻译效果显著提升，但在高资源语种上略差于 SOTA。</font></li>
+<li><font color="red">$x \rightarrow \text {en}$ 翻译，在低资源语种上翻译效果显著提升，但在高资源语种上略差于 SOTA。</font></li>
 <li>由于训练集创建时语种识别错误，导致部分英语音频转写任务被标记为翻译任务。</li>
 </ul>
-<h2 id="对噪声的鲁棒性">4.5.  对噪声的鲁棒性</h2>
-<img src="https://note.youdao.com/yws/api/personal/file/WEBf45f39c8413c859841e3dae7ef688dae?method=download&shareKey=e6777c38d08297ef607a589a1bf6ec85" width="414">
+<h2 id="对噪声的鲁棒性">4.5. 对噪声的鲁棒性</h2><img src="https://note.youdao.com/yws/api/personal/file/WEBf45f39c8413c859841e3dae7ef688dae?method=download&shareKey=e6777c38d08297ef607a589a1bf6ec85" width="414">
+
 <ul>
 <li><font color="red">在 LibriSpeech test-clean 上，高信噪比时，性能差于用 LibriSpeech 预训练或微调的模型，但在低信噪比时（如10dB pub 噪声），Whisper 性能较好。</font></li>
 </ul>
-<h2 id="长音频转写">4.6.  长音频转写</h2>
-<ul>
+<h2 id="长音频转写">4.6. 长音频转写</h2><ul>
 <li><font color="red">连续转写 30s 的片段，根据模型预测的时间戳来移动窗口。</font></li>
 <li>采用对数概率作为得分。从温度0开始，即始终选择最高概率的token。当生成 token 的平均对数概率低于 -1，或生成文本的 gzip 压缩率大于2.4时，将温度提高 0.2 直到 1.0，最终为 5 beams 的 beam search。当温度低于 0.5 时，将前一个窗口的转写文本作为上文输入。可以减少贪婪解码中更频繁出现的重复循环。</li>
 <li>结合 no-speech 概率阈值 0.6、平均对数概率阈值 -1，可以更可靠地检测没有语音的片段。</li>
-<li>约束第一个时间戳在 0～1s，避免模型忽略前几个词。<br>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB76755ca27d1951139ef4c367ac9656bb?method=download&shareKey=c5e47638f97e0a25399aca971e2852a9" width="392"></li>
+<li>约束第一个时间戳在 0～1s，避免模型忽略前几个词。<img src="https://note.youdao.com/yws/api/personal/file/WEB76755ca27d1951139ef4c367ac9656bb?method=download&shareKey=c5e47638f97e0a25399aca971e2852a9" width="392"></li>
 <li>在所有数据集上，均优于 SOTA 开源模型 NVIDIA STT Conformer-CTC Large model (Nemo)；在大部分数据集上，优于商业 ASR 系统（训练集可能包含这些公开测试集）。</li>
 </ul>
-<h2 id="与人类比较">4.7.  与人类比较</h2>
-<ul>
+<h2 id="与人类比较">4.7. 与人类比较</h2><ul>
 <li>由于歧义、不清晰的语音、label 错误等，每个数据集都有不同程度的错误。仅采用 WER 很难衡量还有多少改进空间。</li>
-<li>从 Kincaid46 数据集中挑选了25条音频，录音环境涵盖有/无脚本的广播、电话、VoIP 通话、会议。获得5份专业转写员的转写，其中4份完全由人工转写，1份提供了机器辅助转写。</li>
+<li>从 Kincaid46 数据集中挑选了25条音频，录音环境涵盖有&#x2F;无脚本的广播、电话、VoIP 通话、会议。获得5份专业转写员的转写，其中4份完全由人工转写，1份提供了机器辅助转写。</li>
 </ul>
 <img src="https://note.youdao.com/yws/api/personal/file/WEBaafd7b2add354903a7ef71e0cc969dbb?method=download&shareKey=173a38db52d391d654fec5057da63e62" width="380">
+
 <ul>
 <li>计算机辅助转写的 WER 最低。Whisper 的英语 ASR 性能接近人类水平，只比纯人工转写的 WER 差不到1个百分点。</li>
 </ul>
-<h2 id="语种识别">4.8.  语种识别</h2>
-<h2 id="vad">4.9.  VAD</h2>
-<h1 id="消融实验">5.  消融实验</h1>
-<h2 id="模型-数据规模">5.1.  模型、数据规模</h2>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB76db9ac4e5dc83608d5834e22c85f9c3?method=download&shareKey=321535b080bd0292a0690a1dcff41728" width="953">
+<h2 id="语种识别">4.8. 语种识别</h2><h2 id="VAD">4.9. VAD</h2><h1 id="消融实验">5. 消融实验</h1><h2 id="模型、数据规模">5.1. 模型、数据规模</h2><img src="https://note.youdao.com/yws/api/personal/file/WEB76db9ac4e5dc83608d5834e22c85f9c3?method=download&shareKey=321535b080bd0292a0690a1dcff41728" width="953">
+
 <ul>
 <li>随着模型大小的增加，英语语音识别的性能接近饱和，可能由于其已接近人类水平。多语种语音识别、语音翻译、语种识别的性能不断提高。</li>
 </ul>
 <img src="https://note.youdao.com/yws/api/personal/file/WEB8c5929fe495c4089b905cd581b9a0cd6?method=download&shareKey=dcaa4abc5367d7f32a7bd20e0e4085a3" width="387">
+
 <p>* Whisper medium</p>
 <ul>
-<li>
-<p>通过更长的训练时间、更大的模型，可以进一步提高性能。</p>
+<li><p>通过更长的训练时间、更大的模型，可以进一步提高性能。</p>
 </li>
-<li>
-<p><font color="green">其它语种、任务是否需要和英语 ASR 相当的数据量来达到最佳性能？</font></p>
+<li><p><font color="green">其它语种、任务是否需要和英语 ASR 相当的数据量来达到最佳性能？</font></p>
 </li>
-<li>
-<p>数据分布变化后，是否损伤英语 ASR 的性能？</p>
+<li><p>数据分布变化后，是否损伤英语 ASR 的性能？</p>
 </li>
-<li>
-<p>接近人类水平是否是模型的上限？</p>
+<li><p>接近人类水平是否是模型的上限？</p>
 </li>
-<li>
-<p>在当前数据集上，扩大模型容量的收益已接近饱和。继续增加英语 ASR 的数据量是否有意义？数据量增加后进一步扩大模型容量是否有收益？</p>
+<li><p>在当前数据集上，扩大模型容量的收益已接近饱和。继续增加英语 ASR 的数据量是否有意义？数据量增加后进一步扩大模型容量是否有收益？</p>
 </li>
 </ul>
-<h2 id="多任务-多语种迁移">5.2.  多任务、多语种迁移</h2>
-<img src="https://note.youdao.com/yws/api/personal/file/WEBc6e4ba8f86c64ac0c4f6822672788ab2?method=download&shareKey=23f20f11fb6137e67baa5297d501e93e" width="389">
+<h2 id="多任务、多语种迁移">5.2. 多任务、多语种迁移</h2><img src="https://note.youdao.com/yws/api/personal/file/WEBc6e4ba8f86c64ac0c4f6822672788ab2?method=download&shareKey=23f20f11fb6137e67baa5297d501e93e" width="389">
+
 <ul>
 <li><font color="red">相较于仅在英语 ASR 任务上训练的模型，相同的英语 ASR 训练计算量，采用多任务、多语种训练，小模型性能较差，但扩展到更大的模型时可以超越单一任务模型的性能，从其它任务中获得知识迁移正收益。</font></li>
 </ul>
-<h1 id="展望">6.  展望</h1>
-<ul>
+<h1 id="展望">6. 展望</h1><ul>
 <li><font color="red">存在的问题：陷入重复循环、不转写音频片段的前几个或后几个单词、输出与音频完全无关的文本等，特别是在长音频上。可能的改进方案：在高质量监督数据集上微调Whisper；强化学习。</font></li>
 <li>增加低资源语种的训练数据。</li>
 <li>微调。</li>
 <li>通过消融实验研究 encoder、decoder 分别的收益：比如训练无解码器的CTC模型、对比现有语音识别 encoder (如 wav2vec 2.0) + LM 的性能。</li>
 <li>添加无监督预训练或 self-teaching。</li>
 </ul>
-<h1 id="缺点">7.  缺点</h1>
-<ul>
+<h1 id="缺点">7. 缺点</h1><ul>
 <li>不支持流式</li>
 </ul>
-<h1 id="todo代码">8.  TODO：代码</h1>
-<ul>
-<li><font color="red">提示输出简体中文，而非繁体字</font><br>
-<code>whisper --language Chinese --model large audio.wav --initial_prompt &quot;以下是普通话的句子。&quot; # simplified</code></li>
-<li>huggingface
-<ul>
-<li><font color="green">时间戳预测<br>
-<code>return_timestamps=True # 句子级时间戳</code><br>
-<code>return_timestamps=word # 词级时间戳</code></font></li>
-<li>速度、内存优化
-<ul>
-<li>长音频转写：chunked 算法<br>
-Gandhi S, von Platen P, Rush A M. Distil-Whisper: Robust Knowledge Distillation via Large-Scale Pseudo Labelling[J]. arXiv preprint arXiv:2311.00430, 2023.</li>
+<h1 id="TODO：代码">8. TODO：代码</h1><ul>
+<li><font color="red">提示输出简体中文，而非繁体字</font><br><code>whisper --language Chinese --model large audio.wav --initial_prompt &quot;以下是普通话的句子。&quot;  # simplified</code></li>
+<li>huggingface<ul>
+<li><font color="green">时间戳预测<br><code>return_timestamps=True # 句子级时间戳</code><br><code>return_timestamps=word # 词级时间戳</code></font></li>
+<li>速度、内存优化<ul>
+<li>长音频转写：chunked 算法<br>Gandhi S, von Platen P, Rush A M. Distil-Whisper: Robust Knowledge Distillation via Large-Scale Pseudo Labelling[J]. arXiv preprint arXiv:2311.00430, 2023.</li>
 <li>flash_attention_2</li>
 <li>Torch Scale-Product-Attention (SDPA)</li>
 </ul>
@@ -729,10 +624,9 @@ Gandhi S, von Platen P, Rush A M. Distil-Whisper: Robust Knowledge Distillation 
 </ul>
 </li>
 </ul>
-<h1 id="其它">9.  其它</h1>
-<ul>
+<h1 id="其它">9. 其它</h1><ul>
 <li><a target="_blank" rel="noopener" href="https://github.com/openai/whisper">https://github.com/openai/whisper</a></li>
-<li>Radford A, Kim J W, Xu T, et al. Robust speech recognition via large-scale weak supervision[C]//International Conference on Machine Learning. PMLR, 2023: 28492-28518.</li>
+<li>Radford A, Kim J W, Xu T, et al. Robust speech recognition via large-scale weak supervision[C]&#x2F;&#x2F;International Conference on Machine Learning. PMLR, 2023: 28492-28518.</li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
@@ -783,8 +677,6 @@ Gandhi S, von Platen P, Rush A M. Distil-Whisper: Robust Knowledge Distillation 
 
     
 
-    
-
     <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
@@ -792,9 +684,11 @@ Gandhi S, von Platen P, Rush A M. Distil-Whisper: Robust Knowledge Distillation 
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <div class="card-title">
-                    <a href="/blog/yu-yin/yu-yin-dui-hua/dlm/"> DLM</a>
-                </div>
+                <a href="/blog/yu-yin/yu-yin-dui-hua/dlm/">
+                    <div class="card-content">
+                        <span class="card-title">DLM</span>
+                    </div>
+                </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
@@ -804,6 +698,7 @@ Gandhi S, von Platen P, Rush A M. Distil-Whisper: Robust Knowledge Distillation 
                     <div class="publish-info">
                         <span class="publish-date">
                             <i class="far fa-clock fa-fw icon-date"></i>2024-05-28
+                            <i class="far fa-edit fa-fw icon-date"></i>2024-05-28
                         </span>
                         <span class="publish-author">
                             
@@ -831,9 +726,11 @@ Gandhi S, von Platen P, Rush A M. Distil-Whisper: Robust Knowledge Distillation 
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <div class="card-title">
-                    <a href="/blog/llm/duo-mo-tai/lun-wen/gpt-4o-li-hong-yi/"> 李宏毅老师 《GPT-4o 背后可能的语音技术猜测》</a>
-                </div>
+                <a href="/blog/llm/duo-mo-tai/lun-wen/gpt-4o-li-hong-yi/">
+                    <div class="card-content">
+                        <span class="card-title">李宏毅老师 《GPT-4o 背后可能的语音技术猜测》</span>
+                    </div>
+                </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
@@ -843,6 +740,7 @@ Gandhi S, von Platen P, Rush A M. Distil-Whisper: Robust Knowledge Distillation 
                     <div class="publish-info">
                             <span class="publish-date">
                                 <i class="far fa-clock fa-fw icon-date"></i>2024-05-23
+                                <i class="far fa-edit fa-fw icon-date"></i>2024-07-01
                             </span>
                         <span class="publish-author">
                             
@@ -915,6 +813,11 @@ Gandhi S, von Platen P, Rush A M. Distil-Whisper: Robust Knowledge Distillation 
 <!-- 代码块功能依赖 -->
 <script type="text/javascript" src="/blog/libs/codeBlock/codeBlockFuction.js"></script>
 
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/blog/libs/prism/prism.min.js"></script>
+
+
 <!-- 代码语言 -->
 
 <script type="text/javascript" src="/blog/libs/codeBlock/codeLang.js"></script>
@@ -928,6 +831,7 @@ Gandhi S, von Platen P, Rush A M. Distil-Whisper: Robust Knowledge Distillation 
 <!-- 代码块收缩 -->
 
 <script type="text/javascript" src="/blog/libs/codeBlock/codeShrink.js"></script>
+
 
 
     </div>
@@ -1016,7 +920,7 @@ Gandhi S, von Platen P, Rush A M. Distil-Whisper: Robust Knowledge Distillation 
 </main>
 
 
-<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script>
     MathJax.Hub.Config({
         tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
@@ -1092,6 +996,7 @@ Gandhi S, von Platen P, Rush A M. Distil-Whisper: Robust Knowledge Distillation 
             <a href="/blog/about" target="_blank">nanyang</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
             <br>
             
             
@@ -1243,6 +1148,30 @@ $(function () {
 });
 </script>
 
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
     <!-- 回到顶部按钮 -->
 <div id="backTop" class="top-scroll">
     <a class="btn-floating btn-large waves-effect waves-light" href="#!">
@@ -1266,6 +1195,8 @@ $(function () {
             mermaid.initialize({theme: 'neutral'});
           }
         </script>
+    
+
     
 
     
@@ -1301,6 +1232,21 @@ $(function () {
     <script src="/blog/libs/instantpage/instantpage.js" type="module"></script>
     
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 
 </html>

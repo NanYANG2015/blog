@@ -5,9 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="英语常见发音现象, 梦园">
-    <meta name="description" content="1.  送气 -&amp;gt; 不送气（浊化）
-重读音节中，/s/+清辅音/t/ /p/ /k/ /tr/+元音，清辅音发音为对应的浊辅音/d/ /b/ /g/ /dr/，如student、speak、sky、strict 
-讲解及示例见：htt">
+    <meta name="description" content="1. 送气 -&amp;gt; 不送气（浊化）重读音节中，&amp;#x2F;s&amp;#x2F;+清辅音&amp;#x2F;t&amp;#x2F; &amp;#x2F;p&amp;#x2F; &amp;#x2F;k&amp;#x2F; &amp;#x2F;tr&amp;#x2F;+元音，清辅音发音为对应的浊辅音&amp;#x2F;">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,18 +17,36 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    
-
     <title>英语常见发音现象 | 梦园</title>
     <link rel="icon" type="image/png" href="/blog/favicon.png">
+    
 
-    <link rel="stylesheet" type="text/css" href="/blog/libs/awesome/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="/blog/libs/materialize/materialize.min.css">
-    <link rel="stylesheet" type="text/css" href="/blog/libs/aos/aos.css">
-    <link rel="stylesheet" type="text/css" href="/blog/libs/animate/animate.min.css">
-    <link rel="stylesheet" type="text/css" href="/blog/libs/lightGallery/css/lightgallery.min.css">
-    <link rel="stylesheet" type="text/css" href="/blog/css/matery.css">
-    <link rel="stylesheet" type="text/css" href="/blog/css/my.css">
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/blog/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/blog/css/my.css">
+<link rel="stylesheet" type="text/css" href="/blog/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/blog/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/blog/css/post.css">
+
+
+
+
+    
+
+
 
     <script src="/blog/libs/jquery/jquery-3.6.0.min.js"></script>
 
@@ -126,6 +142,11 @@
       <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
     </a>
   </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
 </ul>
 
 
@@ -180,9 +201,9 @@
               
                 <li>
 
-                  <a href="/blog/about " style="margin-left:50px">
+                  <a href="/blog/about " style="margin-left:75px">
 				  
-				   <i class="fa fas fa-user-circle" style="position: absolute;left:28px" ></i>
+				   <i class="fa fas fa-user-circle" style="position: absolute;left:50px" ></i>
 			      
 		          <span>我</span>
                   </a>
@@ -190,9 +211,9 @@
               
                 <li>
 
-                  <a href="/blog/words " style="margin-left:50px">
+                  <a href="/blog/words " style="margin-left:75px">
 				  
-				   <i class="fa fas fa-pen" style="position: absolute;left:28px" ></i>
+				   <i class="fa fas fa-pen" style="position: absolute;left:50px" ></i>
 			      
 		          <span>文字</span>
                   </a>
@@ -200,9 +221,9 @@
               
                 <li>
 
-                  <a href="/blog/books " style="margin-left:50px">
+                  <a href="/blog/books " style="margin-left:75px">
 				  
-				   <i class="fa fas fa-book" style="position: absolute;left:28px" ></i>
+				   <i class="fa fas fa-book" style="position: absolute;left:50px" ></i>
 			      
 		          <span>书</span>
                   </a>
@@ -210,9 +231,9 @@
               
                 <li>
 
-                  <a href="/blog/videos " style="margin-left:50px">
+                  <a href="/blog/videos " style="margin-left:75px">
 				  
-				   <i class="fa fas fa-film" style="position: absolute;left:28px" ></i>
+				   <i class="fa fas fa-film" style="position: absolute;left:50px" ></i>
 			      
 		          <span>视频</span>
                   </a>
@@ -252,7 +273,7 @@
 <div class="bg-cover pd-header about-cover">
     <div class="container">
     <div class="row">
-    <div class="col s10 offset-s1 m8 offset-m2 l8">
+    <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l1">
         <div class="brand">
             <div class="title">
                 
@@ -271,96 +292,10 @@
 <main class="post-container content">
 
     
-    <link rel="stylesheet" href="/blog/libs/tocbot/tocbot.css">
-<style>
-    #articleContent h1::before,
-    #articleContent h2::before,
-    #articleContent h3::before,
-    #articleContent h4::before,
-    #articleContent h5::before,
-    #articleContent h6::before {
-        display: block;
-        content: " ";
-        height: 100px;
-        margin-top: -100px;
-        visibility: hidden;
-    }
-
-    #articleContent :focus {
-        outline: none;
-    }
-
-    .toc-fixed {
-        position: fixed;
-        top: 64px;
-    }
-
-    .toc-widget {
-        width: 345px;
-        padding-left: 20px;
-    }
-
-    .toc-widget .toc-title {
-        padding: 35px 0 15px 17px;
-        font-size: 1.5rem;
-        font-weight: bold;
-        line-height: 1.5rem;
-    }
-
-    .toc-widget ol {
-        padding: 0;
-        list-style: none;
-    }
-
+    <style>
+    /* 随视窗调整大小、滚动 */
     #toc-content {
         height: calc(100vh - 200px);
-        overflow: scroll;
-    }
-
-    #toc-content ol {
-        padding-left: 10px;
-    }
-
-    #toc-content ol li {
-        padding-left: 10px;
-    }
-
-    #toc-content .toc-link:hover {
-        color: #42b983;
-        font-weight: 700;
-        text-decoration: underline;
-    }
-
-    #toc-content .toc-link::before {
-        background-color: transparent;
-        max-height: 25px;
-
-        position: absolute;
-        right: 23.5vw;
-        display: block;
-    }
-
-    #toc-content .is-active-link {
-        color: #42b983;
-    }
-
-    #floating-toc-btn {
-        position: fixed;
-        right: 15px;
-        bottom: 76px;
-        padding-top: 15px;
-        margin-bottom: 0;
-        z-index: 998;
-    }
-
-    #floating-toc-btn .btn-floating {
-        width: 48px;
-        height: 48px;
-    }
-
-    #floating-toc-btn .btn-floating i {
-        line-height: 48px;
-        font-size: 1.4rem;
     }
 </style>
 <div class="row">
@@ -381,7 +316,7 @@
                 </div>
             </div>
 
-            <div class="row tag-cate">
+            <div class="tag-cate">
                 <div class="right-align">
                     
                     <div class="post-cate">
@@ -426,96 +361,80 @@
 
         
         <!-- 是否加载使用自带的 prismjs. -->
-        <link rel="stylesheet" href="/blog/libs/prism/prism.css">
+        <link rel="stylesheet" href="/blog/libs/prism/prism.min.css">
         
 
         
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="送气-不送气浊化">1.  送气 -&gt; 不送气（浊化）</h1>
-<p>重读音节中，/s/+清辅音/t/ /p/ /k/ /tr/+元音，清辅音发音为对应的浊辅音/d/ /b/ /g/ /dr/，如student、speak、sky、strict <br><br>
-讲解及示例见：<a target="_blank" rel="noopener" href="https://www.yingyutu.com/aspirated">https://www.yingyutu.com/aspirated</a></p>
-<h1 id="闪音">2.  闪音</h1>
-<p>美式英语两个元音之间的/t/发为[ɾ]，注意不是/d/，如city、not at all <br><br>
-讲解及示例见：<a target="_blank" rel="noopener" href="https://www.yingyutu.com/flap">https://www.yingyutu.com/flap</a></p>
-<h1 id="无声除阻">3.  无声除阻</h1>
-<p>爆破音是指发音器官在口腔中形成阻碍，然后气流冲破阻碍而发出的音，也被称为塞音。发这些音时有三个阶段：成阻（发音部位紧闭）、持阻（让气流积聚，形成压力）、除阻（除去气流的阻碍）。当一个塞音紧跟一个需成阻音时，这个塞音会变弱许多，不完全发出来。这是因为前者的除阻后跟后者的成阻，在快速语流中，这样不方便。所以前一个塞音并不释放气流，只做动作，时间上仍然保留原时间。</p>
+                <h1 id="送气-gt-不送气（浊化）">1. 送气 -&gt; 不送气（浊化）</h1><p>重读音节中，&#x2F;s&#x2F;+清辅音&#x2F;t&#x2F; &#x2F;p&#x2F; &#x2F;k&#x2F; &#x2F;tr&#x2F;+元音，清辅音发音为对应的浊辅音&#x2F;d&#x2F; &#x2F;b&#x2F; &#x2F;g&#x2F; &#x2F;dr&#x2F;，如student、speak、sky、strict <br><br>讲解及示例见：<a target="_blank" rel="noopener" href="https://www.yingyutu.com/aspirated">https://www.yingyutu.com/aspirated</a></p>
+<h1 id="闪音">2. 闪音</h1><p>美式英语两个元音之间的&#x2F;t&#x2F;发为[ɾ]，注意不是&#x2F;d&#x2F;，如city、not at all <br><br>讲解及示例见：<a target="_blank" rel="noopener" href="https://www.yingyutu.com/flap">https://www.yingyutu.com/flap</a></p>
+<h1 id="无声除阻">3. 无声除阻</h1><p>爆破音是指发音器官在口腔中形成阻碍，然后气流冲破阻碍而发出的音，也被称为塞音。发这些音时有三个阶段：成阻（发音部位紧闭）、持阻（让气流积聚，形成压力）、除阻（除去气流的阻碍）。当一个塞音紧跟一个需成阻音时，这个塞音会变弱许多，不完全发出来。这是因为前者的除阻后跟后者的成阻，在快速语流中，这样不方便。所以前一个塞音并不释放气流，只做动作，时间上仍然保留原时间。</p>
 <ul>
-<li>爆破音（/p, b, t, d, k, ɡ/）+爆破音，如doctor, good boy</li>
-<li>爆破音+破擦音（/tʃ, dʒ, tr, dr/），如picture, good job</li>
-<li>爆破音+摩擦音（/f, v, s, z, θ, ð, ʃ, ʒ, r, h/），如eighth /eɪ(t)θ/、keep silent /kiː§/</li>
+<li>爆破音（&#x2F;p, b, t, d, k, ɡ&#x2F;）+爆破音，如doctor, good boy</li>
+<li>爆破音+破擦音（&#x2F;tʃ, dʒ, tr, dr&#x2F;），如picture, good job</li>
+<li>爆破音+摩擦音（&#x2F;f, v, s, z, θ, ð, ʃ, ʒ, r, h&#x2F;），如eighth &#x2F;eɪ(t)θ&#x2F;、keep silent &#x2F;kiː(p)&#x2F;</li>
 </ul>
 <p>讲解及示例见：<a target="_blank" rel="noopener" href="https://www.yingyutu.com/unreleased">https://www.yingyutu.com/unreleased</a></p>
-<h1 id="喉塞音">4.  喉塞音</h1>
-<p>喉塞音是一种由声门关闭引起的气流瞬时中断而成的塞音。英式英语和美式英语中，/t/发为/ʔ/，如button</p>
+<h1 id="喉塞音">4. 喉塞音</h1><p>喉塞音是一种由声门关闭引起的气流瞬时中断而成的塞音。英式英语和美式英语中，&#x2F;t&#x2F;发为&#x2F;ʔ&#x2F;，如button</p>
 <blockquote>
-<p>The /t/ is pronounced as a glottal stop /ʔ/ (the sound in the middle of the word ‘uh-oh’) when it is between a vowel, /n/, or /r/ (including all r-controlled vowels) and followed by an /n/(including a syllabic /n/), /m/, or non-syllabic /l/.</p>
+<p>The &#x2F;t&#x2F; is pronounced as a glottal stop &#x2F;ʔ&#x2F; (the sound in the middle of the word ‘uh-oh’) when it is between a vowel, &#x2F;n&#x2F;, or &#x2F;r&#x2F; (including all r-controlled vowels) and followed by an &#x2F;n&#x2F;(including a syllabic &#x2F;n&#x2F;), &#x2F;m&#x2F;, or non-syllabic &#x2F;l&#x2F;.</p>
 </blockquote>
 <p>讲解及示例见：<a target="_blank" rel="noopener" href="https://www.yingyutu.com/glottal">https://www.yingyutu.com/glottal</a></p>
-<h1 id="连读">5.  连读</h1>
-<p>linking /r/：英音中，单词末尾的/r/一般不发音，但当其后的单词以元音开头时，/r/发音且与元音连读。如for ever /fəˈrevə/，here are/hɪərə/</p>
-<h1 id="同化">6.  同化</h1>
-<p>连续语流，若发音较快、较随便，有些音受前后音的影响，变得与之相近或相同。同化后，发音步骤简化，更省力。</p>
+<h1 id="连读">5. 连读</h1><p>linking &#x2F;r&#x2F;：英音中，单词末尾的&#x2F;r&#x2F;一般不发音，但当其后的单词以元音开头时，&#x2F;r&#x2F;发音且与元音连读。如for ever &#x2F;fəˈrevə&#x2F;，here are&#x2F;hɪərə&#x2F;</p>
+<h1 id="同化">6. 同化</h1><p>连续语流，若发音较快、较随便，有些音受前后音的影响，变得与之相近或相同。同化后，发音步骤简化，更省力。</p>
 <ul>
-<li>融合同化
-<ul>
-<li>/t/+/j/→/tʃ/，如Nice to meet you.</li>
-<li>/d/+/j/→/dʒ/，如Did you do it?</li>
-<li>/s/+/j/→/ʃ/, 如God bless you.</li>
-<li>/z/+/j/→/ʒ/, 如As you wish.</li>
-<li>/g/+/j/→/dʒ/，如I beg your pardon.</li>
+<li>融合同化<ul>
+<li>&#x2F;t&#x2F;+&#x2F;j&#x2F;→&#x2F;tʃ&#x2F;，如Nice to meet you.</li>
+<li>&#x2F;d&#x2F;+&#x2F;j&#x2F;→&#x2F;dʒ&#x2F;，如Did you do it?</li>
+<li>&#x2F;s&#x2F;+&#x2F;j&#x2F;→&#x2F;ʃ&#x2F;, 如God bless you.</li>
+<li>&#x2F;z&#x2F;+&#x2F;j&#x2F;→&#x2F;ʒ&#x2F;, 如As you wish.</li>
+<li>&#x2F;g&#x2F;+&#x2F;j&#x2F;→&#x2F;dʒ&#x2F;，如I beg your pardon.</li>
 </ul>
 </li>
-<li>前一个音受后一个音影响，发音部位变化
-<ul>
-<li>/t/+/p, b, m/，/t/→/p/，如that boy /ðæp bɔɪ/</li>
-<li>/t/+/k, g/，/t/→/k/，如that girl /ðæk ɡɜːl/</li>
-<li>/d/+/p, b, m/，/d/→/b/，如good-bye</li>
-<li>/d/+/k, g/，/d/→/g/，如good guy</li>
-<li>/n/+/p, b, m/，/n/→/m/，如ten miles</li>
-<li>/n/+/k, g/，/n/→/ŋ/，如in general</li>
-<li>/nt/+/p, b, m/，/nt/→/mp/，如don’t mind</li>
-<li>/nt/+/k, g/，/nt/→/ŋk/，如don’t go</li>
-<li>/nd/+/p, b, m/，/nd/→/mb/，如second place</li>
-<li>/nd/+/k, g/，/nd/→/ŋg/，如second class</li>
-<li>/s/+/ʃ, j/，/s/→/ʃ/，如this ship, this year</li>
-<li>/z/+/ʃ, j/，/z/→/ʒ/，如these years</li>
+<li>前一个音受后一个音影响，发音部位变化<ul>
+<li>&#x2F;t&#x2F;+&#x2F;p, b, m&#x2F;，&#x2F;t&#x2F;→&#x2F;p&#x2F;，如that boy &#x2F;ðæp bɔɪ&#x2F;</li>
+<li>&#x2F;t&#x2F;+&#x2F;k, g&#x2F;，&#x2F;t&#x2F;→&#x2F;k&#x2F;，如that girl &#x2F;ðæk ɡɜːl&#x2F;</li>
+<li>&#x2F;d&#x2F;+&#x2F;p, b, m&#x2F;，&#x2F;d&#x2F;→&#x2F;b&#x2F;，如good-bye</li>
+<li>&#x2F;d&#x2F;+&#x2F;k, g&#x2F;，&#x2F;d&#x2F;→&#x2F;g&#x2F;，如good guy</li>
+<li>&#x2F;n&#x2F;+&#x2F;p, b, m&#x2F;，&#x2F;n&#x2F;→&#x2F;m&#x2F;，如ten miles</li>
+<li>&#x2F;n&#x2F;+&#x2F;k, g&#x2F;，&#x2F;n&#x2F;→&#x2F;ŋ&#x2F;，如in general</li>
+<li>&#x2F;nt&#x2F;+&#x2F;p, b, m&#x2F;，&#x2F;nt&#x2F;→&#x2F;mp&#x2F;，如don’t mind</li>
+<li>&#x2F;nt&#x2F;+&#x2F;k, g&#x2F;，&#x2F;nt&#x2F;→&#x2F;ŋk&#x2F;，如don’t go</li>
+<li>&#x2F;nd&#x2F;+&#x2F;p, b, m&#x2F;，&#x2F;nd&#x2F;→&#x2F;mb&#x2F;，如second place</li>
+<li>&#x2F;nd&#x2F;+&#x2F;k, g&#x2F;，&#x2F;nd&#x2F;→&#x2F;ŋg&#x2F;，如second class</li>
+<li>&#x2F;s&#x2F;+&#x2F;ʃ, j&#x2F;，&#x2F;s&#x2F;→&#x2F;ʃ&#x2F;，如this ship, this year</li>
+<li>&#x2F;z&#x2F;+&#x2F;ʃ, j&#x2F;，&#x2F;z&#x2F;→&#x2F;ʒ&#x2F;，如these years</li>
 </ul>
 </li>
-<li>词末浊辅音+词首清辅音，词末浊辅音清化
-<ul>
-<li>/z/→/s/，如has to, lose face</li>
-<li>/v/→/f/，如of course, have to</li>
-<li>/ð/→/θ/，如with pleasure</li>
+<li>词末浊辅音+词首清辅音，词末浊辅音清化<ul>
+<li>&#x2F;z&#x2F;→&#x2F;s&#x2F;，如has to, lose face</li>
+<li>&#x2F;v&#x2F;→&#x2F;f&#x2F;，如of course, have to</li>
+<li>&#x2F;ð&#x2F;→&#x2F;θ&#x2F;，如with pleasure</li>
 </ul>
 </li>
 </ul>
-<h1 id="加音">7.  加音</h1>
-<p>前一单词以元音结尾，后一单词以元音开头时</p>
+<h1 id="加音">7. 加音</h1><p>前一单词以元音结尾，后一单词以元音开头时</p>
 <ul>
-<li>/ə/, /ɪə/, /ɑː/, /ɔː/ +元音，加/r/，如China and India, the idea of, pa and ma, law and order</li>
-<li>/ɪ/, /iː/, /eɪ/, /aɪ/, /ɔɪ/ +元音，加/j/，如I am</li>
-<li>/uː/, /ʊ/, /əʊ/, /aʊ/ +元音，加/w/，如who is</li>
+<li>&#x2F;ə&#x2F;, &#x2F;ɪə&#x2F;, &#x2F;ɑː&#x2F;, &#x2F;ɔː&#x2F; +元音，加&#x2F;r&#x2F;，如China and India, the idea of, pa and ma, law and order</li>
+<li>&#x2F;ɪ&#x2F;, &#x2F;iː&#x2F;, &#x2F;eɪ&#x2F;, &#x2F;aɪ&#x2F;, &#x2F;ɔɪ&#x2F; +元音，加&#x2F;j&#x2F;，如I am</li>
+<li>&#x2F;uː&#x2F;, &#x2F;ʊ&#x2F;, &#x2F;əʊ&#x2F;, &#x2F;aʊ&#x2F; +元音，加&#x2F;w&#x2F;，如who is</li>
 </ul>
-<h1 id="省音">8.  省音</h1>
-<ul>
-<li>单词内正确省音，如：
-<ul>
-<li>similar /sɪmələ®/，different /'dɪf(ə)r(ə)nt/</li>
-<li>成音节：单词最后一个音节为辅音+/ə/+/l/或/n/，如trouble /ˈtrʌb(ə)l/、season /ˈsiːz(ə)n/</li>
-<li>/t(ə)ri/：单词末尾为tary、tery或tory时，如secretary /ˈsekrət(ə)ri/</li>
+<h1 id="省音">8. 省音</h1><ul>
+<li>单词内正确省音，如：<ul>
+<li>similar &#x2F;sɪmələ(r)&#x2F;，different &#x2F;‘dɪf(ə)r(ə)nt&#x2F;</li>
+<li>成音节：单词最后一个音节为辅音+&#x2F;ə&#x2F;+&#x2F;l&#x2F;或&#x2F;n&#x2F;，如trouble &#x2F;ˈtrʌb(ə)l&#x2F;、season &#x2F;ˈsiːz(ə)n&#x2F;</li>
+<li>&#x2F;t(ə)ri&#x2F;：单词末尾为tary、tery或tory时，如secretary &#x2F;ˈsekrət(ə)ri&#x2F;</li>
 </ul>
 </li>
-<li>/t/、/d/前后为辅音（其后辅音非/h/）时省音（/d/后辅音为/w/, /d/, /r/或/s/时，不省音），如next day /neks deɪ/、you and me</li>
+<li>&#x2F;t&#x2F;、&#x2F;d&#x2F;前后为辅音（其后辅音非&#x2F;h&#x2F;）时省音（&#x2F;d&#x2F;后辅音为&#x2F;w&#x2F;, &#x2F;d&#x2F;, &#x2F;r&#x2F;或&#x2F;s&#x2F;时，不省音），如next day &#x2F;neks deɪ&#x2F;、you and me</li>
 <li>h−dropping 常见于he, him, her, his, have, who，如get him, tell her</li>
-<li>/v/后跟辅音，如a lot of time /ə lɒt ə taɪm/, give me that</li>
+<li>&#x2F;v&#x2F;后跟辅音，如a lot of time &#x2F;ə lɒt ə taɪm&#x2F;, give me that</li>
 <li>词尾辅音+词首同一辅音，只读一次，如got to、want to、some more</li>
 </ul>
-<h1 id="缩读">9.  缩读</h1>
-<p>如 I am=I’m, is, are, not, have, has, had, will, shall</p>
-<h1 id="弱读">10.  弱读</h1>
-<p>元音常弱化为/ə/，如</p>
+<h1 id="缩读">9. 缩读</h1><p>如 I am&#x3D;I’m, is, are, not, have, has, had, will, shall</p>
+<h1 id="弱读">10. 弱读</h1><p>元音常弱化为&#x2F;ə&#x2F;，如</p>
 <table>
 <thead>
 <tr>
@@ -525,49 +444,41 @@
 <th>示例</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>as</td>
-<td>/æz/</td>
-<td>/əz/</td>
+<td>&#x2F;æz&#x2F;</td>
+<td>&#x2F;əz&#x2F;</td>
 <td></td>
 </tr>
 <tr>
 <td>and</td>
-<td>/ænd/</td>
-<td>/ənd/ /ən/ /n/</td>
-<td>you and/n/ me</td>
+<td>&#x2F;ænd&#x2F;</td>
+<td>&#x2F;ənd&#x2F; &#x2F;ən&#x2F; &#x2F;n&#x2F;</td>
+<td>you and&#x2F;n&#x2F; me</td>
 </tr>
-</tbody>
-</table>
-<h1 id="重读">11.  重读</h1>
-<ul>
+</tbody></table>
+<h1 id="重读">11. 重读</h1><ul>
 <li>以下词类一般重读：名词、实义动词、形容词、副词等；</li>
 <li>以下词类一般不重读：代词、冠词、介词、连词、情态动词、助动词等</li>
 </ul>
-<h1 id="升降调">12.  升降调</h1>
-<ul>
-<li>
-<p>升调：一般和反义疑问句尾、选择疑问句<mark>第一个选项后</mark></p>
-<p>如：Is he tall ↗ or short?</p>
+<h1 id="升降调">12. 升降调</h1><ul>
+<li><p>升调：一般和反义疑问句尾、选择疑问句&#x3D;&#x3D;第一个选项后&#x3D;&#x3D;</p>
+<p>如：Is he tall &amp;nearrow; or short?</p>
 </li>
-<li>
-<p>降调：选择疑问句、特殊疑问句、祈使句、感叹句、陈述句 句尾</p>
-<p>如：Is he tall or short? ↘</p>
-<p>Don’t open the window. ↘</p>
+<li><p>降调：选择疑问句、特殊疑问句、祈使句、感叹句、陈述句 句尾</p>
+<p>如：Is he tall or short? &amp;searrow;</p>
+<p>Don’t open the window. &amp;searrow;</p>
 </li>
-<li>
-<p>长句语调：并列的词，and前升，and后降</p>
-<p>如：I’ve decided to stay away from fried food ↗ and soft drinks. ↘</p>
+<li><p>长句语调：并列的词，and前升，and后降</p>
+<p>如：I’ve decided to stay away from fried food &amp;nearrow; and soft drinks. &amp;searrow;</p>
 </li>
 </ul>
-<h1 id="参考资料">13.  参考资料</h1>
-<ul>
+<h1 id="参考资料">13. 参考资料</h1><ul>
 <li>同化、加音、弱读 王式仁. 英语标准发音教程[M]. 高等教育出版社, 2012</li>
 <li>浊化、失去爆破、缩读 刘金龙, 高莉敏.《零基础从头开始学音标》[M]. 华东理工大学, 2018</li>
 <li>省音 《Features of connected speech》 <a target="_blank" rel="noopener" href="https://mandradey.wixsite.com/connectedspeech">https://mandradey.wixsite.com/connectedspeech</a></li>
 <li><a target="_blank" rel="noopener" href="https://tristone13th.netlify.app/2021/02/09/%E8%8B%B1%E8%AF%AD%E8%AF%AD%E9%9F%B3%E6%8A%80%E5%B7%A7.html">https://tristone13th.netlify.app/2021/02/09/英语语音技巧.html</a></li>
-<li>重读、升降调 <a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzIyNDI3MTIxNg==&amp;mid=2651145729&amp;idx=1&amp;sn=daf3381b9b3f9af2c8f95e33f2978527&amp;chksm=f3e0681ec497e1087ac8809d96df38293203ef0ed91552da594e67a1aed85b4e7771ed37cb35&amp;token=341174366&amp;lang=zh_CN#rd">讯飞易听说 广东省梅州市高考英语听说考试解读及备考策略分享</a></li>
+<li>重读、升降调 <a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzIyNDI3MTIxNg==&mid=2651145729&idx=1&sn=daf3381b9b3f9af2c8f95e33f2978527&chksm=f3e0681ec497e1087ac8809d96df38293203ef0ed91552da594e67a1aed85b4e7771ed37cb35&token=341174366&lang=zh_CN#rd">讯飞易听说 广东省梅州市高考英语听说考试解读及备考策略分享</a></li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
@@ -618,8 +529,6 @@
 
     
 
-    
-
     <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
@@ -627,9 +536,11 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <div class="card-title">
-                    <a href="/blog/yu-yin/yu-yin-xue/yi-hun-yao-fa-yin/"> 易混淆发音</a>
-                </div>
+                <a href="/blog/yu-yin/yu-yin-xue/yi-hun-yao-fa-yin/">
+                    <div class="card-content">
+                        <span class="card-title">易混淆发音</span>
+                    </div>
+                </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
@@ -639,6 +550,7 @@
                     <div class="publish-info">
                         <span class="publish-date">
                             <i class="far fa-clock fa-fw icon-date"></i>2022-10-20
+                            <i class="far fa-edit fa-fw icon-date"></i>2022-10-20
                         </span>
                         <span class="publish-author">
                             
@@ -666,9 +578,11 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <div class="card-title">
-                    <a href="/blog/yu-yin/gong-ju-bao/wenet/dai-ma/"> WeNet代码</a>
-                </div>
+                <a href="/blog/yu-yin/gong-ju-bao/wenet/dai-ma/">
+                    <div class="card-content">
+                        <span class="card-title">WeNet代码</span>
+                    </div>
+                </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
@@ -678,6 +592,7 @@
                     <div class="publish-info">
                             <span class="publish-date">
                                 <i class="far fa-clock fa-fw icon-date"></i>2022-08-12
+                                <i class="far fa-edit fa-fw icon-date"></i>2022-08-22
                             </span>
                         <span class="publish-author">
                             
@@ -750,6 +665,11 @@
 <!-- 代码块功能依赖 -->
 <script type="text/javascript" src="/blog/libs/codeBlock/codeBlockFuction.js"></script>
 
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/blog/libs/prism/prism.min.js"></script>
+
+
 <!-- 代码语言 -->
 
 <script type="text/javascript" src="/blog/libs/codeBlock/codeLang.js"></script>
@@ -763,6 +683,7 @@
 <!-- 代码块收缩 -->
 
 <script type="text/javascript" src="/blog/libs/codeBlock/codeShrink.js"></script>
+
 
 
     </div>
@@ -920,6 +841,7 @@
             <a href="/blog/about" target="_blank">nanyang</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
             <br>
             
             
@@ -1071,6 +993,30 @@ $(function () {
 });
 </script>
 
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
     <!-- 回到顶部按钮 -->
 <div id="backTop" class="top-scroll">
     <a class="btn-floating btn-large waves-effect waves-light" href="#!">
@@ -1094,6 +1040,8 @@ $(function () {
             mermaid.initialize({theme: 'neutral'});
           }
         </script>
+    
+
     
 
     
@@ -1129,6 +1077,21 @@ $(function () {
     <script src="/blog/libs/instantpage/instantpage.js" type="module"></script>
     
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 
 </html>

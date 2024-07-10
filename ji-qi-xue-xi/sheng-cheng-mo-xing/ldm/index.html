@@ -6,10 +6,9 @@
     <meta charset="utf-8">
     <meta name="keywords" content="LDM, 梦园">
     <meta name="description" content="
+相较于原始图像&amp;#x2F;波形&amp;#x2F;频谱，autoencoder 学习 latent 表示，
 
-相较于原始图像/波形/频谱，autoencoder 学习 latent 表示，
-
-忽略了不可感知的细节，保留了必要的语义信息。对于 likelihood-based models（如 diffusion 模型），由于其 mode-cov">
+忽略了不可感知的细节，保留了必要的语义信息。对于 likelihood-based models（如 diffusion 模型），由于其">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -21,18 +20,36 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    
-
     <title>LDM | 梦园</title>
     <link rel="icon" type="image/png" href="/blog/favicon.png">
+    
 
-    <link rel="stylesheet" type="text/css" href="/blog/libs/awesome/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="/blog/libs/materialize/materialize.min.css">
-    <link rel="stylesheet" type="text/css" href="/blog/libs/aos/aos.css">
-    <link rel="stylesheet" type="text/css" href="/blog/libs/animate/animate.min.css">
-    <link rel="stylesheet" type="text/css" href="/blog/libs/lightGallery/css/lightgallery.min.css">
-    <link rel="stylesheet" type="text/css" href="/blog/css/matery.css">
-    <link rel="stylesheet" type="text/css" href="/blog/css/my.css">
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/blog/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/blog/css/my.css">
+<link rel="stylesheet" type="text/css" href="/blog/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/blog/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/blog/css/post.css">
+
+
+
+
+    
+
+
 
     <script src="/blog/libs/jquery/jquery-3.6.0.min.js"></script>
 
@@ -128,6 +145,11 @@
       <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
     </a>
   </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
 </ul>
 
 
@@ -182,9 +204,9 @@
               
                 <li>
 
-                  <a href="/blog/about " style="margin-left:50px">
+                  <a href="/blog/about " style="margin-left:75px">
 				  
-				   <i class="fa fas fa-user-circle" style="position: absolute;left:28px" ></i>
+				   <i class="fa fas fa-user-circle" style="position: absolute;left:50px" ></i>
 			      
 		          <span>我</span>
                   </a>
@@ -192,9 +214,9 @@
               
                 <li>
 
-                  <a href="/blog/words " style="margin-left:50px">
+                  <a href="/blog/words " style="margin-left:75px">
 				  
-				   <i class="fa fas fa-pen" style="position: absolute;left:28px" ></i>
+				   <i class="fa fas fa-pen" style="position: absolute;left:50px" ></i>
 			      
 		          <span>文字</span>
                   </a>
@@ -202,9 +224,9 @@
               
                 <li>
 
-                  <a href="/blog/books " style="margin-left:50px">
+                  <a href="/blog/books " style="margin-left:75px">
 				  
-				   <i class="fa fas fa-book" style="position: absolute;left:28px" ></i>
+				   <i class="fa fas fa-book" style="position: absolute;left:50px" ></i>
 			      
 		          <span>书</span>
                   </a>
@@ -212,9 +234,9 @@
               
                 <li>
 
-                  <a href="/blog/videos " style="margin-left:50px">
+                  <a href="/blog/videos " style="margin-left:75px">
 				  
-				   <i class="fa fas fa-film" style="position: absolute;left:28px" ></i>
+				   <i class="fa fas fa-film" style="position: absolute;left:50px" ></i>
 			      
 		          <span>视频</span>
                   </a>
@@ -254,7 +276,7 @@
 <div class="bg-cover pd-header about-cover">
     <div class="container">
     <div class="row">
-    <div class="col s10 offset-s1 m8 offset-m2 l8">
+    <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l1">
         <div class="brand">
             <div class="title">
                 
@@ -273,96 +295,10 @@
 <main class="post-container content">
 
     
-    <link rel="stylesheet" href="/blog/libs/tocbot/tocbot.css">
-<style>
-    #articleContent h1::before,
-    #articleContent h2::before,
-    #articleContent h3::before,
-    #articleContent h4::before,
-    #articleContent h5::before,
-    #articleContent h6::before {
-        display: block;
-        content: " ";
-        height: 100px;
-        margin-top: -100px;
-        visibility: hidden;
-    }
-
-    #articleContent :focus {
-        outline: none;
-    }
-
-    .toc-fixed {
-        position: fixed;
-        top: 64px;
-    }
-
-    .toc-widget {
-        width: 345px;
-        padding-left: 20px;
-    }
-
-    .toc-widget .toc-title {
-        padding: 35px 0 15px 17px;
-        font-size: 1.5rem;
-        font-weight: bold;
-        line-height: 1.5rem;
-    }
-
-    .toc-widget ol {
-        padding: 0;
-        list-style: none;
-    }
-
+    <style>
+    /* 随视窗调整大小、滚动 */
     #toc-content {
         height: calc(100vh - 200px);
-        overflow: scroll;
-    }
-
-    #toc-content ol {
-        padding-left: 10px;
-    }
-
-    #toc-content ol li {
-        padding-left: 10px;
-    }
-
-    #toc-content .toc-link:hover {
-        color: #42b983;
-        font-weight: 700;
-        text-decoration: underline;
-    }
-
-    #toc-content .toc-link::before {
-        background-color: transparent;
-        max-height: 25px;
-
-        position: absolute;
-        right: 23.5vw;
-        display: block;
-    }
-
-    #toc-content .is-active-link {
-        color: #42b983;
-    }
-
-    #floating-toc-btn {
-        position: fixed;
-        right: 15px;
-        bottom: 76px;
-        padding-top: 15px;
-        margin-bottom: 0;
-        z-index: 998;
-    }
-
-    #floating-toc-btn .btn-floating {
-        width: 48px;
-        height: 48px;
-    }
-
-    #floating-toc-btn .btn-floating i {
-        line-height: 48px;
-        font-size: 1.4rem;
     }
 </style>
 <div class="row">
@@ -383,7 +319,7 @@
                 </div>
             </div>
 
-            <div class="row tag-cate">
+            <div class="tag-cate">
                 <div class="right-align">
                     
                     <div class="post-cate">
@@ -428,7 +364,7 @@
 
         
         <!-- 是否加载使用自带的 prismjs. -->
-        <link rel="stylesheet" href="/blog/libs/prism/prism.css">
+        <link rel="stylesheet" href="/blog/libs/prism/prism.min.css">
         
 
         
@@ -436,26 +372,22 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <ul>
-<li>
-<p><font color="red">相较于原始图像/波形/频谱，autoencoder 学习 latent 表示，</font></p>
+<li><p><font color="red">相较于原始图像&#x2F;波形&#x2F;频谱，autoencoder 学习 latent 表示，</font></p>
 <ul>
 <li>忽略了不可感知的细节，保留了必要的语义信息。对于 likelihood-based models（如 diffusion 模型），由于其 mode-covering 特性，倾向于用很大的模型容量建模数据中高频、难以感知的细节，导致训练耗时。</li>
 <li>维度更低。用于 diffusion 模型时，diffusion 模型训练（梯度计算）、采样（迭代生成）更高效。</li>
 <li>autoencoder 和 diffusion 模型独立，不需要权衡重建质量与生成能力。</li>
 </ul>
 </li>
-<li>
-<p>条件生成</p>
+<li><p>条件生成</p>
 <p>添加 cross attention，允许一般的条件输入，如class-conditional、文本、layout、图像等。</p>
 </li>
-<li>
-<p>评价</p>
+<li><p>评价</p>
 <ul>
 <li>训练、生成速度更快，同时有很高的视觉保真度。</li>
 <li>SOTA：图像修复、class-conditional 图像合成。</li>
 <li>可比：无条件图像生成、text-to-image、super-resolution。</li>
-<li>限制
-<ul>
+<li>限制<ul>
 <li>diffusion 模型迭代生成慢。</li>
 <li>相较于像素级输入，latent 表示的下采样可能限制需要细粒度准确性的任务的性能。</li>
 </ul>
@@ -463,43 +395,34 @@
 </ul>
 </li>
 </ul>
-<h1 id="系统结构">1.  系统结构</h1>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB7a4202bfa6956a8d00757efc2bee1caf?method=download&shareKey=f32b9c20426b7dcdfbf2ccc5c6a06809" width="547">
+<h1 id="系统结构">1. 系统结构</h1><img src="https://note.youdao.com/yws/api/personal/file/WEB7a4202bfa6956a8d00757efc2bee1caf?method=download&shareKey=f32b9c20426b7dcdfbf2ccc5c6a06809" width="547">
+
 <img src="https://note.youdao.com/yws/api/personal/file/WEB801376f71a4ac3ea2bd7666f48d297ee?method=download&shareKey=7c27805809afe6f5370266929a291d10" width="412">
-<h2 id="autoencoder">1.1.  autoencoder</h2>
-<ul>
+
+<h2 id="autoencoder">1.1. autoencoder</h2><ul>
 <li>基于[23]。</li>
-<li>输入 RGB 图像 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mo>∈</mo><msup><mi mathvariant="double-struck">R</mi><mrow><mi>H</mi><mo>×</mo><mi>W</mi><mo>×</mo><mn>3</mn></mrow></msup></mrow><annotation encoding="application/x-tex">x \in \mathbb{R}^{H \times W \times 3}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8413309999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord"><span class="mord mathbb">R</span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.08125em;">H</span><span class="mbin mtight">×</span><span class="mord mathdefault mtight" style="margin-right:0.13889em;">W</span><span class="mbin mtight">×</span><span class="mord mtight">3</span></span></span></span></span></span></span></span></span></span></span></span>；通过 encoder <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="script">E</mi></mrow><annotation encoding="application/x-tex">\mathcal{E}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord"><span class="mord mathcal" style="margin-right:0.08944em;">E</span></span></span></span></span> 得到 latent 表示 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>z</mi><mo>∈</mo><msup><mi mathvariant="double-struck">R</mi><mrow><mi>h</mi><mo>×</mo><mi>w</mi><mo>×</mo><mi>c</mi></mrow></msup></mrow><annotation encoding="application/x-tex">z \in \mathbb{R}^{h \times w \times c}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8491079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord"><span class="mord mathbb">R</span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">h</span><span class="mbin mtight">×</span><span class="mord mathdefault mtight" style="margin-right:0.02691em;">w</span><span class="mbin mtight">×</span><span class="mord mathdefault mtight">c</span></span></span></span></span></span></span></span></span></span></span></span>，下采样系数为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>=</mo><mi>H</mi><mi mathvariant="normal">/</mi><mi>h</mi><mo>=</mo><mi>W</mi><mi mathvariant="normal">/</mi><mi>w</mi></mrow><annotation encoding="application/x-tex">f=H / h=W / w</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.08125em;">H</span><span class="mord">/</span><span class="mord mathdefault">h</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">W</span><span class="mord">/</span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span></span></span></span>；通过 decoder <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="script">D</mi></mrow><annotation encoding="application/x-tex">\mathcal{D}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord"><span class="mord mathcal" style="margin-right:0.02778em;">D</span></span></span></span></span> 重建 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mover accent="true"><mi>x</mi><mo>~</mo></mover><mo>=</mo><mi mathvariant="script">D</mi><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo><mo>=</mo><mi mathvariant="script">D</mi><mo stretchy="false">(</mo><mi mathvariant="script">E</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\tilde{x}=\mathcal{D}(z)=\mathcal{D}(\mathcal{E}(x))</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6678599999999999em;vertical-align:0em;"></span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6678599999999999em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault">x</span></span></span><span style="top:-3.35em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.22222em;">~</span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathcal" style="margin-right:0.02778em;">D</span></span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathcal" style="margin-right:0.02778em;">D</span></span><span class="mopen">(</span><span class="mord"><span class="mord mathcal" style="margin-right:0.08944em;">E</span></span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mclose">)</span></span></span></span>。保留了空间结构。</li>
-<li>latent 空间正则，避免高方差。
-<ul>
-<li>KL-reg：与标准正态分布的 KL 散度。
-<ul>
-<li>rescale：在第一个 batch 上计算  component-wise variance。<p class="katex-block katex-error" title="ParseError: KaTeX parse error: Can&#039;t use function &#039;$&#039; in math mode at position 90: …t{\mu}\right)^2$̲$ $$\hat{\mu}=\…">\hat{\sigma}^2=\frac{1}{b c h w} \sum_{b, c, h, w}\left(z^{b, c, h, w}-\hat{\mu}\right)^2$$ $$\hat{\mu}=\frac{1}{b c h w} \sum_{b, c, h, w} z^{b, c, h, w}$$ $$z \leftarrow \frac{z}{\hat{\sigma}}=\frac{\mathcal{E}(x)}{\hat{\sigma}}
-</p>
-</li>
+<li>输入 RGB 图像 $x \in \mathbb{R}^{H \times W \times 3}$；通过 encoder $\mathcal{E}$ 得到 latent 表示 $z \in \mathbb{R}^{h \times w \times c}$，下采样系数为 $f&#x3D;H &#x2F; h&#x3D;W &#x2F; w$；通过 decoder $\mathcal{D}$ 重建 $\tilde{x}&#x3D;\mathcal{D}(z)&#x3D;\mathcal{D}(\mathcal{E}(x))$。保留了空间结构。</li>
+<li>latent 空间正则，避免高方差。<ul>
+<li>KL-reg：与标准正态分布的 KL 散度。<ul>
+<li>rescale：在第一个 batch 上计算  component-wise variance。<br>$$\hat{\sigma}^2&#x3D;\frac{1}{b c h w} \sum_{b, c, h, w}\left(z^{b, c, h, w}-\hat{\mu}\right)^2$$ $$\hat{\mu}&#x3D;\frac{1}{b c h w} \sum_{b, c, h, w} z^{b, c, h, w}$$ $$z \leftarrow \frac{z}{\hat{\sigma}}&#x3D;\frac{\mathcal{E}(x)}{\hat{\sigma}}$$</li>
 </ul>
 </li>
-<li>VQ-reg：decoder 第一层加向量量化层，学习大小为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">∣</mi><mi mathvariant="script">Z</mi><mi mathvariant="normal">∣</mi></mrow><annotation encoding="application/x-tex">|\mathcal{Z}|</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">∣</span><span class="mord"><span class="mord mathcal" style="margin-right:0.07944em;">Z</span></span><span class="mord">∣</span></span></span></span> 的码本。
-<ul>
+<li>VQ-reg：decoder 第一层加向量量化层，学习大小为 $|\mathcal{Z}|$ 的码本。<ul>
 <li>VQ-reg 生成质量更好，虽然 autoencoder 重建能力差于连续版本。</li>
 </ul>
 </li>
 <li>latent 空间的方差显著影响<font color="green">卷积采样</font>生成高分辨率图像的结果（参见<font color="green">附录B</font>），采用 KL-reg + rescale，VQ-reg 方差接近1。效果对比见图15。</li>
 </ul>
 </li>
-<li>优化目标：感知损失 + patch-based 对抗损失。强调局部真实性；并避免仅依赖像素空间的损失（如 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>L</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">L_2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 或 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>L</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">L_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>）导致的模糊。</li>
+<li>优化目标：感知损失 + patch-based 对抗损失。强调局部真实性；并避免仅依赖像素空间的损失（如 $L_2$ 或 $L_1$）导致的模糊。</li>
 </ul>
-<h2 id="diffusion-model">1.2.  diffusion model</h2>
-<p>UNet<br>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB05461f56e29e26ea9efa8145e143c6fc?method=download&shareKey=a231d0a86d642b07e9cd19e519defe40" width="709"></p>
-<h2 id="条件生成">1.3.  条件生成</h2>
-<p>各种模态的条件输入 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span>，采用特定领域的 encoder 转为表示。与 diffusion 模型通过 cross attention 层连接，作为 K、V；或者与输入拼接。</p>
+<h2 id="diffusion-model">1.2. diffusion model</h2><p>UNet<br><img src="https://note.youdao.com/yws/api/personal/file/WEB05461f56e29e26ea9efa8145e143c6fc?method=download&shareKey=a231d0a86d642b07e9cd19e519defe40" width="709"></p>
+<h2 id="条件生成">1.3. 条件生成</h2><p>各种模态的条件输入 $y$，采用特定领域的 encoder 转为表示。与 diffusion 模型通过 cross attention 层连接，作为 K、V；或者与输入拼接。</p>
 <ul>
 <li>class-conditional，encoder 可以为 1个 embedding 层。</li>
 <li>text-to-image、layout-to-image：<font color="green">unmasked</font> transformer。</li>
 </ul>
-<h1 id="实验">2.  实验</h1>
-<table>
+<h1 id="实验">2. 实验</h1><table>
 <thead>
 <tr>
 <th>实验</th>
@@ -507,16 +430,15 @@
 <th>分析</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>autoencoder 下采样系数</td>
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEB704dd239e20fd750999038bcfd0cad12?method=download&shareKey=3a43478d07160e845a7c3ec3d10f2d14" width="553"></td>
-<td><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>=</mo><mn>1</mn><mo separator="true">,</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">f=1,2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">2</span></span></span></span> 收敛慢；<br><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>=</mo><mn>32</mn></mrow><annotation encoding="application/x-tex">f=32</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span><span class="mord">2</span></span></span></span> 采样质量差，较少训练步后 FID 不下降；<br><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>=</mo><mn>4</mn><mo>−</mo><mn>16</mn></mrow><annotation encoding="application/x-tex">f=4-16</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">4</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">6</span></span></span></span> 达到较好的效率、质量的均衡。</td>
+<td>$f&#x3D;1,2$ 收敛慢；<br>$f&#x3D;32$ 采样质量差，较少训练步后 FID 不下降；<br>$f&#x3D;4-16$ 达到较好的效率、质量的均衡。</td>
 </tr>
 <tr>
 <td>autoencoder 下采样系数、DDIM 采样步数</td>
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEB7713ab9f5a106dee4d8e1d1d50d3850f?method=download&shareKey=63540953b4a827497849c737ccf33752 " width="557"></td>
-<td><font color="red"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>=</mo><mn>4</mn><mo separator="true">,</mo><mn>8</mn></mrow><annotation encoding="application/x-tex">f=4,8</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">4</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">8</span></span></span></span> 采样质量较好，且达到较好质量所需的采样步数较少。</font><br> 下采样系数越大，吞吐越快。</td>
+<td><font color="red">$f&#x3D;4,8$ 采样质量较好，且达到较好质量所需的采样步数较少。</font><br> 下采样系数越大，吞吐越快。</td>
 </tr>
 <tr>
 <td>无条件生成</td>
@@ -548,14 +470,11 @@
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEB49386e37884464d20054ba5cee04737b?method=download&shareKey=5985d1698310cb1aadfe48b21bd2d8ad" width="1133"></td>
 <td></td>
 </tr>
-</tbody>
-</table>
-<h1 id="其它">3.  其它</h1>
-<ul>
-<li>Rombach R, Blattmann A, Lorenz D, et al. High-resolution image synthesis with latent diffusion models[C]//Proceedings of the IEEE/CVF conference on computer vision and pattern recognition. 2022: 10684-10695.</li>
+</tbody></table>
+<h1 id="其它">3. 其它</h1><ul>
+<li>Rombach R, Blattmann A, Lorenz D, et al. High-resolution image synthesis with latent diffusion models[C]&#x2F;&#x2F;Proceedings of the IEEE&#x2F;CVF conference on computer vision and pattern recognition. 2022: 10684-10695.</li>
 <li>预训练模型 <a target="_blank" rel="noopener" href="https://github.com/CompVis/latent-diffusion">https://github.com/CompVis/latent-diffusion</a></li>
-<li>相关工作
-<ul>
+<li>相关工作<ul>
 <li>其它 likelihood-based models，如自回归 transformers，参数量大。而 diffusion 模型迭代生成的过程，类似高度的参数共享，可以建模复杂分布。</li>
 <li>GANs：由于对抗训练，难以扩展到建模复杂分布，适用于变化性有限的数据。存在 mode-collapse、训练不稳定问题。</li>
 </ul>
@@ -611,8 +530,6 @@
 
     
 
-    
-
     <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
@@ -621,9 +538,11 @@
                 <i class="far fa-dot-circle"></i>&nbsp;本篇
             </div>
             <div class="card">
-                <div class="card-title">
-                    <a href="/blog/ji-qi-xue-xi/sheng-cheng-mo-xing/ldm/"> LDM</a>
-                </div>
+                <a href="/blog/ji-qi-xue-xi/sheng-cheng-mo-xing/ldm/">
+                    <div class="card-content">
+                        <span class="card-title">LDM</span>
+                    </div>
+                </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
@@ -633,6 +552,7 @@
                     <div class="publish-info">
                             <span class="publish-date">
                                 <i class="far fa-clock fa-fw icon-date"></i>2024-07-07
+                                <i class="far fa-edit fa-fw icon-date"></i>2024-07-07
                             </span>
                         <span class="publish-author">
                             
@@ -661,9 +581,11 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <div class="card-title">
-                    <a href="/blog/llm/yin-pin-sheng-cheng/lun-wen/audioldm2/"> AudioLDM 2</a>
-                </div>
+                <a href="/blog/llm/yin-pin-sheng-cheng/lun-wen/audioldm2/">
+                    <div class="card-content">
+                        <span class="card-title">AudioLDM 2</span>
+                    </div>
+                </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
@@ -673,6 +595,7 @@
                     <div class="publish-info">
                             <span class="publish-date">
                                 <i class="far fa-clock fa-fw icon-date"></i>2024-07-03
+                                <i class="far fa-edit fa-fw icon-date"></i>2024-07-03
                             </span>
                         <span class="publish-author">
                             
@@ -745,6 +668,11 @@
 <!-- 代码块功能依赖 -->
 <script type="text/javascript" src="/blog/libs/codeBlock/codeBlockFuction.js"></script>
 
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/blog/libs/prism/prism.min.js"></script>
+
+
 <!-- 代码语言 -->
 
 <script type="text/javascript" src="/blog/libs/codeBlock/codeLang.js"></script>
@@ -758,6 +686,7 @@
 <!-- 代码块收缩 -->
 
 <script type="text/javascript" src="/blog/libs/codeBlock/codeShrink.js"></script>
+
 
 
     </div>
@@ -846,7 +775,7 @@
 </main>
 
 
-<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script>
     MathJax.Hub.Config({
         tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
@@ -922,6 +851,7 @@
             <a href="/blog/about" target="_blank">nanyang</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
             <br>
             
             
@@ -1073,6 +1003,30 @@ $(function () {
 });
 </script>
 
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
     <!-- 回到顶部按钮 -->
 <div id="backTop" class="top-scroll">
     <a class="btn-floating btn-large waves-effect waves-light" href="#!">
@@ -1096,6 +1050,8 @@ $(function () {
             mermaid.initialize({theme: 'neutral'});
           }
         </script>
+    
+
     
 
     
@@ -1131,6 +1087,21 @@ $(function () {
     <script src="/blog/libs/instantpage/instantpage.js" type="module"></script>
     
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 
 </html>

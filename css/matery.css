@@ -16,7 +16,7 @@
 /*大屏幕下(桌面类)的样式*/
 @media only screen and (min-width: 993px) {
     .container {
-        width: 100%;
+        width: 98%;
         max-width: 2000px;
     }
 
@@ -27,7 +27,7 @@
     }
 
     .post-container {
-        width: 100%;
+        width: 98%;
         margin: 0 auto;
         max-width: 2000px;
     }
@@ -241,7 +241,8 @@ mark {
 }
 
 .bg-color {
-    background-image: linear-gradient(to right, #4cbf30 0%, #0f9d58 100%);
+    background-image: linear-gradient(to right, #bf30ac 0%, #0f9d58 100%);
+    opacity: 0.7;
 }
 
 .text-color {
@@ -547,8 +548,10 @@ header .go-back i {
 }
 
 .bg-cover:after {
-    -webkit-animation: rainbow 60s infinite;
-    animation: rainbow 60s infinite;
+    /* -webkit-animation: rainbow 60s infinite;
+    animation: rainbow 60s infinite; */
+    background-image: linear-gradient(to right, #bf30ac 0%, #0f9d58 100%);
+    opacity: 0.7;
 }
 
 .bg-cover:before,
@@ -844,16 +847,11 @@ header .go-back i {
 }
 
 .category-list {
-    margin: 0;
-    padding: 0;
-    list-style: none;
     font-weight: 1000;
 }
 
 .category-list-item {
     margin: 5px 3px;
-    font-size: 1rem;
-    font-weight: inherit;
 }
 
 .category-list-link {
@@ -896,7 +894,7 @@ header .go-back i {
     display: inline;
     content: "\00a0"
 }
-    
+
 .archive-calendar {
     margin-top: -60px;
     max-width: 820px;
@@ -955,12 +953,30 @@ article .tag-image img {
 }
 
 article .card .card-content {
-    padding: 15px 15px 12px 18px;
+    padding: 5px 15px 5px 15px;
 }
 
-article .card .card-title{
-width: 100%;
-text-align: center;
+.card .card-content .card-title{
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size:20px;
+    font-weight:700;
+    text-align: center;
+}
+
+.card .card-content .publish-info .publish-date {
+    font-size:14px;
+    color:#8B008B;
+}
+.card .card-content .publish-info .publish-author{
+    font-size:13px;
+    color: #00FFFF;
+}
+.card .card-content .publish-info .publish-author .post-category{
+    color: #3CB371;
 }
 
 article .article-content .summary {
@@ -1078,10 +1094,6 @@ article .article-tags .chip {
     box-shadow: 0 10px 35px 2px rgba(0, 0, 0, .15),
     0 5px 15px rgba(0, 0, 0, .07),
     0 2px 5px -5px rgba(0, 0, 0, .1) !important;
-}
-
-#artDetail .tag-cate {
-    padding-bottom: 15px;
 }
 
 #artDetail a {
@@ -1338,9 +1350,7 @@ thead {
 }
 
 .chip-container .category-chips {
-    margin: auto auto auto 41%;
-    max-width: 850px;
-    text-align: left;
+    margin: auto auto auto 40%;
 }
 
 .chip-container .tag-chips {
@@ -1401,7 +1411,7 @@ thead {
     position: relative;
     width: 80px;
     height: 80px;
-    margin: 10px 0 10px -20px;
+    margin: 10px 0 10px -40px;
     padding: 21px 10px;
     background-color: #ff5722;
     color: #fff;
@@ -1417,7 +1427,7 @@ thead {
     position: relative;
     width: 60px;
     height: 60px;
-    margin: 10px 0 30px -10px;
+    margin: 10px 0 10px -30px;
     padding: 14px 16px;
     background-color: #ef6c00;
     color: #fff;
@@ -1451,7 +1461,6 @@ thead {
     content: '';
     position: absolute;
     top: 0;
-    left: 18px;
     height: 100%;
     width: 4px;
     background: #0f9d58;
@@ -1463,27 +1472,20 @@ thead {
         margin-bottom: 2rem;
     }
 
-    #cd-timeline::before {
-        left: 18px;
-        /*left: 50%;*/
-        margin-left: -2px;
-    }
-
     #cd-timeline .year {
-        margin: 10px 0 10px -430px;
-        /*margin: 忘了原来是多少了*/
+        margin: 10px 0 10px -40px;
         padding: 22px 11px;
     }
 
     #cd-timeline .month {
-        margin: 10px 0 30px -30px;
+        margin: 10px 0 10px -30px;
         padding: 14px 16px;
     }
 }
 
 .cd-timeline-block {
     position: relative;
-    margin: 0em 0;
+    margin: 1em 0;
 }
 
 .cd-timeline-block::after {
@@ -1502,7 +1504,7 @@ thead {
 
 @media only screen and (min-width: 870px) {
     .cd-timeline-block {
-        margin: 0em 0;
+        margin: 1em 0;
     }
 
     .cd-timeline-block:first-child {
@@ -1528,7 +1530,6 @@ thead {
     .cd-timeline-img {
         width: 40px;
         height: 40px;
-        left: 50%;
         margin-left: -20px;
         /* Force Hardware Acceleration in WebKit */
         -webkit-transform: translateZ(0);
@@ -1549,8 +1550,7 @@ thead {
 
 .cd-timeline-content {
     position: relative;
-    margin-top: 1px;
-    /*margin-top: -40px;*/
+    margin-top: -40px;
     margin-left: 40px;
     padding: 0;
     border-radius: 5px;
@@ -1565,7 +1565,7 @@ thead {
 }
 
 .cd-timeline-content .card {
-    margin: 5px;
+    margin: 0;
 }
 
 .cd-timeline-content::before {
@@ -1597,18 +1597,15 @@ thead {
 
 @media only screen and (min-width: 900px) {
     .cd-timeline-content {
-        margin-left: 36px;
-        /*margin-left: 0;*/
+        margin-left: 40px;
         padding: 0;
         width: 100%;
-        /*width: 45%;*/
 
     }
 
     .cd-timeline-content::before {
         top: 24px;
         right: 100%;
-        /*left: 100%;*/
     }
 
     .cd-timeline-content .cd-read-more {
@@ -2205,4 +2202,155 @@ p.search-result-summary{
     height: 50px;
     padding: 0;
     margin: 0;
+}
+
+/* tag button */
+body.DarkMode .theme-btn {
+    background: #222;
+    border: 2px solid #555;
+    border-radius: 2px;
+    color: #ccc !important;
+    display: inline-block;
+    font-size: 0.875em;
+    line-height: 2;
+    padding: 0 5px !important;
+    text-decoration: unset !important;
+    transition: background-color 0.2s ease-in-out;
+}
+body.DarkMode .theme-btn:hover {
+    background: #666;
+    border-color: #666;
+    color: #ccc;
+}
+.theme-btn {
+    background: #fff;
+    border: 2px solid #222;
+    border-radius: 2px;
+    color: #555 !important;
+    display: inline-block;
+    font-size: 0.875em;
+    line-height: 2;
+    padding: 0 5px !important;
+    text-decoration: unset !important;
+    transition: background-color 0.2s ease-in-out;
+}
+.theme-btn:hover {
+    background: #222;
+    border-color: #222;
+    color: #fff;
+}
+.theme-btn + .theme-btn {
+    margin: 0 0 8px 8px;
+}
+.theme-btn .fa-fw {
+    text-align: left;
+    width: 1.285714285714286em;
+}
+/* tag note */
+.post-container .note {
+    border-radius: 0;
+    margin-bottom: 20px;
+    padding: 1em;
+    position: relative;
+    border: 1px solid #eee;
+    border-left-width: 5px;
+}
+.post-container .note summary {
+    cursor: pointer;
+    outline: 0;
+}
+.post-container .note summary p {
+    display: inline;
+}
+.post-container .note h2, .post-container .note h3, .post-container .note h4, .post-container .note h5, .post-container .note h6 {
+    border-bottom: initial;
+    margin: 0;
+    padding-top: 0;
+}
+.post-container .note p:first-child, .post-container .note ul:first-child, .post-container .note ol:first-child, .post-container .note table:first-child, .post-container .note pre:first-child, .post-container .note blockquote:first-child, .post-container .note img:first-child {
+    margin-top: 0;
+}
+.post-container .note p:last-child, .post-container .note ul:last-child, .post-container .note ol:last-child, .post-container .note table:last-child, .post-container .note pre:last-child, .post-container .note blockquote:last-child, .post-container .note img:last-child {
+    margin-bottom: 0;
+}
+.post-container .note:not(.no-icon) {
+    padding-left: 2.5em;
+}
+.post-container .note:not(.no-icon)::before {
+    font-size: 1.5em;
+    left: 0.3em;
+    position: absolute;
+    top: calc(50% - 1em);
+}
+.post-container .note.default {
+    border-left-color: #777;
+}
+.post-container .note.default h2, .post-container .note.default h3, .post-container .note.default h4, .post-container .note.default h5, .post-container .note.default h6 {
+    color: #777;
+}
+.post-container .note.default:not(.no-icon)::before {
+    content:'\f0a9';
+    font-family:'Font Awesome 5 Free';
+    font-weight: 900;
+    color: #777;
+}
+.post-container .note.primary {
+    border-left-color: #6f42c1;
+}
+.post-container .note.primary h2, .post-container .note.primary h3, .post-container .note.primary h4, .post-container .note.primary h5, .post-container .note.primary h6 {
+    color: #6f42c1;
+}
+.post-container .note.primary:not(.no-icon)::before {
+    content:'\f055';
+    font-family:'Font Awesome 5 Free';
+    font-weight: 900;
+    color: #6f42c1;
+}
+.post-container .note.info {
+    border-left-color: #428bca;
+}
+.post-container .note.info h2, .post-container .note.info h3, .post-container .note.info h4, .post-container .note.info h5, .post-container .note.info h6 {
+    color: #428bca;
+}
+.post-container .note.info:not(.no-icon)::before {
+    content:'\f05a';
+    font-family:'Font Awesome 5 Free';
+    font-weight: 900;
+    color: #428bca;
+}
+.post-container .note.success {
+    border-left-color: #5cb85c;
+}
+.post-container .note.success h2, .post-container .note.success h3, .post-container .note.success h4, .post-container .note.success h5, .post-container .note.success h6 {
+    color: #5cb85c;
+}
+.post-container .note.success:not(.no-icon)::before {
+    content:'\f058';
+    font-family:'Font Awesome 5 Free';
+    font-weight: 900;
+    color: #5cb85c;
+}
+.post-container .note.warning {
+    border-left-color: #f0ad4e;
+}
+.post-container .note.warning h2, .post-container .note.warning h3, .post-container .note.warning h4, .post-container .note.warning h5, .post-container .note.warning h6 {
+    color: #f0ad4e;
+}
+.post-container .note.warning:not(.no-icon)::before {
+    content:'\f06a';
+    font-family:'Font Awesome 5 Free';
+    font-weight: 900;
+    color: #f0ad4e;
+}
+.post-container .note.danger {
+    border-left-color: #d9534f;
+}
+.post-container .note.danger h2, .post-container .note.danger h3, .post-container .note.danger h4, .post-container .note.danger h5, .post-container .note.danger h6 {
+    color: #d9534f;
+}
+.post-container .note.danger:not(.no-icon)::before {
+    content:'\f056';
+    font-family:'Font Awesome 5 Free';
+    font-weight: 900;
+    color: #d9534f;
 }

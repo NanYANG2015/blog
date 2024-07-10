@@ -5,12 +5,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="TTS数据集, 梦园">
-    <meta name="description" content="1.  VCTK
-2.  LJSpeech
-3.  LibriTTS
-585h，2456 说话人，24kHz。音频和文本来自 Librispeech。
+    <meta name="description" content="1. VCTK2. LJSpeech3. LibriTTS585h，2456 说话人，24kHz。音频和文本来自 Librispeech。
 
-Zen H, Dang V, Clark R, et al. LibriTTS: A ">
+Zen H, Dang V, Clark R, et al. LibriTTS: A Corpus">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -22,18 +19,36 @@ Zen H, Dang V, Clark R, et al. LibriTTS: A ">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    
-
     <title>TTS数据集 | 梦园</title>
     <link rel="icon" type="image/png" href="/blog/favicon.png">
+    
 
-    <link rel="stylesheet" type="text/css" href="/blog/libs/awesome/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="/blog/libs/materialize/materialize.min.css">
-    <link rel="stylesheet" type="text/css" href="/blog/libs/aos/aos.css">
-    <link rel="stylesheet" type="text/css" href="/blog/libs/animate/animate.min.css">
-    <link rel="stylesheet" type="text/css" href="/blog/libs/lightGallery/css/lightgallery.min.css">
-    <link rel="stylesheet" type="text/css" href="/blog/css/matery.css">
-    <link rel="stylesheet" type="text/css" href="/blog/css/my.css">
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/blog/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/blog/css/my.css">
+<link rel="stylesheet" type="text/css" href="/blog/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/blog/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/blog/css/post.css">
+
+
+
+
+    
+
+
 
     <script src="/blog/libs/jquery/jquery-3.6.0.min.js"></script>
 
@@ -129,6 +144,11 @@ Zen H, Dang V, Clark R, et al. LibriTTS: A ">
       <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
     </a>
   </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
 </ul>
 
 
@@ -183,9 +203,9 @@ Zen H, Dang V, Clark R, et al. LibriTTS: A ">
               
                 <li>
 
-                  <a href="/blog/about " style="margin-left:50px">
+                  <a href="/blog/about " style="margin-left:75px">
 				  
-				   <i class="fa fas fa-user-circle" style="position: absolute;left:28px" ></i>
+				   <i class="fa fas fa-user-circle" style="position: absolute;left:50px" ></i>
 			      
 		          <span>我</span>
                   </a>
@@ -193,9 +213,9 @@ Zen H, Dang V, Clark R, et al. LibriTTS: A ">
               
                 <li>
 
-                  <a href="/blog/words " style="margin-left:50px">
+                  <a href="/blog/words " style="margin-left:75px">
 				  
-				   <i class="fa fas fa-pen" style="position: absolute;left:28px" ></i>
+				   <i class="fa fas fa-pen" style="position: absolute;left:50px" ></i>
 			      
 		          <span>文字</span>
                   </a>
@@ -203,9 +223,9 @@ Zen H, Dang V, Clark R, et al. LibriTTS: A ">
               
                 <li>
 
-                  <a href="/blog/books " style="margin-left:50px">
+                  <a href="/blog/books " style="margin-left:75px">
 				  
-				   <i class="fa fas fa-book" style="position: absolute;left:28px" ></i>
+				   <i class="fa fas fa-book" style="position: absolute;left:50px" ></i>
 			      
 		          <span>书</span>
                   </a>
@@ -213,9 +233,9 @@ Zen H, Dang V, Clark R, et al. LibriTTS: A ">
               
                 <li>
 
-                  <a href="/blog/videos " style="margin-left:50px">
+                  <a href="/blog/videos " style="margin-left:75px">
 				  
-				   <i class="fa fas fa-film" style="position: absolute;left:28px" ></i>
+				   <i class="fa fas fa-film" style="position: absolute;left:50px" ></i>
 			      
 		          <span>视频</span>
                   </a>
@@ -255,7 +275,7 @@ Zen H, Dang V, Clark R, et al. LibriTTS: A ">
 <div class="bg-cover pd-header about-cover">
     <div class="container">
     <div class="row">
-    <div class="col s10 offset-s1 m8 offset-m2 l8">
+    <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l1">
         <div class="brand">
             <div class="title">
                 
@@ -274,96 +294,10 @@ Zen H, Dang V, Clark R, et al. LibriTTS: A ">
 <main class="post-container content">
 
     
-    <link rel="stylesheet" href="/blog/libs/tocbot/tocbot.css">
-<style>
-    #articleContent h1::before,
-    #articleContent h2::before,
-    #articleContent h3::before,
-    #articleContent h4::before,
-    #articleContent h5::before,
-    #articleContent h6::before {
-        display: block;
-        content: " ";
-        height: 100px;
-        margin-top: -100px;
-        visibility: hidden;
-    }
-
-    #articleContent :focus {
-        outline: none;
-    }
-
-    .toc-fixed {
-        position: fixed;
-        top: 64px;
-    }
-
-    .toc-widget {
-        width: 345px;
-        padding-left: 20px;
-    }
-
-    .toc-widget .toc-title {
-        padding: 35px 0 15px 17px;
-        font-size: 1.5rem;
-        font-weight: bold;
-        line-height: 1.5rem;
-    }
-
-    .toc-widget ol {
-        padding: 0;
-        list-style: none;
-    }
-
+    <style>
+    /* 随视窗调整大小、滚动 */
     #toc-content {
         height: calc(100vh - 200px);
-        overflow: scroll;
-    }
-
-    #toc-content ol {
-        padding-left: 10px;
-    }
-
-    #toc-content ol li {
-        padding-left: 10px;
-    }
-
-    #toc-content .toc-link:hover {
-        color: #42b983;
-        font-weight: 700;
-        text-decoration: underline;
-    }
-
-    #toc-content .toc-link::before {
-        background-color: transparent;
-        max-height: 25px;
-
-        position: absolute;
-        right: 23.5vw;
-        display: block;
-    }
-
-    #toc-content .is-active-link {
-        color: #42b983;
-    }
-
-    #floating-toc-btn {
-        position: fixed;
-        right: 15px;
-        bottom: 76px;
-        padding-top: 15px;
-        margin-bottom: 0;
-        z-index: 998;
-    }
-
-    #floating-toc-btn .btn-floating {
-        width: 48px;
-        height: 48px;
-    }
-
-    #floating-toc-btn .btn-floating i {
-        line-height: 48px;
-        font-size: 1.4rem;
     }
 </style>
 <div class="row">
@@ -384,7 +318,7 @@ Zen H, Dang V, Clark R, et al. LibriTTS: A ">
                 </div>
             </div>
 
-            <div class="row tag-cate">
+            <div class="tag-cate">
                 <div class="right-align">
                     
                     <div class="post-cate">
@@ -429,46 +363,36 @@ Zen H, Dang V, Clark R, et al. LibriTTS: A ">
 
         
         <!-- 是否加载使用自带的 prismjs. -->
-        <link rel="stylesheet" href="/blog/libs/prism/prism.css">
+        <link rel="stylesheet" href="/blog/libs/prism/prism.min.css">
         
 
         
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="vctk">1.  VCTK</h1>
-<h1 id="ljspeech">2.  LJSpeech</h1>
-<h1 id="libritts">3.  LibriTTS</h1>
-<p>585h，2456 说话人，24kHz。音频和文本来自 Librispeech。</p>
+                <h1 id="VCTK">1. VCTK</h1><h1 id="LJSpeech">2. LJSpeech</h1><h1 id="LibriTTS">3. LibriTTS</h1><p>585h，2456 说话人，24kHz。音频和文本来自 Librispeech。</p>
 <ul>
 <li>Zen H, Dang V, Clark R, et al. LibriTTS: A Corpus Derived from LibriSpeech for Text-to-Speech[J]. Interspeech 2019, 2019.</li>
 </ul>
-<h1 id="libritts-r">4.  LibriTTS-R</h1>
-<ul>
-<li>
-<p>作者：Google, 2023</p>
+<h1 id="LibriTTS-R">4. LibriTTS-R</h1><ul>
+<li><p>作者：Google, 2023</p>
 </li>
-<li>
-<p>对 LibriTTS 应用 speech restoration（语音恢复），改善音质。主观实验表明，相较于 LibriTTS，采用 LibriTTS-R 训练的 TTS 模型的语音自然度较高，且与 ground-truth 语音自然度相当。</p>
+<li><p>对 LibriTTS 应用 speech restoration（语音恢复），改善音质。主观实验表明，相较于 LibriTTS，采用 LibriTTS-R 训练的 TTS 模型的语音自然度较高，且与 ground-truth 语音自然度相当。</p>
 </li>
-<li>
-<p>speech restoration: 将语音转换到录音室音质。</p>
+<li><p>speech restoration: 将语音转换到录音室音质。</p>
 <p>模型：Miipher，text-informed 参数重合成语音恢复模型。采用说话人 encoder [20] 提取说话人 embedding（小于2s的音频重复后再提取），对原始音频降采样到 16kHz 提取 w2v-BERT 特征，采用基于 DF-Conformer 的特征 cleaner 预测干净音频的 w2v-BERT 特征，最后采用 WaveFit-5 神经声码器合成波形。</p>
 <img src="https://note.youdao.com/yws/api/personal/file/WEB381bf104ea76767cf638a1047687becc?method=download&shareKey=5164aa5e618571c340fd77033b1a6d03" width="443">
+
 <ul>
-<li>
-<p>选择 Miipher 的原因：Miipher 采用 w2v-BERT 特征（在大量有损语音上训练）替代传统的 log-mel 谱，并利用文本信息，解决了噪声掩盖音素、音素缺失（非线性音频处理、下采样等可能导致音素的重要频率分量缺失）问题。</p>
+<li><p>选择 Miipher 的原因：Miipher 采用 w2v-BERT 特征（在大量有损语音上训练）替代传统的 log-mel 谱，并利用文本信息，解决了噪声掩盖音素、音素缺失（非线性音频处理、下采样等可能导致音素的重要频率分量缺失）问题。</p>
 </li>
-<li>
-<p>训练</p>
+<li><p>训练</p>
 <ul>
-<li>私有数据集，含 2680h 含噪、录音室质量 音频对。
-<ul>
+<li>私有数据集，含 2680h 含噪、录音室质量 音频对。<ul>
 <li>目标语音：670h 录音室录制的多语种音频，24kHz。</li>
 <li>噪声数据集：TAU Urban Audio-Visual Scenes 2021 dataset + 内部噪声集（咖啡馆、厨房、汽车等） + 噪声源。</li>
 <li>信噪比：[5, 30] dB</li>
-<li>采用随机 RIR 生成器。
-<ul>
+<li>采用随机 RIR 生成器。<ul>
 <li>J. B. Allen and D. A. Berkley, “Image method for efficiently simulating small-room acoustics,” J. Acoust. Soc. Am., 1979.</li>
 </ul>
 </li>
@@ -479,30 +403,24 @@ Zen H, Dang V, Clark R, et al. LibriTTS: A ">
 <li>先分别预训练特征 cleaner、声码器，再用特征 cleaner 的输出特征微调声码器。</li>
 </ul>
 </li>
-<li>
-<p><a target="_blank" rel="noopener" href="https://google.github.io/df-conformer/miipher/">https://google.github.io/df-conformer/miipher/</a></p>
+<li><p><a target="_blank" rel="noopener" href="https://google.github.io/df-conformer/miipher/">https://google.github.io/df-conformer/miipher/</a></p>
 </li>
-<li>
-<p>非官方实现：<a target="_blank" rel="noopener" href="https://github.com/Wataru-Nakata/miipher">https://github.com/Wataru-Nakata/miipher</a></p>
+<li><p>非官方实现：<a target="_blank" rel="noopener" href="https://github.com/Wataru-Nakata/miipher">https://github.com/Wataru-Nakata/miipher</a></p>
 </li>
 </ul>
 </li>
-<li>
-<p>通过 WER、同一数据集中同一说话人的不同语音的说话人 embedding 的余弦相似度，确认恢复语音的文本、说话人保持不变。</p>
+<li><p>通过 WER、同一数据集中同一说话人的不同语音的说话人 embedding 的余弦相似度，确认恢复语音的文本、说话人保持不变。</p>
 </li>
-<li>
-<p>频谱对比<br>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB8ff5cc25e042746c395a209179d8c1a6?method=download&shareKey=1b4f0b727c64098047599feecf086e60" width="748"></p>
+<li><p>频谱对比</p>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB8ff5cc25e042746c395a209179d8c1a6?method=download&shareKey=1b4f0b727c64098047599feecf086e60" width="748">
+
 <p>从左到右，LibriTTS 中的样本分别受下采样、环境噪声、混响、非线性语音增强影响，LibriTTS-R 分别对其进行了恢复。</p>
 </li>
-<li>
-<p>Koizumi Y, Zen H, Karita S, et al. LibriTTS-R: A Restored Multi-Speaker Text-to-Speech Corpus[J]. arXiv preprint arXiv:2305.18802, 2023.</p>
+<li><p>Koizumi Y, Zen H, Karita S, et al. LibriTTS-R: A Restored Multi-Speaker Text-to-Speech Corpus[J]. arXiv preprint arXiv:2305.18802, 2023.</p>
 </li>
-<li>
-<p><a target="_blank" rel="noopener" href="http://www.openslr.org/141/">http://www.openslr.org/141/</a></p>
+<li><p><a target="_blank" rel="noopener" href="http://www.openslr.org/141/">http://www.openslr.org/141/</a></p>
 </li>
-<li>
-<p><a target="_blank" rel="noopener" href="https://google.github.io/df-conformer/librittsr/">https://google.github.io/df-conformer/librittsr/</a></p>
+<li><p><a target="_blank" rel="noopener" href="https://google.github.io/df-conformer/librittsr/">https://google.github.io/df-conformer/librittsr/</a></p>
 </li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
@@ -554,8 +472,6 @@ Zen H, Dang V, Clark R, et al. LibriTTS: A ">
 
     
 
-    
-
     <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
@@ -563,9 +479,11 @@ Zen H, Dang V, Clark R, et al. LibriTTS: A ">
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <div class="card-title">
-                    <a href="/blog/llm/yin-pin-li-jie/lun-wen/blsp/"> BLSP</a>
-                </div>
+                <a href="/blog/llm/yin-pin-li-jie/lun-wen/blsp/">
+                    <div class="card-content">
+                        <span class="card-title">BLSP</span>
+                    </div>
+                </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
@@ -575,6 +493,7 @@ Zen H, Dang V, Clark R, et al. LibriTTS: A ">
                     <div class="publish-info">
                         <span class="publish-date">
                             <i class="far fa-clock fa-fw icon-date"></i>2023-11-24
+                            <i class="far fa-edit fa-fw icon-date"></i>2024-07-01
                         </span>
                         <span class="publish-author">
                             
@@ -606,9 +525,11 @@ Zen H, Dang V, Clark R, et al. LibriTTS: A ">
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <div class="card-title">
-                    <a href="/blog/yu-yin/mo-xing/hubert/"> HuBERT</a>
-                </div>
+                <a href="/blog/yu-yin/mo-xing/hubert/">
+                    <div class="card-content">
+                        <span class="card-title">HuBERT</span>
+                    </div>
+                </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
@@ -618,6 +539,7 @@ Zen H, Dang V, Clark R, et al. LibriTTS: A ">
                     <div class="publish-info">
                             <span class="publish-date">
                                 <i class="far fa-clock fa-fw icon-date"></i>2023-08-14
+                                <i class="far fa-edit fa-fw icon-date"></i>2023-08-14
                             </span>
                         <span class="publish-author">
                             
@@ -686,6 +608,11 @@ Zen H, Dang V, Clark R, et al. LibriTTS: A ">
 <!-- 代码块功能依赖 -->
 <script type="text/javascript" src="/blog/libs/codeBlock/codeBlockFuction.js"></script>
 
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/blog/libs/prism/prism.min.js"></script>
+
+
 <!-- 代码语言 -->
 
 <script type="text/javascript" src="/blog/libs/codeBlock/codeLang.js"></script>
@@ -699,6 +626,7 @@ Zen H, Dang V, Clark R, et al. LibriTTS: A ">
 <!-- 代码块收缩 -->
 
 <script type="text/javascript" src="/blog/libs/codeBlock/codeShrink.js"></script>
+
 
 
     </div>
@@ -787,7 +715,7 @@ Zen H, Dang V, Clark R, et al. LibriTTS: A ">
 </main>
 
 
-<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script>
     MathJax.Hub.Config({
         tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
@@ -863,6 +791,7 @@ Zen H, Dang V, Clark R, et al. LibriTTS: A ">
             <a href="/blog/about" target="_blank">nanyang</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
             <br>
             
             
@@ -1014,6 +943,30 @@ $(function () {
 });
 </script>
 
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
     <!-- 回到顶部按钮 -->
 <div id="backTop" class="top-scroll">
     <a class="btn-floating btn-large waves-effect waves-light" href="#!">
@@ -1037,6 +990,8 @@ $(function () {
             mermaid.initialize({theme: 'neutral'});
           }
         </script>
+    
+
     
 
     
@@ -1072,6 +1027,21 @@ $(function () {
     <script src="/blog/libs/instantpage/instantpage.js" type="module"></script>
     
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 
 </html>

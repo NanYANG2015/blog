@@ -5,12 +5,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="评分标准, 梦园">
-    <meta name="description" content="1.  考纲
-
+    <meta name="description" content="1. 考纲
 普通高等学校招生全国统一考试大纲-2019
-
 语音项目
-
 基本读音：辅音连缀、成音节、单词重音
 连读、失去爆破、弱读、同化
 意群与停顿、语调、句子重音、节奏
@@ -18,7 +15,7 @@
 
 
 
-英语口语等级考试三级考试大纲-2018（湖北省教育考试院）">
+英语口语等级考试三级考试大纲-2018（湖北省教育考试院）^湖北S">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -30,18 +27,36 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    
-
     <title>评分标准 | 梦园</title>
     <link rel="icon" type="image/png" href="/blog/favicon.png">
+    
 
-    <link rel="stylesheet" type="text/css" href="/blog/libs/awesome/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="/blog/libs/materialize/materialize.min.css">
-    <link rel="stylesheet" type="text/css" href="/blog/libs/aos/aos.css">
-    <link rel="stylesheet" type="text/css" href="/blog/libs/animate/animate.min.css">
-    <link rel="stylesheet" type="text/css" href="/blog/libs/lightGallery/css/lightgallery.min.css">
-    <link rel="stylesheet" type="text/css" href="/blog/css/matery.css">
-    <link rel="stylesheet" type="text/css" href="/blog/css/my.css">
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/blog/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/blog/css/my.css">
+<link rel="stylesheet" type="text/css" href="/blog/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/blog/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/blog/css/post.css">
+
+
+
+
+    
+
+
 
     <script src="/blog/libs/jquery/jquery-3.6.0.min.js"></script>
 
@@ -137,6 +152,11 @@
       <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
     </a>
   </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
 </ul>
 
 
@@ -191,9 +211,9 @@
               
                 <li>
 
-                  <a href="/blog/about " style="margin-left:50px">
+                  <a href="/blog/about " style="margin-left:75px">
 				  
-				   <i class="fa fas fa-user-circle" style="position: absolute;left:28px" ></i>
+				   <i class="fa fas fa-user-circle" style="position: absolute;left:50px" ></i>
 			      
 		          <span>我</span>
                   </a>
@@ -201,9 +221,9 @@
               
                 <li>
 
-                  <a href="/blog/words " style="margin-left:50px">
+                  <a href="/blog/words " style="margin-left:75px">
 				  
-				   <i class="fa fas fa-pen" style="position: absolute;left:28px" ></i>
+				   <i class="fa fas fa-pen" style="position: absolute;left:50px" ></i>
 			      
 		          <span>文字</span>
                   </a>
@@ -211,9 +231,9 @@
               
                 <li>
 
-                  <a href="/blog/books " style="margin-left:50px">
+                  <a href="/blog/books " style="margin-left:75px">
 				  
-				   <i class="fa fas fa-book" style="position: absolute;left:28px" ></i>
+				   <i class="fa fas fa-book" style="position: absolute;left:50px" ></i>
 			      
 		          <span>书</span>
                   </a>
@@ -221,9 +241,9 @@
               
                 <li>
 
-                  <a href="/blog/videos " style="margin-left:50px">
+                  <a href="/blog/videos " style="margin-left:75px">
 				  
-				   <i class="fa fas fa-film" style="position: absolute;left:28px" ></i>
+				   <i class="fa fas fa-film" style="position: absolute;left:50px" ></i>
 			      
 		          <span>视频</span>
                   </a>
@@ -263,7 +283,7 @@
 <div class="bg-cover pd-header about-cover">
     <div class="container">
     <div class="row">
-    <div class="col s10 offset-s1 m8 offset-m2 l8">
+    <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l1">
         <div class="brand">
             <div class="title">
                 
@@ -282,96 +302,10 @@
 <main class="post-container content">
 
     
-    <link rel="stylesheet" href="/blog/libs/tocbot/tocbot.css">
-<style>
-    #articleContent h1::before,
-    #articleContent h2::before,
-    #articleContent h3::before,
-    #articleContent h4::before,
-    #articleContent h5::before,
-    #articleContent h6::before {
-        display: block;
-        content: " ";
-        height: 100px;
-        margin-top: -100px;
-        visibility: hidden;
-    }
-
-    #articleContent :focus {
-        outline: none;
-    }
-
-    .toc-fixed {
-        position: fixed;
-        top: 64px;
-    }
-
-    .toc-widget {
-        width: 345px;
-        padding-left: 20px;
-    }
-
-    .toc-widget .toc-title {
-        padding: 35px 0 15px 17px;
-        font-size: 1.5rem;
-        font-weight: bold;
-        line-height: 1.5rem;
-    }
-
-    .toc-widget ol {
-        padding: 0;
-        list-style: none;
-    }
-
+    <style>
+    /* 随视窗调整大小、滚动 */
     #toc-content {
         height: calc(100vh - 200px);
-        overflow: scroll;
-    }
-
-    #toc-content ol {
-        padding-left: 10px;
-    }
-
-    #toc-content ol li {
-        padding-left: 10px;
-    }
-
-    #toc-content .toc-link:hover {
-        color: #42b983;
-        font-weight: 700;
-        text-decoration: underline;
-    }
-
-    #toc-content .toc-link::before {
-        background-color: transparent;
-        max-height: 25px;
-
-        position: absolute;
-        right: 23.5vw;
-        display: block;
-    }
-
-    #toc-content .is-active-link {
-        color: #42b983;
-    }
-
-    #floating-toc-btn {
-        position: fixed;
-        right: 15px;
-        bottom: 76px;
-        padding-top: 15px;
-        margin-bottom: 0;
-        z-index: 998;
-    }
-
-    #floating-toc-btn .btn-floating {
-        width: 48px;
-        height: 48px;
-    }
-
-    #floating-toc-btn .btn-floating i {
-        line-height: 48px;
-        font-size: 1.4rem;
     }
 </style>
 <div class="row">
@@ -392,7 +326,7 @@
                 </div>
             </div>
 
-            <div class="row tag-cate">
+            <div class="tag-cate">
                 <div class="right-align">
                     
                     <div class="post-cate">
@@ -441,19 +375,16 @@
 
         
         <!-- 是否加载使用自带的 prismjs. -->
-        <link rel="stylesheet" href="/blog/libs/prism/prism.css">
+        <link rel="stylesheet" href="/blog/libs/prism/prism.min.css">
         
 
         
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="考纲">1.  考纲</h1>
-<ul>
-<li><a target="_blank" rel="noopener" href="http://www.neea.edu.cn/res/Home/1901/d15ec0514666ac280810099f9595b557.pdf">普通高等学校招生全国统一考试大纲-2019</a>
-<ul>
-<li>语音项目
-<ul>
+                <h1 id="考纲">1. 考纲</h1><ul>
+<li><a target="_blank" rel="noopener" href="http://www.neea.edu.cn/res/Home/1901/d15ec0514666ac280810099f9595b557.pdf">普通高等学校招生全国统一考试大纲-2019</a><ul>
+<li>语音项目<ul>
 <li>基本读音：辅音连缀、成音节、单词重音</li>
 <li>连读、失去爆破、弱读、同化</li>
 <li>意群与停顿、语调、句子重音、节奏</li>
@@ -461,29 +392,26 @@
 </li>
 </ul>
 </li>
-<li>英语口语等级考试三级考试大纲-2018（湖北省教育考试院）<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>
-<ul>
+<li>英语口语等级考试三级考试大纲-2018（湖北省教育考试院）<a target="_blank" rel="noopener" href="http://www.hbea.edu.cn/html/2018-11/12162.html">^湖北SETS</a><ul>
 <li>短文朗读：语音语调（权重0.6）、流利程度（权重0.4）</li>
 <li>情景提问：语音语调（权重0.2）、语法词汇（权重0.45）、流利程度与交际能力（权重0.35）</li>
 <li>情景应答：语音语调（权重0.2）、语法词汇（权重0.45）、流利程度与交际能力（权重0.35）</li>
 <li>连续表达：语音语调（权重0.2）、语法词汇（权重0.3）、流利程度（0.2）、交际能力（权重0.3）</li>
-<li>分档：4档，百分制 &gt;=85、&gt;=75、&gt;=60、&lt;60</li>
+<li>分档：4档，百分制 &gt;&#x3D;85、&gt;&#x3D;75、&gt;&#x3D;60、&lt;60</li>
 </ul>
 </li>
-<li>广东高考-2011：模仿朗读、情景问答、故事复述<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup></li>
-<li>广西高考-2021 <sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup>
-<ul>
+<li>广东高考-2011：模仿朗读、情景问答、故事复述<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%B9%BF%E4%B8%9C%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E5%90%AC%E8%AF%B4%E8%80%83%E8%AF%95/2678957">^广东高考</a></li>
+<li>广西高考-2021 <a href="%5B%E5%B9%BF%E8%A5%BF%E9%AB%98%E8%80%83-2021%EF%BC%88%E6%8B%9B%E7%94%9F%E8%80%83%E8%AF%95%E9%99%A2%EF%BC%89%5D(https://www.gxeea.cn/gallary/upload_images/1173_26561_1606206201913.pdf)">^广西高考</a><ul>
 <li>模仿朗读：语音语调（权重0.5）、流利度（权重0.3）、完整度（权重0.2）</li>
 <li>口头表达：内容（权重0.5）、语法（0.27）、语音语调+流利度（0.23）</li>
 </ul>
 </li>
-<li>2019年江苏省初中英语听力口语自动化考试纲要：朗读短文（4档）、情景问答（2档）、话题简述（4档）<sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup></li>
-<li>宁波市2022年初中学业水平考试英语听力口语自动化考试说明：朗读短文（4档）、情景问答（3档）、话题简述（4档）<sup class="footnote-ref"><a href="#fn5" id="fnref5">[5]</a></sup></li>
+<li>2019年江苏省初中英语听力口语自动化考试纲要：朗读短文（4档）、情景问答（2档）、话题简述（4档）<a target="_blank" rel="noopener" href="https://jys.jsies.cn/htmledit/uploadfile/20190111153949047.pdf">^江苏中考</a></li>
+<li>宁波市2022年初中学业水平考试英语听力口语自动化考试说明：朗读短文（4档）、情景问答（3档）、话题简述（4档）<a target="_blank" rel="noopener" href="http://nbeea.nbedu.net.cn/ckfile/files/%E5%AE%81%E6%B3%A2%E5%B8%822022%E5%B9%B4%E5%88%9D%E4%B8%AD%E5%AD%A6%E4%B8%9A%E6%B0%B4%E5%B9%B3%E8%80%83%E8%AF%95%E8%8B%B1%E8%AF%AD%E5%90%AC%E5%8A%9B%E5%8F%A3%E8%AF%AD%E8%87%AA%E5%8A%A8%E5%8C%96%E8%80%83%E8%AF%95%E8%AF%B4%E6%98%8E.pdf">^宁波中考</a></li>
 <li><a target="_blank" rel="noopener" href="http://jyj.panjin.gov.cn/2019_09/24_00/content-65069.html">盘锦中考-2019</a>：朗读（4档）、情景问答（3档）</li>
 <li><a target="_blank" rel="noopener" href="http://edu.wenzhou.gov.cn/art/2022/3/3/art_1341152_59021518.html">温州中考-2022</a>：篇章朗读、情景问答、说话 （无评分标准介绍）</li>
 </ul>
-<h1 id="维度分考察点">2.  维度分考察点</h1>
-<table>
+<h1 id="维度分考察点">2. 维度分考察点</h1><table>
 <thead>
 <tr>
 <th>维度分</th>
@@ -492,22 +420,21 @@
 <th>分档描述</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>发音准确度</td>
-<td>语音、声调/单词重音</td>
-<td>与完整度无关，自由表述题中与正确答案无关<sup class="footnote-ref"><a href="#fn6" id="fnref6">[6]</a></sup></td>
-<td>5档：<br>语音、语调清晰、准确；<br>有错误，但不影响理解；<br>有错误，且有时影响理解；<br>有多处错误，且影响理解；<br>表现出较严重发音困难，且严重影响理解<sup class="footnote-ref"><a href="#fn3" id="fnref3:1">[3:1]</a></sup></td>
+<td>语音、声调&#x2F;单词重音</td>
+<td>与完整度无关，自由表述题中与正确答案无关[^先声]</td>
+<td>5档：<br>语音、语调清晰、准确；<br>有错误，但不影响理解；<br>有错误，且有时影响理解；<br>有多处错误，且影响理解；<br>表现出较严重发音困难，且严重影响理解[^广西高考]</td>
 </tr>
 <tr>
 <td>流畅度</td>
-<td>语速、停顿次数、重复<sup class="footnote-ref"><a href="#fn7" id="fnref7">[7]</a></sup></td>
-<td>与朗读的内容无关<sup class="footnote-ref"><a href="#fn6" id="fnref6:1">[6:1]</a></sup> <font style="background: green">（回读）</font></td>
-<td>5档：<br>朗读自然流利，语速适中，有节奏感<sup class="footnote-ref"><a href="#fn5" id="fnref5:1">[5:1]</a></sup>无语流中断，停顿和反复现象很少<sup class="footnote-ref"><a href="#fn1" id="fnref1:1">[1:1]</a></sup>；<br>基本流畅；<br>部分话语不够流畅；<br> 话语大部分不流畅; <br> 不流畅<sup class="footnote-ref"><a href="#fn3" id="fnref3:2">[3:2]</a></sup></td>
+<td>语速、停顿次数、重复[^讯飞]</td>
+<td>与朗读的内容无关[^先声] <font style="background: green">（回读）</font></td>
+<td>5档：<br>朗读自然流利，语速适中，有节奏感[^宁波中考]无语流中断，停顿和反复现象很少[^湖北SETS]；<br>基本流畅；<br>部分话语不够流畅；<br> 话语大部分不流畅; <br> 不流畅[^广西高考]</td>
 </tr>
 <tr>
-<td>标准度/韵律</td>
-<td>无中式口音，能灵活地运用连读、重读、失去爆破等发音技巧，节奏良好，感情充沛<sup class="footnote-ref"><a href="#fn7" id="fnref7:1">[7:1]</a></sup><br>意群停顿、升降调、句子重音<sup class="footnote-ref"><a href="#fn6" id="fnref6:2">[6:2]</a></sup></td>
+<td>标准度&#x2F;韵律</td>
+<td>无中式口音，能灵活地运用连读、重读、失去爆破等发音技巧，节奏良好，感情充沛[^讯飞]<br>意群停顿、升降调、句子重音[^先声]</td>
 <td></td>
 <td></td>
 </tr>
@@ -515,31 +442,22 @@
 <td>完整度</td>
 <td>朗读题：已读内容占提示文本的比例<br>自由表述题：要点覆盖率</td>
 <td></td>
-<td>5档：<br>内容丰富，完整、连贯；<br>内容基本完整、偶尔不够连贯；<br>有部分陈述不够完整，有时不连贯；<br>大部分陈述不完整，或不连贯；严重缺乏完整性和连贯性<sup class="footnote-ref"><a href="#fn3" id="fnref3:3">[3:3]</a></sup></td>
+<td>5档：<br>内容丰富，完整、连贯；<br>内容基本完整、偶尔不够连贯；<br>有部分陈述不够完整，有时不连贯；<br>大部分陈述不完整，或不连贯；严重缺乏完整性和连贯性[^广西高考]</td>
 </tr>
 <tr>
 <td>语法</td>
-<td>人称、单复数、时态、语态、动词的及物性；<br>词汇、短语、语法结构使用<sup class="footnote-ref"><a href="#fn3" id="fnref3:4">[3:4]</a></sup></td>
+<td>人称、单复数、时态、语态、动词的及物性；<br>词汇、短语、语法结构使用[^广西高考]</td>
 <td></td>
-<td>5档：<br>能用合适的词汇、短语、语法结构组织话语；<br>个别地方出现错误；<br>少量错误；<br>大部分不正确；<br>不能正确使用<sup class="footnote-ref"><a href="#fn3" id="fnref3:5">[3:5]</a></sup></td>
+<td>5档：<br>能用合适的词汇、短语、语法结构组织话语；<br>个别地方出现错误；<br>少量错误；<br>大部分不正确；<br>不能正确使用[^广西高考]</td>
 </tr>
-</tbody>
-</table>
-<h1 id="音标朗读">3.  音标朗读</h1>
-<h1 id="单词朗读">4.  单词朗读</h1>
-<h1 id="短文朗读">5.  短文朗读</h1>
-<h2 id="总分与维度分">5.1.  总分与维度分</h2>
-<blockquote>
-<p>成人句子：total_score = (0.6*accuracy_score + fluency_score*0.3 + standard_score*0.1)* integrity_score/100</p>
-<p>成人篇章：total_score = (0.5*accuracy_score + fluency_score*0.3 +standard_score*0.2)* integrity_score/100 <sup class="footnote-ref"><a href="#fn7" id="fnref7:2">[7:2]</a></sup></p>
+</tbody></table>
+<h1 id="音标朗读">3. 音标朗读</h1><h1 id="单词朗读">4. 单词朗读</h1><h1 id="短文朗读">5. 短文朗读</h1><h2 id="总分与维度分">5.1. 总分与维度分</h2><blockquote>
+<p>成人句子：total_score &#x3D; (0.6*accuracy_score + fluency_score*0.3 + standard_score*0.1)* integrity_score&#x2F;100</p>
+<p>成人篇章：total_score &#x3D; (0.5*accuracy_score + fluency_score*0.3 +standard_score*0.2)* integrity_score&#x2F;100 <a target="_blank" rel="noopener" href="https://www.xfyun.cn/doc/Ise/IseAPI.html">^讯飞</a></p>
 </blockquote>
-<h1 id="单项选择">6.  单项选择</h1>
-<p>用户只能按事先设定的固定答案作答；只有读正确答案并且发音正确、完整，才有得分；用户回答多个选项，以后面的回答为准。<sup class="footnote-ref"><a href="#fn6" id="fnref6:3">[6:3]</a></sup></p>
-<h1 id="情景问答">7.  情景问答</h1>
-<h2 id="题型说明">7.1.  题型说明</h2>
-<p>先描述一段场景，然后从描述的场景中提出一个问题，让回答者根据听到的场景回答问题<sup class="footnote-ref"><a href="#fn6" id="fnref6:4">[6:4]</a></sup></p>
-<h2 id="示例">7.2.  示例</h2>
-<p><sup class="footnote-ref"><a href="#fn6" id="fnref6:5">[6:5]</a></sup><sup class="footnote-ref"><a href="#fn8" id="fnref8">[8]</a></sup></p>
+<h1 id="单项选择">6. 单项选择</h1><p>用户只能按事先设定的固定答案作答；只有读正确答案并且发音正确、完整，才有得分；用户回答多个选项，以后面的回答为准。<a target="_blank" rel="noopener" href="https://open.singsound.com/doc/engine?type=engine-en-en.sent.score">^先声</a></p>
+<h1 id="情景问答">7. 情景问答</h1><h2 id="题型说明">7.1. 题型说明</h2><p>先描述一段场景，然后从描述的场景中提出一个问题，让回答者根据听到的场景回答问题<a target="_blank" rel="noopener" href="https://open.singsound.com/doc/engine?type=engine-en-en.sent.score">^先声</a></p>
+<h2 id="示例">7.2. 示例</h2><p><a target="_blank" rel="noopener" href="https://www.chivox.com/opendoc/#/ChineseDoc/coreEn">^先声</a></p>
 <pre class="line-numbers language-none"><code class="language-none">&quot;para&quot;（描述情景的文本）: &quot;It&#39;s unbelievable. He looks stupid, but in fact, he is such a great and humorous actor. What&#39;s going on? You know what? Mr. Bean graduate from Oxford University. Exactly, I am also very crazy about Mr. Bean. He is really a funny guy and he does have a great sense of humor. In my eyes, he is a genius. I really admire him. I couldn&#39;t agree more, and it&#39;s his giftedness and hard works that make him succeed. After seeing his interesting films, I feel cheerful and excited, he brings happiness to us. Yes, I hope we can bring laughter to people too, just like Mr. Bean. I can&#39;t wait to see more his films after class. But first thing first, let&#39;s get our homework done.&quot;,
 &quot;quest_ans&quot;（提问问题的文本）: &quot;What makes Mr. Bean so successful?&quot;,
 &quot;lm&quot;（可能的正确回答；每个text表示一种正确的回答）: [
@@ -557,9 +475,8 @@
 &quot;key&quot;（关键点可能的表述方式；关键点对打分的影响很大）:
     [[&quot;giftedness&quot;, &quot;gift&quot;, &quot;talent&quot;], &quot;hard work&quot;],
 &quot;unkey&quot;（错误答案，用户发音命中其中任一错误答案，对得分影响很大，得分会较低）:[&quot;no&quot;]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="评分标准">7.3.  评分标准</h2>
-<h3 id="广东高考">7.3.1.  广东高考</h3>
-<p><sup class="footnote-ref"><a href="#fn2" id="fnref2:1">[2:1]</a></sup></p>
+
+<h2 id="评分标准">7.3. 评分标准</h2><h3 id="广东高考">7.3.1. 广东高考</h3><p><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%B9%BF%E4%B8%9C%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E5%90%AC%E8%AF%B4%E8%80%83%E8%AF%95/2678957">^广东高考</a></p>
 <table>
 <thead>
 <tr>
@@ -568,8 +485,7 @@
 <th>分档描述</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>信息</td>
 <td>75%</td>
 <td>1.5分：按照要求传递了信息；<br>1分：基本按照要求传递信息（漏了一、两点次要信息、或添加了无关信息）；<br>0分：不能按照要求传递信息</td>
@@ -579,10 +495,8 @@
 <td>25%</td>
 <td>0.5分：不影响理解所表达的信息；<br>0分：导致不能理解所表达的信息</td>
 </tr>
-</tbody>
-</table>
-<h3 id="宁波中考">7.3.2.  宁波中考</h3>
-<p><sup class="footnote-ref"><a href="#fn5" id="fnref5:2">[5:2]</a></sup></p>
+</tbody></table>
+<h3 id="宁波中考">7.3.2. 宁波中考</h3><p><a target="_blank" rel="noopener" href="http://nbeea.nbedu.net.cn/ckfile/files/%E5%AE%81%E6%B3%A2%E5%B8%822022%E5%B9%B4%E5%88%9D%E4%B8%AD%E5%AD%A6%E4%B8%9A%E6%B0%B4%E5%B9%B3%E8%80%83%E8%AF%95%E8%8B%B1%E8%AF%AD%E5%90%AC%E5%8A%9B%E5%8F%A3%E8%AF%AD%E8%87%AA%E5%8A%A8%E5%8C%96%E8%80%83%E8%AF%95%E8%AF%B4%E6%98%8E.pdf">^宁波中考</a></p>
 <table>
 <thead>
 <tr>
@@ -590,8 +504,7 @@
 <th>评分标准</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>1</td>
 <td>意思明白，表达清楚，语音、语调正确，词语、语法合乎规范。</td>
 </tr>
@@ -603,28 +516,21 @@
 <td>0</td>
 <td>答非所问，或错误很多，不能达意。</td>
 </tr>
-</tbody>
-</table>
-<h3 id="其它版本">7.3.3.  其它版本</h3>
-<ul>
-<li>江苏中考（2档）<sup class="footnote-ref"><a href="#fn4" id="fnref4:1">[4:1]</a></sup>、深圳中考、衢州中考</li>
+</tbody></table>
+<h3 id="其它版本">7.3.3. 其它版本</h3><ul>
+<li>江苏中考（2档）<a target="_blank" rel="noopener" href="https://jys.jsies.cn/htmledit/uploadfile/20190111153949047.pdf">^江苏中考</a>、深圳中考、衢州中考</li>
 </ul>
-<h3 id="维度分">7.3.4.  维度分</h3>
-<p>驰声：内容、语法、发音、流利度</p>
+<h3 id="维度分">7.3.4. 维度分</h3><p>驰声：内容、语法、发音、流利度</p>
 <p>先声：完整度、发音、流利度，只建议展示总分</p>
-<h1 id="故事复述">8.  故事复述</h1>
-<p><sup class="footnote-ref"><a href="#fn2" id="fnref2:2">[2:2]</a></sup></p>
-<h2 id="题型说明-2">8.1.  题型说明</h2>
-<p>Retelling(故事复述)，要求考生先听一段大约两分钟的独白，录音播放两遍。考生准备一分钟之后开始复述所听的内容。要求考生尽可能使用自己的语言复述，而且复述内容应涵盖尽可能多的原文信息点。选取的独白其体裁主要以记述文和议论文为主。</p>
-<h2 id="示例-2">8.2.  示例</h2>
-<p><font style="background: yellow">（300词左右）</font></p>
+<h1 id="故事复述">8. 故事复述</h1><p><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%B9%BF%E4%B8%9C%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E5%90%AC%E8%AF%B4%E8%80%83%E8%AF%95/2678957">^广东高考</a></p>
+<h2 id="题型说明-1">8.1. 题型说明</h2><p>Retelling(故事复述)，要求考生先听一段大约两分钟的独白，录音播放两遍。考生准备一分钟之后开始复述所听的内容。要求考生尽可能使用自己的语言复述，而且复述内容应涵盖尽可能多的原文信息点。选取的独白其体裁主要以记述文和议论文为主。</p>
+<h2 id="示例-1">8.2. 示例</h2><p><font style="background: yellow">（300词左右）</font></p>
 <p><strong>A Young Man’s Present</strong></p>
 <p>A young man who lived in London was in love with a beautiful girl. Soon she became his girlfriend. The man was very poor while the girl was rich. The young man wanted to give her a present on her birthday. He wanted to buy something beautiful for her, but he had no idea how to do it, as he had very little money. The next morning he went to a shop. There were many fine things: rings, gold watches, diamonds — but all these things were too expensive. There was one thing he could not take his eyes off. It was a beautiful vase. That was a suitable present for his girlfriend. He had been looking at the vase for half an hour when the manager of the shop noticed him. The young man looked so pale, sad and unhappy that the manager asked what had happened to him.</p>
 <p>The young man told him everything, The manager felt sorry for him and decided to help him. He came up with a good idea. The manager pointed to the corner of the shop. To his great surprise the young man saw a vase broken into many pieces. The manager said: “I can help you. I shall order my worker to pack it and take it to your girlfriend. When he enters the room, he will drop it.”</p>
 <p>On the birthday of his girlfriend the young man was very excited.</p>
 <p>Everything happened as had been planned. The worker brought in the vase, and as he entered the room, he dropped it. There was horror on everybody’s face. When the vase was unpacked the guests saw that each piece was packed separately.</p>
-<h2 id="评分标准-2">8.3.  评分标准</h2>
-<table>
+<h2 id="评分标准-1">8.3. 评分标准</h2><table>
 <thead>
 <tr>
 <th></th>
@@ -634,8 +540,7 @@
 <th>语音</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>权重</td>
 <td>50%</td>
 <td>16.7%</td>
@@ -649,40 +554,15 @@
 <td></td>
 <td>语音语调</td>
 </tr>
-</tbody>
-</table>
-<p>考生不按话题规定内容表述或套背内容毫不相干的范文：0分<sup class="footnote-ref"><a href="#fn3" id="fnref3:6">[3:6]</a></sup></p>
-<h1 id="话题简述">9.  话题简述</h1>
-<h1 id="信度-效度">10.  信度、效度</h1>
-<ul>
-<li>信度：多位专家打分，分数是否一致
-<ul>
+</tbody></table>
+<p>考生不按话题规定内容表述或套背内容毫不相干的范文：0分<a href="%5B%E5%B9%BF%E8%A5%BF%E9%AB%98%E8%80%83-2021%EF%BC%88%E6%8B%9B%E7%94%9F%E8%80%83%E8%AF%95%E9%99%A2%EF%BC%89%5D(https://www.gxeea.cn/gallary/upload_images/1173_26561_1606206201913.pdf)">^广西高考</a></p>
+<h1 id="话题简述">9. 话题简述</h1><h1 id="信度、效度">10. 信度、效度</h1><ul>
+<li>信度：多位专家打分，分数是否一致<ul>
 <li>人工评分平均相关度、平均误差：计算评测员1与其它评测员的平均分的相关度、平均误差，作为评测员1的评分性能；以此类推；取多名评测员的平均作为人工评分性能</li>
 </ul>
 </li>
 <li>效度：分数能否真实反映学生水平</li>
 </ul>
-<hr class="footnotes-sep">
-<section class="footnotes">
-<ol class="footnotes-list">
-<li id="fn1" class="footnote-item"><p><a target="_blank" rel="noopener" href="http://www.hbea.edu.cn/html/2018-11/12162.html">http://www.hbea.edu.cn/html/2018-11/12162.html</a> <a href="#fnref1" class="footnote-backref">↩︎</a> <a href="#fnref1:1" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn2" class="footnote-item"><p><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%B9%BF%E4%B8%9C%E9%AB%98%E8%80%83%E8%8B%B1%E8%AF%AD%E5%90%AC%E8%AF%B4%E8%80%83%E8%AF%95/2678957">https://baike.baidu.com/item/广东高考英语听说考试/2678957</a> <a href="#fnref2" class="footnote-backref">↩︎</a> <a href="#fnref2:1" class="footnote-backref">↩︎</a> <a href="#fnref2:2" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn3" class="footnote-item"><p><a target="_blank" rel="noopener" href="https://www.gxeea.cn/gallary/upload_images/1173_26561_1606206201913.pdf">广西高考-2021（招生考试院）</a> <a href="#fnref3" class="footnote-backref">↩︎</a> <a href="#fnref3:1" class="footnote-backref">↩︎</a> <a href="#fnref3:2" class="footnote-backref">↩︎</a> <a href="#fnref3:3" class="footnote-backref">↩︎</a> <a href="#fnref3:4" class="footnote-backref">↩︎</a> <a href="#fnref3:5" class="footnote-backref">↩︎</a> <a href="#fnref3:6" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn4" class="footnote-item"><p><a target="_blank" rel="noopener" href="https://jys.jsies.cn/htmledit/uploadfile/20190111153949047.pdf">https://jys.jsies.cn/htmledit/uploadfile/20190111153949047.pdf</a> <a href="#fnref4" class="footnote-backref">↩︎</a> <a href="#fnref4:1" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn5" class="footnote-item"><p><a target="_blank" rel="noopener" href="http://nbeea.nbedu.net.cn/ckfile/files/%E5%AE%81%E6%B3%A2%E5%B8%822022%E5%B9%B4%E5%88%9D%E4%B8%AD%E5%AD%A6%E4%B8%9A%E6%B0%B4%E5%B9%B3%E8%80%83%E8%AF%95%E8%8B%B1%E8%AF%AD%E5%90%AC%E5%8A%9B%E5%8F%A3%E8%AF%AD%E8%87%AA%E5%8A%A8%E5%8C%96%E8%80%83%E8%AF%95%E8%AF%B4%E6%98%8E.pdf">http://nbeea.nbedu.net.cn/ckfile/files/宁波市2022年初中学业水平考试英语听力口语自动化考试说明.pdf</a> <a href="#fnref5" class="footnote-backref">↩︎</a> <a href="#fnref5:1" class="footnote-backref">↩︎</a> <a href="#fnref5:2" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn6" class="footnote-item"><p><a target="_blank" rel="noopener" href="https://open.singsound.com/doc/engine?type=engine-en-en.sent.score">https://open.singsound.com/doc/engine?type=engine-en-en.sent.score</a> <a href="#fnref6" class="footnote-backref">↩︎</a> <a href="#fnref6:1" class="footnote-backref">↩︎</a> <a href="#fnref6:2" class="footnote-backref">↩︎</a> <a href="#fnref6:3" class="footnote-backref">↩︎</a> <a href="#fnref6:4" class="footnote-backref">↩︎</a> <a href="#fnref6:5" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn7" class="footnote-item"><p><a target="_blank" rel="noopener" href="https://www.xfyun.cn/doc/Ise/IseAPI.html">https://www.xfyun.cn/doc/Ise/IseAPI.html</a> <a href="#fnref7" class="footnote-backref">↩︎</a> <a href="#fnref7:1" class="footnote-backref">↩︎</a> <a href="#fnref7:2" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn8" class="footnote-item"><p><a target="_blank" rel="noopener" href="https://www.chivox.com/opendoc/#/ChineseDoc/coreEn">https://www.chivox.com/opendoc/#/ChineseDoc/coreEn</a> <a href="#fnref8" class="footnote-backref">↩︎</a></p>
-</li>
-</ol>
-</section>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
             </div>
@@ -732,8 +612,6 @@
 
     
 
-    
-
     <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
@@ -741,9 +619,11 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <div class="card-title">
-                    <a href="/blog/yu-yin/gong-ju-bao/kaldi/cleanup-segmentation.mm/"> cleanup_segmentation</a>
-                </div>
+                <a href="/blog/yu-yin/gong-ju-bao/kaldi/cleanup-segmentation.mm/">
+                    <div class="card-content">
+                        <span class="card-title">cleanup_segmentation</span>
+                    </div>
+                </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
@@ -753,6 +633,7 @@
                     <div class="publish-info">
                         <span class="publish-date">
                             <i class="far fa-clock fa-fw icon-date"></i>2022-05-21
+                            <i class="far fa-edit fa-fw icon-date"></i>2022-06-12
                         </span>
                         <span class="publish-author">
                             
@@ -784,9 +665,11 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <div class="card-title">
-                    <a href="/blog/yu-yin/yu-yin-ping-ce/ying-wen-kou-yu-ping-ce-gong-neng/"> 英文口语评测功能</a>
-                </div>
+                <a href="/blog/yu-yin/yu-yin-ping-ce/ying-wen-kou-yu-ping-ce-gong-neng/">
+                    <div class="card-content">
+                        <span class="card-title">英文口语评测功能</span>
+                    </div>
+                </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
@@ -796,6 +679,7 @@
                     <div class="publish-info">
                             <span class="publish-date">
                                 <i class="far fa-clock fa-fw icon-date"></i>2022-05-04
+                                <i class="far fa-edit fa-fw icon-date"></i>2022-09-25
                             </span>
                         <span class="publish-author">
                             
@@ -868,6 +752,11 @@
 <!-- 代码块功能依赖 -->
 <script type="text/javascript" src="/blog/libs/codeBlock/codeBlockFuction.js"></script>
 
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/blog/libs/prism/prism.min.js"></script>
+
+
 <!-- 代码语言 -->
 
 <script type="text/javascript" src="/blog/libs/codeBlock/codeLang.js"></script>
@@ -881,6 +770,7 @@
 <!-- 代码块收缩 -->
 
 <script type="text/javascript" src="/blog/libs/codeBlock/codeShrink.js"></script>
+
 
 
     </div>
@@ -1038,6 +928,7 @@
             <a href="/blog/about" target="_blank">nanyang</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
             <br>
             
             
@@ -1189,6 +1080,30 @@ $(function () {
 });
 </script>
 
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
     <!-- 回到顶部按钮 -->
 <div id="backTop" class="top-scroll">
     <a class="btn-floating btn-large waves-effect waves-light" href="#!">
@@ -1212,6 +1127,8 @@ $(function () {
             mermaid.initialize({theme: 'neutral'});
           }
         </script>
+    
+
     
 
     
@@ -1247,6 +1164,21 @@ $(function () {
     <script src="/blog/libs/instantpage/instantpage.js" type="module"></script>
     
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 
 </html>
