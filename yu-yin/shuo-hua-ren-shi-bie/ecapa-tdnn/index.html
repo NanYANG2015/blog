@@ -5,12 +5,16 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="ECAPA-TDNN, 梦园">
-    <meta name="description" content="1. 结构特点集成了计算机视觉领域最新的增强模块：Res2Net、SE block，聚合多层的特征，并采用 channel-dependent 帧注意力改进了统计池化模块。
+    <meta name="description" content="1. 结构特点
+集成了计算机视觉领域最新的增强模块：Res2Net、SE
+block，聚合多层的特征，并采用 channel-dependent
+帧注意力改进了统计池化模块。
 2. 系统结构
 
 
 3. 特征提取
-数据增强：为每句话生成6个额外">
+
+数据增强">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -351,7 +355,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-07-30
+                    2024-07-11
                 </div>
                 
 
@@ -373,87 +377,119 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="结构特点">1. 结构特点</h1><p>集成了计算机视觉领域最新的增强模块：Res2Net、SE block，聚合多层的特征，并采用 channel-dependent 帧注意力改进了统计池化模块。</p>
-<h1 id="系统结构">2. 系统结构</h1><img src="https://note.youdao.com/yws/api/personal/file/WEBe03b7ab1ccd2402b22ce13eb3be6ce5a?method=download&shareKey=c864e0ebfeafd8d51f27e9d819df55e5" width="443">
-<img src="https://note.youdao.com/yws/api/personal/file/WEBb244ce5a3bcad0e1a25fa95a504b6f89?method=download&shareKey=3f37b0c013ccdeb9c16a91877158c65c" width="440">
-
-<h1 id="特征提取">3. 特征提取</h1><ul>
-<li>数据增强：为每句话生成6个额外的样本<ul>
+                <h1 id="结构特点">1. 结构特点</h1>
+<p>集成了计算机视觉领域最新的增强模块：Res2Net、SE
+block，聚合多层的特征，并采用 channel-dependent
+帧注意力改进了统计池化模块。</p>
+<h1 id="系统结构">2. 系统结构</h1>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBe03b7ab1ccd2402b22ce13eb3be6ce5a?method=download&shareKey=c864e0ebfeafd8d51f27e9d819df55e5" width="443">
+<img src="https://note.youdao.com/yws/api/personal/file/WEBb244ce5a3bcad0e1a25fa95a504b6f89?method=download&shareKey=3f37b0c013ccdeb9c16a91877158c65c" width="440"></p>
+<h1 id="特征提取">3. 特征提取</h1>
+<ul>
+<li>数据增强：为每句话生成6个额外的样本
+<ul>
 <li>kaldi 加噪（MUSAN babble、noise）、加混响（RIR数据集[21]）</li>
-<li>SoX 变速（tempo up, tempo down）、FFmpeg 压缩（交替 opus 或 aac 压缩）</li>
-<li>speechbrain 实现<ul>
-<li>concat_augment：可选择多种数据增强方式 串行（样本量不变） 或 1个batch内并行（batch_size *&#x3D; X）</li>
-<li>时域增强<ul>
-<li>变速：采用基于sinc的插值进行重采样，比如重采样到原始音频长度的[90%, 100%, 110%]。<font color="green">注意：由于特征提取时默认所有信号为原始采样率，所以重采样到90%采样率的实际效果，为语速*1.11，音高*1.11 </font></li>
+<li>SoX 变速（tempo up, tempo down）、FFmpeg 压缩（交替 opus 或 aac
+压缩）</li>
+<li>speechbrain 实现
+<ul>
+<li>concat_augment：可选择多种数据增强方式 串行（样本量不变） 或
+1个batch内并行（batch_size *= X）</li>
+<li>时域增强
+<ul>
+<li>变速：采用基于sinc的插值进行重采样，比如重采样到原始音频长度的[90%,
+100%,
+110%]。<font color="green">注意：由于特征提取时默认所有信号为原始采样率，所以重采样到90%采样率的实际效果，为语速*1.11，音高*1.11
+</font></li>
 <li>采用滤波器随机mask部分频带。<font color="red">作用：帮助模型学习到依赖所有频带，而不是其中的少部分</font></li>
 <li>随机mask部分音频片段，可选是否填充白噪声<code>4A * torch.rand() - 2A</code>，其中<code>A</code>为原始音频的平均幅值，默认全部置0。作用：帮助模型学习到依赖整个信号</li>
 <li>上述3种增强方式 可选是否添加，串行</li>
-</ul>
-</li>
-<li>环境扰动<ul>
-<li>加混响：采用room 冲击响应<ul>
-<li><a target="_blank" rel="noopener" href="http://www.openslr.org/resources/28/rirs_noises.zip">http://www.openslr.org/resources/28/rirs_noises.zip</a></li>
-</ul>
-</li>
+</ul></li>
+<li>环境扰动
+<ul>
+<li>加混响：采用room 冲击响应
+<ul>
+<li><a target="_blank" rel="noopener" href="http://www.openslr.org/resources/28/rirs_noises.zip" class="uri">http://www.openslr.org/resources/28/rirs_noises.zip</a></li>
+</ul></li>
 <li>加babble</li>
 <li>加噪</li>
 <li>上述3种增强方式 可选是否添加，串行</li>
-</ul>
-</li>
-<li>由此导致的音频长度改变 需要通过末尾截断 或 补0 来与原音频保持一致</li>
+</ul></li>
+<li>由此导致的音频长度改变 需要通过末尾截断 或 补0
+来与原音频保持一致</li>
 <li>实现详见<code>speechbrain.processing.speech_augmentation</code></li>
-</ul>
-</li>
-</ul>
-</li>
-<li>输入特征：80维 MFCCs，<font color="green">随机裁剪为2s的片段</font>，倒谱均值减法，不加VAD。<ul>
+</ul></li>
+</ul></li>
+<li>输入特征：80维
+MFCCs，<font color="green">随机裁剪为2s的片段</font>，倒谱均值减法，不加VAD。
+<ul>
 <li>speechbrain 实现：60维 Fbank</li>
-</ul>
-</li>
+</ul></li>
 <li>SpecAugment</li>
 </ul>
-<h1 id="Res2Net">4. Res2Net</h1><p><a href="https://nanyang2015.github.io/blog/ji-qi-xue-xi/cnn/res2net/">Res2Net</a>：表示多尺度的特征，增大感受野。</p>
-<p>论文与 speechbrain 实现的差异：论文中 Res2 Dilated Conv1D 前后的dense layer，前一个 dense layer 降低通道维度，后一个 dense layer 恢复通道维度，从而控制参数量。</p>
-<h1 id="Squeeze-Excitation-Block">5. Squeeze-Excitation Block</h1><p><a href="https://nanyang2015.github.io/blog/ji-qi-xue-xi/cnn/senet/">SE Block</a>：显式地建模通道间的相关性，根据输入的全局特征，自适应地对各个通道的 feature map 重新加权。</p>
-<h1 id="多层特征聚合">6. 多层特征聚合</h1><p>出发点：浅层的特征也有助于更鲁棒的embedding。</p>
+<h1 id="res2net">4. Res2Net</h1>
+<p><a href="https://nanyang2015.github.io/blog/ji-qi-xue-xi/cnn/res2net/">Res2Net</a>：表示多尺度的特征，增大感受野。</p>
+<p>论文与 speechbrain 实现的差异：论文中 Res2 Dilated Conv1D 前后的dense
+layer，前一个 dense layer 降低通道维度，后一个 dense layer
+恢复通道维度，从而控制参数量。</p>
+<h1 id="squeeze-excitation-block">5. Squeeze-Excitation Block</h1>
+<p><a href="https://nanyang2015.github.io/blog/ji-qi-xue-xi/cnn/senet/">SE
+Block</a>：显式地建模通道间的相关性，根据输入的全局特征，自适应地对各个通道的
+feature map 重新加权。</p>
+<h1 id="多层特征聚合">6. 多层特征聚合</h1>
+<p>出发点：浅层的特征也有助于更鲁棒的embedding。</p>
 <ul>
 <li>拼接所有SE-Res2Blocks的输出feature map，经过1层dense层。</li>
-<li>SE-Res2Block 的残差连接实现为前面所有SE-Res2Blocks的输出的和。求和，而不是拼接，用于约束模型参数量。（speechbrain 未实现）</li>
+<li>SE-Res2Block
+的残差连接实现为前面所有SE-Res2Blocks的输出的和。求和，而不是拼接，用于约束模型参数量。（speechbrain
+未实现）</li>
 </ul>
-<h1 id="channel-dependent-attentive-statistics-pooling">7. channel-dependent attentive statistics pooling</h1><ul>
-<li><font color="red">出发点：将时间注意力机制进一步扩展到通道维度，使得网络可以关注不会同时激活的说话人特征，如元音和辅音属性（不同 channel 的时间注意力系数不一样）。</font></li>
-<li>实现<ul>
-<li><p><font color="red">将 $\boldsymbol{h}_t$ 与其整句的 非加权的均值、标准差拼接（$C*&#x3D;3$），使得attention能自适应句子的全局属性，如噪声、录音环境。</font></p>
-</li>
-<li><p>channel attention：channel 维的 bottleneck 结构的两层全连接，所有时刻参数共享。</p>
+<h1 id="channel-dependent-attentive-statistics-pooling">7. channel-dependent
+attentive statistics pooling</h1>
 <ul>
-<li>speechbrain 实现<pre class="line-numbers language-none"><code class="language-none">self.tdnn &#x3D; TDNNBlock(channels * 3, attention_channels, 1, 1)  # 降维
+<li><font color="red">出发点：将时间注意力机制进一步扩展到通道维度，使得网络可以关注不会同时激活的说话人特征，如元音和辅音属性（不同
+channel 的时间注意力系数不一样）。</font></li>
+<li>实现
+<ul>
+<li><p><font color="red">将 <span class="math inline">\(\boldsymbol{h}_t\)</span> 与其整句的
+非加权的均值、标准差拼接（<span class="math inline">\(C*=3\)</span>），使得attention能自适应句子的全局属性，如噪声、录音环境。</font></p></li>
+<li><p>channel attention：channel 维的 bottleneck
+结构的两层全连接，所有时刻参数共享。</p>
+<ul>
+<li>speechbrain 实现 <pre class="line-numbers language-none"><code class="language-none">self.tdnn &#x3D; TDNNBlock(channels * 3, attention_channels, 1, 1)  # 降维
 self.tanh &#x3D; nn.Tanh()
 self.conv &#x3D; Conv1d(in_channels&#x3D;attention_channels, out_channels&#x3D;channels, kernel_size&#x3D;1)  # 恢复原始形状
 
 attn &#x3D; self.conv(self.tanh(self.tdnn(attn)))
 attn &#x3D; F.softmax(attn, dim&#x3D;2)  # 沿时间轴做softmax<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul></li>
+<li><p><font color="red">attentive statistics pooling：attention
+到不同帧，类似VAD以检测无关的非语音帧。</font></p>
+<p>加权均值： <span class="math display">\[\tilde{\mu}_c=\sum_t^T
+\alpha_{t, c} h_{t, c}\]</span></p>
+<p>加权标准差： <span class="math display">\[\tilde{\sigma}_c=\sqrt{\sum_t^T \alpha_{t, c}
+(h_{t, c}-\tilde{\mu}_c)^2}=\sqrt{\sum_t^T \alpha_{t, c} h_{t,
+c}^2-\tilde{\mu}_c^2}\]</span></p>
+<p>pooling层的输出为 <span class="math inline">\(\tilde{\mu}\)</span>、<span class="math inline">\(\tilde{\sigma}\)</span> 拼接</p></li>
+</ul></li>
 </ul>
-</li>
-<li><p><font color="red">attentive statistics pooling：attention 到不同帧，类似VAD以检测无关的非语音帧。</font></p>
-<p>加权均值：<br>$$\tilde{\mu}<em>c&#x3D;\sum_t^T \alpha</em>{t, c} h_{t, c}$$</p>
-<p>加权标准差：<br>$$\tilde{\sigma}<em>c&#x3D;\sqrt{\sum_t^T \alpha</em>{t, c} (h_{t, c}-\tilde{\mu}<em>c)^2}&#x3D;\sqrt{\sum_t^T \alpha</em>{t, c} h_{t, c}^2-\tilde{\mu}_c^2}$$</p>
-<p>pooling层的输出为 $\tilde{\mu}$、$\tilde{\sigma}$ 拼接</p>
-</li>
+<h1 id="bottleneck-结构的两层全连接">8. bottleneck 结构的两层全连接</h1>
+<p>bottleneck 层的输出可以作为低维的说话人embedding。</p>
+<h1 id="训练">9. 训练</h1>
+<ul>
+<li>采用参考文献[23]中的 triangular2 policy，循环学习率，[1e-8,
+1e-3]，一次循环为 130k 迭代。</li>
+<li><font color="green">AAM-softmax，margin 0.2，softmax prescaling of
+30 for 4 cycles。</font></li>
 </ul>
-</li>
-</ul>
-<h1 id="bottleneck-结构的两层全连接">8. bottleneck 结构的两层全连接</h1><p>bottleneck 层的输出可以作为低维的说话人embedding。</p>
-<h1 id="训练">9. 训练</h1><ul>
-<li>采用参考文献[23]中的 triangular2 policy，循环学习率，[1e-8, 1e-3]，一次循环为 130k 迭代。</li>
-<li><font color="green">AAM-softmax，margin 0.2，softmax prescaling of 30 for 4 cycles。</font></li>
-</ul>
-<h1 id="实验结果">10. 实验结果</h1><img src="https://note.youdao.com/yws/api/personal/file/WEBe9098186e1d400650ef1821ea33629ef?method=download&shareKey=f434762b2145eb1db885eb270b0c89d4" width="727">
-
-<img src="https://note.youdao.com/yws/api/personal/file/WEB08c933cf955a2b189352633460c292fb?method=download&shareKey=0a0a54795b59fa9de701da3df3d15f9e" width="350">
-
-<h1 id="论文">11. 论文</h1><ul>
-<li>Desplanques B, Thienpondt J, Demuynck K. ECAPA-TDNN: Emphasized channel attention, propagation and aggregation in TDNN based speaker verification[J]. arXiv preprint arXiv:2005.07143, 2020.</li>
+<h1 id="实验结果">10. 实验结果</h1>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBe9098186e1d400650ef1821ea33629ef?method=download&shareKey=f434762b2145eb1db885eb270b0c89d4" width="727"></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB08c933cf955a2b189352633460c292fb?method=download&shareKey=0a0a54795b59fa9de701da3df3d15f9e" width="350"></p>
+<h1 id="论文">11. 论文</h1>
+<ul>
+<li>Desplanques B, Thienpondt J, Demuynck K. ECAPA-TDNN: Emphasized
+channel attention, propagation and aggregation in TDNN based speaker
+verification[J]. arXiv preprint arXiv:2005.07143, 2020.</li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
@@ -525,7 +561,7 @@ attn &#x3D; F.softmax(attn, dim&#x3D;2)  # 沿时间轴做softmax<span aria-hidd
                     <div class="publish-info">
                         <span class="publish-date">
                             <i class="far fa-clock fa-fw icon-date"></i>2023-08-06
-                            <i class="far fa-edit fa-fw icon-date"></i>2023-08-06
+                            <i class="far fa-edit fa-fw icon-date"></i>2024-07-11
                         </span>
                         <span class="publish-author">
                             
@@ -743,7 +779,7 @@ attn &#x3D; F.softmax(attn, dim&#x3D;2)  # 沿时间轴做softmax<span aria-hidd
 </main>
 
 
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 <script>
     MathJax.Hub.Config({
         tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
@@ -1055,21 +1091,6 @@ $(function () {
     <script src="/blog/libs/instantpage/instantpage.js" type="module"></script>
     
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 
 </html>

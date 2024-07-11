@@ -8,10 +8,10 @@
     <meta name="description" content="
 作者：Surrey 大学、字节跳动等。
 特点
+
 语音、音乐、音效 生成统一框架。有条件生成。
-类似 MusicLM、AudioLM，分别采用语义 token、声学 token，本文中分别对应 AudioMAE、VAE 表示。
-生成流程
-采用">
+类似 MusicLM、AudioLM，分别采用语义 token、声学
+token，本文中分别对应 AudioMAE、VAE 表示。">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -380,67 +380,117 @@
             <div id="articleContent">
                 <ul>
 <li>作者：Surrey 大学、字节跳动等。</li>
-<li><font color="red">特点<ul>
+<li><font color="red">特点
+<ul>
 <li>语音、音乐、音效 生成统一框架。有条件生成。</li>
-<li>类似 MusicLM、AudioLM，分别采用语义 token、声学 token，本文中分别对应 AudioMAE、VAE 表示。</li>
-<li>生成流程<ul>
+<li>类似 MusicLM、AudioLM，分别采用语义 token、声学
+token，本文中分别对应 AudioMAE、VAE 表示。</li>
+<li>生成流程
+<ul>
 <li>采用多个 encoder，将多种条件拼接、输入 GPT-2；</li>
 <li>GPT-2 生成语义 token（AudioMAE）；</li>
 <li>采用 LDM，以语义 token 为条件，生成声学token（VAE 表示）；</li>
 <li>采用 VAE decoder 重建 mel 谱；</li>
 <li>采用 HiFiGAN vocoder 生成音频采样点。</li>
-</ul>
-</li>
+</ul></li>
 <li>性能：text-to-audio、text-to-music SOTA，text-to-speech 显著优于 <a target="_blank" rel="noopener" href="https://huggingface.co/facebook/fastspeech2-en-ljspeech">FastSpeech2</a>。</li></ul></font></li>
 </ul>
 
-
-<h1 id="系统结构">1. 系统结构</h1><img src="https://note.youdao.com/yws/api/personal/file/WEBc0570aabe53121fdbfb3c238483c7c19?method=download&shareKey=80e274ee308805c24d26944870725bdb" width="921">
-
-<p>$$ \mathcal{H}_0&#x3D;\mathcal{G} \circ \mathcal{M}: C \mapsto \hat{Y} \mapsto x $$<br>$$ Y&#x3D;\mathcal{A}(x) $$</p>
-<p>其中，$C$ 为 condition，可以是文本、音素、音频、图像等。$\hat{Y}$ 为音频中间表示，$x$ 为采样点。$\mathcal{A}$ 为自监督表示学习预训练模型，如 AudioMAE。$\mathcal{M}: C \mapsto \hat{Y}$ 采用 GPT-2。$\hat{Y} \mapsto x$ 采用 latent diffusion 模型（VAE 表示） + VAE decoder（mel 谱） + HiFiGAN vocoder（采样点）。</p>
-<h2 id="AudioMAE">1.1. AudioMAE</h2><ul>
-<li>相较于其它自监督预训练模型的优势<ul>
-<li>相较于专注特定领域的模型，如 MERT（音乐）、HuBERT（语音），AudioMAE 在 AudioSet 多种音频上进行了预训练，在通用音频分类任务上具有 SOTA 性能。</li>
-<li><font color="green">相较于采用对比 loss、next token 预测等判别性损失，如 wav2vec，AudioMAE 采用重建损失，可能更适合生成任务。</font></li>
+<h1 id="系统结构">1. 系统结构</h1>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBc0570aabe53121fdbfb3c238483c7c19?method=download&shareKey=80e274ee308805c24d26944870725bdb" width="921"></p>
+<p><span class="math display">\[ \mathcal{H}_0=\mathcal{G} \circ
+\mathcal{M}: C \mapsto \hat{Y} \mapsto x \]</span> <span class="math display">\[ Y=\mathcal{A}(x) \]</span></p>
+<p>其中，<span class="math inline">\(C\)</span> 为
+condition，可以是文本、音素、音频、图像等。<span class="math inline">\(\hat{Y}\)</span> 为音频中间表示，<span class="math inline">\(x\)</span> 为采样点。<span class="math inline">\(\mathcal{A}\)</span>
+为自监督表示学习预训练模型，如 AudioMAE。<span class="math inline">\(\mathcal{M}: C \mapsto \hat{Y}\)</span> 采用
+GPT-2。<span class="math inline">\(\hat{Y} \mapsto x\)</span> 采用
+latent diffusion 模型（VAE 表示） + VAE decoder（mel 谱） + HiFiGAN
+vocoder（采样点）。</p>
+<h2 id="audiomae">1.1. AudioMAE</h2>
+<ul>
+<li>相较于其它自监督预训练模型的优势
+<ul>
+<li>相较于专注特定领域的模型，如 MERT（音乐）、HuBERT（语音），AudioMAE
+在 AudioSet 多种音频上进行了预训练，在通用音频分类任务上具有 SOTA
+性能。</li>
+<li><font color="green">相较于采用对比 loss、next token
+预测等判别性损失，如 wav2vec，AudioMAE
+采用重建损失，可能更适合生成任务。</font></li>
+</ul></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/facebookresearch/AudioMAE">audio masked
+autoencoder (AudioMAE)</a> encoder：将 log mel 谱，采用 <span class="math inline">\(k=s=P, c=D\)</span>的卷积，分割成 <span class="math inline">\(P \times P\)</span> 的 patch，encoder 输出 <span class="math inline">\(E \in \mathbb{R}^{T^{\prime} \times F^{\prime}
+\times D}\)</span>，<span class="math inline">\(T^{\prime}=T /
+P\)</span>，<span class="math inline">\(F^{\prime}=F / P\)</span>。</li>
+<li>后处理：2D <font color="green">average-max
+pooling[52]（保留时频关系）</font><span class="math inline">\(k=s=\lambda\)</span>，reshape，得到 embedding 序列
+<span class="math inline">\(L_\lambda \times D\)</span>，<span class="math inline">\(L_\lambda=T^{\prime} F^{\prime} /
+\lambda^2\)</span>。</li>
 </ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/facebookresearch/AudioMAE">audio masked autoencoder (AudioMAE)</a> encoder：将 log mel 谱，采用 $k&#x3D;s&#x3D;P, c&#x3D;D$的卷积，分割成 $P \times P$ 的 patch，encoder 输出 $E \in \mathbb{R}^{T^{\prime} \times F^{\prime} \times D}$，$T^{\prime}&#x3D;T &#x2F; P$，$F^{\prime}&#x3D;F &#x2F; P$。</li>
-<li>后处理：2D <font color="green">average-max pooling[52]（保留时频关系）</font>$k&#x3D;s&#x3D;\lambda$，reshape，得到 embedding 序列 $L_\lambda \times D$，$L_\lambda&#x3D;T^{\prime} F^{\prime} &#x2F; \lambda^2$。</li>
+<h2 id="vae">1.2. VAE</h2>
+<ul>
+<li>variational autoencoder (VAE) 用于 LDM。<span class="math inline">\(\mathcal{V}: X \mapsto z \mapsto
+\hat{X}\)</span>，压缩 mel 谱、重建。</li>
+<li><font color="green">优化目标：重建损失 + 判别损失 + <span class="math inline">\(z\)</span> 和标准高斯的 KL 散度（约束 latent
+空间的方差）。</font></li>
 </ul>
-<h2 id="VAE">1.2. VAE</h2><ul>
-<li>variational autoencoder (VAE) 用于 LDM。$\mathcal{V}: X \mapsto z \mapsto \hat{X}$，压缩 mel 谱、重建。</li>
-<li><font color="green">优化目标：重建损失 + 判别损失 + $z$ 和标准高斯的 KL 散度（约束 latent 空间的方差）。</font></li>
+<h2 id="audiomae-vs-vae">1.3. AudioMAE vs VAE</h2>
+<ul>
+<li>相较于 AudioMAE，VAE
+更关注重建质量，<font color="green">压缩比更高</font>。</li>
+<li>AudioMAE 包含更多语义信息。
+<img src="https://note.youdao.com/yws/api/personal/file/WEB3382540fdf27039037cade70eb98048c?method=download&shareKey=9afd9631dd94a9f9d113ba92a2a54b69" width="456"></li>
 </ul>
-<h2 id="AudioMAE-vs-VAE">1.3. AudioMAE vs VAE</h2><ul>
-<li>相较于 AudioMAE，VAE 更关注重建质量，<font color="green">压缩比更高</font>。</li>
-<li>AudioMAE 包含更多语义信息。<img src="https://note.youdao.com/yws/api/personal/file/WEB3382540fdf27039037cade70eb98048c?method=download&shareKey=9afd9631dd94a9f9d113ba92a2a54b69" width="456"></li>
-</ul>
-<h2 id="GPT-2">1.4. GPT-2</h2><ul>
-<li>condition<ul>
-<li>可以是文本、音素、音频、图像等。采用多个 encoder + 线性层，沿序列长度维度拼接多个 encoder 表示。<ul>
-<li><a target="_blank" rel="noopener" href="https://github.com/LAION-AI/CLAP">contrastive language and audio pretraining (CLAP)</a>：音频字幕（不同于转写）采用 CLAP text encoder，否则采用 CLAP audio encoder，如 <font color="green">TTS（同 AudioLDM）</font>。</li>
-<li><a target="_blank" rel="noopener" href="https://huggingface.co/google/flan-t5-large">FLAN-T5</a>（enhanced text-to-text transfer transformer (T5)）：用于捕捉文本的时序信息。</li>
-<li>音素 encoder：见 NaturalSpeech [2]。采用 <a target="_blank" rel="noopener" href="https://github.com/espeak-ng/espeak-ng">Espeak phonemizers</a> 将文本转为音素序列。</li>
-</ul>
-</li>
+<h2 id="gpt-2">1.4. GPT-2</h2>
+<ul>
+<li>condition
+<ul>
+<li>可以是文本、音素、音频、图像等。采用多个 encoder +
+线性层，沿序列长度维度拼接多个 encoder 表示。
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/LAION-AI/CLAP">contrastive language and
+audio pretraining (CLAP)</a>：音频字幕（不同于转写）采用 CLAP text
+encoder，否则采用 CLAP audio encoder，如 <font color="green">TTS（同
+AudioLDM）</font>。</li>
+<li><a target="_blank" rel="noopener" href="https://huggingface.co/google/flan-t5-large">FLAN-T5</a>（enhanced
+text-to-text transfer transformer (T5)）：用于捕捉文本的时序信息。</li>
+<li>音素 encoder：见 NaturalSpeech [2]。采用 <a target="_blank" rel="noopener" href="https://github.com/espeak-ng/espeak-ng">Espeak phonemizers</a>
+将文本转为音素序列。</li>
+</ul></li>
 <li>除音素 encoder 无可用预训练权重外，其它预训练的 encoder 冻结。</li>
-<li><font color="green">TTS 训练时，采用 CLAP audio encoder 计算 condition，推理时采用 CLAP text encoder，有利于 prompt-based 说话人控制。</font></li>
-</ul>
-</li>
+<li><font color="green">TTS 训练时，采用 CLAP audio encoder 计算
+condition，推理时采用 CLAP text encoder，有利于 prompt-based
+说话人控制。</font></li>
+</ul></li>
 <li>采用连续表示 AudioMAE 的 MSE loss 微调。</li>
-<li><font color="green">由于序列长度变短，相较于 MusicLM、SoundStream，减轻了推理计算成本高、错误累积的问题。</font></li>
+<li><font color="green">由于序列长度变短，相较于
+MusicLM、SoundStream，减轻了推理计算成本高、错误累积的问题。</font></li>
 </ul>
-<h2 id="LDM">1.5. LDM</h2><ul>
-<li>latent diffusion model (LDM) 以 AudioMAE 序列为条件，采用 VAE 表示进行特征压缩。</li>
-<li>采用 Transformer-UNet (T-UNet) 架构。为了扩大模型容量，在卷积 block 后插入了 $n_{\text {trans }}+1$ 个 transformer blocks，最后1个 transformer block 采用 cross attention 引入 condition 信息，其它采用 self attention。</li>
-<li>在 TTS 任务中，添加额外的 cross attention 层，引入 FLAN-T5 condition。</li>
+<h2 id="ldm">1.5. LDM</h2>
+<ul>
+<li>latent diffusion model (LDM) 以 AudioMAE 序列为条件，采用 VAE
+表示进行特征压缩。</li>
+<li>采用 Transformer-UNet (T-UNet) 架构。为了扩大模型容量，在卷积 block
+后插入了 <span class="math inline">\(n_{\text {trans }}+1\)</span> 个
+transformer blocks，最后1个 transformer block 采用 cross attention 引入
+condition 信息，其它采用 self attention。</li>
+<li>在 TTS 任务中，添加额外的 cross attention 层，引入 FLAN-T5
+condition。</li>
 </ul>
-<h3 id="Classifier-free-guidance">1.5.1. Classifier-free guidance</h3><ul>
-<li>训练时以一定概率（如0.1）丢弃 condition。生成时 $$\mathcal{G}^{\prime}\left(z_t, t, Y ; \phi\right)&#x3D;w \mathcal{G}\left(z_t, t ; \phi\right)+(1-w) \mathcal{G}\left(z_t, t, Y ; \phi\right)$$</li>
-<li><font color="green">Denoising Diffusion Implicit Models (DDIM) [90] 采样时 classifier-free guidance scale 设为 3.5。</font></li>
+<h3 id="classifier-free-guidance">1.5.1. Classifier-free guidance</h3>
+<ul>
+<li>训练时以一定概率（如0.1）丢弃 condition。生成时 <span class="math display">\[\mathcal{G}^{\prime}\left(z_t, t, Y ;
+\phi\right)=w \mathcal{G}\left(z_t, t ; \phi\right)+(1-w)
+\mathcal{G}\left(z_t, t, Y ; \phi\right)\]</span></li>
+<li><font color="green">Denoising Diffusion Implicit Models (DDIM) [90]
+采样时 classifier-free guidance scale 设为 3.5。</font></li>
 </ul>
-<h1 id="数据集">2. 数据集</h1><table>
+<h1 id="数据集">2. 数据集</h1>
+<table>
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
 <thead>
 <tr>
 <th>数据集</th>
@@ -448,7 +498,8 @@
 <th>备注</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>AudioSet (AS)</td>
 <td>音频分类</td>
 <td>200万，527 类，10s</td>
@@ -488,40 +539,57 @@
 <td>语音识别</td>
 <td>1wh</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <p>合计 29510h。</p>
-<h1 id="训练">3. 训练</h1><img src="https://note.youdao.com/yws/api/personal/file/WEB0321be8daedc335de43427bba6e3ce77?method=download&shareKey=2002e2c181be21d052559192d174e6fc" width="455">
-
+<h1 id="训练">3. 训练</h1>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB0321be8daedc335de43427bba6e3ce77?method=download&shareKey=2002e2c181be21d052559192d174e6fc" width="455"></p>
 <ul>
-<li>AudioLDM 2 T-UNet $n_{\text {trans}}&#x3D;2$，AudioLDM 2-Large $n_{\text {trans}}&#x3D;6$。</li>
+<li><p>AudioLDM 2 T-UNet <span class="math inline">\(n_{\text
+{trans}}=2\)</span>，AudioLDM 2-Large <span class="math inline">\(n_{\text {trans}}=6\)</span>。</p></li>
+<li><p>AudioMAE：<span class="math inline">\(P=16\)</span>，10s
+音频序列长度 512，768 维。最后 16 个 transformer
+层输出求平均，作为最终的表示。</p></li>
+<li><p>训练时，按一定概率动态选择 AudioMAE 特征来自 ground truth（<span class="math inline">\(P_{\mathrm{gt}}=0.25\)</span>）还是 GPT-2（<span class="math inline">\(P_{\text {pred }}=0.75\)</span>）。</p></li>
+<li><p>GPT-2、LDM 分别训练，再联合微调。音频-文本配对数据训练
+GPT-2。所有音频数据训练 LDM。</p></li>
+<li><p>LDM 预训练：用 10s
+片段训练，<font color="green">零填充到10.24s</font>。随机选择 <span class="math inline">\(\lambda \in\{1,2,4,8\}\)</span>
+以增强鲁棒性。</p></li>
 </ul>
+<h1 id="评价">4. 评价</h1>
 <ul>
-<li>AudioMAE：$P&#x3D;16$，10s 音频序列长度 512，768 维。最后 16 个 transformer 层输出求平均，作为最终的表示。</li>
-<li>训练时，按一定概率动态选择 AudioMAE 特征来自 ground truth（$P_{\mathrm{gt}}&#x3D;0.25$）还是 GPT-2（$P_{\text {pred }}&#x3D;0.75$）。</li>
-<li>GPT-2、LDM 分别训练，再联合微调。音频-文本配对数据训练 GPT-2。所有音频数据训练 LDM。</li>
-<li>LDM 预训练：用 10s 片段训练，<font color="green">零填充到10.24s</font>。随机选择 $\lambda \in{1,2,4,8}$ 以增强鲁棒性。</li>
-</ul>
-<h1 id="评价">4. 评价</h1><ul>
-<li>评价指标<ul>
-<li>客观<ul>
-<li>Frechet Audio Distance (FAD)：VGGish 模型提取的目标、生成音频的分布距离。</li>
-<li>KL 散度：采用 Patch-out Transformer（音频 tag 模型），评价目标、生成音频的相似度。</li>
-<li>CLAP 评分：评价音频、文本之间的相似度。$\operatorname{CLAPScore}(x, r)&#x3D;\frac{\vec{e}_x \cdot \vec{e}_r}{\max \left(\left|\vec{e}_x\right|\left|\vec{e}_r\right|, \epsilon\right)}$。</li>
-</ul>
-</li>
-<li>主观<ul>
+<li>评价指标
+<ul>
+<li>客观
+<ul>
+<li>Frechet Audio Distance (FAD)：VGGish
+模型提取的目标、生成音频的分布距离。</li>
+<li>KL 散度：采用 Patch-out Transformer（音频 tag
+模型），评价目标、生成音频的相似度。</li>
+<li>CLAP 评分：评价音频、文本之间的相似度。<span class="math inline">\(\operatorname{CLAPScore}(x, r)=\frac{\vec{e}_x
+\cdot \vec{e}_r}{\max
+\left(\left\|\vec{e}_x\right\|\left\|\vec{e}_r\right\|,
+\epsilon\right)}\)</span>。</li>
+</ul></li>
+<li>主观
+<ul>
 <li>总体印象（OVL）、音频-文本相关性（REL）、MOS（TTS）。</li>
-<li>众包标注，可靠性：<ul>
-<li>worker: approval rate &gt;&#x3D; 60%，approvals &gt;&#x3D; 50。</li>
+<li>众包标注，可靠性：
+<ul>
+<li>worker: approval rate &gt;= 60%，approvals &gt;= 50。</li>
 <li>每条音频至少10人标注。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
+</ul></li>
+</ul></li>
+</ul></li>
 </ul>
 <table>
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
 <thead>
 <tr>
 <th>任务</th>
@@ -530,7 +598,8 @@
 <th>分析</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>text-to-audio</td>
 <td>AudioCaps</td>
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEBac7d937074d3cdfb37f1de7f51b69849?method=download&shareKey=04df36762de478a3e82cb660d3b81cd2" width="904"></td>
@@ -540,13 +609,16 @@
 <td>text-to-music</td>
 <td>MusicCaps</td>
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEB127b8c51aac5ab3ef1cdba38c8bb69cf?method=download&shareKey=5eee3f5d6be2a236acb9b0afdb9fa878" width="443"></td>
-<td>相较于 -MSD，-Full 效果更好。<br>AudioLDM-M CLAP score 高，可能由于 conditioned by 同一模型。</td>
+<td>相较于 -MSD，-Full 效果更好。<br>AudioLDM-M CLAP score 高，可能由于
+conditioned by 同一模型。</td>
 </tr>
 <tr>
 <td>text-to-speech</td>
 <td>LJSpeech</td>
-<td><img src="https://note.youdao.com/yws/api/personal/file/WEBd9e31aa3da855664bfd630057d3f87f0?method=download&shareKey=e487cd4026f42b788bcb1f602dc65860" width="429"><br>AudioLDM 2-LJS-Pretrained: 在 GigaSpeech 上预训练 GPT-2。</td>
-<td>主观评价发现 AudioLDM 2-LJS-Pretrained 在情感、标点符号、语调上有更好的起伏变化。</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEBd9e31aa3da855664bfd630057d3f87f0?method=download&shareKey=e487cd4026f42b788bcb1f602dc65860" width="429"><br>AudioLDM
+2-LJS-Pretrained: 在 GigaSpeech 上预训练 GPT-2。</td>
+<td>主观评价发现 AudioLDM 2-LJS-Pretrained
+在情感、标点符号、语调上有更好的起伏变化。</td>
 </tr>
 <tr>
 <td>消融实验</td>
@@ -557,19 +629,28 @@
 <tr>
 <td>pooling 下采样倍数的影响</td>
 <td></td>
-<td>LDM 的重建效果<br><img src="https://note.youdao.com/yws/api/personal/file/WEB8fb851a09d7af5961c25e62e62763c83?method=download&shareKey=c1b338f08badb24d53307e623c91b5ac" width="454"></td>
-<td>$\lambda&#x3D;1$ 时最接近 ground truth，$\lambda&#x3D;2, 4$ 时差异较小，虽然未保留所有细节，但准确地保留了语义信息。</td>
+<td>LDM
+的重建效果<br><img src="https://note.youdao.com/yws/api/personal/file/WEB8fb851a09d7af5961c25e62e62763c83?method=download&shareKey=c1b338f08badb24d53307e623c91b5ac" width="454"></td>
+<td><span class="math inline">\(\lambda=1\)</span> 时最接近 ground
+truth，<span class="math inline">\(\lambda=2, 4\)</span>
+时差异较小，虽然未保留所有细节，但准确地保留了语义信息。</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <ul>
-<li>相较于 AudioLDM，利用 GPT-2、diffusion 模型，在生成质量、通用性、可懂度方面有提升。</li>
+<li>相较于 AudioLDM，利用 GPT-2、diffusion
+模型，在生成质量、通用性、可懂度方面有提升。</li>
 </ul>
-<h1 id="代码">5. 代码</h1><ul>
-<li><a target="_blank" rel="noopener" href="https://audioldm.github.io/audioldm2">代码、预训练模型、demo（还包含 Image-to-Audio）</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/haoheliu/AudioLDM-training-finetuning">训练代码</a></li>
-<li><a target="_blank" rel="noopener" href="https://huggingface.co/blog/audioldm2">推理速度优化：采用 Hugging Face 🧨 Diffusers</a></li>
-<li><a target="_blank" rel="noopener" href="https://audioldm.github.io/audioldm2/#gigaspeech">prompt-based speaker control</a><img src="https://note.youdao.com/yws/api/personal/file/WEB222628bffd4881e9e021ee704e717f01?method=download&shareKey=4176bdbdfc7c99d935ccef6336e1d1c5" width="454">
-
+<h1 id="代码">5. 代码</h1>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://audioldm.github.io/audioldm2">代码、预训练模型、demo（还包含
+Image-to-Audio）</a></p></li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/haoheliu/AudioLDM-training-finetuning">训练代码</a></p></li>
+<li><p><a target="_blank" rel="noopener" href="https://huggingface.co/blog/audioldm2">推理速度优化：采用 Hugging
+Face 🧨 Diffusers</a></p></li>
+<li><p><a target="_blank" rel="noopener" href="https://audioldm.github.io/audioldm2/#gigaspeech">prompt-based
+speaker control</a>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB222628bffd4881e9e021ee704e717f01?method=download&shareKey=4176bdbdfc7c99d935ccef6336e1d1c5" width="454"></p>
 <pre class="line-numbers language-none"><code class="language-none">audioldm2 -t &quot;A female reporter is speaking full of emotion&quot; --transcription &quot;Wish you have a good day&quot;
 audioldm2 -t &quot;A female reporter is speaking&quot; --transcription &quot;Wish you have a good day&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
 </ul>
@@ -643,7 +724,7 @@ audioldm2 -t &quot;A female reporter is speaking&quot; --transcription &quot;Wis
                     <div class="publish-info">
                         <span class="publish-date">
                             <i class="far fa-clock fa-fw icon-date"></i>2024-07-07
-                            <i class="far fa-edit fa-fw icon-date"></i>2024-07-07
+                            <i class="far fa-edit fa-fw icon-date"></i>2024-07-11
                         </span>
                         <span class="publish-author">
                             
@@ -685,7 +766,7 @@ audioldm2 -t &quot;A female reporter is speaking&quot; --transcription &quot;Wis
                     <div class="publish-info">
                             <span class="publish-date">
                                 <i class="far fa-clock fa-fw icon-date"></i>2024-07-01
-                                <i class="far fa-edit fa-fw icon-date"></i>2024-07-01
+                                <i class="far fa-edit fa-fw icon-date"></i>2024-07-11
                             </span>
                         <span class="publish-author">
                             
@@ -861,7 +942,7 @@ audioldm2 -t &quot;A female reporter is speaking&quot; --transcription &quot;Wis
 </main>
 
 
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 <script>
     MathJax.Hub.Config({
         tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
@@ -1173,21 +1254,6 @@ $(function () {
     <script src="/blog/libs/instantpage/instantpage.js" type="module"></script>
     
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 
 </html>

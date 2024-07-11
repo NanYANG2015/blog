@@ -6,7 +6,8 @@
     <meta charset="utf-8">
     <meta name="keywords" content="denoising diffusion, 梦园">
     <meta name="description" content="
-论文：Ho J, Jain A, Abbeel P. Denoising diffusion probabilistic models[J]. Advances in neural information processing syste">
+论文：Ho J, Jain A, Abbeel P. Denoising diffusion probabilistic
+models[J]. Advances in neural information processing sys">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -347,7 +348,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-07-07
+                    2024-07-11
                 </div>
                 
 
@@ -370,58 +371,215 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <ul>
-<li>论文：Ho J, Jain A, Abbeel P. Denoising diffusion probabilistic models[J]. Advances in neural information processing systems, 2020, 33: 6840-6851.</li>
-<li><font color="red">核心思想<ul>
-<li>将无条件生成近似为马尔可夫链过程，转移概率为条件高斯，反向过程由噪声 $p\left(\mathbf{x}_T\right) &#x3D; \mathcal{N}\left(\mathbf{x}_T ; \mathbf{0}, \mathbf{I}\right)$ 渐进式地生成数据，正向过程为逐步向数据加高斯噪声直到信号被破坏。</li>
-<li>将正向过程的分布参数固定为常数超参数，通过重参数化 <a href="#Eq8-1">Eq. (8-1)</a>、<a href="#Eq11">Eq. (11)</a>、<a href="#Eq7-3">Eq. (7-3)</a>，得到变分界 <a href="#Eq12">Eq. (12)</a>。进一步简化为 <a href="#Eq14">Eq. (14)</a>，类似于对较小的 $t$ 降低了 loss 权重，有利于采样质量。</li>
-<li>对于图像离散数据，采用 <a href="#Eq13">Eq. (13)</a> 所示的离散 decoder，使得在生成最终数据时不需要加噪。</li>
-<li><a href="#%E8%AE%AD%E7%BB%83%E3%80%81%E9%87%87%E6%A0%B7">训练、采样流程</a></li></ul></font></li>
+<li>论文：Ho J, Jain A, Abbeel P. Denoising diffusion probabilistic
+models[J]. Advances in neural information processing systems, 2020, 33:
+6840-6851.</li>
+<li><font color="red">核心思想
+<ul>
+<li>将无条件生成近似为马尔可夫链过程，转移概率为条件高斯，反向过程由噪声
+<span class="math inline">\(p\left(\mathbf{x}_T\right) =
+\mathcal{N}\left(\mathbf{x}_T ; \mathbf{0}, \mathbf{I}\right)\)</span>
+渐进式地生成数据，正向过程为逐步向数据加高斯噪声直到信号被破坏。</li>
+<li>将正向过程的分布参数固定为常数超参数，通过重参数化 <a href="#Eq8-1">Eq. (8-1)</a>、<a href="#Eq11">Eq. (11)</a>、<a href="#Eq7-3">Eq. (7-3)</a>，得到变分界 <a href="#Eq12">Eq.
+(12)</a>。进一步简化为 <a href="#Eq14">Eq. (14)</a>，类似于对较小的
+<span class="math inline">\(t\)</span> 降低了 loss
+权重，有利于采样质量。</li>
+<li>对于图像离散数据，采用 <a href="#Eq13">Eq. (13)</a> 所示的离散
+decoder，使得在生成最终数据时不需要加噪。</li>
+<li><a href="#训练、采样">训练、采样流程</a></li></ul></font></li>
 </ul>
 
-
-<h1 id="diffusion-model">1. diffusion model</h1><img src="https://note.youdao.com/yws/api/personal/file/WEB541b78b0b3c2bff349127573a9fbcf73?method=download&shareKey=2916faa23b8813f19d8f54105ca2b16a" width="538">
-
-<p>latent 变量模型，其中 $\mathbf{x}_1, \ldots, \mathbf{x}_T$ 为 latents，与数据 $\mathbf{x}_0$ 同维度。马尔可夫链，逐步向数据加高斯噪声直到信号被破坏，假设马尔可夫链的转移概率为条件高斯。</p>
-<p>reverse process<br>$$ p_\theta\left(\mathbf{x}_{0: T}\right):&#x3D;p\left(\mathbf{x}_T\right) \prod_{t&#x3D;1}^T p_\theta\left(\mathbf{x}_{t-1} \mid \mathbf{x}_t\right) $$<br><font color="red">$$p\left(\mathbf{x}_T\right) &#x3D; \mathcal{N}\left(\mathbf{x}_T ; \mathbf{0}, \mathbf{I}\right)$$</font><br>$$ p_\theta\left(\mathbf{x}_{t-1} \mid \mathbf{x}_t\right):&#x3D;\mathcal{N}\left(\mathbf{x}_{t-1} ; \boldsymbol{\mu}_\theta\left(\mathbf{x}_t, t\right), \mathbf{\Sigma}_\theta\left(\mathbf{x}_t, t\right)\right)$$</p>
-<p>forward&#x2F;diffusion process<br>近似后验 $$ q\left(\mathbf{x}_{1: T} \mid \mathbf{x}_0\right):&#x3D;\prod_{t&#x3D;1}^T q\left(\mathbf{x}_t \mid \mathbf{x}_{t-1}\right)$$<br><font color="red">$$ q\left(\mathbf{x}_t \mid \mathbf{x}_{t-1}\right):&#x3D;\mathcal{N}\left(\mathbf{x}_t ; \sqrt{1-\beta_t} \mathbf{x}_{t-1}, \beta_t \mathbf{I}\right) $$</font></p>
+<h1 id="diffusion-model">1. diffusion model</h1>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB541b78b0b3c2bff349127573a9fbcf73?method=download&shareKey=2916faa23b8813f19d8f54105ca2b16a" width="538"></p>
+<p>latent 变量模型，其中 <span class="math inline">\(\mathbf{x}_1,
+\ldots, \mathbf{x}_T\)</span> 为 latents，与数据 <span class="math inline">\(\mathbf{x}_0\)</span>
+同维度。马尔可夫链，逐步向数据加高斯噪声直到信号被破坏，假设马尔可夫链的转移概率为条件高斯。</p>
+<p>reverse process <span class="math display">\[
+p_\theta\left(\mathbf{x}_{0: T}\right):=p\left(\mathbf{x}_T\right)
+\prod_{t=1}^T p_\theta\left(\mathbf{x}_{t-1} \mid \mathbf{x}_t\right)
+\]</span> <font color="red"><span class="math display">\[p\left(\mathbf{x}_T\right) =
+\mathcal{N}\left(\mathbf{x}_T ; \mathbf{0},
+\mathbf{I}\right)\]</span></font> <span class="math display">\[
+p_\theta\left(\mathbf{x}_{t-1} \mid
+\mathbf{x}_t\right):=\mathcal{N}\left(\mathbf{x}_{t-1} ;
+\boldsymbol{\mu}_\theta\left(\mathbf{x}_t, t\right),
+\mathbf{\Sigma}_\theta\left(\mathbf{x}_t, t\right)\right)\]</span></p>
+<p>forward/diffusion process 近似后验 <span class="math display">\[
+q\left(\mathbf{x}_{1: T} \mid \mathbf{x}_0\right):=\prod_{t=1}^T
+q\left(\mathbf{x}_t \mid \mathbf{x}_{t-1}\right)\]</span>
+<font color="red"><span class="math display">\[ q\left(\mathbf{x}_t \mid
+\mathbf{x}_{t-1}\right):=\mathcal{N}\left(\mathbf{x}_t ;
+\sqrt{1-\beta_t} \mathbf{x}_{t-1}, \beta_t \mathbf{I}\right)
+\]</span></font></p>
 <blockquote>
-<p>备注：<br>重参数化 $\mathbf{x}_t&#x3D;\sqrt{1-\beta_t} \mathbf{x}_{t-1}+\epsilon_t$，其中 $\epsilon_t \sim \mathcal{N}\left(0, \beta_t \mathbf{I}\right)$，即噪声的方差为 $\beta_t$。<br>$\operatorname{Var}\left(\mathbf{x}_t\right)&#x3D;\operatorname{Var}\left(\sqrt{1-\beta_t} \mathbf{x}_{t-1}+\epsilon_t\right) &#x3D; \left(1-\beta_t\right) \sigma^2+\beta_t$，其中 $\mathbf{x}_{t-1}$ 的方差为 $\sigma^2$。<br>若原始数据的方差为1，则所有 latents 的方差保持 1 不变。</p>
+<p>备注： 重参数化 <span class="math inline">\(\mathbf{x}_t=\sqrt{1-\beta_t}
+\mathbf{x}_{t-1}+\epsilon_t\)</span>，其中 <span class="math inline">\(\epsilon_t \sim \mathcal{N}\left(0, \beta_t
+\mathbf{I}\right)\)</span>，即噪声的方差为 <span class="math inline">\(\beta_t\)</span>。</p>
+<p><span class="math inline">\(\operatorname{Var}\left(\mathbf{x}_t\right)=\operatorname{Var}\left(\sqrt{1-\beta_t}
+\mathbf{x}_{t-1}+\epsilon_t\right) = \left(1-\beta_t\right)
+\sigma^2+\beta_t\)</span>，其中 <span class="math inline">\(\mathbf{x}_{t-1}\)</span> 的方差为 <span class="math inline">\(\sigma^2\)</span>。</p>
+<p>若原始数据的方差为1，则所有 latents 的方差保持 1 不变。</p>
 </blockquote>
-<p>令 $\alpha_t:&#x3D;1-\beta_t$，$\bar{\alpha}_t:&#x3D;\prod_{s&#x3D;1}^t \alpha_s$，则 <span id="Eq4">$$ q\left(\mathbf{x}_t \mid \mathbf{x}_0\right)&#x3D;\mathcal{N}\left(\mathbf{x}_t ; \sqrt{\bar{\alpha}_t} \mathbf{x}_0,\left(1-\bar{\alpha}_t\right) \mathbf{I}\right) \tag{4}$$</span></p>
+<p>令 <span class="math inline">\(\alpha_t:=1-\beta_t\)</span>，<span class="math inline">\(\bar{\alpha}_t:=\prod_{s=1}^t
+\alpha_s\)</span>，则 <span id="Eq4"><span class="math display">\[
+q\left(\mathbf{x}_t \mid
+\mathbf{x}_0\right)=\mathcal{N}\left(\mathbf{x}_t ;
+\sqrt{\bar{\alpha}_t} \mathbf{x}_0,\left(1-\bar{\alpha}_t\right)
+\mathbf{I}\right) \tag{4}\]</span></span></p>
 <blockquote>
-<p>备注：<br>$$ \begin{aligned} \mathbf{x}_t&amp;&#x3D;\sqrt{\alpha_t} \mathbf{x}_{t-1}+\epsilon_t  \\ &amp;&#x3D;\sqrt{\alpha_t}\left(\sqrt{\alpha_{t-1}} \mathbf{x}_{t-2}+\epsilon_{t-1}\right)+\epsilon_t \\ &amp;&#x3D;\sqrt{\alpha_t}\left(\sqrt{\alpha_{t-1}} \left(\sqrt{\alpha_{t-2}} \mathbf{x}_{t-3}+\epsilon_{t-2}\right) +\epsilon_{t-1}\right)+\epsilon_t \\ &amp;&#x3D; \sqrt{\alpha_{t}\alpha_{t-1}\alpha_{t-2}}\mathbf{x}_{t-3}+ \sqrt{\alpha_{t}\alpha_{t-1}}\epsilon_{t-2} + \sqrt{\alpha_{t}}\epsilon_{t-1} + \epsilon_t \\ &amp;&#x3D;\sqrt{\bar{\alpha}_t} \mathbf{x}_0 + \sum_{i&#x3D;0}^{t-1} \sqrt{\alpha_t \alpha_{t-1} \cdots \alpha_{t-i+1}} \epsilon_{t-i} \end{aligned} $$<br>$\mathbb{E}\left[\mathbf{x}_t\right]&#x3D;\sqrt{\bar{\alpha}_t} \mathbb{E}\left[\mathbf{x}_0\right]$<br><font color="green">由于 $\beta_t$ 较小，$\mathbb{E}\left[\mathbf{x}_0\right]$ 接近0时，才能使 $\mathbb{E}\left[\mathbf{x}_T\right]$ 接近0？<br>$ \begin{aligned} \operatorname{Var}\left(\mathbf{x}_t\right)&amp;&#x3D;\bar{\alpha}_t \operatorname{Var}\left(\mathbf{x}_0\right)+ \sum_{i&#x3D;0}^{t-1} \alpha_t \alpha_{t-1} \cdots \alpha_{t-i+1}\beta_{t-i} \\ &amp;&#x3D; \bar{\alpha}_t + (1-\alpha_t) + \alpha_t(1-\alpha_{t-1}) + \alpha_t\alpha_{t-1}(1-\alpha_{t-2}) + \cdots + \alpha_t\alpha_{t-1} \cdots \alpha_2(1-\alpha_1) \\ &amp;&#x3D; 1 \end{aligned}$<br>存在的问题：哪里推导得不对？</font></p>
+<p>备注： <span class="math display">\[ \begin{aligned}
+\mathbf{x}_t&amp;=\sqrt{\alpha_t} \mathbf{x}_{t-1}+\epsilon_t  \\
+&amp;=\sqrt{\alpha_t}\left(\sqrt{\alpha_{t-1}}
+\mathbf{x}_{t-2}+\epsilon_{t-1}\right)+\epsilon_t \\
+&amp;=\sqrt{\alpha_t}\left(\sqrt{\alpha_{t-1}} \left(\sqrt{\alpha_{t-2}}
+\mathbf{x}_{t-3}+\epsilon_{t-2}\right) +\epsilon_{t-1}\right)+\epsilon_t
+\\ &amp;= \sqrt{\alpha_{t}\alpha_{t-1}\alpha_{t-2}}\mathbf{x}_{t-3}+
+\sqrt{\alpha_{t}\alpha_{t-1}}\epsilon_{t-2} +
+\sqrt{\alpha_{t}}\epsilon_{t-1} + \epsilon_t \\
+&amp;=\sqrt{\bar{\alpha}_t} \mathbf{x}_0 + \sum_{i=0}^{t-1}
+\sqrt{\alpha_t \alpha_{t-1} \cdots \alpha_{t-i+1}} \epsilon_{t-i}
+\end{aligned} \]</span> <span class="math inline">\(\mathbb{E}\left[\mathbf{x}_t\right]=\sqrt{\bar{\alpha}_t}
+\mathbb{E}\left[\mathbf{x}_0\right]\)</span></p>
+<font color="green">由于 <span class="math inline">\(\beta_t\)</span>
+较小，<span class="math inline">\(\mathbb{E}\left[\mathbf{x}_0\right]\)</span>
+接近0时，才能使 <span class="math inline">\(\mathbb{E}\left[\mathbf{x}_T\right]\)</span>
+接近0？
+<span class="math display">\[\begin{aligned}
+\operatorname{Var}\left(\mathbf{x}_t\right)&amp;=\bar{\alpha}_t
+\operatorname{Var}\left(\mathbf{x}_0\right)+ \sum_{i=0}^{t-1} \alpha_t
+\alpha_{t-1} \cdots \alpha_{t-i+1}\beta_{t-i} \\ &amp;= \bar{\alpha}_t +
+(1-\alpha_t) + \alpha_t(1-\alpha_{t-1}) +
+\alpha_t\alpha_{t-1}(1-\alpha_{t-2}) + \cdots + \alpha_t\alpha_{t-1}
+\cdots \alpha_2(1-\alpha_1) \\ &amp;= 1 \end{aligned}\]</span>
+<p>存在的问题：哪里推导得不对？</p></font><p></p>
 </blockquote>
-<p>训练：通过 Variational Inference 训练，优化变分下界<br>$$ \mathbb{E}\left[-\log p_\theta\left(\mathbf{x}_0\right)\right] \leq \mathbb{E}_q\left[-\log \frac{p_\theta\left(\mathbf{x}_{0: T}\right)}{q\left(\mathbf{x}_{1: T} \mid \mathbf{x}_0\right)}\right]&#x3D;\mathbb{E}_q\left[-\log p\left(\mathbf{x}_T\right)-\sum_{t \geq 1} \log \frac{p_\theta\left(\mathbf{x}_{t-1} \mid \mathbf{x}_t\right)}{q\left(\mathbf{x}_t \mid \mathbf{x}_{t-1}\right)}\right]&#x3D;: L $$</p>
-<p>重写 $L$（推导过程详见论文附录）<br>$$ \mathbb{E}_q[\underbrace{D_{\mathrm{KL}}\left(q\left(\mathbf{x}_T \mid \mathbf{x}_0\right) | p\left(\mathbf{x}_T\right)\right)}_{L_T}+\sum_{t&gt;1} \underbrace{D_{\mathrm{KL}}\left(q\left(\mathbf{x}_{t-1} \mid \mathbf{x}_t, \mathbf{x}_0\right) | p_\theta\left(\mathbf{x}_{t-1} \mid \mathbf{x}_t\right)\right)}_{L_{t-1}} \underbrace{-\log p_\theta\left(\mathbf{x}_0 \mid \mathbf{x}_1\right)}_{L_0}]  \tag{5}$$<br><font color="green">$$ q\left(\mathbf{x}_{t-1} \mid \mathbf{x}_t, \mathbf{x}_0\right)&#x3D;\mathcal{N}\left(\mathbf{x}_{t-1} ; \tilde{\boldsymbol{\mu}}_t\left(\mathbf{x}_t, \mathbf{x}_0\right), \tilde{\beta}_t \mathbf{I}\right) \tag{6}$$<br><span id="Eq7-1">$$ \tilde{\boldsymbol{\mu}}_t\left(\mathbf{x}_t, \mathbf{x}_0\right):&#x3D;\frac{\sqrt{\bar{\alpha}_{t-1}} \beta_t}{1-\bar{\alpha}_t} \mathbf{x}_0+\frac{\sqrt{\alpha_t}\left(1-\bar{\alpha}_{t-1}\right)}{1-\bar{\alpha}_t} \mathbf{x}_t  \tag{7-1}$$</span><br>$$ \tilde{\beta}_t:&#x3D;\frac{1-\bar{\alpha}_{t-1}}{1-\bar{\alpha}_t} \beta_t \tag{7-2}$$</font><br>其中，高斯分布之间的 KL 散度可以直接计算。</p>
-<h1 id="Forward-process">2. Forward process</h1><p>相较于通过重参数化学习 $\beta_t$，本文将其固定为常数超参数，因此近似后验 $q$ 没有可学习的参数，$L_T$ 为常数，训练时可忽略。</p>
-<h1 id="Reverse-process">3. Reverse process</h1><p>令 <span id="Eq7-3">$$\boldsymbol{\Sigma}_\theta\left(\mathbf{x}_t, t\right)&#x3D;\sigma_t^2 \mathbf{I} \tag{7-3}$$</span><br>为时间相关的常数。</p>
-<p>则 $$ L_{t-1}&#x3D;\mathbb{E}_q\left[\frac{1}{2 \sigma_t^2}\left|\tilde{\boldsymbol{\mu}}_t\left(\mathbf{x}_t, \mathbf{x}_0\right)-\boldsymbol{\mu}_\theta\left(\mathbf{x}_t, t\right)\right|^2\right]+C \tag{8}$$<br>其中，$C$ 为$ \theta$ 无关的常数。</p>
-<p>重参数化 <a href="#Eq4">Eq. (4)</a> <span id="Eq8-1">$$ \mathbf{x}_t\left(\mathbf{x}_0, \boldsymbol{\epsilon}\right)&#x3D;\sqrt{\bar{\alpha}_t} \mathbf{x}_0+\sqrt{1-\bar{\alpha}_t} \boldsymbol{\epsilon} \quad \text {for} \quad \boldsymbol{\epsilon} \sim \mathcal{N}(\mathbf{0}, \mathbf{I}) \tag{8-1}$$</span><br>和 <a href="#Eq7-1">Eq. (7-1)</a>、$\alpha_t:&#x3D;1-\beta_t$ 一起带入上式得到 <span id="Eq10">$$L_{t-1}-C &#x3D;\mathbb{E}_{\mathbf{x}_0, \boldsymbol{\epsilon}}\left[\frac{1}{2 \sigma_t^2}\left|\frac{1}{\sqrt{\alpha_t}}\left(\mathbf{x}_t\left(\mathbf{x}_0, \boldsymbol{\epsilon}\right)-\frac{\beta_t}{\sqrt{1-\bar{\alpha}_t}} \boldsymbol{\epsilon}\right)-\boldsymbol{\mu}_\theta\left(\mathbf{x}_t\left(\mathbf{x}_0, \boldsymbol{\epsilon}\right), t\right)\right|^2\right] \tag{10}$$</span></p>
-<p>参数化 <span id="Eq11">$$\boldsymbol{\mu}_\theta\left(\mathbf{x}_t, t\right)&#x3D;\frac{1}{\sqrt{\alpha_t}}\left(\mathbf{x}_t-\frac{\beta_t}{\sqrt{1-\bar{\alpha}_t}} \boldsymbol{\epsilon}_\theta\left(\mathbf{x}_t, t\right)\right) \tag{11}$$</span><br>其中，$\boldsymbol{\epsilon}_\theta$ 为从 $\mathbf{x}_t$ 预测 $\boldsymbol{\epsilon}$ 的函数近似。<br>$$\mathbf{x}_{t-1}&#x3D;\frac{1}{\sqrt{\alpha_t}}\left(\mathbf{x}_t-\frac{\beta_t}{\sqrt{1-\bar{\alpha}_t}} \boldsymbol{\epsilon}_\theta\left(\mathbf{x}_t, t\right)\right)+\sigma_t \mathbf{z}, \text { where } \mathbf{z} \sim \mathcal{N}(\mathbf{0}, \mathbf{I})$$</p>
-<p>因此，<a href="#Eq10">Eq. (10)</a>简化为 <span id="Eq12">$$\mathbb{E}_{\mathbf{x}_0, \boldsymbol{\epsilon}}\left[\frac{\beta_t^2}{2 \sigma_t^2 \alpha_t\left(1-\bar{\alpha}_t\right)}\left|\boldsymbol{\epsilon}-\boldsymbol{\epsilon}_\theta\left(\sqrt{\bar{\alpha}_t} \mathbf{x}_0+\sqrt{1-\bar{\alpha}_t} \boldsymbol{\epsilon}, t\right)\right|^2\right] \tag{12}$$</span></p>
-<h1 id="简化训练目标">4. 简化训练目标</h1><p><span id="Eq14">$$ L_{\text {simple }}(\theta):&#x3D;\mathbb{E}_{t, \mathbf{x}_0, \boldsymbol{\epsilon}}\left[\left|\boldsymbol{\epsilon}-\boldsymbol{\epsilon}_\theta\left(\sqrt{\bar{\alpha}_t} \mathbf{x}_0+\sqrt{1-\bar{\alpha}_t \boldsymbol{\epsilon}}, t\right)\right|^2\right] \tag{14}$$</span><br>相较于 <a href="#Eq12">Eq. (12)</a>，<font color="green">类似于对较小的 $t$ 降低了 loss 权重，有利于采样质量。</font></p>
-<h1 id="L-0-、离散-decoder">5. $L_0$、离散 decoder</h1><ul>
-<li><p>将图像数据 [0，255] 缩放到 [-1, 1]。</p>
-</li>
-<li><p><span id="Eq13">离散解码器&#x2F;离散 likelihood</span></p>
-<img src="https://note.youdao.com/yws/api/personal/file/WEBc580ecc71dc81fa44994da2c32d81418?method=download&shareKey=bb8b29e1f83372de0932b02d2e90ee53" width="677">
-
-<p>其中，$D$ 表示数据维度，$i$ 表示坐标。可以替换为更强大的解码器，如条件自回归模型。</p>
-<p><font color="green">使得对离散数据是无损编码，且在生成最终数据时不需要加噪。</font></p>
-</li>
+<p>训练：通过 Variational Inference 训练，优化变分下界 <span class="math display">\[ \mathbb{E}\left[-\log
+p_\theta\left(\mathbf{x}_0\right)\right] \leq \mathbb{E}_q\left[-\log
+\frac{p_\theta\left(\mathbf{x}_{0: T}\right)}{q\left(\mathbf{x}_{1: T}
+\mid \mathbf{x}_0\right)}\right]=\mathbb{E}_q\left[-\log
+p\left(\mathbf{x}_T\right)-\sum_{t \geq 1} \log
+\frac{p_\theta\left(\mathbf{x}_{t-1} \mid
+\mathbf{x}_t\right)}{q\left(\mathbf{x}_t \mid
+\mathbf{x}_{t-1}\right)}\right]=: L \]</span></p>
+<p>重写 <span class="math inline">\(L\)</span>（推导过程详见论文附录）
+<span class="math display">\[
+\mathbb{E}_q[\underbrace{D_{\mathrm{KL}}\left(q\left(\mathbf{x}_T \mid
+\mathbf{x}_0\right) \|
+p\left(\mathbf{x}_T\right)\right)}_{L_T}+\sum_{t&gt;1}
+\underbrace{D_{\mathrm{KL}}\left(q\left(\mathbf{x}_{t-1} \mid
+\mathbf{x}_t, \mathbf{x}_0\right) \| p_\theta\left(\mathbf{x}_{t-1} \mid
+\mathbf{x}_t\right)\right)}_{L_{t-1}} \underbrace{-\log
+p_\theta\left(\mathbf{x}_0 \mid
+\mathbf{x}_1\right)}_{L_0}]  \tag{5}\]</span> <font color="green"><span class="math display">\[ q\left(\mathbf{x}_{t-1} \mid \mathbf{x}_t,
+\mathbf{x}_0\right)=\mathcal{N}\left(\mathbf{x}_{t-1} ;
+\tilde{\boldsymbol{\mu}}_t\left(\mathbf{x}_t, \mathbf{x}_0\right),
+\tilde{\beta}_t \mathbf{I}\right) \tag{6}\]</span> <span id="Eq7-1"><span class="math display">\[
+\tilde{\boldsymbol{\mu}}_t\left(\mathbf{x}_t,
+\mathbf{x}_0\right):=\frac{\sqrt{\bar{\alpha}_{t-1}}
+\beta_t}{1-\bar{\alpha}_t}
+\mathbf{x}_0+\frac{\sqrt{\alpha_t}\left(1-\bar{\alpha}_{t-1}\right)}{1-\bar{\alpha}_t}
+\mathbf{x}_t  \tag{7-1}\]</span></span> <span class="math display">\[
+\tilde{\beta}_t:=\frac{1-\bar{\alpha}_{t-1}}{1-\bar{\alpha}_t} \beta_t
+\tag{7-2}\]</span></font> 其中，高斯分布之间的 KL 散度可以直接计算。</p>
+<h1 id="forward-process">2. Forward process</h1>
+<p>相较于通过重参数化学习 <span class="math inline">\(\beta_t\)</span>，本文将其固定为常数超参数，因此近似后验
+<span class="math inline">\(q\)</span> 没有可学习的参数，<span class="math inline">\(L_T\)</span> 为常数，训练时可忽略。</p>
+<h1 id="reverse-process">3. Reverse process</h1>
+<p>令 <span id="Eq7-3"><span class="math display">\[\boldsymbol{\Sigma}_\theta\left(\mathbf{x}_t,
+t\right)=\sigma_t^2 \mathbf{I} \tag{7-3}\]</span></span>
+为时间相关的常数。</p>
+<p>则 <span class="math display">\[ L_{t-1}=\mathbb{E}_q\left[\frac{1}{2
+\sigma_t^2}\left\|\tilde{\boldsymbol{\mu}}_t\left(\mathbf{x}_t,
+\mathbf{x}_0\right)-\boldsymbol{\mu}_\theta\left(\mathbf{x}_t,
+t\right)\right\|^2\right]+C \tag{8}\]</span> 其中，<span class="math inline">\(C\)</span> 为$ $ 无关的常数。</p>
+<p>重参数化 <a href="#Eq4">Eq. (4)</a> <span id="Eq8-1"><span class="math display">\[ \mathbf{x}_t\left(\mathbf{x}_0,
+\boldsymbol{\epsilon}\right)=\sqrt{\bar{\alpha}_t}
+\mathbf{x}_0+\sqrt{1-\bar{\alpha}_t} \boldsymbol{\epsilon} \quad \text
+{for} \quad \boldsymbol{\epsilon} \sim \mathcal{N}(\mathbf{0},
+\mathbf{I}) \tag{8-1}\]</span></span> 和 <a href="#Eq7-1">Eq.
+(7-1)</a>、<span class="math inline">\(\alpha_t:=1-\beta_t\)</span>
+一起带入上式得到 <span id="Eq10"><span class="math display">\[L_{t-1}-C
+=\mathbb{E}_{\mathbf{x}_0, \boldsymbol{\epsilon}}\left[\frac{1}{2
+\sigma_t^2}\left\|\frac{1}{\sqrt{\alpha_t}}\left(\mathbf{x}_t\left(\mathbf{x}_0,
+\boldsymbol{\epsilon}\right)-\frac{\beta_t}{\sqrt{1-\bar{\alpha}_t}}
+\boldsymbol{\epsilon}\right)-\boldsymbol{\mu}_\theta\left(\mathbf{x}_t\left(\mathbf{x}_0,
+\boldsymbol{\epsilon}\right), t\right)\right\|^2\right]
+\tag{10}\]</span></span></p>
+<p>参数化 <span id="Eq11"><span class="math display">\[\boldsymbol{\mu}_\theta\left(\mathbf{x}_t,
+t\right)=\frac{1}{\sqrt{\alpha_t}}\left(\mathbf{x}_t-\frac{\beta_t}{\sqrt{1-\bar{\alpha}_t}}
+\boldsymbol{\epsilon}_\theta\left(\mathbf{x}_t, t\right)\right)
+\tag{11}\]</span></span> 其中，<span class="math inline">\(\boldsymbol{\epsilon}_\theta\)</span> 为从 <span class="math inline">\(\mathbf{x}_t\)</span> 预测 <span class="math inline">\(\boldsymbol{\epsilon}\)</span> 的函数近似。 <span class="math display">\[\mathbf{x}_{t-1}=\frac{1}{\sqrt{\alpha_t}}\left(\mathbf{x}_t-\frac{\beta_t}{\sqrt{1-\bar{\alpha}_t}}
+\boldsymbol{\epsilon}_\theta\left(\mathbf{x}_t, t\right)\right)+\sigma_t
+\mathbf{z}, \text { where } \mathbf{z} \sim \mathcal{N}(\mathbf{0},
+\mathbf{I})\]</span></p>
+<p>因此，<a href="#Eq10">Eq. (10)</a>简化为 <span id="Eq12"><span class="math display">\[\mathbb{E}_{\mathbf{x}_0,
+\boldsymbol{\epsilon}}\left[\frac{\beta_t^2}{2 \sigma_t^2
+\alpha_t\left(1-\bar{\alpha}_t\right)}\left\|\boldsymbol{\epsilon}-\boldsymbol{\epsilon}_\theta\left(\sqrt{\bar{\alpha}_t}
+\mathbf{x}_0+\sqrt{1-\bar{\alpha}_t} \boldsymbol{\epsilon},
+t\right)\right\|^2\right] \tag{12}\]</span></span></p>
+<h1 id="简化训练目标">4. 简化训练目标</h1>
+<p><span id="Eq14"><span class="math display">\[ L_{\text {simple
+}}(\theta):=\mathbb{E}_{t, \mathbf{x}_0,
+\boldsymbol{\epsilon}}\left[\left\|\boldsymbol{\epsilon}-\boldsymbol{\epsilon}_\theta\left(\sqrt{\bar{\alpha}_t}
+\mathbf{x}_0+\sqrt{1-\bar{\alpha}_t} \boldsymbol{\epsilon},
+t\right)\right\|^2\right] \tag{14}\]</span></span> 相较于 <a href="#Eq12">Eq. (12)</a>，<font color="green">类似于对较小的 <span class="math inline">\(t\)</span> 降低了 loss
+权重，有利于采样质量。</font></p>
+<h1 id="l_0离散-decoder">5. \(L_0\)、离散
+decoder</h1>
+<ul>
+<li><p>将图像数据 [0，255] 缩放到 [-1, 1]。</p></li>
+<li><p>离散解码器/离散 likelihood</p>
+<p><span id="Eq13"><span class="math display">\[
+p_\theta\left(\mathbf{x}_0 \mid \mathbf{x}_1\right) =\prod_{i=1}^D
+\int_{\delta_{-}\left(x_0^i\right)}^{\delta_{+}\left(x_0^i\right)}
+\mathcal{N}\left(x ; \mu_\theta^i\left(\mathbf{x}_1, 1\right),
+\sigma_1^2\right) dx \\
+\delta_{+}(x) =\left\{\begin{array}{ll}
+\infty &amp; \text { if } x=1 \\
+x+\frac{1}{255} &amp; \text { if } x&lt;1
+\end{array} \quad \delta_{-}(x)= \begin{cases}-\infty &amp; \text { if }
+x=-1 \\
+x-\frac{1}{255} &amp; \text { if } x&gt;-1\end{cases}
+\right.\tag{13}\]</span></span></p>
+<p>其中，<span class="math inline">\(D\)</span> 表示数据维度，<span class="math inline">\(i\)</span>
+表示坐标。可以替换为更强大的解码器，如条件自回归模型。</p>
+<p><font color="green">使得对离散数据是无损编码，且在生成最终数据时不需要加噪。</font></p></li>
 </ul>
-<h1 id="训练、采样">6. 训练、采样</h1><img src="https://note.youdao.com/yws/api/personal/file/WEBa03ec53bf0a5e84468db19290149e775?method=download&shareKey=e33d664f7355ba00d042e6aa44dcfd98" width="712">
-
-<h1 id="渐进有损编码-x2F-压缩">7. 渐进有损编码&#x2F;压缩</h1><p>对于 $\mathbf{x}_0 \sim q\left(\mathbf{x}_0\right)$，依次发送 $\mathbf{x}_T, \ldots, \mathbf{x}_0$，接收端渐近地估计 $$\mathbf{x}_0 \approx \hat{\mathbf{x}}_0&#x3D;\left(\mathbf{x}_t-\sqrt{1-\bar{\alpha}_t} \epsilon_\theta\left(\mathbf{x}_t\right)\right) &#x2F; \sqrt{\bar{\alpha}_t}$$<br>失真为 $$\sqrt{\left|\mathbf{x}_0-\hat{\mathbf{x}}_0\right|^2 &#x2F; D}$$<br><font color="green">rate：假设传输1个样本 $\mathbf{x} \sim q(\mathbf{x})$ 平均需要 $D_{\mathrm{KL}}(q(\mathbf{x}) | p(\mathbf{x}))$ bit，则 rate（总编码长度）为 $L_T+\cdots+L_1$。</font></p>
-<h1 id="实验">8. 实验</h1><p>$T&#x3D;1000$。前向过程的方差线性增加 $\beta_1&#x3D;10^{-4}$，$\beta_T&#x3D;0.02$；<font color="green">当 $\beta_t$ 较小时，前向过程、反向过程有相同的函数形式；另外，使得 $\mathbf{X}_T$ 时的信噪比</font> $D_{\mathrm{KL}}\left(q\left(\mathbf{x}_T \mid \mathbf{x}_0\right) | \mathcal{N}(\mathbf{0}, \mathbf{I})\right) \approx 10^{-5}$ 尽可能小。</p>
-<p><font color="green">反向过程采用 U-Net + group normalization。各时间步参数共享 + Transformer 正弦位置 embedding。分辨率 $16 \times 16$。</font></p>
+<h1 id="训练采样">6. 训练、采样</h1>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBa03ec53bf0a5e84468db19290149e775?method=download&shareKey=e33d664f7355ba00d042e6aa44dcfd98" width="712"></p>
+<h1 id="渐进有损编码压缩">7. 渐进有损编码/压缩</h1>
+<p>对于 <span class="math inline">\(\mathbf{x}_0 \sim
+q\left(\mathbf{x}_0\right)\)</span>，依次发送 <span class="math inline">\(\mathbf{x}_T, \ldots,
+\mathbf{x}_0\)</span>，接收端渐近地估计 <span class="math display">\[\mathbf{x}_0 \approx
+\hat{\mathbf{x}}_0=\left(\mathbf{x}_t-\sqrt{1-\bar{\alpha}_t}
+\epsilon_\theta\left(\mathbf{x}_t\right)\right) /
+\sqrt{\bar{\alpha}_t}\]</span> 失真为 <span class="math display">\[\sqrt{\left\|\mathbf{x}_0-\hat{\mathbf{x}}_0\right\|^2
+/ D}\]</span> <font color="green">rate：假设传输1个样本 <span class="math inline">\(\mathbf{x} \sim q(\mathbf{x})\)</span> 平均需要
+<span class="math inline">\(D_{\mathrm{KL}}(q(\mathbf{x}) \|
+p(\mathbf{x}))\)</span> bit，则 rate（总编码长度）为 <span class="math inline">\(L_T+\cdots+L_1\)</span>。</font></p>
+<h1 id="实验">8. 实验</h1>
+<p><span class="math inline">\(T=1000\)</span>。前向过程的方差线性增加
+<span class="math inline">\(\beta_1=10^{-4}\)</span>，<span class="math inline">\(\beta_T=0.02\)</span>；<font color="green">当
+<span class="math inline">\(\beta_t\)</span>
+较小时，前向过程、反向过程有相同的函数形式；另外，使得 <span class="math inline">\(\mathbf{X}_T\)</span> 时的信噪比</font> <span class="math inline">\(D_{\mathrm{KL}}\left(q\left(\mathbf{x}_T \mid
+\mathbf{x}_0\right) \| \mathcal{N}(\mathbf{0}, \mathbf{I})\right)
+\approx 10^{-5}\)</span> 尽可能小。</p>
+<p><font color="green">反向过程采用 U-Net + group
+normalization。各时间步参数共享 + Transformer 正弦位置 embedding。分辨率
+<span class="math inline">\(16 \times 16\)</span>。</font></p>
 <p>评价指标</p>
 <ul>
 <li>Inception score</li>
 <li>FID score</li>
-<li>负 log likelihood(lossless codelengths)（对比基于 likelihood 的模型）</li>
+<li>负 log likelihood(lossless codelengths)（对比基于 likelihood
+的模型） </li>
 </ul>
 <table>
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
 <thead>
 <tr>
 <th>实验</th>
@@ -429,7 +587,8 @@
 <th>结论</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>采样质量</td>
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEB488ad36f737fd0d4f85f86660b846714?method=download&shareKey=af4b5424fa2603d8127e3696e78e1a90" width="547"></td>
 <td>采用真实变分界，NLL 更好；采用简化版本，采样质量更好。</td>
@@ -437,12 +596,16 @@
 <tr>
 <td>反向过程参数化、训练目标</td>
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEBabd8aa5bdc8f8821f563971b32c00d5f?method=download&shareKey=251eae700aef3aea210c4e7a3803131e" width="396"></td>
-<td>1. 预测 $\tilde{\boldsymbol{\mu}}$ 时，采用 MSE loss（类似于<a href="#Eq14">Eq. (14)</a>）训练不稳定，可采用真实变分界；<br> 2. 相较于固定反向过程方差，学习方差导致样本质量较差或训练不稳定；<br> 3. 相较于预测 $\tilde{\boldsymbol{\mu}}$，预测 $\boldsymbol{\epsilon}$，采用真实变分界、固定方差时性能相当，采用简化版本时性能更好。</td>
+<td>1. 预测 <span class="math inline">\(\tilde{\boldsymbol{\mu}}\)</span> 时，采用 MSE
+loss（类似于<a href="#Eq14">Eq.
+(14)</a>）训练不稳定，可采用真实变分界；<br> 2.
+相较于固定反向过程方差，学习方差导致样本质量较差或训练不稳定；<br> 3.
+相较于预测 <span class="math inline">\(\tilde{\boldsymbol{\mu}}\)</span>，预测 <span class="math inline">\(\boldsymbol{\epsilon}\)</span>，采用真实变分界、固定方差时性能相当，采用简化版本时性能更好。</td>
 </tr>
 <tr>
 <td>渐进编码</td>
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEBe0d2f1389ceba4712de3ef1a97ff5276?method=download&shareKey=081b6d71ed8f5438c3997996fc00c0ec" width="716"></td>
-<td>绝大多数 bit 用于表征不易感知的失真&#x2F;图像细节。</td>
+<td>绝大多数 bit 用于表征不易感知的失真/图像细节。</td>
 </tr>
 <tr>
 <td>渐进式图像生成</td>
@@ -454,22 +617,29 @@
 <td>示例样本详见论文图8、图9</td>
 <td></td>
 </tr>
-</tbody></table>
-<h1 id="其它">9. 其它</h1><ul>
-<li><a target="_blank" rel="noopener" href="https://github.com/hojonathanho/diffusion">https://github.com/hojonathanho/diffusion</a></li>
-<li><font color="green">生成模型：GAN、自回归、flows、VAE、基于能量的模型、score matching。</font><ul>
-<li>score matching<blockquote>
+</tbody>
+</table>
+<h1 id="其它">9. 其它</h1>
 <ul>
-<li>随机变量的 score（或梯度）是其概率密度函数的梯度。对于数据点 $x$, 其在分布 $p(x)$ 下的得分为 $\nabla_x \log p(x)$</li>
-<li>目标函数：$$ L&#x3D;\mathbb{E}_{x \sim p}\left|\nabla_x \log q(x ; \theta)-\nabla_x \log p(x)\right|^2 $$<br>其中, $\theta$ 是模型参数, $p$ 是真实数据分布, $q$ 是模型分布。</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/hojonathanho/diffusion" class="uri">https://github.com/hojonathanho/diffusion</a></li>
+<li><font color="green">生成模型：GAN、自回归、flows、VAE、基于能量的模型、score
+matching。</font>
+<ul>
+<li><p>score matching</p>
+<blockquote>
+<ul>
+<li>随机变量的 score（或梯度）是其概率密度函数的梯度。对于数据点 <span class="math inline">\(x\)</span>, 其在分布 <span class="math inline">\(p(x)\)</span> 下的得分为 <span class="math inline">\(\nabla_x \log p(x)\)</span></li>
+<li>目标函数：<span class="math display">\[ L=\mathbb{E}_{x \sim
+p}\left\|\nabla_x \log q(x ; \theta)-\nabla_x \log p(x)\right\|^2
+\]</span> 其中, <span class="math inline">\(\theta\)</span> 是模型参数,
+<span class="math inline">\(p\)</span> 是真实数据分布, <span class="math inline">\(q\)</span> 是模型分布。</li>
 <li>梯度估计：取训练样本上的梯度均值。</li>
-<li>相较于 likelihood-based model 直接建模样本分布，学习数据分布的局部梯度特征，对未见数据的泛化性能更好；对数据分布中的噪声、异常值鲁棒性更好。</li>
+<li>相较于 likelihood-based model
+直接建模样本分布，学习数据分布的局部梯度特征，对未见数据的泛化性能更好；对数据分布中的噪声、异常值鲁棒性更好。
+-- kimi</li>
 </ul>
-<p>– kimi</p>
-</blockquote>
-</li>
-</ul>
-</li>
+</blockquote></li>
+</ul></li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
@@ -541,7 +711,7 @@
                     <div class="publish-info">
                         <span class="publish-date">
                             <i class="far fa-clock fa-fw icon-date"></i>2024-07-01
-                            <i class="far fa-edit fa-fw icon-date"></i>2024-07-01
+                            <i class="far fa-edit fa-fw icon-date"></i>2024-07-11
                         </span>
                         <span class="publish-author">
                             
@@ -583,7 +753,7 @@
                     <div class="publish-info">
                             <span class="publish-date">
                                 <i class="far fa-clock fa-fw icon-date"></i>2024-06-19
-                                <i class="far fa-edit fa-fw icon-date"></i>2024-06-30
+                                <i class="far fa-edit fa-fw icon-date"></i>2024-07-11
                             </span>
                         <span class="publish-author">
                             
@@ -759,7 +929,7 @@
 </main>
 
 
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 <script>
     MathJax.Hub.Config({
         tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
@@ -1071,21 +1241,6 @@ $(function () {
     <script src="/blog/libs/instantpage/instantpage.js" type="module"></script>
     
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 
 </html>

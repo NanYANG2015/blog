@@ -6,10 +6,11 @@
     <meta charset="utf-8">
     <meta name="keywords" content="transformers Streamer, 梦园">
     <meta name="description" content="不能用于 beam search。
-1. TextStreamer若输出 token 构成完整单词，立即打印到 stdout。skip_prompt：若为 True，则第一次调用 put(input_ids) 不打印。
-
-put
-若生成 t">
+ 不支持
+batch size &amp;gt; 1
+1. TextStreamer
+若输出 token 构成完整单词，立即打印到 stdout。 skip_prompt：若为
+True，则第一次调用 ">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -354,7 +355,7 @@ put
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-05-29
+                    2024-07-11
                 </div>
                 
 
@@ -377,19 +378,26 @@ put
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>不能用于 beam search。</p>
-<h1 id="TextStreamer">1. TextStreamer</h1><p>若输出 token 构成完整单词，立即打印到 stdout。<br>skip_prompt：若为 True，则第一次调用 put(input_ids) 不打印。</p>
+<p><font color="red"> <a target="_blank" rel="noopener" href="https://github.com/huggingface/transformers/blob/v4.42.0/src/transformers/generation/streamers.py#L87">不支持
+batch size &gt; 1</a></font></p>
+<h1 id="textstreamer">1. TextStreamer</h1>
+<p>若输出 token 构成完整单词，立即打印到 stdout。 skip_prompt：若为
+True，则第一次调用 put(input_ids) 不打印。</p>
 <ul>
-<li>put<ul>
-<li>若生成 text 末尾为 \n，打印新增文本，清空 cache。</li>
+<li>put
+<ul>
+<li>若生成 text 末尾为 ，打印新增文本，清空 cache。</li>
 <li>若最后一个 token 为 CJK 字符，打印新增文本。</li>
 <li>否则，打印新增文本中最后一个空格及之前的内容。</li>
-</ul>
-</li>
+</ul></li>
 <li>end：打印剩余生成文本及换行符。</li>
 </ul>
-<h1 id="TextIteratorStreamer">2. TextIteratorStreamer</h1><p>在另外的线程中运行 generate，新增的可打印文本可以迭代器的方式非阻塞地获取。可用于交互式 Gradio demo 中。</p>
-<p>接口、代码用例 <a target="_blank" rel="noopener" href="https://huggingface.co/docs/transformers/internal/generation_utils#transformers.TextIteratorStreamer">https://huggingface.co/docs/transformers/internal/generation_utils#transformers.TextIteratorStreamer</a></p>
-<p><a target="_blank" rel="noopener" href="https://medium.com/@shrinath.suresh/building-an-interactive-streaming-chatbot-with-langchain-transformers-and-gradio-93b97378353e">https://medium.com/@shrinath.suresh/building-an-interactive-streaming-chatbot-with-langchain-transformers-and-gradio-93b97378353e</a></p>
+<h1 id="textiteratorstreamer">2. TextIteratorStreamer</h1>
+<p>在另外的线程中运行
+generate，新增的可打印文本可以迭代器的方式非阻塞地获取。可用于交互式
+Gradio demo 中。</p>
+<p><a target="_blank" rel="noopener" href="https://huggingface.co/docs/transformers/internal/generation_utils#transformers.TextIteratorStreamer">接口、代码用例</a></p>
+<p><a target="_blank" rel="noopener" href="https://medium.com/@shrinath.suresh/building-an-interactive-streaming-chatbot-with-langchain-transformers-and-gradio-93b97378353e" class="uri">https://medium.com/@shrinath.suresh/building-an-interactive-streaming-chatbot-with-langchain-transformers-and-gradio-93b97378353e</a></p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
             </div>
@@ -460,7 +468,7 @@ put
                     <div class="publish-info">
                         <span class="publish-date">
                             <i class="far fa-clock fa-fw icon-date"></i>2024-05-29
-                            <i class="far fa-edit fa-fw icon-date"></i>2024-05-29
+                            <i class="far fa-edit fa-fw icon-date"></i>2024-07-11
                         </span>
                         <span class="publish-author">
                             
@@ -506,7 +514,7 @@ put
                     <div class="publish-info">
                             <span class="publish-date">
                                 <i class="far fa-clock fa-fw icon-date"></i>2024-05-28
-                                <i class="far fa-edit fa-fw icon-date"></i>2024-05-28
+                                <i class="far fa-edit fa-fw icon-date"></i>2024-07-11
                             </span>
                         <span class="publish-author">
                             
@@ -987,21 +995,6 @@ $(function () {
     <script src="/blog/libs/instantpage/instantpage.js" type="module"></script>
     
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 
 </html>

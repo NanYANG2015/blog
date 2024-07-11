@@ -7,8 +7,8 @@
     <meta name="keywords" content="LoRA, 梦园">
     <meta name="description" content="
 作者：微软
-
-LoRA (Low-Rank Adaptation)：过参数化（over-parametrized）模型实际上是低秩的。假设：微调时，模型权重的变化量也是低秩的。通过学习权重变化的低秩分解矩阵，间接地微调权重参数，同时可以冻">
+LoRA (Low-Rank
+Adaptation)：过参数化（over-parametrized）模型实际上是低秩的。假设：微调时，模型权重的变化量也是低秩的。通过学习权重变化的低秩分解矩阵，间接地微调权重参数，同时可">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -349,7 +349,7 @@ LoRA (Low-Rank Adaptation)：过参数化（over-parametrized）模型实际上�
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-12-07
+                    2024-07-11
                 </div>
                 
 
@@ -372,36 +372,68 @@ LoRA (Low-Rank Adaptation)：过参数化（over-parametrized）模型实际上�
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <ul>
-<li><p>作者：微软</p>
-</li>
-<li><p>LoRA (Low-Rank Adaptation)：过参数化（over-parametrized）模型实际上是低秩的。假设：微调时，模型权重的变化量也是低秩的。通过学习权重变化的低秩分解矩阵，间接地微调权重参数，同时可以冻结预训练模型的参数。适用于任何模型中的 dense 层。<br>$$ h&#x3D;W_0 x+\Delta W x&#x3D;W_0 x+B A x $$</p>
-<p>其中，$W_0 \in \mathbb{R}^{d \times k}$ 为预训练模型的权重矩阵，$\Delta W$ 为微调时的累积梯度更新量，$B \in \mathbb{R}^{d \times r}$，$A \in \mathbb{R}^{r \times k}$，秩 $r \ll \min (d, k)$。A 随机高斯初始化，B 全0初始化，因此 BA 初始值为 0。</p>
-<p>$\alpha$：将 $\Delta W x$ 乘以 $\frac{\alpha}{r}$。采用 Adam 优化时，调 $\alpha$ 大致相当于调学习率，因此，改变 $r$ 时，$\alpha$ 保持不变，可以不需要调学习率。</p>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB2aee59d8c5388e3cfc72ca7667c87e1b?method=download&shareKey=7cbcb396b87afc011e77a682978176db" width="185"></li>
+<li><p>作者：微软</p></li>
+<li><p>LoRA (Low-Rank
+Adaptation)：过参数化（over-parametrized）模型实际上是低秩的。假设：微调时，模型权重的变化量也是低秩的。通过学习权重变化的低秩分解矩阵，间接地微调权重参数，同时可以冻结预训练模型的参数。适用于任何模型中的
+dense 层。 <span class="math display">\[ h=W_0 x+\Delta W x=W_0 x+B A x
+\]</span></p>
+<p>其中，<span class="math inline">\(W_0 \in \mathbb{R}^{d \times
+k}\)</span> 为预训练模型的权重矩阵，<span class="math inline">\(\Delta
+W\)</span> 为微调时的累积梯度更新量，<span class="math inline">\(B \in
+\mathbb{R}^{d \times r}\)</span>，<span class="math inline">\(A \in
+\mathbb{R}^{r \times k}\)</span>，秩 <span class="math inline">\(r \ll
+\min (d, k)\)</span>。A 随机高斯初始化，B 全0初始化，因此 BA 初始值为
+0。</p>
+<p><span class="math inline">\(\alpha\)</span>：将 <span class="math inline">\(\Delta W x\)</span> 乘以 <span class="math inline">\(\frac{\alpha}{r}\)</span>。采用 Adam 优化时，调
+<span class="math inline">\(\alpha\)</span>
+大致相当于调学习率，因此，改变 <span class="math inline">\(r\)</span>
+时，<span class="math inline">\(\alpha\)</span>
+保持不变，可以不需要调学习率。</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB2aee59d8c5388e3cfc72ca7667c87e1b?method=download&shareKey=7cbcb396b87afc011e77a682978176db" width="185"></p></li>
 <li><p>优点</p>
 <ul>
 <li>相较于全参数微调，可训练参数量大大减少，显存需求更小（不需要存冻结参数的优化器状态），训练吞吐量更高，与微调效果相当或更好。多任务部署时，可共享预训练模型，存储需求减少。</li>
-<li>相较于添加 adapter 层（online 场景、短序列，引入的推理延迟可以高达30%；大 batch、长序列，延迟可缓解。），没有额外的推理延迟。<img src="https://note.youdao.com/yws/api/personal/file/WEB0e524e9faa8e881b669551004cc4f250?method=download&shareKey=0dff8368dd82d48ca0bc6c3128dd0401" width="613"></li>
-<li>prefix-tuning：在输入序列中插入特殊 token，占用了输入序列长度。且较难优化，性能不随可训练参数量单调变化，LoRA 的性能更稳定。<img src="https://note.youdao.com/yws/api/personal/file/WEB31a71baa655899064067e9a81fdc669d?method=download&shareKey=9e9533a65d6b74ed43f9777210e83dae" width="613"></li>
-<li>few-shot learning &#x2F; prompt engineering：适用于只有很少量训练样本的任务。在性能敏感的应用上，微调的性能是显著优于 few-shot learning 的。</li>
-<li>低数据量 adaption：相较于其它 adaption 方法，总体上 LoRA 性能更好。<img src="https://note.youdao.com/yws/api/personal/file/WEB9a387fd3333ff1bbce41861f856bbb0b?method=download&shareKey=d53d9ebc3f2e807487d509b8ab2f52cd" width="613"></li>
+<li>相较于添加 adapter 层（online
+场景、短序列，引入的推理延迟可以高达30%；大
+batch、长序列，延迟可缓解。），没有额外的推理延迟。
+<img src="https://note.youdao.com/yws/api/personal/file/WEB0e524e9faa8e881b669551004cc4f250?method=download&shareKey=0dff8368dd82d48ca0bc6c3128dd0401" width="613"></li>
+<li>prefix-tuning：在输入序列中插入特殊
+token，占用了输入序列长度。且较难优化，性能不随可训练参数量单调变化，LoRA
+的性能更稳定。
+<img src="https://note.youdao.com/yws/api/personal/file/WEB31a71baa655899064067e9a81fdc669d?method=download&shareKey=9e9533a65d6b74ed43f9777210e83dae" width="613"></li>
+<li>few-shot learning / prompt
+engineering：适用于只有很少量训练样本的任务。在性能敏感的应用上，微调的性能是显著优于
+few-shot learning 的。</li>
+<li>低数据量 adaption：相较于其它 adaption 方法，总体上 LoRA 性能更好。
+<img src="https://note.youdao.com/yws/api/personal/file/WEB9a387fd3333ff1bbce41861f856bbb0b?method=download&shareKey=d53d9ebc3f2e807487d509b8ab2f52cd" width="613"></li>
 <li>与其它微调方法正交，可以组合使用。</li>
-<li>部署：可以存储 $W&#x3D;W_0+B A$。当需要切换到另一个下游任务时，$-B A + B^{\prime} A^{\prime}$。</li>
-</ul>
-</li>
-<li><p>符号表示：本文以 Transformer 为例，对每一个 Transformer 块中 self attention 模块的权重矩阵添加 LoRA 模块。<br>$d_model$：Transformer 层的输入、输出维度<br>$W_q$、$W_k$、$W_v$、$W_o$：self-attention 模块中的 query&#x2F;key&#x2F;value&#x2F;output projection 矩阵。<br>$d_{f f n}&#x3D;4 \times d_{\text {model }}$：feedforward 维度。</p>
-</li>
+<li>部署：可以存储 <span class="math inline">\(W=W_0+B
+A\)</span>。当需要切换到另一个下游任务时，<span class="math inline">\(-B
+A + B^{\prime} A^{\prime}\)</span>。</li>
+</ul></li>
+<li><p>符号表示：本文以 Transformer 为例，对每一个 Transformer 块中 self
+attention 模块的权重矩阵添加 LoRA 模块。</p>
+<p><span class="math inline">\(d\_model\)</span>：Transformer
+层的输入、输出维度</p>
+<p><span class="math inline">\(W_q\)</span>、<span class="math inline">\(W_k\)</span>、<span class="math inline">\(W_v\)</span>、<span class="math inline">\(W_o\)</span>：self-attention 模块中的
+query/key/value/output projection 矩阵。</p>
+<p><span class="math inline">\(d_{f f n}=4 \times d_{\text {model
+}}\)</span>：feedforward 维度。</p></li>
 <li><p>关键问题</p>
 <ul>
-<li>Q：限定可训练参数量，LoRA 应该添加到 Transformer 中的哪些权重矩阵？<img src="https://note.youdao.com/yws/api/personal/file/WEB97d91417122c14b9981324b9efd992c4?method=download&shareKey=553ea06f3618b8e05d81adb7f571d9cc" width="612"></li>
-<li>Q：最优的 $r$ 值。A：较小的值就可以达到较好的性能。<img src="https://note.youdao.com/yws/api/personal/file/WEB4eccb312371acf5b32d37751595194c1?method=download&shareKey=6e08e7b5862dde308043c1b03a0fabd9" width="611"></li>
-<li>Q：$\Delta W$ 与 $W$ 的关系？A：相较于随机矩阵，$\Delta W$ 与 $W$ 有更强的相关性。<font color="red"> $\Delta W$ 可能会放大预训练模型中已学习但未强调的特定下游任务的重要特征。</font></li>
-</ul>
-</li>
-<li><p>Hu E J, Shen Y, Wallis P, et al. Lora: Low-rank adaptation of large language models[J]. arXiv preprint arXiv:2106.09685, 2021.</p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/microsoft/LoRA">https://github.com/microsoft/LoRA</a></p>
-</li>
+<li>Q：限定可训练参数量，LoRA 应该添加到 Transformer 中的哪些权重矩阵？
+<img src="https://note.youdao.com/yws/api/personal/file/WEB97d91417122c14b9981324b9efd992c4?method=download&shareKey=553ea06f3618b8e05d81adb7f571d9cc" width="612"></li>
+<li>Q：最优的 <span class="math inline">\(r\)</span>
+值。A：较小的值就可以达到较好的性能。
+<img src="https://note.youdao.com/yws/api/personal/file/WEB4eccb312371acf5b32d37751595194c1?method=download&shareKey=6e08e7b5862dde308043c1b03a0fabd9" width="611"></li>
+<li>Q：<span class="math inline">\(\Delta W\)</span> 与 <span class="math inline">\(W\)</span> 的关系？A：相较于随机矩阵，<span class="math inline">\(\Delta W\)</span> 与 <span class="math inline">\(W\)</span> 有更强的相关性。<font color="red">
+<span class="math inline">\(\Delta W\)</span>
+可能会放大预训练模型中已学习但未强调的特定下游任务的重要特征。</font></li>
+</ul></li>
+<li><p>Hu E J, Shen Y, Wallis P, et al. Lora: Low-rank adaptation of
+large language models[J]. arXiv preprint arXiv:2106.09685,
+2021.</p></li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/microsoft/LoRA" class="uri">https://github.com/microsoft/LoRA</a></p></li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
@@ -473,7 +505,7 @@ LoRA (Low-Rank Adaptation)：过参数化（over-parametrized）模型实际上�
                     <div class="publish-info">
                         <span class="publish-date">
                             <i class="far fa-clock fa-fw icon-date"></i>2023-12-07
-                            <i class="far fa-edit fa-fw icon-date"></i>2024-07-01
+                            <i class="far fa-edit fa-fw icon-date"></i>2024-07-11
                         </span>
                         <span class="publish-author">
                             
@@ -519,7 +551,7 @@ LoRA (Low-Rank Adaptation)：过参数化（over-parametrized）模型实际上�
                     <div class="publish-info">
                             <span class="publish-date">
                                 <i class="far fa-clock fa-fw icon-date"></i>2023-12-07
-                                <i class="far fa-edit fa-fw icon-date"></i>2024-07-01
+                                <i class="far fa-edit fa-fw icon-date"></i>2024-07-11
                             </span>
                         <span class="publish-author">
                             
@@ -699,7 +731,7 @@ LoRA (Low-Rank Adaptation)：过参数化（over-parametrized）模型实际上�
 </main>
 
 
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 <script>
     MathJax.Hub.Config({
         tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
@@ -1011,21 +1043,6 @@ $(function () {
     <script src="/blog/libs/instantpage/instantpage.js" type="module"></script>
     
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 
 </html>

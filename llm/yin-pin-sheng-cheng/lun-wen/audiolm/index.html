@@ -7,9 +7,12 @@
     <meta name="keywords" content="AudioLM, 梦园">
     <meta name="description" content="
 作者：Google, 2022.09。
-功能：输入 prompt 音频（3s），生成延续，在语法、语义上连贯，同时保持说话人的音色、韵律、录音环境。还能扩展到钢琴音乐延续。
+功能：输入 prompt
+音频（3s），生成延续，在语法、语义上连贯，同时保持说话人的音色、韵律、录音环境。还能扩展到钢琴音乐延续。
 创新点
-音频表示同时采用语义 token、声学 token，兼顾">
+
+音频表示同时采用语义 token、声学
+">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -354,7 +357,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-07-01
+                    2024-07-11
                 </div>
                 
 
@@ -378,82 +381,129 @@
             <div id="articleContent">
                 <ul>
 <li>作者：Google, 2022.09。</li>
-<li><font color="red">功能：输入 prompt 音频（3s），生成延续，在语法、语义上连贯，同时保持说话人的音色、韵律、录音环境。还能扩展到钢琴音乐延续。</font></li>
-<li>创新点<ul>
-<li>音频表示同时采用语义 token、声学 token，兼顾了长时结构的一致性（如语音中的语法、语义，音乐中的旋律、和弦、节奏）、高合成质量。</li>
-<li>采用3阶段 decoder-only Transformer LM，分别建模语义、粗粒度声学表示、细粒度声学表示。每个阶段的 token 序列长度更小。</li>
-</ul>
-</li>
-<li>优点<ul>
+<li><font color="red">功能：输入 prompt
+音频（3s），生成延续，在语法、语义上连贯，同时保持说话人的音色、韵律、录音环境。还能扩展到钢琴音乐延续。</font></li>
+<li>创新点
+<ul>
+<li>音频表示同时采用语义 token、声学
+token，兼顾了长时结构的一致性（如语音中的语法、语义，音乐中的旋律、和弦、节奏）、高合成质量。</li>
+<li>采用3阶段 decoder-only Transformer
+LM，分别建模语义、粗粒度声学表示、细粒度声学表示。每个阶段的 token
+序列长度更小。</li>
+</ul></li>
+<li>优点
+<ul>
 <li>不需要带标注的训练音频。</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h1 id="系统结构">1. 系统结构</h1><ul>
-<li>音频表示：离散 token<br>语义 token：采用自监督表示学习 w2v-BERT，表征局部内容、长时结构；<br>声学 token：采用 neural audio codec SoundStream，实现高质量的合成。<img src="https://note.youdao.com/yws/api/personal/file/WEB7e9ed734208fcc5c20f2e283870071c9?method=download&shareKey=48506717ee8cd986aeb067812c47179c" width="584"></li>
-<li>w2v-BERT XL 0.6B<ul>
+<h1 id="系统结构">1. 系统结构</h1>
+<ul>
+<li>音频表示：离散 token 语义 token：采用自监督表示学习
+w2v-BERT，表征局部内容、长时结构； 声学 token：采用 neural audio codec
+SoundStream，实现高质量的合成。
+<img src="https://note.youdao.com/yws/api/personal/file/WEB7e9ed734208fcc5c20f2e283870071c9?method=download&shareKey=48506717ee8cd986aeb067812c47179c" width="584"></li>
+<li>w2v-BERT XL 0.6B
+<ul>
 <li>基于 Conformer，MLM loss + 对比 loss。40ms 帧率。</li>
-<li>中间层表示（MLM 第7层）k-means 聚类。聚类前进行归一化（各维 0均值、单位方差）可以显著地提高音素区分性。</li>
-</ul>
-</li>
-<li>SoundStream<ul>
-<li>residual vector quantizer (RVQ) 由 Q 个词表为 N 的量化器组成。16kHz、20ms 帧率，比特率为 $50 * Q * \log_{2}{N} \mathrm{bps}$。</li>
+<li>中间层表示（MLM 第7层）k-means 聚类。聚类前进行归一化（各维
+0均值、单位方差）可以显著地提高音素区分性。</li>
+</ul></li>
+<li>SoundStream
+<ul>
+<li>residual vector quantizer (RVQ) 由 Q 个词表为 N
+的量化器组成。16kHz、20ms 帧率，比特率为 <span class="math inline">\(50
+* Q * \log_{2}{N} \mathrm{bps}\)</span>。</li>
 <li>重建损失 + 对抗损失，端到端训练。</li>
-</ul>
-</li>
+</ul></li>
 <li>decoder-only Transformer 自回归 LM。</li>
 </ul>
-<h2 id="3-阶段建模">1.1. 3 阶段建模</h2><img src="https://note.youdao.com/yws/api/personal/file/WEB5478fde1b8235d245d20aa9cfba1f22e?method=download&shareKey=b38bac8bd4dceef3a7d5dd174c1b2a58" width="1184">
-
+<h2 id="阶段建模">1.1. 3 阶段建模</h2>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB5478fde1b8235d245d20aa9cfba1f22e?method=download&shareKey=b38bac8bd4dceef3a7d5dd174c1b2a58" width="1184"></p>
 <p>3 个 decoder-only Transformer。</p>
-<ol>
-<li>语义建模：自回归预测语义 token $p\left(z_t \mid z_{&lt;t}\right)$。</li>
-<li>粗声学建模：以语义 token 为条件，只建模粗声学 token（前 $Q^{\prime}$ 个量化器），恢复说话人、录音环境等声学特性。token 序列为 $\left(z_1, z_2, \ldots, z_{T_S}, y_1^1, y_1^2, \ldots, y_1^{Q^{\prime}}, y_2^1, y_2^2, \ldots,, y_2^{Q^{\prime}}, \ldots, y_{T_A}^{Q^{\prime}}\right)$，建模 $p\left(y_t^q \mid z, y_{&lt;t}^{\leq Q^{\prime}}, y_t^{&lt;q}\right)$ $q \leq Q^{\prime}$，其中，$y$ 序列为 $y+o$，$o_i&#x3D;(i-1 \bmod Q^{\prime}) \cdot N$。<font color="green">训练时 $y_1^1$ 为第一个预测的 token。</font></li>
-<li>细粒度声学建模：$p\left(y_t^q \mid y^{\leq Q^{\prime}}, y_{&lt;t}^{&gt;Q^{\prime}}, y_t^{&lt;q}\right)$ $q &gt; Q^{\prime}$，去除第二阶段有损压缩导致的 artifacts。<br>由于细粒度声学 token 由粗粒度 token 局部确定，在 3s 的非重叠块上执行。因此，第3阶段不受目标音频序列长度影响，且可以采用更大的 Q 来实现更高的质量。</li>
+<ol type="1">
+<li><p>语义建模：自回归预测语义 token <span class="math inline">\(p\left(z_t \mid
+z_{&lt;t}\right)\)</span>。</p></li>
+<li><p>粗声学建模：以语义 token 为条件，只建模粗声学 token（前 <span class="math inline">\(Q^{\prime}\)</span>
+个量化器），恢复说话人、录音环境等声学特性。token 序列为 <span class="math inline">\(\left(z_1, z_2, \ldots, z_{T_S}, y_1^1, y_1^2,
+\ldots, y_1^{Q^{\prime}}, y_2^1, y_2^2, \ldots,, y_2^{Q^{\prime}},
+\ldots, y_{T_A}^{Q^{\prime}}\right)\)</span>，建模 <span class="math inline">\(p\left(y_t^q \mid z, y_{&lt;t}^{\leq Q^{\prime}},
+y_t^{&lt;q}\right)\)</span> <span class="math inline">\(q \leq
+Q^{\prime}\)</span>，其中，<span class="math inline">\(y\)</span> 序列为
+<span class="math inline">\(y+o\)</span>，<span class="math inline">\(o_i=(i-1 \bmod Q^{\prime}) \cdot
+N\)</span>。<font color="green">训练时 <span class="math inline">\(y_1^1\)</span> 为第一个预测的
+token。</font></p></li>
+<li><p>细粒度声学建模：<span class="math inline">\(p\left(y_t^q \mid
+y^{\leq Q^{\prime}}, y_{&lt;t}^{&gt;Q^{\prime}},
+y_t^{&lt;q}\right)\)</span> <span class="math inline">\(q &gt;
+Q^{\prime}\)</span>，去除第二阶段有损压缩导致的 artifacts。
+由于细粒度声学 token 由粗粒度 token 局部确定，在 3s
+的非重叠块上执行。因此，第3阶段不受目标音频序列长度影响，且可以采用更大的
+Q 来实现更高的质量。</p></li>
 </ol>
 <ul>
-<li>条件独立假设：语义 token 与 声学 token 条件独立；细粒度声学 token 与语义 token 条件独立。</li>
-<li>优点：相较于语义 token、声学 token 交替，合并第2、第3阶段，该方案每个阶段的 token 序列长度减小了，计算更高效。</li>
+<li>条件独立假设：语义 token 与 声学 token 条件独立；细粒度声学 token
+与语义 token 条件独立。</li>
+<li>优点：相较于语义 token、声学 token
+交替，合并第2、第3阶段，该方案每个阶段的 token
+序列长度减小了，计算更高效。</li>
 </ul>
-<h2 id="推理">1.2. 推理</h2><ul>
-<li>无条件生成。无条件采样语义 token。可以生成具有不同说话人、韵律、声学环境特征的，语法、语义一致的，多样化的语音。</li>
-<li>声学生成。给定语义 token，合成语音的文本一致，具有不同的声学特征。</li>
+<h2 id="推理">1.2. 推理</h2>
+<ul>
+<li>无条件生成。无条件采样语义
+token。可以生成具有不同说话人、韵律、声学环境特征的，语法、语义一致的，多样化的语音。</li>
+<li>声学生成。给定语义
+token，合成语音的文本一致，具有不同的声学特征。</li>
 <li>延续。输入简短的 prompt 音频。</li>
 </ul>
-<h1 id="实验">2. 实验</h1><ul>
-<li>训练集<br>AudioLM 所有组件（w2v-BERT、k-means、SoundStream、decoder-only Transformer）的训练集都为 Libri-Light  unlab-60k（英语）。</li>
-<li>SoundStream<br>$Q&#x3D;12$，$N&#x3D;1024$，$Q^{\prime}&#x3D;4$。4个卷积 block stride (2,4,5,8)，音频采样率 16kHz，帧率 20ms。</li>
-<li>decoder-only Transformer<ul>
+<h1 id="实验">2. 实验</h1>
+<ul>
+<li>训练集 AudioLM
+所有组件（w2v-BERT、k-means、SoundStream、decoder-only
+Transformer）的训练集都为 Libri-Light unlab-60k（英语）。</li>
+<li>SoundStream <span class="math inline">\(Q=12\)</span>，<span class="math inline">\(N=1024\)</span>，<span class="math inline">\(Q^{\prime}=4\)</span>。4个卷积 block stride
+(2,4,5,8)，音频采样率 16kHz，帧率 20ms。</li>
+<li>decoder-only Transformer
+<ul>
 <li>3个阶段的模型结构一致，各 0.3B，参数详见论文。</li>
-<li>3个阶段，音频随机裁剪到 30s、10s、3s。删除语义 token 的连续重复。</li>
-</ul>
-</li>
-<li>训练<br>训练音频 encoder、decoder -&gt; 冻结，训练 LM。解耦、简化训练流程。</li>
-<li>推理<br>3个阶段均采用采样，温度系数分别为0.6、0.8、0.6，权衡生成语音的多样性、语义一致性。</li>
-<li>对比语义 token、声学 token<ul>
-<li>音素区分性<ul>
-<li>方式：将 w2v-BERT k-means 聚类质心表示、SoundStream encoder 输出，转换为 RVQ embedding，计算 ABX 错误率。</li>
-<li>评价指标：ABX 错误率。考虑仅中心 phone 不同的 triphone，ABX 错误率为 X 更接近 B（中心 phone 不同）而不是 A（中心 phone 相同）的比例。<ul>
+<li>3个阶段，音频随机裁剪到 30s、10s、3s。删除语义 token
+的连续重复。</li>
+</ul></li>
+<li>训练 训练音频 encoder、decoder -&gt; 冻结，训练
+LM。解耦、简化训练流程。</li>
+<li>推理
+3个阶段均采用采样，温度系数分别为0.6、0.8、0.6，权衡生成语音的多样性、语义一致性。</li>
+<li>对比语义 token、声学 token
+<ul>
+<li>音素区分性
+<ul>
+<li>方式：将 w2v-BERT k-means 聚类质心表示、SoundStream encoder
+输出，转换为 RVQ embedding，计算 ABX 错误率。</li>
+<li>评价指标：ABX 错误率。考虑仅中心 phone 不同的 triphone，ABX 错误率为
+X 更接近 B（中心 phone 不同）而不是 A（中心 phone 相同）的比例。
+<ul>
 <li>within-speaker: A、B、X 来自同一说话人。</li>
 <li>across-speaker: A、B 来自同一说话人，X 来自另一说话人。</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>重建质量<ul>
+</ul></li>
+</ul></li>
+<li>重建质量
+<ul>
 <li>方式：训练 SoundStream decoder，输入 token 重建音频。</li>
 <li>评价指标：ViSQOL score，参考音频、重建音频之间的感知相似度。</li>
-</ul>
-</li>
-<li>训练 decoder-only Transformer，采用输出 token 合成音频。<ul>
+</ul></li>
+<li>训练 decoder-only Transformer，采用输出 token 合成音频。
+<ul>
 <li>采用语义 token，音频合成质量很差。</li>
-<li>采用声学 token，保留了说话人特征、录音环境，但内容往往类似于 babbling。</li>
-</ul>
-</li>
-</ul>
-</li>
+<li>采用声学 token，保留了说话人特征、录音环境，但内容往往类似于
+babbling。</li>
+</ul></li>
+</ul></li>
 </ul>
 <table>
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
 <thead>
 <tr>
 <th>实验</th>
@@ -461,47 +511,64 @@
 <th>结论</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>对比语义 token、声学 token</td>
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEB83e195cc1dc022a6ca8f7ed21ba07560?method=download&shareKey=ac47314155debfbd09bb877c610ad6c1" width="1176"></td>
-<td>语义 token 包含了长时结构，声学 token 保留了说话人特征、录音环境。<br> 相较于 $Q&#x3D;4$（2000bps），$Q&#x3D;12$（6000bps）显著提高了生成音频的质量。</td>
+<td>语义 token 包含了长时结构，声学 token
+保留了说话人特征、录音环境。<br> 相较于 <span class="math inline">\(Q=4\)</span>（2000bps），<span class="math inline">\(Q=12\)</span>（6000bps）显著提高了生成音频的质量。</td>
 </tr>
 <tr>
 <td>语义建模超参数选择</td>
-<td><img src="https://note.youdao.com/yws/api/personal/file/WEB02ac67da6a5c3ae42d72104b22d776ba?method=download&shareKey=81e7f0785a75b8a07730ff360d98fd14" width="582"><br>* 另外，主观评价不同超参数下生成的音频。</td>
-<td>采用 w2v-BERT XL 0.6B MLM 第7层的表示；<br>k-means 聚类 $K&#x3D;1024$。</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEB02ac67da6a5c3ae42d72104b22d776ba?method=download&shareKey=81e7f0785a75b8a07730ff360d98fd14" width="582"><br>*
+另外，主观评价不同超参数下生成的音频。</td>
+<td>采用 w2v-BERT XL 0.6B MLM 第7层的表示；<br>k-means 聚类 <span class="math inline">\(K=1024\)</span>。</td>
 </tr>
 <tr>
 <td>语义 token<br>给定语义 token 生成音频，ASR</td>
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEB1f0c712205e17dfe0dd6bf60b00b639f?method=download&shareKey=181dadfdba4ff4d82fc6d21b074b6155" width="550"></td>
-<td>CER、WER 较低：语言内容被语义 token 完全表示。<br> AudioLM WER&#x2F;CER 相对较高，而SoundStream 重建音频与原始音频的 WER&#x2F;CER 接近：AudioLM WER&#x2F;CER 主要来源于语义 token 到声学 token 的映射。<br>WER 的主要来源：专有名词合成、&lt;eos&gt;。</td>
+<td>CER、WER 较低：语言内容被语义 token 完全表示。<br> AudioLM WER/CER
+相对较高，而SoundStream 重建音频与原始音频的 WER/CER 接近：AudioLM
+WER/CER 主要来源于语义 token 到声学 token 的映射。<br>WER
+的主要来源：专有名词合成、&lt;eos&gt;。</td>
 </tr>
 <tr>
 <td>声学 token<br>说话人分类</td>
-<td>上一实验中，给定语义 token，多次采样，说话人、录音环境变化较大，韵律、语调变化较小。<br><img src="https://note.youdao.com/yws/api/personal/file/WEB4b8cffc907ad2ecacc2d2f04142be561?method=download&shareKey=4fdf85b21ff4a1f7d34537a84c9a97e3" width="564"></td>
+<td>上一实验中，给定语义
+token，多次采样，说话人、录音环境变化较大，韵律、语调变化较小。<br><img src="https://note.youdao.com/yws/api/personal/file/WEB4b8cffc907ad2ecacc2d2f04142be561?method=download&shareKey=4fdf85b21ff4a1f7d34537a84c9a97e3" width="564"></td>
 <td>说话人、录音环境信息由声学 token 表示。</td>
 </tr>
 <tr>
-<td>语义 token LM 的语言学知识<br>sWUGGY：给定单词、发音相近的 non-word，模型是否对正确单词有更高的概率。<br>sBLIMP：给定语法正确的句子、语法不正确的相似的句子，模型对前者概率更高的比例。</td>
+<td>语义 token LM 的语言学知识<br>sWUGGY：给定单词、发音相近的
+non-word，模型是否对正确单词有更高的概率。<br>sBLIMP：给定语法正确的句子、语法不正确的相似的句子，模型对前者概率更高的比例。</td>
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEBdc9cb9b175df27d911ee93bd08b6c3c8?method=download&shareKey=03cee79773d8ba262c19f6cacdcae155" width="580"></td>
 <td>不需要文本有监督数据，语义 token LM 词法、句法判断能力较强。</td>
 </tr>
 <tr>
-<td>主观评价<br>区分原始录音与AudioLM 生成的延续。原始录音也经过 SoundStream 压缩。</td>
+<td>主观评价<br>区分原始录音与AudioLM 生成的延续。原始录音也经过
+SoundStream 压缩。</td>
 <td>人工区分正确率 51.2%，接近随机猜。</td>
 <td></td>
 </tr>
 <tr>
-<td>钢琴延续<br>在钢琴音乐数据集上重训所有组件。Q&#x3D;3, N&#x3D;16384，不需要第3阶段。<br>主观评价：对仅基于声学 token 生成的延续、AudioLM 生成的偏好</td>
+<td>钢琴延续<br>在钢琴音乐数据集上重训所有组件。Q=3,
+N=16384，不需要第3阶段。<br>主观评价：对仅基于声学 token
+生成的延续、AudioLM 生成的偏好</td>
 <td>83.3% 偏好 AudioLM 的生成。</td>
 <td></td>
 </tr>
-</tbody></table>
-<h1 id="安全性">3. 安全性</h1><p>训练了分类器区分 AudioLM 生成的语音、压缩后的真实录音，准确率 98.6%。</p>
-<h1 id="其它">4. 其它</h1><ul>
-<li>Borsos Z, Marinier R, Vincent D, et al. Audiolm: a language modeling approach to audio generation[J]. IEEE&#x2F;ACM Transactions on Audio, Speech, and Language Processing, 2023.</li>
-<li><a target="_blank" rel="noopener" href="https://google-research.github.io/seanet/audiolm/examples">https://google-research.github.io/seanet/audiolm/examples</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/lucidrains/audiolm-pytorch">https://github.com/lucidrains/audiolm-pytorch</a></li>
+</tbody>
+</table>
+<h1 id="安全性">3. 安全性</h1>
+<p>训练了分类器区分 AudioLM 生成的语音、压缩后的真实录音，准确率
+98.6%。</p>
+<h1 id="其它">4. 其它</h1>
+<ul>
+<li>Borsos Z, Marinier R, Vincent D, et al. Audiolm: a language modeling
+approach to audio generation[J]. IEEE/ACM Transactions on Audio, Speech,
+and Language Processing, 2023.</li>
+<li><a target="_blank" rel="noopener" href="https://google-research.github.io/seanet/audiolm/examples" class="uri">https://google-research.github.io/seanet/audiolm/examples</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/lucidrains/audiolm-pytorch" class="uri">https://github.com/lucidrains/audiolm-pytorch</a></li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
@@ -573,7 +640,7 @@
                     <div class="publish-info">
                         <span class="publish-date">
                             <i class="far fa-clock fa-fw icon-date"></i>2024-05-23
-                            <i class="far fa-edit fa-fw icon-date"></i>2024-07-01
+                            <i class="far fa-edit fa-fw icon-date"></i>2024-07-11
                         </span>
                         <span class="publish-author">
                             
@@ -619,7 +686,7 @@
                     <div class="publish-info">
                             <span class="publish-date">
                                 <i class="far fa-clock fa-fw icon-date"></i>2024-05-10
-                                <i class="far fa-edit fa-fw icon-date"></i>2024-07-01
+                                <i class="far fa-edit fa-fw icon-date"></i>2024-07-11
                             </span>
                         <span class="publish-author">
                             
@@ -799,7 +866,7 @@
 </main>
 
 
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 <script>
     MathJax.Hub.Config({
         tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
@@ -1111,21 +1178,6 @@ $(function () {
     <script src="/blog/libs/instantpage/instantpage.js" type="module"></script>
     
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 
 </html>

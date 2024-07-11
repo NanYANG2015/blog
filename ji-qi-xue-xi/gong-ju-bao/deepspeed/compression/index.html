@@ -350,7 +350,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-05-29
+                    2024-07-11
                 </div>
                 
 
@@ -372,69 +372,96 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p><font color="green"><a target="_blank" rel="noopener" href="https://www.microsoft.com/en-us/research/blog/deepspeed-compression-a-composable-library-for-extreme-compression-and-zero-cost-quantization/">https://www.microsoft.com/en-us/research/blog/deepspeed-compression-a-composable-library-for-extreme-compression-and-zero-cost-quantization/</a></font></p>
+                <p><font color="green"><a target="_blank" rel="noopener" href="https://www.microsoft.com/en-us/research/blog/deepspeed-compression-a-composable-library-for-extreme-compression-and-zero-cost-quantization/" class="uri">https://www.microsoft.com/en-us/research/blog/deepspeed-compression-a-composable-library-for-extreme-compression-and-zero-cost-quantization/</a></font></p>
 <p>支持的量化技术包含：</p>
-<h1 id="减少层数">1. 减少层数</h1><ul>
+<h1 id="减少层数">1. 减少层数</h1>
+<ul>
 <li>可选是否采用知识蒸馏。</li>
 <li>收益：推理延迟线性减小。</li>
 </ul>
-<h1 id="权重量化">2. 权重量化</h1><ul>
-<li>支持分组权重量化。<ul>
-<li>Shen S, Dong Z, Ye J, et al. Q-bert: Hessian based ultra low precision quantization of bert[C]&#x2F;&#x2F;Proceedings of the AAAI Conference on Artificial Intelligence. 2020, 34(05): 8815-8821.</li>
+<h1 id="权重量化">2. 权重量化</h1>
+<ul>
+<li>支持分组权重量化。
+<ul>
+<li>Shen S, Dong Z, Ye J, et al. Q-bert: Hessian based ultra low
+precision quantization of bert[C]//Proceedings of the AAAI Conference on
+Artificial Intelligence. 2020, 34(05): 8815-8821.</li>
+</ul></li>
 </ul>
-</li>
+<h1 id="激活量化">3. 激活量化</h1>
+<ul>
+<li><font color="green"><a target="_blank" rel="noopener" href="https://medium.com/@joel_34050/quantization-in-deep-learning-478417eab72b" class="uri">https://medium.com/@joel_34050/quantization-in-deep-learning-478417eab72b</a></font></li>
 </ul>
-<h1 id="激活量化">3. 激活量化</h1><ul>
-<li><font color="green"><a target="_blank" rel="noopener" href="https://medium.com/@joel_34050/quantization-in-deep-learning-478417eab72b">https://medium.com/@joel_34050/quantization-in-deep-learning-478417eab72b</a></font></li>
+<h1 id="剪枝">4. 剪枝</h1>
+<p>通过删除模型连接来减少计算量。</p>
+<h2 id="稀疏剪枝">4.1. 稀疏剪枝</h2>
+<ul>
+<li>将权重矩阵中的某些元素置为 0。可以<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1506.02626">基于权重的绝对值</a> 或<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1810.02340">基于权重被 mask 时 loss
+的变化</a>。</li>
+<li><font color="green">支持的方法：L1 norm, topk,
+snip_momentum。</font></li>
 </ul>
-<h1 id="剪枝">4. 剪枝</h1><p>通过删除模型连接来减少计算量。</p>
-<h2 id="稀疏剪枝">4.1. 稀疏剪枝</h2><ul>
-<li>将权重矩阵中的某些元素置为 0。可以<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1506.02626">基于权重的绝对值</a> 或<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1810.02340">基于权重被 mask 时 loss 的变化</a>。</li>
-<li><font color="green">支持的方法：L1 norm, topk, snip_momentum。</font></li>
-</ul>
-<h2 id="行剪枝">4.2. 行剪枝</h2><ul>
+<h2 id="行剪枝">4.2. 行剪枝</h2>
+<ul>
 <li>将权重矩阵中某些行的所有元素置为零。</li>
 <li>相较于稀疏剪枝，有利于硬件加速，但准确率损失可能更大。</li>
 </ul>
-<h2 id="head-剪枝">4.3. head 剪枝</h2><blockquote>
-<p>训练模型后，测试时删除许多 head，没有显著影响性能，甚至在某些情况下，删除少量 head 性能更好。<br><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1905.09418">https://arxiv.org/abs/1905.09418</a></p>
+<h2 id="head-剪枝">4.3. head 剪枝</h2>
+<blockquote>
+<p>训练模型后，测试时删除许多
+head，没有显著影响性能，甚至在某些情况下，删除少量 head 性能更好。</p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1905.09418" class="uri">https://arxiv.org/abs/1905.09418</a></p>
 </blockquote>
 <ul>
 <li>涉及 multi-head attention 中的 QKV、输出矩阵。</li>
 </ul>
-<h2 id="channel-剪枝">4.4. channel 剪枝</h2><p>应用于卷积层。</p>
-<h1 id="zero-cost-quantization-ZeroQuant">5. zero-cost quantization (ZeroQuant)</h1><ul>
-<li>包含权重、激活量化。支持 INT8、INT4&#x2F;INT8 混合精度量化。</li>
+<h2 id="channel-剪枝">4.4. channel 剪枝</h2>
+<p>应用于卷积层。</p>
+<h1 id="zero-cost-quantization-zeroquant">5. zero-cost quantization
+(ZeroQuant)</h1>
+<ul>
+<li>包含权重、激活量化。支持 INT8、INT4/INT8 混合精度量化。</li>
 <li>逐层知识蒸馏。</li>
 <li><font color="red">训练后量化，不需要量化感知训练。</font></li>
-<li><font color="green"><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2206.01861">https://arxiv.org/abs/2206.01861</a></font></li>
+<li><font color="green"><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2206.01861" class="uri">https://arxiv.org/abs/2206.01861</a></font></li>
 </ul>
-<h1 id="extreme-compression-XTC">6. extreme compression (XTC)</h1><ul>
-<li><font color="red">极低 bit 量化。训练中量化。</font>比如对激活应用 8bit 量化，QKV、feedforward 权重、embedding 应用 1bit 量化。</li>
+<h1 id="extreme-compression-xtc">6. extreme compression (XTC)</h1>
+<ul>
+<li><font color="red">极低 bit 量化。训练中量化。</font>比如对激活应用
+8bit 量化，QKV、feedforward 权重、embedding 应用 1bit 量化。</li>
 <li>支持层减少，1bit、2bit 量化。</li>
-<li><font color="red">发现 FP16 训练下，<code>quantize_groups</code> 较小时（如1、2）训练可能不稳定，建议设为较大值，如 64。</font></li>
-<li><font color="green"><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2206.01859">https://arxiv.org/abs/2206.01859</a></font></li>
+<li><font color="red">发现 FP16 训练下，<code>quantize_groups</code>
+较小时（如1、2）训练可能不稳定，建议设为较大值，如 64。</font></li>
+<li><font color="green"><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2206.01859" class="uri">https://arxiv.org/abs/2206.01859</a></font></li>
 </ul>
-<h1 id="Mixture-of-Quantization-MoQ">7. Mixture-of-Quantization (MoQ)</h1><ul>
+<h1 id="mixture-of-quantization-moq">7. Mixture-of-Quantization (MoQ)</h1>
+<ul>
 <li><font color="red">在量化感知训练中，先以高精度量化模型，然后按预定义的计划降低精度，直到达到目标量化位数。</font></li>
-<li>支持使用模型参数的二阶信息分别动态调整各层（可指定部分层）的量化计划，以充分地适应性训练。默认为指定减少 bit 数的训练步数 <code>quantize_period</code>，每减少 1bit 上述步数加倍。<ul>
+<li>支持使用模型参数的二阶信息分别动态调整各层（可指定部分层）的量化计划，以充分地适应性训练。默认为指定减少
+bit 数的训练步数 <code>quantize_period</code>，每减少 1bit
+上述步数加倍。
+<ul>
 <li>训练速度将变慢。</li>
-<li>动态调整至多将所需的步数增大到5倍，当与原本的“每减少 1bit 步数加倍”结合时，可能变得非常大。因此，建议设置相对较小的 <code>quantize_period</code>，以在训练结束前经历所有的精度减少阶段。</li>
+<li>动态调整至多将所需的步数增大到5倍，当与原本的“每减少 1bit
+步数加倍”结合时，可能变得非常大。因此，建议设置相对较小的
+<code>quantize_period</code>，以在训练结束前经历所有的精度减少阶段。</li>
+</ul></li>
+<li><font color="green"><a target="_blank" rel="noopener" href="https://www.deepspeed.ai/2021/05/04/MoQ.html" class="uri">https://www.deepspeed.ai/2021/05/04/MoQ.html</a></font></li>
 </ul>
-</li>
-<li><font color="green"><a target="_blank" rel="noopener" href="https://www.deepspeed.ai/2021/05/04/MoQ.html">https://www.deepspeed.ai/2021/05/04/MoQ.html</a></font></li>
-</ul>
-<h1 id="配置">8. 配置</h1><ul>
-<li>权重量化<ul>
+<h1 id="配置">8. 配置</h1>
+<ul>
+<li>权重量化
+<ul>
 <li><font color="green">对称或非对称量化</font></li>
-</ul>
-</li>
-<li>激活量化<ul>
+</ul></li>
+<li>激活量化
+<ul>
 <li><font color="green">动态或静态。</font></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h1 id="其它">9. 其它</h1><p><font color="green">结合 DeepSpeed 高度优化的推理引擎，消除量化&#x2F;反量化开销。</font></p>
+<h1 id="其它">9. 其它</h1>
+<p><font color="green">结合 DeepSpeed
+高度优化的推理引擎，消除量化/反量化开销。</font></p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
             </div>
@@ -505,7 +532,7 @@
                     <div class="publish-info">
                         <span class="publish-date">
                             <i class="far fa-clock fa-fw icon-date"></i>2024-06-01
-                            <i class="far fa-edit fa-fw icon-date"></i>2024-07-01
+                            <i class="far fa-edit fa-fw icon-date"></i>2024-07-11
                         </span>
                         <span class="publish-author">
                             
@@ -551,7 +578,7 @@
                     <div class="publish-info">
                             <span class="publish-date">
                                 <i class="far fa-clock fa-fw icon-date"></i>2024-05-29
-                                <i class="far fa-edit fa-fw icon-date"></i>2024-05-29
+                                <i class="far fa-edit fa-fw icon-date"></i>2024-07-11
                             </span>
                         <span class="publish-author">
                             
@@ -1036,21 +1063,6 @@ $(function () {
     <script src="/blog/libs/instantpage/instantpage.js" type="module"></script>
     
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 
 </html>

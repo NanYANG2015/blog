@@ -6,8 +6,11 @@
     <meta charset="utf-8">
     <meta name="keywords" content="解码器, 梦园">
     <meta name="description" content="1. 参数
-beam: 每一帧保留的token的cost 与当前帧最优cost的最大允许差值。越大，解码越慢，内存占用越大，但越准确。默认值16.0（即路径概率约为1.1e-07 &amp;#x3D; 1&amp;#x2F;exp(16) 倍）。
-max_">
+
+beam: 每一帧保留的token的cost
+与当前帧最优cost的最大允许差值。越大，解码越慢，内存占用越大，但越准确。默认值16.0（即路径概率约为1.1e-07
+= 1/exp(16) 倍）。
+max_acti">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -370,67 +373,104 @@ max_">
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="参数">1. 参数</h1><ul>
-<li>beam: 每一帧保留的token的cost 与当前帧最优cost的最大允许差值。越大，解码越慢，内存占用越大，但越准确。默认值16.0<font color="green">（即路径概率约为1.1e-07 &#x3D; 1&#x2F;exp(16) 倍）</font>。</li>
-<li>max_active: 每一帧可以激活的最大状态数。越大，解码越慢，内存占用越大，但越准确。默认值7000。</li>
+                <h1 id="参数">1. 参数</h1>
+<ul>
+<li>beam: 每一帧保留的token的cost
+与当前帧最优cost的最大允许差值。越大，解码越慢，内存占用越大，但越准确。默认值16.0<font color="green">（即路径概率约为1.1e-07
+= 1/exp(16) 倍）</font>。</li>
+<li>max_active:
+每一帧可以激活的最大状态数。越大，解码越慢，内存占用越大，但越准确。默认值7000。</li>
 <li>min_active: 每一帧需要激活的最小状态数。默认值200。</li>
-<li><a href="#lattice_beam">lattice_beam</a>: Lattice Decoder中，跳转弧到达当前最后一帧active token A的最优路径的cost与到达A的最优路径的cost的最大允许差值（对于当前最后一帧的多个active tokens，其一满足即可）。默认值6.0<font color="green">（即路径概率约为0.0025 &#x3D; 1&#x2F;exp(6) 倍）</font>。</li>
-<li><a href="#beam_delta">beam_delta</a>: FasterDecoder中，用于根据前一帧估计当前帧的<code>adaptive_beam</code>。默认值0.5。</li>
-<li>prune_interval: Lattice Decoder中，每隔多少帧裁剪过去帧的tokens。默认值20。</li>
-<li><a href="#prune_scale">prune_scale</a>: Lattice Decoder中，若token的extra cost变大（假设上一次PruneActiveTokens时，该token计算extra cost对应的是当时最后一帧的token A，当A不在到达当前最后一帧的最优路径上时，该token的extra cost就会变大）（变化量，而非值）超过<code>lattice_beam * prune_scale</code>，则需要判断之前的帧是否需要裁剪。越大，则向前回溯得越少（内存与解码速度的均衡）。默认值0.1。</li>
+<li><a href="#lattice_beam">lattice_beam</a>: Lattice
+Decoder中，跳转弧到达当前最后一帧active token
+A的最优路径的cost与到达A的最优路径的cost的最大允许差值（对于当前最后一帧的多个active
+tokens，其一满足即可）。默认值6.0<font color="green">（即路径概率约为0.0025
+= 1/exp(6) 倍）</font>。</li>
+<li><a href="#beam_delta">beam_delta</a>:
+FasterDecoder中，用于根据前一帧估计当前帧的<code>adaptive_beam</code>。默认值0.5。</li>
+<li>prune_interval: Lattice
+Decoder中，每隔多少帧裁剪过去帧的tokens。默认值20。</li>
+<li><a href="#prune_scale">prune_scale</a>: Lattice
+Decoder中，若token的extra
+cost变大（假设上一次PruneActiveTokens时，该token计算extra
+cost对应的是当时最后一帧的token
+A，当A不在到达当前最后一帧的最优路径上时，该token的extra
+cost就会变大）（变化量，而非值）超过<code>lattice_beam * prune_scale</code>，则需要判断之前的帧是否需要裁剪。越大，则向前回溯得越少（内存与解码速度的均衡）。默认值0.1。</li>
 <li><a href="#hash_ratio">hash_ratio</a>：FasterDecoder中，用于设置存储tokens的哈希表的容量。默认值2。</li>
-<li>length_penalty：LatticeFasterDecoder中，每跳转到一个新的状态（排除了状态自旋、epsilon弧），graph cost加上length_penalty。&gt;0则倾向于短句子，&lt;0时倾向于长句子。默认值0.0。</li>
+<li>length_penalty：LatticeFasterDecoder中，每跳转到一个新的状态（排除了状态自旋、epsilon弧），graph
+cost加上length_penalty。&gt;0则倾向于短句子，&lt;0时倾向于长句子。默认值0.0。</li>
 </ul>
-<h1 id="数据结构">2. 数据结构</h1><ul>
-<li>DecodableInterface: 为了最小化解码器和声学模型代码之间的交互，创建了该基类。DecodableInterface 对象可以视为LogLikelihood矩阵。<ul>
-<li>BaseFloat LogLikelihood(int32 frame, int32 index): 返回索引(frame, index)对应的声学log-likelihood。若已计算，则直接返回值；否则调用声学模型计算。可能还包含减log_priors、乘acoustic_scale等处理。<ul>
+<h1 id="数据结构">2. 数据结构</h1>
+<ul>
+<li>DecodableInterface:
+为了最小化解码器和声学模型代码之间的交互，创建了该基类。DecodableInterface
+对象可以视为LogLikelihood矩阵。
+<ul>
+<li>BaseFloat LogLikelihood(int32 frame, int32 index): 返回索引(frame,
+index)对应的声学log-likelihood。若已计算，则直接返回值；否则调用声学模型计算。可能还包含减log_priors、乘acoustic_scale等处理。
+<ul>
 <li>acoustic_scale：默认值0.1。</li>
-</ul>
-</li>
-<li>int32 NumFramesReady(): 根据已计算的声学特征，可得到的LogLikelihood帧数（声学模型可能包含降采样、特征上下文等处理）。</li>
-<li>bool IsLastFrame(int32 frame): 是否为最后一帧（若为online模式，则须输入结束）。</li>
-</ul>
-</li>
-<li>Decoder<ul>
+</ul></li>
+<li>int32 NumFramesReady():
+根据已计算的声学特征，可得到的LogLikelihood帧数（声学模型可能包含降采样、特征上下文等处理）。</li>
+<li>bool IsLastFrame(int32 frame):
+是否为最后一帧（若为online模式，则须输入结束）。</li>
+</ul></li>
+<li>Decoder
+<ul>
 <li>构造decoder需要传入fst和相关配置参数。</li>
-</ul>
-</li>
-<li>Token（以下主要以Lattice Decoder为例）<ul>
+</ul></li>
+<li>Token（以下主要以Lattice Decoder为例）
+<ul>
 <li>每一帧、每个激活的状态各由一个Token表示。</li>
-<li>BaseFloat tot_cost: 从句子开头到当前状态的AM + LM cost (ac_cost + graph_cost)。<ul>
-<li>vector&lt;BaseFloat&gt; cost_offsets_: 每一帧，AM log-likelihoods 加的 offset，使其接近0，减小roundoff的误差。</li>
-</ul>
-</li>
-<li>BaseFloat extra_cost: 认为当前最后一帧的各active token都有可能在最终的最优路径上，extra_cost均为0；其它帧token的extra cost为：经过该token到达当前最后一帧active token（计为A）的最优路径，与到达A的最优路径的cost差值；对于当前最后一帧的多个active tokens，取这些cost差值的最小值。在PruneForwardLinks(Final)中计算。</li>
-<li>ForwardLink<stdtoken> *links: 该token到下一帧的跳转弧（或跳转到当前帧的epsilon弧）的单链表<ul>
+<li>BaseFloat tot_cost: 从句子开头到当前状态的AM + LM cost (ac_cost +
+graph_cost)。
+<ul>
+<li>vector&lt;BaseFloat&gt; cost_offsets_: 每一帧，AM log-likelihoods
+加的 offset，使其接近0，减小roundoff的误差。</li>
+</ul></li>
+<li>BaseFloat extra_cost: 认为当前最后一帧的各active
+token都有可能在最终的最优路径上，extra_cost均为0；其它帧token的extra
+cost为：经过该token到达当前最后一帧active
+token（计为A）的最优路径，与到达A的最优路径的cost差值；对于当前最后一帧的多个active
+tokens，取这些cost差值的最小值。在PruneForwardLinks(Final)中计算。</li>
+<li>ForwardLink<stdtoken> *links:
+该token到下一帧的跳转弧（或跳转到当前帧的epsilon弧）的单链表
+<ul>
 <li>fst::StdArc::Label ilabel</li>
 <li>fst::StdArc::Label olabel</li>
 <li>BaseFloat acoustic_cost: cost_offset - logLikelihood</li>
-<li>BaseFloat graph_cost: arc.weight，包含状态转移模型概率、词典发音概率、静音概率、LM概率等</li>
+<li>BaseFloat graph_cost:
+arc.weight，包含状态转移模型概率、词典发音概率、静音概率、LM概率等</li>
 <li>Token *next_tok：跳转到的下一个token</li>
 <li>ForwardLink *next：单链表结构</li>
-</ul>
-</stdtoken></li>
-<li>Token *backpointer: 到达当前token的最优路径上的上一token。用于LatticeFasterOnlineDecoder中高效地GetBestPath。</li>
+</ul></stdtoken></li>
+<li>Token *backpointer:
+到达当前token的最优路径上的上一token。用于LatticeFasterOnlineDecoder中高效地GetBestPath。</li>
 <li>Token *next: 该帧的下一token</li>
-<li>非Lattice Decoder中还包含：<ul>
-<li>int32 ref_count_: 该token跳转到的token的数量+1。当该token不再在到达当前最后一帧的各active token的最优路径上时（ref_count&#x3D;&#x3D;1），删除到达该token的路径上的所有无用token（TokenDelete）。</li>
-<li>Token *prev_: 路径中的上一个token，唯一，用于回溯。<ul>
-<li>Lattice Decoder记录路径中的下一token，链表，多个。<font color="green">更高效</font>。GetBestPath中，先顺序遍历每一帧的active tokens 生成lattice，再采用 openfst 的 ShortestPath 返回最优路径。</li>
-</ul>
-</li>
+<li>非Lattice Decoder中还包含：
+<ul>
+<li>int32 ref_count_:
+该token跳转到的token的数量+1。当该token不再在到达当前最后一帧的各active
+token的最优路径上时（ref_count==1），删除到达该token的路径上的所有无用token（TokenDelete）。</li>
+<li>Token *prev_: 路径中的上一个token，唯一，用于回溯。
+<ul>
+<li>Lattice
+Decoder记录路径中的下一token，链表，多个。<font color="green">更高效</font>。GetBestPath中，先顺序遍历每一帧的active
+tokens 生成lattice，再采用 openfst 的 ShortestPath 返回最优路径。</li>
+</ul></li>
 <li>arc_.nextstate 当前状态</li>
+</ul></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-</li>
-</ul>
-<h1 id="解码器类型">3. 解码器类型</h1><h2 id="SimpleDecoder">3.1. SimpleDecoder</h2><ul>
-<li>采用<code>unordered_map&lt;StateId, Token*&gt; cur_toks_, prev_toks_</code> 分别存储当前帧和前一帧的active tokens。</li>
+<h1 id="解码器类型">3. 解码器类型</h1>
+<h2 id="simpledecoder">3.1. SimpleDecoder</h2>
+<ul>
+<li>采用<code>unordered_map&lt;StateId, Token*&gt; cur_toks_, prev_toks_</code>
+分别存储当前帧和前一帧的active tokens。</li>
 <li>Viterbi beam search。</li>
 </ul>
-<p>核心流程如下：</p>
-<pre class="line-numbers language-C++" data-language="C++"><code class="language-C++">InitDecoding();
+<p>核心流程如下： <pre class="line-numbers language-C++" data-language="C++"><code class="language-C++">InitDecoding();
 while (num_frames_decoded_ &lt; target_frames_decoded) &#123;
     &#x2F;&#x2F; note: ProcessEmitting() increments num_frames_decoded_
     ClearToks(prev_toks_);  &#x2F;&#x2F; 删除历史无用路径，并清空prev_toks_
@@ -438,95 +478,137 @@ while (num_frames_decoded_ &lt; target_frames_decoded) &#123;
     ProcessEmitting(decodable);  &#x2F;&#x2F; 处理发射弧，将token从上一帧传播到当前帧
     ProcessNonemitting();  &#x2F;&#x2F; 处理当前帧token的epsilon弧
     PruneToks(beam_, &amp;cur_toks_);  &#x2F;&#x2F; 再次裁剪（因为ProcessEmitting中的cutoff是动态更新的）
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="FasterDecoder">3.2. FasterDecoder</h2><ul>
-<li>采用<code>HashList&lt;StateId, Token*&gt; toks_</code> 存储tokens，其元素可以通过哈希表访问，也可以通过单链表访问。token传播时，先清空哈希表，前一帧的active tokens仅可以通过单链表访问，当前帧的active tokens还可以通过哈希表访问。<ul>
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
+<h2 id="fasterdecoder">3.2. FasterDecoder</h2>
+<ul>
+<li>采用<code>HashList&lt;StateId, Token*&gt; toks_</code>
+存储tokens，其元素可以通过哈希表访问，也可以通过单链表访问。token传播时，先清空哈希表，前一帧的active
+tokens仅可以通过单链表访问，当前帧的active tokens还可以通过哈希表访问。
+<ul>
 <li>创建新token时，需要查询对应的状态是否已存在token，相较于unordered_map的遍历查找，采用哈希表查找速度更快。</li>
-</ul>
-</li>
+</ul></li>
 <li>采用<code>max-active</code>、<code>min-active</code> 调整裁剪。</li>
 </ul>
-<p>核心流程如下：</p>
-<pre class="line-numbers language-C++" data-language="C++"><code class="language-C++">InitDecoding();
+<p>核心流程如下： <pre class="line-numbers language-C++" data-language="C++"><code class="language-C++">InitDecoding();
 while (num_frames_decoded_ &lt; target_frames_decoded) &#123;
     double weight_cutoff &#x3D; ProcessEmitting(decodable);
     ProcessNonemitting(weight_cutoff);
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="BiglmFasterDecoder">3.3. BiglmFasterDecoder</h2><ul>
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
+<h2 id="biglmfasterdecoder">3.3. BiglmFasterDecoder</h2>
+<ul>
 <li>大语言模型：弧数&gt;百万。由于内存限制，很难构建解码图。</li>
-<li><font color="red"> 两种处理方式 </font><ul>
+<li><font color="red"> 两种处理方式 </font>
+<ul>
 <li>先采用小LM生成lattice，再用大LM对lattice进行rescore。（小、大指ngram阶数）</li>
-<li>采用“biglm” decoder：先采用小LM <code>G</code> 构建HCLG，解码时动态地compose 大LM $G^{\prime}$ 与小LM的差。$HCLG \circ G^{-} \circ G^{\prime}$，其中 $G^{-}$ 为对<code>G</code>中的权重取负数得到。<ul>
-<li>实现：未采用通用的compose算法，而是采用 $(HCLG\text {中的状态}, G^{-} \circ G^{\prime}\text {中的状态})$ 状态空间，查找指定状态上具有指定输入标签的弧。</li>
-<li>缺点：解码较慢。<font color="green"> 相较于beam相同、但没有biglm部分的解码器，biglm decoder 耗时几乎为2倍 (疑问：对比时，普通解码器LM大小与biglm decoder中的<code>G</code>相当，还是与$G^{\prime}$相当？)</font>。</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>效果：大语言模型的HCLG &gt; biglm decoder &gt; rescore。<ul>
+<li>采用“biglm” decoder：先采用小LM <code>G</code>
+构建HCLG，解码时动态地compose 大LM <span class="math inline">\(G^{\prime}\)</span> 与小LM的差。<span class="math inline">\(HCLG \circ G^{-} \circ G^{\prime}\)</span>，其中
+<span class="math inline">\(G^{-}\)</span>
+为对<code>G</code>中的权重取负数得到。
+<ul>
+<li>实现：未采用通用的compose算法，而是采用 <span class="math inline">\((HCLG\text {中的状态}, G^{-} \circ G^{\prime}\text
+{中的状态})\)</span> 状态空间，查找指定状态上具有指定输入标签的弧。</li>
+<li>缺点：解码较慢。<font color="green">
+相较于beam相同、但没有biglm部分的解码器，biglm decoder 耗时几乎为2倍
+(疑问：对比时，普通解码器LM大小与biglm
+decoder中的<code>G</code>相当，还是与<span class="math inline">\(G^{\prime}\)</span>相当？)</font>。</li>
+</ul></li>
+</ul></li>
+<li>效果：大语言模型的HCLG &gt; biglm decoder &gt; rescore。
+<ul>
 <li>rescore：采用小LM生成lattice时最优路径有可能被裁剪掉。</li>
-<li>biglm decoder：<font color="green"> only updates the ‘good’ language model score every time it crosses a word（ChatGPT: 只有在完整的单词被解码时才会更新语言模型分，可以通过减少语言模型需要被评估的次数来加速解码，但是，与在每个声学帧或每个子单元上更新语言模型分相比，可能会导致稍微不太准确的解码结果。）</font></li>
+<li>biglm decoder：<font color="green"> only updates the 'good' language
+model score every time it crosses a word（ChatGPT:
+只有在完整的单词被解码时才会更新语言模型分，可以通过减少语言模型需要被评估的次数来加速解码，但是，与在每个声学帧或每个子单元上更新语言模型分相比，可能会导致稍微不太准确的解码结果。）</font></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h2 id="Lattice-Decoder">3.4. Lattice Decoder</h2><ul>
-<li>对比<ul>
+<h2 id="lattice-decoder">3.4. Lattice Decoder</h2>
+<ul>
+<li>对比
+<ul>
 <li>one-best解码：只保留到达active状态的最优路径。</li>
 <li>lattice解码：若存在多条可行路径到达同一active状态，均保留。</li>
-</ul>
-</li>
-<li>采用<code>vector&lt;TokenList&gt; active_toks_</code>记录每一帧的active tokens链表头节点。</li>
+</ul></li>
+<li>采用<code>vector&lt;TokenList&gt; active_toks_</code>记录每一帧的active
+tokens链表头节点。</li>
 <li>采用lattice beam进一步裁剪。</li>
 </ul>
-<p>核心流程如下：</p>
-<pre class="line-numbers language-C++" data-language="C++"><code class="language-C++">InitDecoding();
+<p>核心流程如下： <pre class="line-numbers language-C++" data-language="C++"><code class="language-C++">InitDecoding();
 while (NumFramesDecoded() &lt; target_frames_decoded) &#123;
     if (NumFramesDecoded() % config_.prune_interval &#x3D;&#x3D; 0)
       PruneActiveTokens(config_.lattice_beam * config_.prune_scale);
     double weight_cutoff &#x3D; ProcessEmitting(decodable);
     ProcessNonemitting(weight_cutoff);
 &#125;
-FinalizeDecoding();  &#x2F;&#x2F; 可选，采用lattice beam进行裁剪<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="LatticeFasterOnlineDecoder">3.5. LatticeFasterOnlineDecoder</h2><ul>
+FinalizeDecoding();  &#x2F;&#x2F; 可选，采用lattice beam进行裁剪<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
+<h2 id="latticefasteronlinedecoder">3.5. LatticeFasterOnlineDecoder</h2>
+<ul>
 <li>支持在使用endpointing或其它需要频繁获取最佳路径的场景下，利用backpointer高效计算GetBestPath()。</li>
 </ul>
-<h2 id="LatticeIncrementalDecoder">3.6. LatticeIncrementalDecoder</h2><ul>
+<h2 id="latticeincrementaldecoder">3.6. LatticeIncrementalDecoder</h2>
+<ul>
 <li>普通解码器LatticeFasterDecoder，用于长语音实时应用时，每次获取lattice时的lattice确定化可能会花费相当多的时间，从而引入延迟。LatticeIncrementalDecoder将lattice确定化分散到整个解码过程中。</li>
 <li><font color="green">TODO: 实现</font></li>
-<li>术语<ul>
-<li>chunk：对 chunk 帧原始lattice分别进行确定化。长度至少为1个单词，如20帧。</li>
-</ul>
-</li>
-</ul>
-<h1 id="代码解析">4. 代码解析</h1><h2 id="Decodable-NumFramesReady">4.1. Decodable::NumFramesReady()</h2><p>由于声学模型输入特征可能包含上下文，音频中间和末尾的NumFramesReady计算方式可能不一样。</p>
-<h2 id="cost-cutoff-x3D-ProcessEmitting-decodable">4.2. cost_cutoff &#x3D; ProcessEmitting(decodable)</h2><p>将令牌从前一帧传播到当前帧。</p>
+<li>术语
 <ul>
-<li>GetCutoff：计算上一帧的cutoff <font color="red">(cur_cutoff)</font>。<ul>
+<li>chunk：对 chunk
+帧原始lattice分别进行确定化。长度至少为1个单词，如20帧。</li>
+</ul></li>
+</ul>
+<h1 id="代码解析">4. 代码解析</h1>
+<h2 id="decodablenumframesready">4.1. Decodable::NumFramesReady()</h2>
+<p>由于声学模型输入特征可能包含上下文，音频中间和末尾的NumFramesReady计算方式可能不一样。</p>
+<h2 id="cost_cutoff-processemittingdecodable">4.2. cost_cutoff =
+ProcessEmitting(decodable)</h2>
+<p>将令牌从前一帧传播到当前帧。</p>
+<ul>
+<li>GetCutoff：计算上一帧的cutoff
+<font color="red">(cur_cutoff)</font>。
+<ul>
 <li>返回值：同时满足<code>beam</code>、<code>max_active</code>、<code>min_active</code>约束的cost临界值。</li>
-<li>adaptive_beam: 自适应估计的有效beam width。若根据<code>max_active</code>或<code>min_active</code>调整了beam，则为同时满足上述约束的$beam^{\prime}$ + <span id="beam_delta"> <code>beam_delta</code></span>，否则为<code>beam</code>。该值通常 &gt;&#x3D; 实际有效的beam width，认为采用beam_delta&#x3D;0.5（默认值）时 该估计值比实际值更严格的情况不会经常发生。</li>
-</ul>
-</li>
-<li><span id="hash_ratio">PossiblyResizeHash(tok_cnt)：若上一帧的token数<code>tok_cnt</code> <code>* hash_ratio &gt; toks_.Size()</code>，<code>toks_</code>扩容。</span></li>
-<li>初始化当前帧的cutoff <font color="red">(next_cutoff)</font>：取上一帧的best state，对其在fst上的各发射弧，计算cost，cutoff取上述cost的最小值 + adaptive_beam。<ul>
-<li>cost_offsets_[frame] &#x3D; - best_elem-&gt;val-&gt;tot_cost (best_elem: 上一帧的)</li>
-</ul>
-</li>
-<li>对于前一帧的各active token (tok)，若满足不被裁剪的条件 <font color="red">（cur_cutoff）</font>，处理其对应状态的各发射弧（即输入标签非0 - epsilon），若满足不被裁剪的条件 <font color="red">（next_cutoff）</font>，则FindOrAddToken，并将新ForwardLink添加至tok-&gt;links头部。动态更新当前帧cutoff。<ul>
+<li>adaptive_beam: 自适应估计的有效beam
+width。若根据<code>max_active</code>或<code>min_active</code>调整了beam，则为同时满足上述约束的<span class="math inline">\(beam^{\prime}\)</span> + <span id="beam_delta">
+<code>beam_delta</code></span>，否则为<code>beam</code>。该值通常 &gt;=
+实际有效的beam width，认为采用beam_delta=0.5（默认值）时
+该估计值比实际值更严格的情况不会经常发生。</li>
+</ul></li>
+<li><span id="hash_ratio">PossiblyResizeHash(tok_cnt)：若上一帧的token数<code>tok_cnt</code>
+<code>* hash_ratio &gt; toks_.Size()</code>，<code>toks_</code>扩容。</span></li>
+<li>初始化当前帧的cutoff
+<font color="red">(next_cutoff)</font>：取上一帧的best
+state，对其在fst上的各发射弧，计算cost，cutoff取上述cost的最小值 +
+adaptive_beam。
+<ul>
+<li>cost_offsets_[frame] = - best_elem-&gt;val-&gt;tot_cost (best_elem:
+上一帧的)</li>
+</ul></li>
+<li>对于前一帧的各active token (tok)，若满足不被裁剪的条件
+<font color="red">（cur_cutoff）</font>，处理其对应状态的各发射弧（即输入标签非0
+- epsilon），若满足不被裁剪的条件
+<font color="red">（next_cutoff）</font>，则FindOrAddToken，并将新ForwardLink添加至tok-&gt;links头部。动态更新当前帧cutoff。
+<ul>
 <li>FindOrAddToken：若当前帧已存在与该状态关联的token，判断是否更新tot_cost、backpointer。</li>
+</ul></li>
 </ul>
-</li>
+<h2 id="processnonemittingcost_cutoff">4.3. ProcessNonemitting(cost_cutoff)</h2>
+<ul>
+<li>对于当前帧满足cost_cutoff约束的各token，处理其对应状态的各非发射弧（即输入标签为0
+-
+epsilon）。若仍满足cost_cutoff约束，则FindOrAddToken，并将新ForwardLink添加至tok-&gt;links头部。</li>
+<li>采用队列（queue）遍历含epsilon弧的token。若FindOrAddToken中新添加的token
+或 更新了tot_cost的token 也含Epsilon弧，也加入queue。
+<ul>
+<li>DeleteForwardLinks(tok)：若 tok 存在 ForwardLinks，则一定为 epsilon
+弧，且再次在queue中，则 tot_cost
+减小了，因此DeleteForwardLinks，并重新处理其所有的 epsilon 弧。</li>
+</ul></li>
 </ul>
-<h2 id="ProcessNonemitting-cost-cutoff">4.3. ProcessNonemitting(cost_cutoff)</h2><ul>
-<li>对于当前帧满足cost_cutoff约束的各token，处理其对应状态的各非发射弧（即输入标签为0 - epsilon）。若仍满足cost_cutoff约束，则FindOrAddToken，并将新ForwardLink添加至tok-&gt;links头部。</li>
-<li>采用队列（queue）遍历含epsilon弧的token。若FindOrAddToken中新添加的token 或 更新了tot_cost的token 也含Epsilon弧，也加入queue。<ul>
-<li>DeleteForwardLinks(tok)：若 tok 存在 ForwardLinks，则一定为 epsilon 弧，且再次在queue中，则 tot_cost 减小了，因此DeleteForwardLinks，并重新处理其所有的 epsilon 弧。</li>
-</ul>
-</li>
-</ul>
-<h2 id="PruneActiveTokens">4.4. PruneActiveTokens</h2><p>逆序遍历每一帧（不包含当前帧），如果该帧还未被该函数访问过(new TokenList)，或者下一帧存在token extra_cost变化超过<span id="prune_scale"> delta （&#x3D; config_.lattice_beam * config_.prune_scale）</span>，对该帧token的forward link进行裁剪（若 link_extra_cost &gt; <span id="lattice_beam"> config_.lattice_beam</span>），并删除下一帧 forward link 均被裁剪了的 token。</p>
+<h2 id="pruneactivetokens">4.4. PruneActiveTokens</h2>
+<p>逆序遍历每一帧（不包含当前帧），如果该帧还未被该函数访问过(new
+TokenList)，或者下一帧存在token extra_cost变化超过<span id="prune_scale"> delta （= config_.lattice_beam *
+config_.prune_scale）</span>，对该帧token的forward link进行裁剪（若
+link_extra_cost &gt; <span id="lattice_beam">
+config_.lattice_beam</span>），并删除下一帧 forward link 均被裁剪了的
+token。</p>
 <pre class="line-numbers language-C++" data-language="C++"><code class="language-C++">&#x2F;&#x2F; delta &#x3D; config_.lattice_beam * config_.prune_scale
 void PruneActiveTokens(BaseFloat delta) &#123;
     int32 cur_frame_plus_one &#x3D; NumFramesDecoded();
@@ -551,7 +633,6 @@ void PruneActiveTokens(BaseFloat delta) &#123;
         &#125;
     &#125;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>PruneForwardLinks:</p>
 <pre class="line-numbers language-C++" data-language="C++"><code class="language-C++">&#x2F;&#x2F; 遍历该帧所有token，若extra_cost **变化** 均不超过delta，循环停止。
 &#x2F;&#x2F; 由于存在epsilon弧，而链表不保证拓扑顺序，所以需要while循环。
@@ -594,44 +675,51 @@ while (changed) &#123;
     &#125;
     if (changed) *extra_costs_changed &#x3D; true;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <blockquote>
 <ul>
-<li>通常每一帧有数千个active tokens，因此定期（prune_interval）采用lattice_beam 进行裁剪，而不是等到话语结束才裁剪，否则会OOM。</li>
-<li>裁剪算法的时间复杂度接近线性，而不是$O(T^2)$。对于非常长的语句，通常仅向后裁剪1-2s。另外，绝大多数token在该算法第一次访问时就被删除了。</li>
-<li><a target="_blank" rel="noopener" href="https://kaldi-asr.org/doc/lattices.html#lattices_generation">https://kaldi-asr.org/doc/lattices.html#lattices_generation</a></li>
+<li>通常每一帧有数千个active
+tokens，因此定期（prune_interval）采用lattice_beam
+进行裁剪，而不是等到话语结束才裁剪，否则会OOM。</li>
+<li>裁剪算法的时间复杂度接近线性，而不是<span class="math inline">\(O(T^2)\)</span>。对于非常长的语句，通常仅向后裁剪1-2s。另外，绝大多数token在该算法第一次访问时就被删除了。</li>
+<li>https://kaldi-asr.org/doc/lattices.html#lattices_generation</li>
 </ul>
 </blockquote>
-<h2 id="FinalizeDecoding">4.5. FinalizeDecoding</h2><p>采用 lattice beam 进行裁剪。与 PruneActiveTokens 的区别：</p>
+<h2 id="finalizedecoding">4.5. FinalizeDecoding</h2>
+<p>采用 lattice beam 进行裁剪。与 PruneActiveTokens 的区别： +
+PruneForwardLinksFinal：最后一帧特殊处理。 +
+<font color="red">若存在token在final状态，则不在final状态的token
+extra_cost 为无穷大；否则，不考虑final权重。</font> + 若
+link_extra_cost（epsilon弧） &gt; lattice_beam，则删除该link。 + token
+的 extra cost 为 经过该token的最优路径 与 全局最优路径 的cost差值。若
+&gt; lattice_beam，则设为无穷大。 + 逆序遍历、处理所有帧，不需考虑
+delta、must_prune_tokens 等条件。</p>
+<h2 id="getbestpath">4.6. GetBestPath</h2>
 <ul>
-<li>PruneForwardLinksFinal：最后一帧特殊处理。<ul>
-<li><font color="red">若存在token在final状态，则不在final状态的token extra_cost 为无穷大；否则，不考虑final权重。</font></li>
-<li>若 link_extra_cost（epsilon弧） &gt; lattice_beam，则删除该link。</li>
-<li>token 的 extra cost 为 经过该token的最优路径 与 全局最优路径 的cost差值。若 &gt; lattice_beam，则设为无穷大。</li>
-</ul>
-</li>
-<li>逆序遍历、处理所有帧，不需考虑 delta、must_prune_tokens 等条件。</li>
-</ul>
-<h2 id="GetBestPath">4.6. GetBestPath</h2><ul>
 <li><font color="red">参数：use_final_probs。若为true，且存在token在final状态，则仅考虑所有在final状态的token；否则，不考虑final权重。</font></li>
 <li>非lattice解码器：从cost最小的token开始回溯，返回线性FST，<font color="green">最后调用RemoveEpsLocal</font>。</li>
-<li>lattice 解码器<ul>
-<li>GetRawLattice：根据active_toks_中每一帧的active tokens，及token间的forwardlink，生成FST。<ul>
-<li><font color="green">TopSortTokens：对一帧的token进行拓扑排序，使得生成的fst上，epsilon弧的起始状态的id &lt; 结束状态的id。</font></li>
-</ul>
-</li>
+<li>lattice 解码器
+<ul>
+<li>GetRawLattice：根据active_toks_中每一帧的active
+tokens，及token间的forwardlink，生成FST。
+<ul>
+<li><font color="green">TopSortTokens：对一帧的token进行拓扑排序，使得生成的fst上，epsilon弧的起始状态的id
+&lt; 结束状态的id。</font></li>
+</ul></li>
 <li>ShortestPath：调用 OpenFst 的 ShortestPath 算法。</li>
 <li>由于epsilon弧，弧数可能比帧数多。</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h2 id="GetLattice">4.7. GetLattice</h2><ul>
+<h2 id="getlattice">4.7. GetLattice</h2>
+<ul>
 <li><font color="green">TODO: 实现</font></li>
-<li>lattice 确定化：只保留每个单词序列的最优路径。确定化前的lattice可用于声学rescore，很大；确定化后的lattice 可用于计算句子级的置信度分、LM rescore。</li>
+<li>lattice
+确定化：只保留每个单词序列的最优路径。确定化前的lattice可用于声学rescore，很大；确定化后的lattice
+可用于计算句子级的置信度分、LM rescore。</li>
 </ul>
-<h1 id="参考资源">5. 参考资源</h1><ul>
-<li><a target="_blank" rel="noopener" href="https://kaldi-asr.org/doc/decoders.html">https://kaldi-asr.org/doc/decoders.html</a></li>
-<li><a target="_blank" rel="noopener" href="https://kaldi-asr.org/doc/lattices.html">https://kaldi-asr.org/doc/lattices.html</a></li>
+<h1 id="参考资源">5. 参考资源</h1>
+<ul>
+<li>https://kaldi-asr.org/doc/decoders.html</li>
+<li>https://kaldi-asr.org/doc/lattices.html</li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
@@ -921,7 +1009,7 @@ while (changed) &#123;
 </main>
 
 
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 <script>
     MathJax.Hub.Config({
         tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
@@ -1233,21 +1321,6 @@ $(function () {
     <script src="/blog/libs/instantpage/instantpage.js" type="module"></script>
     
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 
 </html>
