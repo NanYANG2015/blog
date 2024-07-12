@@ -4,11 +4,14 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="LoRA, 梦园">
+    <meta name="keywords" content="WenetSpeech, 梦园">
     <meta name="description" content="
-作者：微软
-LoRA (Low-Rank
-Adaptation)：过参数化（over-parametrized）模型实际上是低秩的。假设：微调时，模型权重的变化量也是低秩的。通过学习权重变化的低秩分解矩阵，间接地微调权重参数，同时可">
+作者：西北工业大学、出门问问等，2022。
+ASR数据集，中文普通话，多领域，万小时级。
+
+
+音频格式：16kHz，16bit，单声道，比特率 32 kbps，Opus 压缩。
+S(100h), M(1000h) 训练子集置信">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -20,7 +23,7 @@ Adaptation)：过参数化（over-parametrized）模型实际上是低秩的。�
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>LoRA | 梦园</title>
+    <title>WenetSpeech | 梦园</title>
     <link rel="icon" type="image/png" href="/blog/favicon.png">
     
 
@@ -312,7 +315,7 @@ Adaptation)：过参数化（over-parametrized）模型实际上是低秩的。�
                     <div class="row">
                         <div class="col s12 m12 l12">
                             <div class="brand">
-                                <h1 class="description center-align post-title">LoRA</h1>
+                                <h1 class="description center-align post-title">WenetSpeech</h1>
                             </div>
                         </div>
                     </div>
@@ -325,12 +328,16 @@ Adaptation)：过参数化（over-parametrized）模型实际上是低秩的。�
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/blog/categories/NLP/" class="post-category">
-                                NLP
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/" class="post-category">
+                                语音
                             </a>
                         
-                            <a href="/blog/categories/NLP/%E6%A8%A1%E5%9E%8B/" class="post-category">
-                                模型
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/" class="post-category">
+                                语音识别
+                            </a>
+                        
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/%E6%95%B0%E6%8D%AE%E9%9B%86/" class="post-category">
+                                数据集
                             </a>
                         
                     </div>
@@ -342,14 +349,14 @@ Adaptation)：过参数化（over-parametrized）模型实际上是低秩的。�
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2023-12-07
+                    2024-07-12
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-07-11
+                    2024-07-12
                 </div>
                 
 
@@ -372,68 +379,53 @@ Adaptation)：过参数化（over-parametrized）模型实际上是低秩的。�
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <ul>
-<li><p>作者：微软</p></li>
-<li><p>LoRA (Low-Rank
-Adaptation)：过参数化（over-parametrized）模型实际上是低秩的。假设：微调时，模型权重的变化量也是低秩的。通过学习权重变化的低秩分解矩阵，间接地微调权重参数，同时可以冻结预训练模型的参数。适用于任何模型中的
-dense 层。 <span class="math display">\[ h=W_0 x+\Delta W x=W_0 x+B A x
-\]</span></p>
-<p>其中，<span class="math inline">\(W_0 \in \mathbb{R}^{d \times
-k}\)</span> 为预训练模型的权重矩阵，<span class="math inline">\(\Delta
-W\)</span> 为微调时的累积梯度更新量，<span class="math inline">\(B \in
-\mathbb{R}^{d \times r}\)</span>，<span class="math inline">\(A \in
-\mathbb{R}^{r \times k}\)</span>，秩 <span class="math inline">\(r \ll
-\min (d, k)\)</span>。A 随机高斯初始化，B 全0初始化，因此 BA 初始值为
-0。</p>
-<p><span class="math inline">\(\alpha\)</span>：将 <span class="math inline">\(\Delta W x\)</span> 乘以 <span class="math inline">\(\frac{\alpha}{r}\)</span>。采用 Adam 优化时，调
-<span class="math inline">\(\alpha\)</span>
-大致相当于调学习率，因此，改变 <span class="math inline">\(r\)</span>
-时，<span class="math inline">\(\alpha\)</span>
-保持不变，可以不需要调学习率。</p>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB2aee59d8c5388e3cfc72ca7667c87e1b?method=download&shareKey=7cbcb396b87afc011e77a682978176db" width="185"></p></li>
-<li><p>优点</p>
+<li><p>作者：西北工业大学、出门问问等，2022。</p></li>
+<li><p>ASR数据集，中文普通话，多领域，万小时级。</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB09871d16b5b5fc110c09bbb1cc830075?method=download&shareKey=6e07304e68491daa326588c4417251af" width="230"></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBe8c8b7652f5d4e1a3d2a16c5c3ec6b43?method=download&shareKey=55218c8ba22ad1233c81f461e6132ca7" width="348"></p>
+<p>音频格式：16kHz，16bit，单声道，比特率 32 kbps，Opus 压缩。</p>
+<p>S(100h), M(1000h) 训练子集置信度为1.0。</p></li>
+<li><p>音频采集</p>
 <ul>
-<li>相较于全参数微调，可训练参数量大大减少，显存需求更小（不需要存冻结参数的优化器状态），训练吞吐量更高，与微调效果相当或更好。多任务部署时，可共享预训练模型，存储需求减少。</li>
-<li>相较于添加 adapter 层（online
-场景、短序列，引入的推理延迟可以高达30%；大
-batch、长序列，延迟可缓解。），没有额外的推理延迟。
-<img src="https://note.youdao.com/yws/api/personal/file/WEB0e524e9faa8e881b669551004cc4f250?method=download&shareKey=0dff8368dd82d48ca0bc6c3128dd0401" width="613"></li>
-<li>prefix-tuning：在输入序列中插入特殊
-token，占用了输入序列长度。且较难优化，性能不随可训练参数量单调变化，LoRA
-的性能更稳定。
-<img src="https://note.youdao.com/yws/api/personal/file/WEB31a71baa655899064067e9a81fdc669d?method=download&shareKey=9e9533a65d6b74ed43f9777210e83dae" width="613"></li>
-<li>few-shot learning / prompt
-engineering：适用于只有很少量训练样本的任务。在性能敏感的应用上，微调的性能是显著优于
-few-shot learning 的。</li>
-<li>低数据量 adaption：相较于其它 adaption 方法，总体上 LoRA 性能更好。
-<img src="https://note.youdao.com/yws/api/personal/file/WEB9a387fd3333ff1bbce41861f856bbb0b?method=download&shareKey=d53d9ebc3f2e807487d509b8ab2f52cd" width="613"></li>
-<li>与其它微调方法正交，可以组合使用。</li>
-<li>部署：可以存储 <span class="math inline">\(W=W_0+B
-A\)</span>。当需要切换到另一个下游任务时，<span class="math inline">\(-B
-A + B^{\prime} A^{\prime}\)</span>。</li>
+<li>定义类别：audiobook, commentary, documentary, drama, interview,
+news, reading, talk, variety, others。</li>
 </ul></li>
-<li><p>符号表示：本文以 Transformer 为例，对每一个 Transformer 块中 self
-attention 模块的权重矩阵添加 LoRA 模块。</p>
-<p><span class="math inline">\(d\_model\)</span>：Transformer
-层的输入、输出维度</p>
-<p><span class="math inline">\(W_q\)</span>、<span class="math inline">\(W_k\)</span>、<span class="math inline">\(W_v\)</span>、<span class="math inline">\(W_o\)</span>：self-attention 模块中的
-query/key/value/output projection 矩阵。</p>
-<p><span class="math inline">\(d_{f f n}=4 \times d_{\text {model
-}}\)</span>：feedforward 维度。</p></li>
-<li><p>关键问题</p>
+<li><p>label</p>
 <ul>
-<li>Q：限定可训练参数量，LoRA 应该添加到 Transformer 中的哪些权重矩阵？
-<img src="https://note.youdao.com/yws/api/personal/file/WEB97d91417122c14b9981324b9efd992c4?method=download&shareKey=553ea06f3618b8e05d81adb7f571d9cc" width="612"></li>
-<li>Q：最优的 <span class="math inline">\(r\)</span>
-值。A：较小的值就可以达到较好的性能。
-<img src="https://note.youdao.com/yws/api/personal/file/WEB4eccb312371acf5b32d37751595194c1?method=download&shareKey=6e08e7b5862dde308043c1b03a0fabd9" width="611"></li>
-<li>Q：<span class="math inline">\(\Delta W\)</span> 与 <span class="math inline">\(W\)</span> 的关系？A：相较于随机矩阵，<span class="math inline">\(\Delta W\)</span> 与 <span class="math inline">\(W\)</span> 有更强的相关性。<font color="red">
-<span class="math inline">\(\Delta W\)</span>
-可能会放大预训练模型中已学习但未强调的特定下游任务的重要特征。</font></li>
+<li>Youtube 视频：OCR 提取字幕
+<ul>
+<li>对视频中的每一帧图像应用基于 CTPN[29] 的文本检测。</li>
+<li>逐帧计算<font color="red">字幕区域</font>的结构相似度（SSIM），确定字幕片段的起、止时间。</li>
+<li>采用基于 CRNN-CTC 的 OCR 识别字幕区域。</li>
+<li>合并连续的片段，直到音频超过8s，以减少音频-字幕异步问题。</li>
 </ul></li>
-<li><p>Hu E J, Shen Y, Wallis P, et al. Lora: Low-rank adaptation of
-large language models[J]. arXiv preprint arXiv:2106.09685,
-2021.</p></li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/microsoft/LoRA" class="uri">https://github.com/microsoft/LoRA</a></p></li>
+<li>Podcast：第三方商业ASR引擎转写（含VAD）</li>
+<li>Dev(20h)、Test_Net(23h，match，还涵盖游戏解说、电商直播等热门、难点领域)、Test_Meeting(15h，mismatch，远场)：人工转写</li>
+</ul></li>
+<li><p>过滤</p>
+<ul>
+<li><p>强制对齐构图
+<img src="https://note.youdao.com/yws/api/personal/file/WEB21de03bb237f4254650d983fa0223f0e?method=download&shareKey=0fc562b98825ed627ff43a10db712144" width="467"></p>
+<ul>
+<li><font color="red">漏读惩罚 2.3（p=0.1）</font></li>
+<li>filler 状态，用于支持插入、替换，各 CTC 建模单元的自旋惩罚
+4.6（p=0.01）</li>
+<li><a target="_blank" rel="noopener" href="https:github.com/wenet-e2e/wenet/blob/main/runtime/core/bin/label_checker_main.cc" class="uri">https:github.com/wenet-e2e/wenet/blob/main/runtime/core/bin/label_checker_main.cc</a></li>
+<li><font color="red">存在的问题：filler_end
+与每个单词相连，易出现长距离漏读、跳跃</font></li>
+</ul></li>
+<li><p>置信度</p>
+<p><span class="math display">\[
+c=1-\frac{\operatorname{EditDistance}(\text { ref }, \text { hyp
+})}{\max (\operatorname{len}(\text { ref }), \operatorname{len}(hyp))}
+\]</span></p></li>
+</ul></li>
+<li><p>text normalization: <a target="_blank" rel="noopener" href="https://github.com/speechio/chinese_text_normalization" class="uri">https://github.com/speechio/chinese_text_normalization</a></p></li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/wenet-e2e/WenetSpeech" class="uri">https://github.com/wenet-e2e/WenetSpeech</a></p></li>
+<li><p>Zhang B, Lv H, Guo P, et al. Wenetspeech: A 10000+ hours
+multi-domain mandarin corpus for speech recognition[C]//ICASSP 2022-2022
+IEEE International Conference on Acoustics, Speech and Signal Processing
+(ICASSP). IEEE, 2022: 6182-6186.</p></li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
@@ -491,9 +483,9 @@ large language models[J]. arXiv preprint arXiv:2106.09685,
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/blog/llm/yin-pin-li-jie/lun-wen/sparks-of-large-audio-models/">
+                <a href="/blog/llm/tiao-jian-sheng-cheng/lun-wen/pmg/">
                     <div class="card-content">
-                        <span class="card-title">Sparks of Large Audio Models- A Survey and Outlook</span>
+                        <span class="card-title">PMG</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -504,8 +496,8 @@ large language models[J]. arXiv preprint arXiv:2106.09685,
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2023-12-07
-                            <i class="far fa-edit fa-fw icon-date"></i>2024-07-11
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-07-12
+                            <i class="far fa-edit fa-fw icon-date"></i>2024-07-12
                         </span>
                         <span class="publish-author">
                             
@@ -515,12 +507,16 @@ large language models[J]. arXiv preprint arXiv:2106.09685,
                                     LLM
                                 </a>
                             
-                            <a href="/blog/categories/LLM/%E9%9F%B3%E9%A2%91%E7%90%86%E8%A7%A3/" class="post-category">
-                                    音频理解
+                            <a href="/blog/categories/LLM/%E6%9D%A1%E4%BB%B6%E7%94%9F%E6%88%90/" class="post-category">
+                                    条件生成
                                 </a>
                             
-                            <a href="/blog/categories/LLM/%E9%9F%B3%E9%A2%91%E7%90%86%E8%A7%A3/%E8%AE%BA%E6%96%87/" class="post-category">
+                            <a href="/blog/categories/LLM/%E6%9D%A1%E4%BB%B6%E7%94%9F%E6%88%90/%E8%AE%BA%E6%96%87/" class="post-category">
                                     论文
+                                </a>
+                            
+                            <a href="/blog/categories/LLM/%E6%9D%A1%E4%BB%B6%E7%94%9F%E6%88%90/%E8%AE%BA%E6%96%87/%E6%B3%9B%E8%AF%BB/" class="post-category">
+                                    泛读
                                 </a>
                             
                             
@@ -537,9 +533,9 @@ large language models[J]. arXiv preprint arXiv:2106.09685,
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/blog/llm/yin-pin-li-jie/lun-wen/salmonn/">
+                <a href="/blog/yu-yin/yu-yin-shi-bie/shu-ju-ji/gigaspeech/">
                     <div class="card-content">
-                        <span class="card-title">SALMONN</span>
+                        <span class="card-title">GigaSpeech</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -550,23 +546,23 @@ large language models[J]. arXiv preprint arXiv:2106.09685,
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-12-07
-                                <i class="far fa-edit fa-fw icon-date"></i>2024-07-11
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-07-12
+                                <i class="far fa-edit fa-fw icon-date"></i>2024-07-12
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/blog/categories/LLM/" class="post-category">
-                                    LLM
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/" class="post-category">
+                                    语音
                                 </a>
                             
-                            <a href="/blog/categories/LLM/%E9%9F%B3%E9%A2%91%E7%90%86%E8%A7%A3/" class="post-category">
-                                    音频理解
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/" class="post-category">
+                                    语音识别
                                 </a>
                             
-                            <a href="/blog/categories/LLM/%E9%9F%B3%E9%A2%91%E7%90%86%E8%A7%A3/%E8%AE%BA%E6%96%87/" class="post-category">
-                                    论文
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/%E6%95%B0%E6%8D%AE%E9%9B%86/" class="post-category">
+                                    数据集
                                 </a>
                             
                             
