@@ -398,14 +398,15 @@
 作者：微软
 发表时间：2023.09
 创新点：更大的训练集、更新 encoder。
-性能：在 26 个下游任务上的广泛评估显示了模型较好的泛化性，且在其中几个任务上建立了新的 SOTA。
+性能：在 26
+个下游任务上的广泛评估显示了模型较好的泛化性，且在其中几个任务上建立了新的
+SOTA。
 
 
-1.  训练
-
+1. 训练
 
 训练集
-4.6M 音频-文本
+
                                 
                             </div>
                             <div class="publish-info">
@@ -474,11 +475,7 @@
 
 
 作者：微软
-发表时间：2022.06
-
-
-
-CLAP：C
+发表时间：2022.0
                                 
                             </div>
                             <div class="publish-info">
@@ -537,16 +534,13 @@ CLAP：C
                             <div class="summary block-with-text">
                                 
                                     
-
 作者：Meta AI
-
-
 发表时间：2023.05
-
-
 核心思想
 
-仅采用与图像自然配对的无监督数据（除图文数据外）、对比 loss，训练6种模态：视觉、文本、音频、深度、thermal、Inertial Measurement Uni
+仅采用与图像自然配对的无监督数据（除图文数据外）、对比
+loss，训练6种模态：视觉、文本、音频、深度、thermal、Inertial Measurement
+U
                                 
                             </div>
                             <div class="publish-info">
@@ -615,8 +609,7 @@ CLAP：C
 
 
 作者：字节
-发表时间：2024.06
-支持英语、中文普通
+发表时间：2024.0
                                 
                             </div>
                             <div class="publish-info">
@@ -671,8 +664,8 @@ CLAP：C
                             <div class="summary block-with-text">
                                 
                                     
-
-论文：Shen X, Zhang R, Zhao X, et al. PMG: Personalized Multimodal Generation with Large Language Models[C]//Proceedings 
+论文：Shen X, Zhang R, Zhao X, et al. PMG: Personalized
+Multimodal Generation with Large Language Models[C]//Proceedings
                                 
                             </div>
                             <div class="publish-info">
@@ -731,15 +724,12 @@ CLAP：C
                             <div class="summary block-with-text">
                                 
                                     
-
 作者：西北工业大学、出门问问等，2022。
-
-
 ASR数据集，中文普通话，多领域，万小时级。
 
 
 音频格式：16kHz，16bit，单声道，比特率 32 kbps，Opus 压缩。
-S(100h), M(1000h) 训练子集置信度为1
+S(100h), M(1000h) 训练子集置信
                                 
                             </div>
                             <div class="publish-info">
@@ -793,15 +783,13 @@ S(100h), M(1000h) 训练子集置信度为1
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                    1.  特点
+                                    1. 特点
 
 英文，1wh 高质量标注数据，总共 4wh 音频
 可扩展，记录的元数据使其还可用于其它任务，如说话人识别
 包含原始转录与Normalized转录（包含标点符号，大小写、日期、时间normalization等）
 
 
-
-数据集中
                                 
                             </div>
                             <div class="publish-info">
@@ -856,10 +844,10 @@ S(100h), M(1000h) 训练子集置信度为1
                             <div class="summary block-with-text">
                                 
                                     
-作者：陈果果、Daniel Povey 等，The Johns Hopkins University，2015。
-1000h，英语（口音接近美音），朗读，原始数据来自 LibriVox 项目的audiobooks。音频：16kHz。
-
-t
+作者：陈果果、Daniel Povey 等，The Johns Hopkins
+University，2015。
+1000h，英语（口音接近美音），朗读，原始数据来自 LibriVox
+项目的audiobooks。音频：16kHz
                                 
                             </div>
                             <div class="publish-info">
@@ -914,17 +902,14 @@ t
                             <div class="summary block-with-text">
                                 
                                     
-
 开发者：Fish Audio Fish Speech
-
-
-系统结构 V1
-
-
+系统结构
+V1
 
 VQGAN + LLAMA。30wh 数据训练。在高质量数据集上 SFT。
 
-存疑：更新日志中，V1.1 引入了 VITS Decoder 来降低 WER、
+存疑：更新日志中，V1.1 引入了 VITS Decoder 来降低
+W
                                 
                             </div>
                             <div class="publish-info">
@@ -979,14 +964,10 @@ VQGAN + LLAMA。30wh 数据训练。在高质量数据集上 SFT。
                             <div class="summary block-with-text">
                                 
                                     
-
 开发者：2noise
-
-
 推出时间：2024.05
-
-
-TN (homophone 替换) + 文本口语化 (stream_batch，text2text) + GPT + GroupedResidualVQ + VAE (mel) +
+TN (homophone 替换) + 文本口语化
+(stream_batch，text2text) + GPT + GroupedResidualVQ + VAE (mel) + 
                                 
                             </div>
                             <div class="publish-info">
@@ -1050,7 +1031,8 @@ TN (homophone 替换) + 文本口语化 (stream_batch，text2text) + GPT + Group
     }
 
 
-+   相较于原始图像/波形/频谱，autoencode
+
+相较于原始图像/波形/频谱，au
                                 
                             </div>
                             <div class="publish-info">
@@ -1105,10 +1087,8 @@ TN (homophone 替换) + 文本口语化 (stream_batch，text2text) + GPT + Group
 特点
 
 语音、音乐、音效 生成统一框架。有条件生成。
-类似 MusicLM、AudioLM，分别采用语义 token、声学 token，本文中分别对应 AudioMAE、VAE 表示。
-生成流程
-
-
+类似 MusicLM、AudioLM，分别采用语义 token、声学
+token，本文中分别对应 AudioMAE、VAE 表示。
                                 
                             </div>
                             <div class="publish-info">
@@ -1162,9 +1142,10 @@ TN (homophone 替换) + 文本口语化 (stream_batch，text2text) + GPT + Group
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                    1.  音频读取
+                                    1. 音频读取
 
-采用 torchaudio，支持后缀为 wav、mp3（如 common voice）、flac（如 Librispeech）、raw、WAV（如 TIMIT）、mp4（如 MELD）、m4a（如 Voxceleb） 等
+采用 torchaudio，支持后缀为 wav、mp3（如 common voice）、flac（如
+Librispeech）、raw、WAV（如 TIMIT）、mp4（如 MELD）、m4a（如 Voxceleb）
                                 
                             </div>
                             <div class="publish-info">
@@ -1220,7 +1201,8 @@ TN (homophone 替换) + 文本口语化 (stream_batch，text2text) + GPT + Group
                             <div class="summary block-with-text">
                                 
                                     
-论文：Ho J, Jain A, Abbeel P. Denoising diffusion probabilistic models[J]. Advances in neural information processing syste
+论文：Ho J, Jain A, Abbeel P. Denoising diffusion probabilistic
+models[J]. Advances in neural information processing sys
                                 
                             </div>
                             <div class="publish-info">
@@ -1270,8 +1252,9 @@ TN (homophone 替换) + 文本口语化 (stream_batch，text2text) + GPT + Group
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                    论文：Kingma D P, Welling M. Auto-encoding variational bayes[J]. arXiv preprint arXiv:1312.6114, 2013.
-核心思想：通过 Variational 
+                                    论文：Kingma D P, Welling M. Auto-encoding variational bayes[J].
+arXiv preprint arXiv:1312.6114, 2013.
+核心思想：通过 Variationa
                                 
                             </div>
                             <div class="publish-info">
@@ -1323,13 +1306,15 @@ TN (homophone 替换) + 文本口语化 (stream_batch，text2text) + GPT + Group
                                 
                                     
 作者：腾讯
-MM-LLMs：利用预训练的 LLM，添加多模态理解、生成能力，以节省训练成本。
+MM-LLMs：利用预训练的
+LLM，添加多模态理解、生成能力，以节省训练成本。
 
-1.  模型架构
+1. 模型架构
 
 
-通常模态 encoder、LLM backbone、模态生成器 参数冻结，重点优化输入、输出投影层。
-1.1.  模态e
+通常模态 encoder、LLM backbone、模态生成器
+参数冻结，重点优化输入、输出投影层。
+
                                 
                             </div>
                             <div class="publish-info">
@@ -1388,7 +1373,8 @@ MM-LLMs：利用预训练的 LLM，添加多模态理解、生成能力，以节
 功能：支持 文本、图像、视频、音频 理解、推理与生成。
 创新点
 
-在 vision-to-vision 生成任务中，由于将 visual encoder 表示投影到 LLM 的表示空间, 而 LLM 更倾向于表征语
+在 vision-to-vision 生成任务中，由于将 visual encoder 表示投影到 LLM
+的表示空间, 而 LLM 更
                                 
                             </div>
                             <div class="publish-info">
@@ -1446,8 +1432,9 @@ MM-LLMs：利用预训练的 LLM，添加多模态理解、生成能力，以节
 作者：复旦大学等。
 贡献
 
-基于离散 token，实现了 any-to-any 多模态 LLM，即支持理解、生成各种模态，包含语音、文本、图像、音乐。以文本为中心，通过将其它模态与文本对齐，实现所有模态之间的相互对齐。
-any-to-an
+基于离散 token，实现了 any-to-any 多模态
+LLM，即支持理解、生成各种模态，包含语音、文本、图像、音乐。以文本为中心，通过将其它模态与文本对齐，实现所有模态之间的相互对齐。
+any
                                 
                             </div>
                             <div class="publish-info">

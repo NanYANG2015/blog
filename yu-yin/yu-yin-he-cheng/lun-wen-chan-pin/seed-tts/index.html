@@ -16,8 +16,7 @@
 
 
 作者：字节
-发表时间：2024.06
-支持英语、中文普通">
+发表时间：2024.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -398,22 +397,23 @@
 <li>发表时间：2024.06</li>
 <li>支持英语、中文普通话语音合成，支持跨语种合成（提示语音、合成文本语种不同）。</li>
 </ul>
-<h1 id="系统结构">1.  系统结构</h1>
-<img src="https://note.youdao.com/yws/api/personal/file/WEBda21189ef8f727fd938b84b36dffdc7f?method=download&shareKey=a0dcc15498377487b7fca73360374a88" width="631">
-<p><font color="red">“We investigate both continuous and discrete speech tokenizers, and found that the design of the tokenizer is crucial to the performance of the entire system.”（没公布结论）</font></p>
-<h1 id="训练">2.  训练</h1>
+<h1 id="系统结构">1. 系统结构</h1>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBda21189ef8f727fd938b84b36dffdc7f?method=download&shareKey=a0dcc15498377487b7fca73360374a88" width="631"></p>
+<p><font color="red">"We investigate both continuous and discrete speech
+tokenizers, and found that the design of the tokenizer is crucial to the
+performance of the entire system."（没公布结论）</font></p>
+<h1 id="训练">2. 训练</h1>
 <p>3阶段</p>
 <ul>
 <li>预训练</li>
 <li>微调
 <ul>
-<li><a href="#%E8%AF%B4%E8%AF%9D%E4%BA%BA%E5%BE%AE%E8%B0%83">说话人微调</a>：增强指定说话人s的性能。</li>
-<li><a href="#%E6%8C%87%E4%BB%A4%E5%BE%AE%E8%B0%83">指令微调</a>：提高可控性和交互性，如表现力、语速、风格、情感等。</li>
+<li><a href="#说话人微调">说话人微调</a>：增强指定说话人s的性能。</li>
+<li><a href="#指令微调">指令微调</a>：提高可控性和交互性，如表现力、语速、风格、情感等。</li>
+</ul></li>
+<li>偏好训练：<a href="#强化学习">强化学习</a>，增强鲁棒性、说话人相似度、可控性。</li>
 </ul>
-</li>
-<li>偏好训练：<a href="#%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0">强化学习</a>，增强鲁棒性、说话人相似度、可控性。</li>
-</ul>
-<h1 id="评价">3.  评价</h1>
+<h1 id="评价">3. 评价</h1>
 <ul>
 <li>客观测试集：1000 Common Voice + 2000 DiDiSpeech（中文）。</li>
 <li>主观测试集：100 内部数据，包含不同口音、方言、情感、说话风格。</li>
@@ -423,21 +423,25 @@
 <li>客观
 <ul>
 <li>WER：EN: Whisper-large-v3，ZH: Paraformer-zh。</li>
-<li>说话人相似度：在说话人 verification 任务上微调  WavLM-large，计算说话人 embedding 的余弦相似度。</li>
-</ul>
-</li>
+<li>说话人相似度：在说话人 verification 任务上微调
+WavLM-large，计算说话人 embedding 的余弦相似度。</li>
+</ul></li>
 <li>主观
 <ul>
-<li>
-<p>CMOS：提供参考语音、合成语音、ground truth（<font color="red">后两者随机顺序</font>），评价说话人相似度、表现力。</p>
-<p>[-2,2]，经验上 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">∣</mi><mi>C</mi><mi>M</mi><mi>O</mi><mi>S</mi><mi mathvariant="normal">∣</mi><mo>&lt;</mo><mn>0.1</mn></mrow><annotation encoding="application/x-tex">|CMOS|&lt;0.1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">∣</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord">∣</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">1</span></span></span></span> 表明无显著偏好。</p>
-</li>
-</ul>
-</li>
-</ul>
-</li>
+<li><p>CMOS：提供参考语音、合成语音、ground
+truth（<font color="red">后两者随机顺序</font>），评价说话人相似度、表现力。</p>
+<p>[-2,2]，经验上 <span class="math inline">\(|CMOS|&lt;0.1\)</span>
+表明无显著偏好。</p></li>
+</ul></li>
+</ul></li>
 </ul>
 <table>
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
 <thead>
 <tr>
 <th>实验目的</th>
@@ -451,125 +455,154 @@
 <td>zero-shot in-context learning (ICL)</td>
 <td></td>
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEBcfceec284eab4d8d829a6b596f29b8dc?method=download&shareKey=6e435f05c0a44ef0895a295f60f6f25f" width="475"></td>
-<td>相较于 ground truth，ICL 合成语音与提示音频的说话人相似度更高。由于同一说话人的多个语音，说话风格、背景环境等仍有差异。<br><br>说话人相似度更高时，WER 不一定更低。更低的 WER 可能由于语音更“标准”，而牺牲了口音、表现力、自然度等。<br><br>ICL CMOS 得分较低的样本，真实语音句间变化更多，合成语音保持了与参考语音一致的韵律，导致长时 TTS 中韵律变化较少。可能可以通过 few-shot 解决。</td>
+<td>相较于 ground truth，ICL
+合成语音与提示音频的说话人相似度更高。由于同一说话人的多个语音，说话风格、背景环境等仍有差异。<br><br>说话人相似度更高时，WER
+不一定更低。更低的 WER
+可能由于语音更“标准”，而牺牲了口音、表现力、自然度等。<br><br>ICL CMOS
+得分较低的样本，真实语音句间变化更多，合成语音保持了与参考语音一致的韵律，导致长时
+TTS 中韵律变化较少。可能可以通过 few-shot 解决。</td>
 </tr>
 <tr>
 <td>15s 音频提示 zero-shot ICL vs FastSpeech 说话人微调</td>
-<td>每个说话人分别微调得到各自独立的模型。训练集约 5h/人。<br><br>hard 说话人如 electronic high-pitched chipmunk 虚拟角色。</td>
+<td>每个说话人分别微调得到各自独立的模型。训练集约 5h/人。<br><br>hard
+说话人如 electronic high-pitched chipmunk 虚拟角色。</td>
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEBb4c37b35fedbfb8aa69843aa4c40847e?method=download&shareKey=fabb538422415d12be04a48ad7a63596" width="536"></td>
-<td><strong>对于普通、日常风格的说话人，</strong> zero-shot ICL 自然度、表现力更好；<br><br> <strong>对于有强烈口音、说话风格夸张的说话人，</strong> zero-shot ICL 没有忠实地保留口音、风格，特别是语音提示缺少代表性韵律时。可以通过更长的语音提示、增加训练数据覆盖优化。<br><br><font color="green">存疑：都基于 Seed-TTS，zero-shot ICL vs 说话人微调性能差异？</font></td>
+<td><strong>对于普通、日常风格的说话人，</strong> zero-shot ICL
+自然度、表现力更好；<br><br>
+<strong>对于有强烈口音、说话风格夸张的说话人，</strong> zero-shot ICL
+没有忠实地保留口音、风格，特别是语音提示缺少代表性韵律时。可以通过更长的语音提示、增加训练数据覆盖优化。<br><br><font color="green">存疑：都基于
+Seed-TTS，zero-shot ICL vs 说话人微调性能差异？</font></td>
 </tr>
 <tr>
-<td><font color="red">使用合成音频进行 ASR 等语音理解任务训练的可行性</font></td>
-<td><strong>合成数据集构建方式：</strong> 对训练集中的每个句子，将其作为语音提示，合成训练集中随机选择的文本，保证所有音频、文本均被采样一次。<br><br>采用相同的模型结构、超参数，分别采用原始数据集、合成数据集训练 ASR 模型。</td>
+<td><font color="red">使用合成音频进行 ASR
+等语音理解任务训练的可行性</font></td>
+<td><strong>合成数据集构建方式：</strong>
+对训练集中的每个句子，将其作为语音提示，合成训练集中随机选择的文本，保证所有音频、文本均被采样一次。<br><br>采用相同的模型结构、超参数，分别采用原始数据集、合成数据集训练
+ASR 模型。</td>
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEBc4cadc7cd12a64fe3fee94019f0154d5?method=download&shareKey=f2bda2fa009552140056f96fbd30fe94" width="528"></td>
-<td>clean 数据集上性能接近，other 数据集上性能较差，可能由于 TTS 合成语音背景噪声较少，通过数据增强可以减少性能差距。</td>
+<td>clean 数据集上性能接近，other 数据集上性能较差，可能由于 TTS
+合成语音背景噪声较少，通过数据增强可以减少性能差距。</td>
 </tr>
 <tr>
 <td><span id="说话人微调">说话人微调</span></td>
-<td>数据：5人，各 1-10h，合计 20h。<br>添加说话人 index token。<br>ICL：20s 提示。</td>
+<td>数据：5人，各 1-10h，合计 20h。<br>添加说话人 index
+token。<br>ICL：20s 提示。</td>
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEB0d11ba531748de96f04bd25126c06131?method=download&shareKey=e11920979f24587c19f648872fd5d920" width="484"></td>
 <td>CMOS 0.37，学习到了目标说话人更细微的韵律特点。</td>
 </tr>
 <tr>
 <td><span id="指令微调">指令微调</span></td>
-<td>对4类主要情感，分别合成100个对应情感的文本，采用 SER 模型预测合成语音的情感。</td>
+<td>对4类主要情感，分别合成100个对应情感的文本，采用 SER
+模型预测合成语音的情感。</td>
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEB09d6f29b88b956835ace79870cd41ed0?method=download&shareKey=491c6b2bb0e5e2d4546653ab74c9a656" width="489"></td>
-<td><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mtext>Seed-TTS</mtext><mtext>SFT</mtext></msub></mrow><annotation encoding="application/x-tex">\text {Seed-TTS}_{\text{SFT}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord text"><span class="mord">Seed-TTS</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">SFT</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 根据文本推断目标情感，有一定的准确性；<br><br> <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mtext>Seed-TTS</mtext><mtext>IFT</mtext></msub></mrow><annotation encoding="application/x-tex">\text {Seed-TTS}_{\text{IFT}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord text"><span class="mord">Seed-TTS</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">IFT</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 根据明确的指令，合成音频的情感准确度显著提高。</td>
+<td><span class="math inline">\(\text {Seed-TTS}_{\text{SFT}}\)</span>
+根据文本推断目标情感，有一定的准确性；<br><br> <span class="math inline">\(\text {Seed-TTS}_{\text{IFT}}\)</span>
+根据明确的指令，合成音频的情感准确度显著提高。</td>
 </tr>
 </tbody>
 </table>
 <p>局限性：唱歌；提示包含背景音乐、噪声时，生成的背景音不一致，如完全忽略音乐。</p>
-<div class="red-text">
-<h1 id="低延迟-流式推理">4.  低延迟、流式推理</h1>
+<section id="低延迟流式推理" class="red-text">
+<h1>4. 低延迟、流式推理</h1>
 <ul>
-<li>
-<p>流式推理</p>
+<li><p>流式推理</p>
 <ul>
 <li>causal diffusion</li>
-</ul>
-</li>
-<li>
-<p>减少 diffusion 模型计算量</p>
+</ul></li>
+<li><p>减少 diffusion 模型计算量</p>
 <ul>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2303.01469">consistency distillation</a></li>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2403.03206">modified flow matching</a></li>
-</ul>
-</li>
-<li>
-<p>LM 优化</p>
-<p>grouped-query attention、paged attention、flash attention、模型量化</p>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2303.01469">consistency
+distillation</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2403.03206">modified flow
+matching</a></li>
+</ul></li>
+<li><p>LM 优化</p>
+<p>grouped-query attention、paged attention、flash
+attention、模型量化</p>
 <ul>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2106.08295">A White Paper on Neural Network Quantization</a></li>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2404.12759">decoupleQ: Towards 2-bit Post-Training Uniform Quantization via decoupling Parameters into Integer and Floating Points</a></li>
-</ul>
-</li>
-<li>
-<p>相关文献</p>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2106.08295">A White Paper on Neural
+Network Quantization</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2404.12759">decoupleQ: Towards 2-bit
+Post-Training Uniform Quantization via decoupling Parameters into
+Integer and Floating Points</a></li>
+</ul></li>
+<li><p>相关文献</p>
 <ul>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2310.04378">Latent consistency models: Synthesizing high-resolution images with few-step inference</a></li>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2306.00978">AWQ: Activation-aware weight quantization for llm compression and acceleration</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2310.04378">Latent consistency
+models: Synthesizing high-resolution images with few-step
+inference</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2306.00978">AWQ: Activation-aware
+weight quantization for llm compression and acceleration</a></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-</div>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB46b5da2839c94b892742b3f58baa8ee7?method=download&shareKey=8770eaddba4ed52615d6ecef2656149c" width="475">
-<h1 id="speech-factorization-by-self-distillation">5.  Speech factorization by self-distillation</h1>
-<p>Speech factorization：将语音分解为各种独立的属性，如音色、韵律、内容。</p>
+</section>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB46b5da2839c94b892742b3f58baa8ee7?method=download&shareKey=8770eaddba4ed52615d6ecef2656149c" width="475"></p>
+<h1 id="speech-factorization-by-self-distillation">5. Speech factorization
+by self-distillation</h1>
+<p>Speech
+factorization：将语音分解为各种独立的属性，如音色、韵律、内容。</p>
 <p>自蒸馏</p>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB4e4688a187fd38ab244ea6264bdf2d6a?method=download&shareKey=cffac6e8f5a8647e5744bea9164a9cf9" width="509">
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB4e4688a187fd38ab244ea6264bdf2d6a?method=download&shareKey=cffac6e8f5a8647e5744bea9164a9cf9" width="509"></p>
 <ul>
 <li>创建语音对，大部分属性一致，指定的一个或多个目标属性不一致。</li>
-<li>在 diffusion 模型中引入<font color="green">说话人扰动，生成内容、韵律相同</font>，音色不同的成对语音。原始音色、扰动音色数据分别表示为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>S</mi><mrow><mi>o</mi><mi>r</mi><mi>i</mi></mrow></msub></mrow><annotation encoding="application/x-tex">S_{ori}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">o</span><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span><span class="mord mathdefault mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>、<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>S</mi><mtext>alt</mtext></msub></mrow><annotation encoding="application/x-tex">S_{\text {alt}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">alt</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>。</li>
-<li>重训 diffusion 模型，输入从 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>S</mi><mtext>alt</mtext></msub></mrow><annotation encoding="application/x-tex">S_{\text {alt}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">alt</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 提取的 token、从 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>S</mi><mrow><mi>o</mi><mi>r</mi><mi>i</mi></mrow></msub></mrow><annotation encoding="application/x-tex">S_{ori}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">o</span><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span><span class="mord mathdefault mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 提取的音色，训练目标为恢复从 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>S</mi><mrow><mi>o</mi><mi>r</mi><mi>i</mi></mrow></msub></mrow><annotation encoding="application/x-tex">S_{ori}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">o</span><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span><span class="mord mathdefault mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 提取的 vocoder embedding。</li>
-<li><font color="green">存疑：原始模型如何区分音色、内容表示？若已区分，是否还需要解耦？若未解耦，直接用输入的从 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>S</mi><mrow><mi>o</mi><mi>r</mi><mi>i</mi></mrow></msub></mrow><annotation encoding="application/x-tex">S_{ori}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">o</span><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span><span class="mord mathdefault mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 提取的表示进行合成即可。原始音色的表示是否应该来自内容、韵律不同的语音？</font></li>
+<li>在 diffusion
+模型中引入<font color="green">说话人扰动，生成内容、韵律相同</font>，音色不同的成对语音。原始音色、扰动音色数据分别表示为
+<span class="math inline">\(S_{ori}\)</span>、<span class="math inline">\(S_{\text {alt}}\)</span>。</li>
+<li>重训 diffusion 模型，输入从 <span class="math inline">\(S_{\text
+{alt}}\)</span> 提取的 token、从 <span class="math inline">\(S_{ori}\)</span> 提取的音色，训练目标为恢复从
+<span class="math inline">\(S_{ori}\)</span> 提取的 vocoder
+embedding。</li>
+<li><font color="green">存疑：原始模型如何区分音色、内容表示？若已区分，是否还需要解耦？若未解耦，直接用输入的从
+<span class="math inline">\(S_{ori}\)</span>
+提取的表示进行合成即可。原始音色的表示是否应该来自内容、韵律不同的语音？</font></li>
 </ul>
 <p>应用：voice conversion。</p>
-<img src="https://note.youdao.com/yws/api/personal/file/WEBa1ea584bd462e2bb485c2f58c46d1991?method=download&shareKey=5c678248ce13b3cbfb54c40fbb206052" width="526">
-<h1 id="强化学习">6.  强化学习</h1>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBa1ea584bd462e2bb485c2f58c46d1991?method=download&shareKey=5c678248ce13b3cbfb54c40fbb206052" width="526"></p>
+<h1 id="强化学习">6. 强化学习</h1>
 <ul>
-<li>
-<p>对比了</p>
+<li><p>对比了</p>
 <ul>
-<li>使用外部奖励模型，如 Proximal Policy Optimization、REINFORCE，允许对特定的语音属性更明确的控制。</li>
+<li>使用外部奖励模型，如 Proximal Policy
+Optimization、REINFORCE，允许对特定的语音属性更明确的控制。</li>
 <li>不需要奖励模型，如 DPO，实现简单。</li>
 </ul>
-<p>两类方法都有效。本文报告 REINFORCE 的结果。</p>
-</li>
-<li>
-<p>两个版本，采用不同的奖励函数，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mtext>Seed-TTS</mtext><mtext>RL-SIM-WER</mtext></msub></mrow><annotation encoding="application/x-tex">\text {Seed-TTS}_{\text{RL-SIM-WER}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord text"><span class="mord">Seed-TTS</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">RL-SIM-WER</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>、<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mtext>Seed-TTS</mtext><mtext>SER</mtext></msub></mrow><annotation encoding="application/x-tex">\text {Seed-TTS}_{\text{SER}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord text"><span class="mord">Seed-TTS</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">SER</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>。</p>
-<img src="https://note.youdao.com/yws/api/personal/file/WEBe43d6523b6ed5823aa103a4ad1a429ad?method=download&shareKey=17be3aad3218a11d63114498a93bd9fd" width="437">
+<p>两类方法都有效。本文报告 REINFORCE 的结果。</p></li>
+<li><p>两个版本，采用不同的奖励函数，<span class="math inline">\(\text
+{Seed-TTS}_{\text{RL-SIM-WER}}\)</span>、<span class="math inline">\(\text {Seed-TTS}_{\text{SER}}\)</span>。</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBe43d6523b6ed5823aa103a4ad1a429ad?method=download&shareKey=17be3aad3218a11d63114498a93bd9fd" width="437"></p>
 <p>* Hard: 包含对 AR 模型特别难的文本模式，如单词重复、绕口令等。</p>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB51011895c3bf752bdfca801e730ae6fe?method=download&shareKey=5a8b74f13c58611829faeeb203bd7152" width="458">
-<p>* 观察到 RL 普遍存在的 reward hacking 问题，如为了更低的 WER，倾向于生成更慢、更清晰、自然度差的语音。</p>
-<img src="https://note.youdao.com/yws/api/personal/file/WEBa9873910d7b1aea03bfc0b1f1c8b0001?method=download&shareKey=8c82b582b90dc33fca8e21483f622277" width="529">
-</li>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB51011895c3bf752bdfca801e730ae6fe?method=download&shareKey=5a8b74f13c58611829faeeb203bd7152" width="458"></p>
+<p>* 观察到 RL 普遍存在的 reward hacking 问题，如为了更低的
+WER，倾向于生成更慢、更清晰、自然度差的语音。</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBa9873910d7b1aea03bfc0b1f1c8b0001?method=download&shareKey=8c82b582b90dc33fca8e21483f622277" width="529"></p></li>
 </ul>
-<h1 id="全-diffusion-模型">7.  全 diffusion 模型</h1>
+<h1 id="全-diffusion-模型">7. 全 diffusion 模型</h1>
 <ul>
 <li>对比 LM + diffusion 与全 diffusion 模型。
 <ul>
-<li>
-<p>视觉领域的对比 <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2310.05737">Language model beats diffusion - tokenizer is key to visual generation</a></p>
-</li>
-<li>
-<p>全 diffusion 模型：<font color="green">非流式、支持内容编辑</font>。</p>
-<img src="https://note.youdao.com/yws/api/personal/file/WEBbddb8a6d352ddff70eef01773ec2d82c?method=download&shareKey=564abcc56bdb070215a1a672f5bb0410" width="534">
-</li>
-<li>
-<p>LM：<font color="green">流式处理</font>、可集成文本 LM。</p>
-</li>
-</ul>
-</li>
+<li><p>视觉领域的对比 <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2310.05737">Language model beats diffusion -
+tokenizer is key to visual generation</a></p></li>
+<li><p>全 diffusion
+模型：<font color="green">非流式、支持内容编辑</font>。</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBbddb8a6d352ddff70eef01773ec2d82c?method=download&shareKey=564abcc56bdb070215a1a672f5bb0410" width="534"></p></li>
+<li><p>LM：<font color="green">流式处理</font>、可集成文本 LM。</p></li>
+</ul></li>
 <li>时长预测
 <ul>
 <li>经验：添加额外的时长预测模型，合成语音的自然度降低。</li>
-<li>采用 diffusion 模型直接预测语音的总时长。由于可以动态调整每个音素的时长，合成语音的自然度很高。</li>
-<li><strong>本文</strong>：直接向模型提供总时长。diffusion 模型输入提示语音、文本、具有目标语音总时长的高斯噪声片段。使其可用于语速编辑。</li>
-</ul>
-</li>
+<li>采用 diffusion
+模型直接预测语音的总时长。由于可以动态调整每个音素的时长，合成语音的自然度很高。</li>
+<li><strong>本文</strong>：直接向模型提供总时长。diffusion
+模型输入提示语音、文本、具有目标语音总时长的高斯噪声片段。使其可用于语速编辑。</li>
+</ul></li>
 </ul>
 <table>
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
 <thead>
 <tr>
 <th>任务</th>
@@ -599,7 +632,7 @@
 </tr>
 </tbody>
 </table>
-<h1 id="其它">8.  其它</h1>
+<h1 id="其它">8. 其它</h1>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://bytedancespeech.github.io/seedtts_tech_report">Demo</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/BytedanceSpeech/seed-tts-eval">测试集、测试代码</a></li>
