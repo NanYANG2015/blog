@@ -10,8 +10,10 @@
 特点
 
 语音、音乐、音效 生成统一框架。有条件生成。
-类似 MusicLM、AudioLM，分别采用语义 token、声学
-token，本文中分别对应 AudioMAE、VAE 表示。">
+类似 MusicLM、AudioLM，分别采用语义 token、声学 token，本文中分别对应 AudioMAE、VAE 表示。
+生成流程
+
+">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -383,8 +385,7 @@ token，本文中分别对应 AudioMAE、VAE 表示。">
 <li><font color="red">特点
 <ul>
 <li>语音、音乐、音效 生成统一框架。有条件生成。</li>
-<li>类似 MusicLM、AudioLM，分别采用语义 token、声学
-token，本文中分别对应 AudioMAE、VAE 表示。</li>
+<li>类似 MusicLM、AudioLM，分别采用语义 token、声学 token，本文中分别对应 AudioMAE、VAE 表示。</li>
 <li>生成流程
 <ul>
 <li>采用多个 encoder，将多种条件拼接、输入 GPT-2；</li>
@@ -392,105 +393,72 @@ token，本文中分别对应 AudioMAE、VAE 表示。</li>
 <li>采用 LDM，以语义 token 为条件，生成声学token（VAE 表示）；</li>
 <li>采用 VAE decoder 重建 mel 谱；</li>
 <li>采用 HiFiGAN vocoder 生成音频采样点。</li>
-</ul></li>
+</ul>
+</li>
 <li>性能：text-to-audio、text-to-music SOTA，text-to-speech 显著优于 <a target="_blank" rel="noopener" href="https://huggingface.co/facebook/fastspeech2-en-ljspeech">FastSpeech2</a>。</li></ul></font></li>
 </ul>
 
-<h1 id="系统结构">1. 系统结构</h1>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEBc0570aabe53121fdbfb3c238483c7c19?method=download&shareKey=80e274ee308805c24d26944870725bdb" width="921"></p>
-<p><span class="math display">\[ \mathcal{H}_0=\mathcal{G} \circ
-\mathcal{M}: C \mapsto \hat{Y} \mapsto x \]</span> <span class="math display">\[ Y=\mathcal{A}(x) \]</span></p>
-<p>其中，<span class="math inline">\(C\)</span> 为
-condition，可以是文本、音素、音频、图像等。<span class="math inline">\(\hat{Y}\)</span> 为音频中间表示，<span class="math inline">\(x\)</span> 为采样点。<span class="math inline">\(\mathcal{A}\)</span>
-为自监督表示学习预训练模型，如 AudioMAE。<span class="math inline">\(\mathcal{M}: C \mapsto \hat{Y}\)</span> 采用
-GPT-2。<span class="math inline">\(\hat{Y} \mapsto x\)</span> 采用
-latent diffusion 模型（VAE 表示） + VAE decoder（mel 谱） + HiFiGAN
-vocoder（采样点）。</p>
-<h2 id="audiomae">1.1. AudioMAE</h2>
+
+<h1 id="系统结构">1.  系统结构</h1>
+<img src="https://note.youdao.com/yws/api/personal/file/WEBc0570aabe53121fdbfb3c238483c7c19?method=download&shareKey=80e274ee308805c24d26944870725bdb" width="921">
+<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="script">H</mi><mn>0</mn></msub><mo>=</mo><mi mathvariant="script">G</mi><mo>∘</mo><mi mathvariant="script">M</mi><mo>:</mo><mi>C</mi><mo>↦</mo><mover accent="true"><mi>Y</mi><mo>^</mo></mover><mo>↦</mo><mi>x</mi></mrow><annotation encoding="application/x-tex">\mathcal{H}_0=\mathcal{G} \circ \mathcal{M}: C \mapsto \hat{Y} \mapsto x 
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord"><span class="mord mathcal" style="margin-right:0.00965em;">H</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.78055em;vertical-align:-0.09722em;"></span><span class="mord"><span class="mord mathcal" style="margin-right:0.0593em;">G</span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∘</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord"><span class="mord mathcal">M</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.69433em;vertical-align:-0.011em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">↦</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9577699999999999em;vertical-align:-0.011em;"></span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.9467699999999999em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">Y</span></span></span><span style="top:-3.25233em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.25em;">^</span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">↦</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span></span></p>
+<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>Y</mi><mo>=</mo><mi mathvariant="script">A</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y=\mathcal{A}(x) 
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.22222em;">Y</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathcal">A</span></span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span></span></span></span></span></p>
+<p>其中，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>C</mi></mrow><annotation encoding="application/x-tex">C</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span></span></span></span> 为 condition，可以是文本、音素、音频、图像等。<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mover accent="true"><mi>Y</mi><mo>^</mo></mover></mrow><annotation encoding="application/x-tex">\hat{Y}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9467699999999999em;vertical-align:0em;"></span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.9467699999999999em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">Y</span></span></span><span style="top:-3.25233em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.25em;">^</span></span></span></span></span></span></span></span></span> 为音频中间表示，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 为采样点。<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="script">A</mi></mrow><annotation encoding="application/x-tex">\mathcal{A}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord"><span class="mord mathcal">A</span></span></span></span></span> 为自监督表示学习预训练模型，如 AudioMAE。<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="script">M</mi><mo>:</mo><mi>C</mi><mo>↦</mo><mover accent="true"><mi>Y</mi><mo>^</mo></mover></mrow><annotation encoding="application/x-tex">\mathcal{M}: C \mapsto \hat{Y}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord"><span class="mord mathcal">M</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.69433em;vertical-align:-0.011em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">↦</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9467699999999999em;vertical-align:0em;"></span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.9467699999999999em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">Y</span></span></span><span style="top:-3.25233em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.25em;">^</span></span></span></span></span></span></span></span></span> 采用 GPT-2。<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mover accent="true"><mi>Y</mi><mo>^</mo></mover><mo>↦</mo><mi>x</mi></mrow><annotation encoding="application/x-tex">\hat{Y} \mapsto x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9577699999999999em;vertical-align:-0.011em;"></span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.9467699999999999em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">Y</span></span></span><span style="top:-3.25233em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.25em;">^</span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">↦</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 采用 latent diffusion 模型（VAE 表示） + VAE decoder（mel 谱） + HiFiGAN vocoder（采样点）。</p>
+<h2 id="audiomae">1.1.  AudioMAE</h2>
 <ul>
 <li>相较于其它自监督预训练模型的优势
 <ul>
-<li>相较于专注特定领域的模型，如 MERT（音乐）、HuBERT（语音），AudioMAE
-在 AudioSet 多种音频上进行了预训练，在通用音频分类任务上具有 SOTA
-性能。</li>
-<li><font color="green">相较于采用对比 loss、next token
-预测等判别性损失，如 wav2vec，AudioMAE
-采用重建损失，可能更适合生成任务。</font></li>
-</ul></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/facebookresearch/AudioMAE">audio masked
-autoencoder (AudioMAE)</a> encoder：将 log mel 谱，采用 <span class="math inline">\(k=s=P, c=D\)</span>的卷积，分割成 <span class="math inline">\(P \times P\)</span> 的 patch，encoder 输出 <span class="math inline">\(E \in \mathbb{R}^{T^{\prime} \times F^{\prime}
-\times D}\)</span>，<span class="math inline">\(T^{\prime}=T /
-P\)</span>，<span class="math inline">\(F^{\prime}=F / P\)</span>。</li>
-<li>后处理：2D <font color="green">average-max
-pooling[52]（保留时频关系）</font><span class="math inline">\(k=s=\lambda\)</span>，reshape，得到 embedding 序列
-<span class="math inline">\(L_\lambda \times D\)</span>，<span class="math inline">\(L_\lambda=T^{\prime} F^{\prime} /
-\lambda^2\)</span>。</li>
+<li>相较于专注特定领域的模型，如 MERT（音乐）、HuBERT（语音），AudioMAE 在 AudioSet 多种音频上进行了预训练，在通用音频分类任务上具有 SOTA 性能。</li>
+<li><font color="green">相较于采用对比 loss、next token 预测等判别性损失，如 wav2vec，AudioMAE 采用重建损失，可能更适合生成任务。</font></li>
 </ul>
-<h2 id="vae">1.2. VAE</h2>
-<ul>
-<li>variational autoencoder (VAE) 用于 LDM。<span class="math inline">\(\mathcal{V}: X \mapsto z \mapsto
-\hat{X}\)</span>，压缩 mel 谱、重建。</li>
-<li><font color="green">优化目标：重建损失 + 判别损失 + <span class="math inline">\(z\)</span> 和标准高斯的 KL 散度（约束 latent
-空间的方差）。</font></li>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/facebookresearch/AudioMAE">audio masked autoencoder (AudioMAE)</a> encoder：将 log mel 谱，采用 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi><mo>=</mo><mi>s</mi><mo>=</mo><mi>P</mi><mo separator="true">,</mo><mi>c</mi><mo>=</mo><mi>D</mi></mrow><annotation encoding="application/x-tex">k=s=P, c=D</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">s</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">c</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span></span></span></span>的卷积，分割成 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>P</mi><mo>×</mo><mi>P</mi></mrow><annotation encoding="application/x-tex">P \times P</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span></span></span></span> 的 patch，encoder 输出 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>E</mi><mo>∈</mo><msup><mi mathvariant="double-struck">R</mi><mrow><msup><mi>T</mi><mo mathvariant="normal">′</mo></msup><mo>×</mo><msup><mi>F</mi><mo mathvariant="normal">′</mo></msup><mo>×</mo><mi>D</mi></mrow></msup></mrow><annotation encoding="application/x-tex">E \in \mathbb{R}^{T^{\prime} \times F^{\prime} \times D}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72243em;vertical-align:-0.0391em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.94248em;vertical-align:0em;"></span><span class="mord"><span class="mord"><span class="mord mathbb">R</span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.94248em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8278285714285715em;"><span style="top:-2.931em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mbin mtight">×</span><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">F</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8278285714285715em;"><span style="top:-2.931em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mbin mtight">×</span><span class="mord mathdefault mtight" style="margin-right:0.02778em;">D</span></span></span></span></span></span></span></span></span></span></span></span>，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>T</mi><mo mathvariant="normal">′</mo></msup><mo>=</mo><mi>T</mi><mi mathvariant="normal">/</mi><mi>P</mi></mrow><annotation encoding="application/x-tex">T^{\prime}=T / P</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.751892em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.751892em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord">/</span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span></span></span></span>，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>F</mi><mo mathvariant="normal">′</mo></msup><mo>=</mo><mi>F</mi><mi mathvariant="normal">/</mi><mi>P</mi></mrow><annotation encoding="application/x-tex">F^{\prime}=F / P</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.751892em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.751892em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="mord">/</span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span></span></span></span>。</li>
+<li>后处理：2D <font color="green">average-max pooling[52]（保留时频关系）</font><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi><mo>=</mo><mi>s</mi><mo>=</mo><mi>λ</mi></mrow><annotation encoding="application/x-tex">k=s=\lambda</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">s</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">λ</span></span></span></span>，reshape，得到 embedding 序列 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>L</mi><mi>λ</mi></msub><mo>×</mo><mi>D</mi></mrow><annotation encoding="application/x-tex">L_\lambda \times D</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">λ</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span></span></span></span>，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>L</mi><mi>λ</mi></msub><mo>=</mo><msup><mi>T</mi><mo mathvariant="normal">′</mo></msup><msup><mi>F</mi><mo mathvariant="normal">′</mo></msup><mi mathvariant="normal">/</mi><msup><mi>λ</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">L_\lambda=T^{\prime} F^{\prime} / \lambda^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">λ</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.751892em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.751892em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mord">/</span><span class="mord"><span class="mord mathdefault">λ</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span>。</li>
 </ul>
-<h2 id="audiomae-vs-vae">1.3. AudioMAE vs VAE</h2>
+<h2 id="vae">1.2.  VAE</h2>
 <ul>
-<li>相较于 AudioMAE，VAE
-更关注重建质量，<font color="green">压缩比更高</font>。</li>
-<li>AudioMAE 包含更多语义信息。
+<li>variational autoencoder (VAE) 用于 LDM。<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="script">V</mi><mo>:</mo><mi>X</mi><mo>↦</mo><mi>z</mi><mo>↦</mo><mover accent="true"><mi>X</mi><mo>^</mo></mover></mrow><annotation encoding="application/x-tex">\mathcal{V}: X \mapsto z \mapsto \hat{X}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord"><span class="mord mathcal" style="margin-right:0.08222em;">V</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.69433em;vertical-align:-0.011em;"></span><span class="mord mathdefault" style="margin-right:0.07847em;">X</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">↦</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.522em;vertical-align:-0.011em;"></span><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">↦</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9467699999999999em;vertical-align:0em;"></span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.9467699999999999em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07847em;">X</span></span></span><span style="top:-3.25233em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.16666em;">^</span></span></span></span></span></span></span></span></span>，压缩 mel 谱、重建。</li>
+<li><font color="green">优化目标：重建损失 + 判别损失 + <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.04398em;">z</span></span></span></span> 和标准高斯的 KL 散度（约束 latent 空间的方差）。</font></li>
+</ul>
+<h2 id="audiomae-vs-vae">1.3.  AudioMAE vs VAE</h2>
+<ul>
+<li>相较于 AudioMAE，VAE 更关注重建质量，<font color="green">压缩比更高</font>。</li>
+<li>AudioMAE 包含更多语义信息。<br>
 <img src="https://note.youdao.com/yws/api/personal/file/WEB3382540fdf27039037cade70eb98048c?method=download&shareKey=9afd9631dd94a9f9d113ba92a2a54b69" width="456"></li>
 </ul>
-<h2 id="gpt-2">1.4. GPT-2</h2>
+<h2 id="gpt-2">1.4.  GPT-2</h2>
 <ul>
 <li>condition
 <ul>
-<li>可以是文本、音素、音频、图像等。采用多个 encoder +
-线性层，沿序列长度维度拼接多个 encoder 表示。
+<li>可以是文本、音素、音频、图像等。采用多个 encoder + 线性层，沿序列长度维度拼接多个 encoder 表示。
 <ul>
-<li><a target="_blank" rel="noopener" href="https://github.com/LAION-AI/CLAP">contrastive language and
-audio pretraining (CLAP)</a>：音频字幕（不同于转写）采用 CLAP text
-encoder，否则采用 CLAP audio encoder，如 <font color="green">TTS（同
-AudioLDM）</font>。</li>
-<li><a target="_blank" rel="noopener" href="https://huggingface.co/google/flan-t5-large">FLAN-T5</a>（enhanced
-text-to-text transfer transformer (T5)）：用于捕捉文本的时序信息。</li>
-<li>音素 encoder：见 NaturalSpeech [2]。采用 <a target="_blank" rel="noopener" href="https://github.com/espeak-ng/espeak-ng">Espeak phonemizers</a>
-将文本转为音素序列。</li>
-</ul></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/LAION-AI/CLAP">contrastive language and audio pretraining (CLAP)</a>：音频字幕（不同于转写）采用 CLAP text encoder，否则采用 CLAP audio encoder，如 <font color="green">TTS（同 AudioLDM）</font>。</li>
+<li><a target="_blank" rel="noopener" href="https://huggingface.co/google/flan-t5-large">FLAN-T5</a>（enhanced text-to-text transfer transformer (T5)）：用于捕捉文本的时序信息。</li>
+<li>音素 encoder：见 NaturalSpeech [2]。采用 <a target="_blank" rel="noopener" href="https://github.com/espeak-ng/espeak-ng">Espeak phonemizers</a> 将文本转为音素序列。</li>
+</ul>
+</li>
 <li>除音素 encoder 无可用预训练权重外，其它预训练的 encoder 冻结。</li>
-<li><font color="green">TTS 训练时，采用 CLAP audio encoder 计算
-condition，推理时采用 CLAP text encoder，有利于 prompt-based
-说话人控制。</font></li>
-</ul></li>
+<li><font color="green">TTS 训练时，采用 CLAP audio encoder 计算 condition，推理时采用 CLAP text encoder，有利于 prompt-based 说话人控制。</font></li>
+</ul>
+</li>
 <li>采用连续表示 AudioMAE 的 MSE loss 微调。</li>
-<li><font color="green">由于序列长度变短，相较于
-MusicLM、SoundStream，减轻了推理计算成本高、错误累积的问题。</font></li>
+<li><font color="green">由于序列长度变短，相较于 MusicLM、SoundStream，减轻了推理计算成本高、错误累积的问题。</font></li>
 </ul>
-<h2 id="ldm">1.5. LDM</h2>
+<h2 id="ldm">1.5.  LDM</h2>
 <ul>
-<li>latent diffusion model (LDM) 以 AudioMAE 序列为条件，采用 VAE
-表示进行特征压缩。</li>
-<li>采用 Transformer-UNet (T-UNet) 架构。为了扩大模型容量，在卷积 block
-后插入了 <span class="math inline">\(n_{\text {trans }}+1\)</span> 个
-transformer blocks，最后1个 transformer block 采用 cross attention 引入
-condition 信息，其它采用 self attention。</li>
-<li>在 TTS 任务中，添加额外的 cross attention 层，引入 FLAN-T5
-condition。</li>
+<li>latent diffusion model (LDM) 以 AudioMAE 序列为条件，采用 VAE 表示进行特征压缩。</li>
+<li>采用 Transformer-UNet (T-UNet) 架构。为了扩大模型容量，在卷积 block 后插入了 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>n</mi><mtext>trans </mtext></msub><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">n_{\text {trans }}+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.73333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">trans </span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> 个 transformer blocks，最后1个 transformer block 采用 cross attention 引入 condition 信息，其它采用 self attention。</li>
+<li>在 TTS 任务中，添加额外的 cross attention 层，引入 FLAN-T5 condition。</li>
 </ul>
-<h3 id="classifier-free-guidance">1.5.1. Classifier-free guidance</h3>
+<h3 id="classifier-free-guidance">1.5.1.  Classifier-free guidance</h3>
 <ul>
-<li>训练时以一定概率（如0.1）丢弃 condition。生成时 <span class="math display">\[\mathcal{G}^{\prime}\left(z_t, t, Y ;
-\phi\right)=w \mathcal{G}\left(z_t, t ; \phi\right)+(1-w)
-\mathcal{G}\left(z_t, t, Y ; \phi\right)\]</span></li>
-<li><font color="green">Denoising Diffusion Implicit Models (DDIM) [90]
-采样时 classifier-free guidance scale 设为 3.5。</font></li>
+<li>训练时以一定概率（如0.1）丢弃 condition。生成时 $$\mathcal{G}^{\prime}\left(z_t, t, Y ; \phi\right)=w \mathcal{G}\left(z_t, t ; \phi\right)+(1-w) \mathcal{G}\left(z_t, t, Y ; \phi\right)$$</li>
+<li><font color="green">Denoising Diffusion Implicit Models (DDIM) [90] 采样时 classifier-free guidance scale 设为 3.5。</font></li>
 </ul>
-<h1 id="数据集">2. 数据集</h1>
+<h1 id="数据集">2.  数据集</h1>
 <table>
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
 <thead>
 <tr>
 <th>数据集</th>
@@ -542,36 +510,52 @@ condition。</li>
 </tbody>
 </table>
 <p>合计 29510h。</p>
-<h1 id="训练">3. 训练</h1>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB0321be8daedc335de43427bba6e3ce77?method=download&shareKey=2002e2c181be21d052559192d174e6fc" width="455"></p>
+<h1 id="训练">3.  训练</h1>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB0321be8daedc335de43427bba6e3ce77?method=download&shareKey=2002e2c181be21d052559192d174e6fc" width="455">
 <ul>
-<li><p>AudioLDM 2 T-UNet <span class="math inline">\(n_{\text
-{trans}}=2\)</span>，AudioLDM 2-Large <span class="math inline">\(n_{\text {trans}}=6\)</span>。</p></li>
-<li><p>AudioMAE：<span class="math inline">\(P=16\)</span>，10s
-音频序列长度 512，768 维。最后 16 个 transformer
-层输出求平均，作为最终的表示。</p></li>
-<li><p>训练时，按一定概率动态选择 AudioMAE 特征来自 ground truth（<span class="math inline">\(P_{\mathrm{gt}}=0.25\)</span>）还是 GPT-2（<span class="math inline">\(P_{\text {pred }}=0.75\)</span>）。</p></li>
-<li><p>GPT-2、LDM 分别训练，再联合微调。音频-文本配对数据训练
-GPT-2。所有音频数据训练 LDM。</p></li>
-<li><p>LDM 预训练：用 10s
-片段训练，<font color="green">零填充到10.24s</font>。随机选择 <span class="math inline">\(\lambda \in\{1,2,4,8\}\)</span>
-以增强鲁棒性。</p></li>
+<li>AudioLDM 2 T-UNet <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>n</mi><mtext>trans</mtext></msub><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">n_{\text {trans}}=2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">trans</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span>，AudioLDM 2-Large <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>n</mi><mtext>trans</mtext></msub><mo>=</mo><mn>6</mn></mrow><annotation encoding="application/x-tex">n_{\text {trans}}=6</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">trans</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">6</span></span></span></span>。</li>
 </ul>
-<h1 id="评价">4. 评价</h1>
+<ul>
+<li>AudioMAE：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>P</mi><mo>=</mo><mn>16</mn></mrow><annotation encoding="application/x-tex">P=16</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">6</span></span></span></span>，10s 音频序列长度 512，768 维。最后 16 个 transformer 层输出求平均，作为最终的表示。</li>
+<li>训练时，按一定概率动态选择 AudioMAE 特征来自 ground truth（<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>P</mi><mrow><mi mathvariant="normal">g</mi><mi mathvariant="normal">t</mi></mrow></msub><mo>=</mo><mn>0.25</mn></mrow><annotation encoding="application/x-tex">P_{\mathrm{gt}}=0.25</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.28055599999999997em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight" style="margin-right:0.01389em;">g</span><span class="mord mathrm mtight">t</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">2</span><span class="mord">5</span></span></span></span>）还是 GPT-2（<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>P</mi><mtext>pred </mtext></msub><mo>=</mo><mn>0.75</mn></mrow><annotation encoding="application/x-tex">P_{\text {pred }}=0.75</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">pred </span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">7</span><span class="mord">5</span></span></span></span>）。</li>
+<li>GPT-2、LDM 分别训练，再联合微调。音频-文本配对数据训练 GPT-2。所有音频数据训练 LDM。</li>
+<li>LDM 预训练：用 10s 片段训练，<font color="green">零填充到10.24s</font>。随机选择 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>λ</mi><mo>∈</mo><mo stretchy="false">{</mo><mn>1</mn><mo separator="true">,</mo><mn>2</mn><mo separator="true">,</mo><mn>4</mn><mo separator="true">,</mo><mn>8</mn><mo stretchy="false">}</mo></mrow><annotation encoding="application/x-tex">\lambda \in\{1,2,4,8\}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.73354em;vertical-align:-0.0391em;"></span><span class="mord mathdefault">λ</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">{</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">4</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">8</span><span class="mclose">}</span></span></span></span> 以增强鲁棒性。</li>
+</ul>
+<h1 id="评价">4.  评价</h1>
 <ul>
 <li>评价指标
 <ul>
 <li>客观
 <ul>
-<li>Frechet Audio Distance (FAD)：VGGish
-模型提取的目标、生成音频的分布距离。</li>
-<li>KL 散度：采用 Patch-out Transformer（音频 tag
-模型），评价目标、生成音频的相似度。</li>
-<li>CLAP 评分：评价音频、文本之间的相似度。<span class="math inline">\(\operatorname{CLAPScore}(x, r)=\frac{\vec{e}_x
-\cdot \vec{e}_r}{\max
-\left(\left\|\vec{e}_x\right\|\left\|\vec{e}_r\right\|,
-\epsilon\right)}\)</span>。</li>
-</ul></li>
+<li>Frechet Audio Distance (FAD)：VGGish 模型提取的目标、生成音频的分布距离。</li>
+<li>KL 散度：采用 Patch-out Transformer（音频 tag 模型），评价目标、生成音频的相似度。</li>
+<li>CLAP 评分：评价音频、文本之间的相似度。<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">CLAPScore</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>x</mi><mo separator="true">,</mo><mi>r</mi><mo stretchy="false">)</mo><mo>=</mo><mfrac><mrow><msub><mover accent="true"><mi>e</mi><mo>⃗</mo></mover><mi>x</mi></msub><mo>⋅</mo><msub><mover accent="true"><mi>e</mi><mo>⃗</mo></mover><mi>r</mi></msub></mrow><mrow><mi>max</mi><mo>⁡</mo><mrow><mo fence="true">(</mo><mrow><mo fence="true">∥</mo><msub><mover accent="true"><mi>e</mi><mo>⃗</mo></mover><mi>x</mi></msub><mo fence="true">∥</mo></mrow><mrow><mo fence="true">∥</mo><msub><mover accent="true"><mi>e</mi><mo>⃗</mo></mover><mi>r</mi></msub><mo fence="true">∥</mo></mrow><mo separator="true">,</mo><mi>ϵ</mi><mo fence="true">)</mo></mrow></mrow></mfrac></mrow><annotation encoding="application/x-tex">\operatorname{CLAPScore}(x, r)=\frac{\vec{e}_x \cdot \vec{e}_r}{\max \left(\left\|\vec{e}_x\right\|\left\|\vec{e}_r\right\|, \epsilon\right)}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop"><span class="mord mathrm">C</span><span class="mord mathrm">L</span><span class="mord mathrm">A</span><span class="mord mathrm">P</span><span class="mord mathrm">S</span><span class="mord mathrm">c</span><span class="mord mathrm">o</span><span class="mord mathrm">r</span><span class="mord mathrm">e</span></span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.4299em;vertical-align:-0.52em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.9098999999999999em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mop mtight">max</span><span class="minner mtight"><span class="mopen mtight delimcenter" style="top:0em;"><span class="mtight">(</span></span><span class="minner mtight"><span class="mopen mtight delimcenter" style="top:0em;"><span class="mtight">∥</span></span><span class="mord mtight"><span class="mord accent mtight"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.714em;"><span style="top:-2.714em;"><span class="pstrut" style="height:2.714em;"></span><span class="mord mtight"><span class="mord mathdefault mtight">e</span></span></span><span style="top:-2.714em;"><span class="pstrut" style="height:2.714em;"></span><span class="accent-body" style="left:-0.17994em;"><span class="overlay mtight" style="height:0.714em;width:0.471em;"><svg width="0.471em" height="0.714em" style="width:0.471em" viewbox="0 0 471 714" preserveaspectratio="xMinYMin"><path d="M377 20c0-5.333 1.833-10 5.5-14S391 0 397 0c4.667 0 8.667 1.667 12 5
+3.333 2.667 6.667 9 10 19 6.667 24.667 20.333 43.667 41 57 7.333 4.667 11
+10.667 11 18 0 6-1 10-3 12s-6.667 5-14 9c-28.667 14.667-53.667 35.667-75 63
+-1.333 1.333-3.167 3.5-5.5 6.5s-4 4.833-5 5.5c-1 .667-2.5 1.333-4.5 2s-4.333 1
+-7 1c-4.667 0-9.167-1.833-13.5-5.5S337 184 337 178c0-12.667 15.667-32.333 47-59
+H213l-171-1c-8.667-6-13-12.333-13-19 0-4.667 4.333-11.333 13-20h359
+c-16-25.333-24-45-24-59z"/></svg></span></span></span></span></span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.16454285714285719em;"><span style="top:-2.357em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathdefault mtight">x</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span><span class="mclose mtight delimcenter" style="top:0em;"><span class="mtight">∥</span></span></span><span class="minner mtight"><span class="mopen mtight delimcenter" style="top:0em;"><span class="mtight">∥</span></span><span class="mord mtight"><span class="mord accent mtight"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.714em;"><span style="top:-2.714em;"><span class="pstrut" style="height:2.714em;"></span><span class="mord mtight"><span class="mord mathdefault mtight">e</span></span></span><span style="top:-2.714em;"><span class="pstrut" style="height:2.714em;"></span><span class="accent-body" style="left:-0.17994em;"><span class="overlay mtight" style="height:0.714em;width:0.471em;"><svg width="0.471em" height="0.714em" style="width:0.471em" viewbox="0 0 471 714" preserveaspectratio="xMinYMin"><path d="M377 20c0-5.333 1.833-10 5.5-14S391 0 397 0c4.667 0 8.667 1.667 12 5
+3.333 2.667 6.667 9 10 19 6.667 24.667 20.333 43.667 41 57 7.333 4.667 11
+10.667 11 18 0 6-1 10-3 12s-6.667 5-14 9c-28.667 14.667-53.667 35.667-75 63
+-1.333 1.333-3.167 3.5-5.5 6.5s-4 4.833-5 5.5c-1 .667-2.5 1.333-4.5 2s-4.333 1
+-7 1c-4.667 0-9.167-1.833-13.5-5.5S337 184 337 178c0-12.667 15.667-32.333 47-59
+H213l-171-1c-8.667-6-13-12.333-13-19 0-4.667 4.333-11.333 13-20h359
+c-16-25.333-24-45-24-59z"/></svg></span></span></span></span></span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.16454285714285719em;"><span style="top:-2.357em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span><span class="mclose mtight delimcenter" style="top:0em;"><span class="mtight">∥</span></span></span><span class="mpunct mtight">,</span><span class="mord mathdefault mtight">ϵ</span><span class="mclose mtight delimcenter" style="top:0em;"><span class="mtight">)</span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.4101em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord accent mtight"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.714em;"><span style="top:-2.714em;"><span class="pstrut" style="height:2.714em;"></span><span class="mord mtight"><span class="mord mathdefault mtight">e</span></span></span><span style="top:-2.714em;"><span class="pstrut" style="height:2.714em;"></span><span class="accent-body" style="left:-0.17994em;"><span class="overlay mtight" style="height:0.714em;width:0.471em;"><svg width="0.471em" height="0.714em" style="width:0.471em" viewbox="0 0 471 714" preserveaspectratio="xMinYMin"><path d="M377 20c0-5.333 1.833-10 5.5-14S391 0 397 0c4.667 0 8.667 1.667 12 5
+3.333 2.667 6.667 9 10 19 6.667 24.667 20.333 43.667 41 57 7.333 4.667 11
+10.667 11 18 0 6-1 10-3 12s-6.667 5-14 9c-28.667 14.667-53.667 35.667-75 63
+-1.333 1.333-3.167 3.5-5.5 6.5s-4 4.833-5 5.5c-1 .667-2.5 1.333-4.5 2s-4.333 1
+-7 1c-4.667 0-9.167-1.833-13.5-5.5S337 184 337 178c0-12.667 15.667-32.333 47-59
+H213l-171-1c-8.667-6-13-12.333-13-19 0-4.667 4.333-11.333 13-20h359
+c-16-25.333-24-45-24-59z"/></svg></span></span></span></span></span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.16454285714285719em;"><span style="top:-2.357em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathdefault mtight">x</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span><span class="mbin mtight">⋅</span><span class="mord mtight"><span class="mord accent mtight"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.714em;"><span style="top:-2.714em;"><span class="pstrut" style="height:2.714em;"></span><span class="mord mtight"><span class="mord mathdefault mtight">e</span></span></span><span style="top:-2.714em;"><span class="pstrut" style="height:2.714em;"></span><span class="accent-body" style="left:-0.17994em;"><span class="overlay mtight" style="height:0.714em;width:0.471em;"><svg width="0.471em" height="0.714em" style="width:0.471em" viewbox="0 0 471 714" preserveaspectratio="xMinYMin"><path d="M377 20c0-5.333 1.833-10 5.5-14S391 0 397 0c4.667 0 8.667 1.667 12 5
+3.333 2.667 6.667 9 10 19 6.667 24.667 20.333 43.667 41 57 7.333 4.667 11
+10.667 11 18 0 6-1 10-3 12s-6.667 5-14 9c-28.667 14.667-53.667 35.667-75 63
+-1.333 1.333-3.167 3.5-5.5 6.5s-4 4.833-5 5.5c-1 .667-2.5 1.333-4.5 2s-4.333 1
+-7 1c-4.667 0-9.167-1.833-13.5-5.5S337 184 337 178c0-12.667 15.667-32.333 47-59
+H213l-171-1c-8.667-6-13-12.333-13-19 0-4.667 4.333-11.333 13-20h359
+c-16-25.333-24-45-24-59z"/></svg></span></span></span></span></span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.16454285714285719em;"><span style="top:-2.357em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.52em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span>。</li>
+</ul>
+</li>
 <li>主观
 <ul>
 <li>总体印象（OVL）、音频-文本相关性（REL）、MOS（TTS）。</li>
@@ -579,17 +563,14 @@ GPT-2。所有音频数据训练 LDM。</p></li>
 <ul>
 <li>worker: approval rate &gt;= 60%，approvals &gt;= 50。</li>
 <li>每条音频至少10人标注。</li>
-</ul></li>
-</ul></li>
-</ul></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 <table>
-<colgroup>
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-</colgroup>
 <thead>
 <tr>
 <th>任务</th>
@@ -609,16 +590,13 @@ GPT-2。所有音频数据训练 LDM。</p></li>
 <td>text-to-music</td>
 <td>MusicCaps</td>
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEB127b8c51aac5ab3ef1cdba38c8bb69cf?method=download&shareKey=5eee3f5d6be2a236acb9b0afdb9fa878" width="443"></td>
-<td>相较于 -MSD，-Full 效果更好。<br>AudioLDM-M CLAP score 高，可能由于
-conditioned by 同一模型。</td>
+<td>相较于 -MSD，-Full 效果更好。<br>AudioLDM-M CLAP score 高，可能由于 conditioned by 同一模型。</td>
 </tr>
 <tr>
 <td>text-to-speech</td>
 <td>LJSpeech</td>
-<td><img src="https://note.youdao.com/yws/api/personal/file/WEBd9e31aa3da855664bfd630057d3f87f0?method=download&shareKey=e487cd4026f42b788bcb1f602dc65860" width="429"><br>AudioLDM
-2-LJS-Pretrained: 在 GigaSpeech 上预训练 GPT-2。</td>
-<td>主观评价发现 AudioLDM 2-LJS-Pretrained
-在情感、标点符号、语调上有更好的起伏变化。</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEBd9e31aa3da855664bfd630057d3f87f0?method=download&shareKey=e487cd4026f42b788bcb1f602dc65860" width="429"><br>AudioLDM 2-LJS-Pretrained: 在 GigaSpeech 上预训练 GPT-2。</td>
+<td>主观评价发现 AudioLDM 2-LJS-Pretrained 在情感、标点符号、语调上有更好的起伏变化。</td>
 </tr>
 <tr>
 <td>消融实验</td>
@@ -629,30 +607,31 @@ conditioned by 同一模型。</td>
 <tr>
 <td>pooling 下采样倍数的影响</td>
 <td></td>
-<td>LDM
-的重建效果<br><img src="https://note.youdao.com/yws/api/personal/file/WEB8fb851a09d7af5961c25e62e62763c83?method=download&shareKey=c1b338f08badb24d53307e623c91b5ac" width="454"></td>
-<td><span class="math inline">\(\lambda=1\)</span> 时最接近 ground
-truth，<span class="math inline">\(\lambda=2, 4\)</span>
-时差异较小，虽然未保留所有细节，但准确地保留了语义信息。</td>
+<td>LDM 的重建效果<br><img src="https://note.youdao.com/yws/api/personal/file/WEB8fb851a09d7af5961c25e62e62763c83?method=download&shareKey=c1b338f08badb24d53307e623c91b5ac" width="454"></td>
+<td><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>λ</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\lambda=1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">λ</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> 时最接近 ground truth，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>λ</mi><mo>=</mo><mn>2</mn><mo separator="true">,</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">\lambda=2, 4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">λ</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">4</span></span></span></span> 时差异较小，虽然未保留所有细节，但准确地保留了语义信息。</td>
 </tr>
 </tbody>
 </table>
 <ul>
-<li>相较于 AudioLDM，利用 GPT-2、diffusion
-模型，在生成质量、通用性、可懂度方面有提升。</li>
+<li>相较于 AudioLDM，利用 GPT-2、diffusion 模型，在生成质量、通用性、可懂度方面有提升。</li>
 </ul>
-<h1 id="代码">5. 代码</h1>
+<h1 id="代码">5.  代码</h1>
 <ul>
-<li><p><a target="_blank" rel="noopener" href="https://audioldm.github.io/audioldm2">代码、预训练模型、demo（还包含
-Image-to-Audio）</a></p></li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/haoheliu/AudioLDM-training-finetuning">训练代码</a></p></li>
-<li><p><a target="_blank" rel="noopener" href="https://huggingface.co/blog/audioldm2">推理速度优化：采用 Hugging
-Face 🧨 Diffusers</a></p></li>
-<li><p><a target="_blank" rel="noopener" href="https://audioldm.github.io/audioldm2/#gigaspeech">prompt-based
-speaker control</a>
+<li>
+<p><a target="_blank" rel="noopener" href="https://audioldm.github.io/audioldm2">代码、预训练模型、demo（还包含 Image-to-Audio）</a></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="https://github.com/haoheliu/AudioLDM-training-finetuning">训练代码</a></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="https://huggingface.co/blog/audioldm2">推理速度优化：采用 Hugging Face 🧨 Diffusers</a></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="https://audioldm.github.io/audioldm2/#gigaspeech">prompt-based speaker control</a><br>
 <img src="https://note.youdao.com/yws/api/personal/file/WEB222628bffd4881e9e021ee704e717f01?method=download&shareKey=4176bdbdfc7c99d935ccef6336e1d1c5" width="454"></p>
 <pre class="line-numbers language-none"><code class="language-none">audioldm2 -t &quot;A female reporter is speaking full of emotion&quot; --transcription &quot;Wish you have a good day&quot;
-audioldm2 -t &quot;A female reporter is speaking&quot; --transcription &quot;Wish you have a good day&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
+audioldm2 -t &quot;A female reporter is speaking&quot; --transcription &quot;Wish you have a good day&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+</li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
