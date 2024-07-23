@@ -360,7 +360,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-07-22
+                    2024-07-23
                 </div>
                 
 
@@ -392,12 +392,15 @@
     }
 </style>
 <ul>
-<li>论文：SpeechTeam T. FunAudioLLM: Voice Understanding and Generation
-Foundation Models for Natural Interaction Between Humans and LLMs[J].
-arXiv preprint arXiv:2407.04051, 2024.</li>
-<li>作者：阿里 通义语音组</li>
-<li>代码：https://github.com/FunAudioLLM</li>
-<li>Demo：https://fun-audio-llm.github.io</li>
+<li><p>论文：SpeechTeam T. FunAudioLLM: Voice Understanding and
+Generation Foundation Models for Natural Interaction Between Humans and
+LLMs[J]. arXiv preprint arXiv:2407.04051, 2024.</p>
+<p>Du Z, Chen Q, Zhang S, et al. CosyVoice: A Scalable Multilingual
+Zero-shot Text-to-speech Synthesizer based on Supervised Semantic
+Tokens[J]. arXiv preprint arXiv:2407.05407, 2024.</p></li>
+<li><p>作者：阿里 通义语音组</p></li>
+<li><p>代码：<a target="_blank" rel="noopener" href="https://github.com/FunAudioLLM" class="uri">https://github.com/FunAudioLLM</a></p></li>
+<li><p>Demo：<a target="_blank" rel="noopener" href="https://fun-audio-llm.github.io" class="uri">https://fun-audio-llm.github.io</a></p></li>
 </ul>
 <h1 id="sensevoice">1. SenseVoice</h1>
 <p><img src="https://note.youdao.com/yws/api/personal/file/WEB0c0a94f4c962a334f2007ab364e5a550?method=download&shareKey=101e5efbd0b1ac52818f6b95f2b11456" width="579"></p>
@@ -500,12 +503,24 @@ learning、跨语种音色克隆。<font color="red">提示语音
 <li><p>CosyVoice-sft-300M：在 7 个多语种说话人上进行了微调。</p></li>
 </ul>
 <h2 id="系统结构">2.2. 系统结构</h2>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB9d38a3b2013078ba227731cff3fc58f1?method=download&shareKey=b7b04a2c88bd398ff43f6a53b6cb9a3d" width="561"></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB9d38a3b2013078ba227731cff3fc58f1?method=download&shareKey=b7b04a2c88bd398ff43f6a53b6cb9a3d" width="561"><img src="https://note.youdao.com/yws/api/personal/file/WEBc99c2e322c6bf43a70a95ef359b0fac7?method=download&shareKey=2cb78920922c4779f145ce7d2b83854a" width="147"></p>
+<p>* <font color="green">CosyVoice 论文中，文本经过 BPE tokenizer
+后、输入 LLM 前，会经过额外的 text encoder 模块，用于对齐语音、文本
+token 的语义空间。在训练集文本上训练 word sentence-piece 模型，词典大小
+4000。</font></p>
+<p>* LLM 建模语义内容和韵律。说话人 embedding：x-vector，从<a target="_blank" rel="noopener" href="https://github.com/alibaba-damo-academy/3D-Speaker/tree/main/egs/3dspeaker/sv-cam++">预训练的voice-print
+模型</a>中提取。</p>
 <p>* <font color="green">flow matching: ordinary differential equation
-based (ODE-based) diffusion model。</font></p>
+based (ODE-based) diffusion model。</font><font color="red">相较于传统
+diffusion 模型，加速了训练、推理。</font></p>
 <p>* <font color="red">HiFTNet：支持流式生成。</font></p>
 <p>*虚线模块是可选的，只用于特定的应用。</p>
 <h2 id="离散-token">2.3. 离散 token</h2>
+<ul>
+<li><a href="https://nanyang2015.github.io/blog/llm/yin-pin-sheng-cheng/lun-wen/audiopalm">AudioPaLM</a>
+表明在语音翻译、ASR 任务上，采用辅助的 ASR loss 量化得到的离散
+token，相较于原始 k-means 聚类，性能更好。</li>
+</ul>
 <div class="green-text">
 <ul>
 <li><p>初步实验表明，语音 tokenizer
@@ -516,12 +531,18 @@ based (ODE-based) diffusion model。</font></p>
 <li>语义 token，如 HuBERT。</li>
 </ul>
 <p>均无监督或自监督训练，因而与语义关联较少，导致合成不稳定，容易受数据噪声影响，需要大量干净的训练数据。</p></li>
-<li><p>引入有监督语义表示。采用预训练的 SenseVoice-Large，在 encoder
-第6层后插入向量量化，单码本，大小 4096，1token / 20ms。提取的 token
-和语音内容、副语言信息强相关。由于监督训练，增强了对数据噪声的鲁棒性、不依赖于干净的语音训练集。</p></li>
+<li><p>本文提出 supervised semantic speech (<span class="math inline">\(S^3\)</span>) tokenizer。采用预训练的
+SenseVoice-Large，在 encoder 第6层后插入向量量化，单码本，大小
+4096，1token / 20ms。提取的 token
+和语音内容、副语言信息强相关。由于监督训练，增强了对数据噪声的鲁棒性、不依赖于干净的语音训练集。消除了文本转音素的需求。</p></li>
 </ul>
 </div>
 <ul>
+<li>量化 <span class="math display">\[\mu_l=\operatorname{VQ}\left(\mathbf{h}_l,
+C\right)=\arg \min _{\mathbf{c}_n \in
+C}\left\|\mathbf{h}_l-\mathbf{c}_n\right\|_2\]</span> 其中，<span class="math inline">\(\mathbf{h}_l\)</span> 为第 <span class="math inline">\(l\)</span> 帧的隐层表示，<span class="math inline">\(C\)</span> 为 codebook。</li>
+<li>训练时，codebook embeddings 采用指数移动平均更新。<span class="math display">\[\mathbf{c}_{\mu_l}:=\alpha
+\mathbf{c}_{\mu_l}+(1-\alpha) \mathbf{h}_l\]</span> 其中 <span class="math inline">\(\alpha\)</span> 为预定义的衰减系数。</li>
 <li>之后加入额外的位置 embedding，增强时序信息。</li>
 </ul>
 <p><img src="https://note.youdao.com/yws/api/personal/file/WEB29d94980872572a4daa401a86fa98ad8?method=download&shareKey=0e7868a9aaf19f0df6f97e2c193aa3e4" width="402"></p>
@@ -542,18 +563,24 @@ based (ODE-based) diffusion model。</font></p>
 </div>
 <h2 id="训练">2.5. 训练</h2>
 <ul>
+<li><p>text encoder + LLM</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB2f2ec813d13030de7b60025f15bea1f7?method=download&shareKey=3b11e7f4d2d9af2379d98ba3a9bb5533" width="277"></p></li>
 <li><p>flow matching</p>
 <ul>
 <li>估计条件概率 <span class="math inline">\(P\left(S \mid X, v,
 S_{ref}\right)\)</span>，其中 <span class="math inline">\(X\)</span>
-为语音 token，<span class="math inline">\(v\)</span> 为说话人
-embedding，<span class="math inline">\(S_{ref}\)</span> 为参考语音的 mel
+为语音 token（含提示语音 token + 生成语音 token），<span class="math inline">\(v\)</span> 为说话人 embedding，<span class="math inline">\(S_{ref}\)</span> 为参考语音的 mel
 谱，用于进一步增强音色、声学环境一致性，<span class="math inline">\(S\)</span> 为目标语音的 mel 谱。</li>
+<li>采用 classifier-free guidance、cosine scheduler、masked
+conditions。</li>
 </ul></li>
 <li><p>zero-shot in-context learning
 <img src="https://note.youdao.com/yws/api/personal/file/WEB5ec8723efcfbae568059bce352f32142?method=download&shareKey=e0d015b5257e32b749fb0db1433622b6" width="567"></p>
+<p>* 其中，灰色方块表示在文本 token 和语音 token 间插入的 “turn of
+speech” token。</p>
 <ul>
-<li>若提示语音、输入文本同语种，拼接，作为 AR 模型输入。</li>
+<li>若提示语音、输入文本同语种，拼接，作为 AR 模型输入，将提示语音 token
+视为已经生成的。</li>
 <li>若提示语音、输入文本语种不同，丢弃源语种的提示文本、音频，避免源语种的韵律影响目标语种。</li>
 <li>提示语音对应的文本可以人工标注或 ASR。</li>
 </ul></li>
@@ -580,9 +607,11 @@ embedding，<span class="math inline">\(S_{ref}\)</span> 为参考语音的 mel
 Paraformer；<br>SS: 说话人相似度，ERes2Net
 提取的提示语音、生成语音的说话人 embedding 的余弦相似度；<br>AR
 模型：随机采样解码，采用5个随机种子 0, 7, 42, 123, 1337
-分别合成；<br><font color="green">ASR re-ranking。</font></td>
+分别合成；<br><font color="green">ASR re-ranking</font></td>
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEB740922900c4ff0366461bf1f8e1d9648?method=download&shareKey=568eb8302a5fc251021ec213612b9581" width="572"><br><img src="https://note.youdao.com/yws/api/personal/file/WEB03bb668c3431023b32db28361436fbcc?method=download&shareKey=13f0a9b0e8f2a6b7ecf4b4c8d1e7f4dc" width="568"></td>
-<td><font color="green">ChatTTS 由于 speaker
+<td>CosyVoice 合成的语音达到了和人类水平相近的 WER /可比的
+CER，说话人相似度更高；<br>ASR re-ranking
+显著增强了内容一致性；<br><font color="green">ChatTTS 由于 speaker
 leaking，有更多的插入、删除错误。</font></td>
 </tr>
 <tr>
@@ -590,6 +619,15 @@ leaking，有更多的插入、删除错误。</font></td>
 只输入文本。</td>
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEB5fcce28971440a9015c783612661d57d?method=download&shareKey=42396e691fdcf233e57bbb8cbd814707" width="570"></td>
 <td></td>
+</tr>
+<tr>
+<td>文本 token、语音 token、训练集+模型规模 的影响</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEB17c53b753ec1e5b2d80f485e3892c2eb?method=download&shareKey=37cdba0cc8415ba5e723278b3f45a029" width="572"><br>Exp-x-LibriTTS:
+CosyVoice 论文中在 LibriTTS 数据集上训练的小模型</td>
+<td>对比 Exp-1、Exp-2，<font color="red">相较于 HuBERT，采用 <span class="math inline">\(S^3\)</span>
+tokenizer，合成语音的内容一致性显著提升；</font><br>对比
+Exp-1、Exp-2、Exp-3，<font color="red">文本、语音 tokenizer
+对内容一致性都很重要</font>，但几乎不影响说话人相似度。</td>
 </tr>
 <tr>
 <td><span class="math inline">\(S^3\)</span> 语音 tokenizer
@@ -600,9 +638,11 @@ leaking，有更多的插入、删除错误。</font></td>
 <tr>
 <td>用于生成数据</td>
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEBe59ae86c18b0722fa99a1fc14c566231?method=download&shareKey=8ed80287f6521063ffc63254546ff6da" width="576"></td>
-<td>添加 <font color="green">MLS
+<td><font color="red">仅在合成数据上训练，可以达到原始 Librispeech
+训练集可比的 ASR 性能；<br>结合两者，ASR
+性能显著提高；<br>添加<font color="green"> MLS
 训练集文本</font>的合成语音，显著提高了识别效果。可能表明对于
-ASR，文本丰富度的重要性高于语音时长。</td>
+ASR，文本丰富度的重要性高于语音时长。</font></td>
 </tr>
 </tbody>
 </table>
@@ -687,7 +727,7 @@ ASR，文本丰富度的重要性高于语音时长。</td>
                     <div class="publish-info">
                             <span class="publish-date">
                                 <i class="far fa-clock fa-fw icon-date"></i>2024-07-22
-                                <i class="far fa-edit fa-fw icon-date"></i>2024-07-22
+                                <i class="far fa-edit fa-fw icon-date"></i>2024-07-23
                             </span>
                         <span class="publish-author">
                             
