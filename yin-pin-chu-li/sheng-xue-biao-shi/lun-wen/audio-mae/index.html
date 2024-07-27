@@ -1,0 +1,1150 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Audio-MAE, 梦园">
+    <meta name="description" content="论文：Huang P Y, Xu H, Li J, et al. Masked autoencoders that
+listen[J]. Advances in Neural Information Processing Systems,">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>Audio-MAE | 梦园</title>
+    <link rel="icon" type="image/png" href="/blog/favicon.png">
+    
+
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/blog/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/blog/css/my.css">
+<link rel="stylesheet" type="text/css" href="/blog/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/blog/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/blog/css/post.css">
+
+
+
+
+    
+
+
+
+    <script src="/blog/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">梦园</div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/blog/" class="waves-effect waves-light">
+      
+      <i class="fas fa-list" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/blog/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/blog/about">
+          
+          <i class="fas fa-user-circle" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>我</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/blog/words">
+          
+          <i class="fas fa-pen" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>文字</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/blog/books">
+          
+          <i class="fas fa-book" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>书</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/blog/videos">
+          
+          <i class="fas fa-film" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>视频</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/blog/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">梦园</div>
+        <div class="logo-desc">
+            
+            愿，彼此相伴，走过流年
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/blog/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-list"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/blog/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  style="background:  ;" >
+              
+                <li>
+
+                  <a href="/blog/about " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-user-circle" style="position: absolute;left:50px" ></i>
+			      
+		          <span>我</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/blog/words " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-pen" style="position: absolute;left:50px" ></i>
+			      
+		          <span>文字</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/blog/books " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-book" style="position: absolute;left:50px" ></i>
+			      
+		          <span>书</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/blog/videos " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-film" style="position: absolute;left:50px" ></i>
+			      
+		          <span>视频</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+<script src="/blog/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/blog/';
+            }
+        }
+    })();
+</script>
+
+
+<div class="bg-cover pd-header about-cover">
+    <div class="container">
+    <div class="row">
+    <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l1">
+        <div class="brand">
+            <div class="title">
+                
+                愿，彼此相伴，走过流年
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <style>
+    /* 随视窗调整大小、滚动 */
+    #toc-content {
+        height: calc(100vh - 200px);
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="pd-header post-cover">
+                <div class="container" style="right: 0px;left: 0px;">
+                    <div class="row">
+                        <div class="col s12 m12 l12">
+                            <div class="brand">
+                                <h1 class="description center-align post-title">Audio-MAE</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tag-cate">
+                <div class="right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/blog/categories/%E9%9F%B3%E9%A2%91%E5%A4%84%E7%90%86/" class="post-category">
+                                音频处理
+                            </a>
+                        
+                            <a href="/blog/categories/%E9%9F%B3%E9%A2%91%E5%A4%84%E7%90%86/%E5%A3%B0%E9%9F%B3%E8%A1%A8%E7%A4%BA/" class="post-category">
+                                声音表示
+                            </a>
+                        
+                            <a href="/blog/categories/%E9%9F%B3%E9%A2%91%E5%A4%84%E7%90%86/%E5%A3%B0%E9%9F%B3%E8%A1%A8%E7%A4%BA/%E8%AE%BA%E6%96%87/" class="post-category">
+                                论文
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2024-07-27
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2024-07-27
+                </div>
+                
+
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/blog/libs/prism/prism.min.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p>论文：Huang P Y, Xu H, Li J, et al. Masked autoencoders that
+listen[J]. Advances in Neural Information Processing Systems, 2022, 35:
+28708-28720.</p>
+<p>代码、模型：<a target="_blank" rel="noopener" href="https://github.com/facebookresearch/AudioMAE" class="uri">https://github.com/facebookresearch/AudioMAE</a></p>
+<ul>
+<li>作者：来自 Meta AI、Carnegie Mellon University</li>
+<li>发表时间：2022.07</li>
+<li>创新点
+<ul>
+<li><a href="#系统结构">系统结构</a></li>
+<li><font color="red">减小 self-attention 计算量：encoder
+只处理很小部分的未 mask 的 patch、local attention。</font></li>
+</ul></li>
+<li>性能：在音频、语音分类任务上实现了 SOTA。</li>
+</ul>
+<h1 id="系统结构">1. 系统结构</h1>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBc516d2e508e201291956025406d346db?method=download&shareKey=62c36a374c6394382237c5b1a26af3de" width="713"></p>
+<p>* patch embedding：送入 encoder、decoder 前均加 fixed 正弦位置
+embedding。</p>
+<p>* decoder 处理的 mask patch embedding 是可学习的。</p>
+<h1 id="实验">2. 实验</h1>
+<ul>
+<li>音频：16kHz、帧长 25ms、帧移 10ms、FBANK 128。</li>
+<li>encoder：12 层 ViT-Base。</li>
+<li>decoder：16 层 Transformer。</li>
+<li>预训练
+<ul>
+<li>数据集：AudioSet-2M，10s。随机采样开始时间、循环，得到 10s
+音频。随机抖动音频幅值至多 <span class="math inline">\(\pm 6
+\mathrm{~dB}\)</span>。不采用频谱增强，如 Specaugment、<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1905.04899">CutMix</a>、<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1710.09412">mixup</a>，因为发现在预训练阶段无收益或更差。</li>
+</ul></li>
+<li>微调
+<ul>
+<li>数据集：AudioSet-2M（加权采样来均衡类别）、AudioSet-20K（类别均衡的）、ESC-50、Speech
+Commands（关键词检测）、VoxCeleb (SID，说话人识别)。</li>
+<li><font color="red">mask：用于正则化、减少计算量。</font></li>
+<li>丢弃预训练的 decoder。average pooling + 线性层分类。</li>
+<li>优化目标：当数据集为 multi-label 或采用 mixup 数据增强时，采用不带
+label smoothing 的 BCE loss。</li>
+</ul></li>
+</ul>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB8d44422b421b13e0aea8542cab2a7094?method=download&shareKey=9f37f47ff4907317aebae8a0c4c71b26" width="573"></p>
+<table>
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr>
+<th>任务</th>
+<th>结果</th>
+<th>分析</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mask 策略</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEB9c1743c6bcf2da26f4656404b23ee4b8?method=download&shareKey=0743aa5adbffae41c7b1a82607f11bf0" width="694"><br><img src="https://note.youdao.com/yws/api/personal/file/WEBbae3ff4a743b8043628d398c62da1b9e?method=download&shareKey=c7f92a4625ad3e6ff8b3479643d994c3" width="722"><br><img src="https://note.youdao.com/yws/api/personal/file/WEB42c63d532af87f8d243a56e739f14872?method=download&shareKey=0d091e3cc1c203e3dd56e43a2dcda5cd" width="709"></td>
+<td>1. mask 比例：<font color="red">预训练</font>采用高 mask 比例
+<font color="red">80%</font>，因为语音频谱、图像的高冗余特性；<font color="red">微调采用
+30%</font>。<br>2. mask 方式：<font color="red">预训练采用非结构化随机
+mask；微调时采用时间+频率 mask</font>。<br>3.
+预训练重建语谱图，采用非结构化随机 mask
+更容易，模型可以根据附近的上下文预测。而结构化 mask
+可能导致重建的语音单词缺失，如图 6e-3。<br>4. 随 mask 比例增加，结构化
+mask 性能下降，可能由于任务变得过于困难。</td>
+</tr>
+<tr>
+<td>消融实验</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEB63452a24a08d4e8ca634842f50ec240f?method=download&shareKey=bfb24d23d4f49b5d0ff84218e56afed5" width="722"><br>(c)
+除少量的最后几层采用全局 attention 外，其它采用 local
+attention。<br>(e) decoder width 指 embedding
+维度。<br><img src="https://note.youdao.com/yws/api/personal/file/WEB05f2e146e741b4807ea1451dde0cafcb?method=download&shareKey=c616958be9a08e2f75ed1a63ba7f1cdd" width="257"><br><img src="https://note.youdao.com/yws/api/personal/file/WEB05a4e24e9e02a949dfb3ef013d2710ba?method=download&shareKey=cb5f035f4e319fd35056892d4053f3be" width="310"></td>
+<td>(a) patch：卷积
+kernel=stride=(16,16)，<font color="red">不重叠</font>。<br>相较于 AST
+采用重叠 patch 提高终端任务的性能，Audio-MAE
+中未观察到性能提升，<font color="red">可能由于自监督训练中
+short-cuts（捷径）</font>。<br>(b) encoder 大小：采用
+ViT-B，性能与开销的权衡。<br>采用更多域内数据微调时，不同模型大小间的性能差异可以显著减小。<br>(c)
+decoder attention 机制：采用 <font color="red">shifted local
+attention</font>。相邻层间向左上移 50%。<br>如图 5 所示，采用 local
+attention 可以更好地重建元音的谐波结构。<br>(f)
+预训练性能随数据量增加而单调提升。<br>类别是否均衡对预训练影响不大。<br>(h)
+领域外预训练（如 ImageNet）对 Audio-MAE 有损，可能由于领域偏差。</td>
+</tr>
+<tr>
+<td>预训练目标</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEB375be07b2ddba64561f45d124aa98076?method=download&shareKey=09d1c2e5d64d44a3ee902eb8db614a6e" width="325"></td>
+<td><font color="red">单独采用重建损失即可，采用或结合对比损失无性能收益。</font></td>
+</tr>
+<tr>
+<td>对比 SOTA</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEB173f7f39379f3d4ea111b7451f023db0?method=download&shareKey=bd192642d652ba52ff0dfebd7b95c9cc" width="714"><br>*
+SUPERB
+[53]：不完全可比，底层预训练模型未端到端微调。<br>采用不同的随机种子运行3次。</td>
+<td></td>
+</tr>
+<tr>
+<td>音频重建质量</td>
+<td>图7</td>
+<td>相较于音乐、声音事件有相对可预测的谱图模式，如跨时域的重复
+tempos（音乐）、跨频域的谐波，语音重建更具挑战性。</td>
+</tr>
+</tbody>
+</table>
+<h1 id="其它">3. 其它</h1>
+<ul>
+<li><p>展望：将 Audio-MAE decoder 用于 Voice over IP (VoIP)
+应用中的丢包重建（Packet Loss
+Concealment，PLC）、语音频带扩展等任务。</p></li>
+<li><p>局限性：数据集规模，音频持续时长（音频中的长时依赖性
+哪些场景存在？），transformer 建模长音频、高维数据计算量大。</p></li>
+<li><p>Transformer 用于长序列任务，减小 attention 计算量的方式</p>
+<ul>
+<li>Swin-Transformer：shifted local attention</li>
+<li>MViT [20]：分层 Transformers，pooling attention</li>
+</ul></li>
+<li><p>音频自监督训练</p>
+<table>
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr>
+<th>类别</th>
+<th></th>
+<th>模型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>输入</td>
+<td>原始波形</td>
+<td>wav2vec 2.0、data2vec</td>
+</tr>
+<tr>
+<td></td>
+<td>帧级特征</td>
+<td>HuBERT、AV-HuBERT、<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2110.07313">Conformer-Based Self-Supervised
+Learning for Non-Speech Audio Tasks [37]</a></td>
+</tr>
+<tr>
+<td></td>
+<td>语谱图 patch</td>
+<td>SS-AST [18]、MAE-AST</td>
+</tr>
+<tr>
+<td>优化目标</td>
+<td>对比损失</td>
+<td>wav2vec 2.0、HuBERT</td>
+</tr>
+<tr>
+<td></td>
+<td>预测/重建</td>
+<td>data2vec、AV-HuBERT、[37]、SS-AST</td>
+</tr>
+</tbody>
+</table></li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <i class="fas fa-exclamation-circle"></i>
+            <span>
+                本文不允许转载。
+            </span>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/blog/yin-pin-chu-li/sheng-xue-biao-shi/lun-wen/audio-mae/">
+                    <div class="card-content">
+                        <span class="card-title">Audio-MAE</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-07-27
+                                <i class="far fa-edit fa-fw icon-date"></i>2024-07-27
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/blog/categories/%E9%9F%B3%E9%A2%91%E5%A4%84%E7%90%86/" class="post-category">
+                                    音频处理
+                                </a>
+                            
+                            <a href="/blog/categories/%E9%9F%B3%E9%A2%91%E5%A4%84%E7%90%86/%E5%A3%B0%E9%9F%B3%E8%A1%A8%E7%A4%BA/" class="post-category">
+                                    声音表示
+                                </a>
+                            
+                            <a href="/blog/categories/%E9%9F%B3%E9%A2%91%E5%A4%84%E7%90%86/%E5%A3%B0%E9%9F%B3%E8%A1%A8%E7%A4%BA/%E8%AE%BA%E6%96%87/" class="post-category">
+                                    论文
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/blog/yu-yin/yu-yin-shi-bie/lun-wen/seed-asr/">
+                    <div class="card-content">
+                        <span class="card-title">Seed-ASR</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-07-27
+                                <i class="far fa-edit fa-fw icon-date"></i>2024-07-27
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/" class="post-category">
+                                    语音
+                                </a>
+                            
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/" class="post-category">
+                                    语音识别
+                                </a>
+                            
+                            <a href="/blog/categories/%E8%AF%AD%E9%9F%B3/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/%E8%AE%BA%E6%96%87/" class="post-category">
+                                    论文
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('50')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE' || selection.getRangeAt(0).commonAncestorContainer.nodeName === 'CODE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: 梦园<br />'
+            + '文章作者: nanyang<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/blog/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/blog/libs/prism/prism.min.js"></script>
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/blog/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/blog/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/blog/libs/codeBlock/codeShrink.js"></script>
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/blog/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('6'),
+            headingSelector: 'h1, h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    });
+</script>
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/blog/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="5001011615"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/blog/libs/aplayer/APlayer.min.js"></script>
+<script src="/blog/libs/aplayer/Meting.min.js"></script>
+
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2019-2024</span>
+            
+            <a href="/blog/about" target="_blank">nanyang</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+            <br>
+            
+            
+            
+            
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link ">
+    <a href="https://github.com/NanYANG2015" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:2271348390@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=2271348390" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 2271348390" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/blog/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/blog/libs/materialize/materialize.min.js"></script>
+    <script src="/blog/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/blog/libs/aos/aos.js"></script>
+    <script src="/blog/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/blog/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/blog/js/matery.js"></script>
+
+    
+        <!-- <script src='https://unpkg.com/mermaid@latest/dist/mermaid.min.js'></script> -->
+        <script src='/blog/libs/mermaid/mermaid.min.js'></script>
+        <script>
+          if (window.mermaid) {
+            mermaid.initialize({theme: 'neutral'});
+          }
+        </script>
+    
+
+    
+
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+    
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/blog/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

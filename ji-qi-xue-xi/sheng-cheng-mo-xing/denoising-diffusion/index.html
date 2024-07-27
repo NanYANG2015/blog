@@ -348,7 +348,7 @@ models[J]. Advances in neural information processing sys">
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-07-11
+                    2024-07-23
                 </div>
                 
 
@@ -419,6 +419,10 @@ q\left(\mathbf{x}_t \mid \mathbf{x}_{t-1}\right)\]</span>
 \mathbf{x}_{t-1}+\epsilon_t\right) = \left(1-\beta_t\right)
 \sigma^2+\beta_t\)</span>，其中 <span class="math inline">\(\mathbf{x}_{t-1}\)</span> 的方差为 <span class="math inline">\(\sigma^2\)</span>。</p>
 <p>若原始数据的方差为1，则所有 latents 的方差保持 1 不变。</p>
+<p>可以理解为对 <span class="math inline">\(t-1\)</span> 时刻的数据
+<span class="math inline">\(\mathbf{x}_{t-1}\)</span>
+进行一定程度的“确定性”变换得到 <span class="math inline">\(\sqrt{1-\beta_t}
+\mathbf{x}_{t-1}\)</span>，再在每个维度上独立地添加均值为0、方差为 <span class="math inline">\(\beta_t\)</span> 的高斯噪声。其中，<span class="math inline">\({1-\beta_t}\)</span> 决定了 <span class="math inline">\(\mathbf{x}_t\)</span> 中 <span class="math inline">\(\mathbf{x}_{t-1}\)</span> 所占的比例，<span class="math inline">\(\beta_t\)</span> 决定噪声比例。</p>
 </blockquote>
 <p>令 <span class="math inline">\(\alpha_t:=1-\beta_t\)</span>，<span class="math inline">\(\bar{\alpha}_t:=\prod_{s=1}^t
 \alpha_s\)</span>，则 <span id="Eq4"><span class="math display">\[
@@ -440,18 +444,17 @@ q\left(\mathbf{x}_t \mid
 \sqrt{\alpha_t \alpha_{t-1} \cdots \alpha_{t-i+1}} \epsilon_{t-i}
 \end{aligned} \]</span> <span class="math inline">\(\mathbb{E}\left[\mathbf{x}_t\right]=\sqrt{\bar{\alpha}_t}
 \mathbb{E}\left[\mathbf{x}_0\right]\)</span></p>
-<font color="green">由于 <span class="math inline">\(\beta_t\)</span>
+<p><font color="green">由于 <span class="math inline">\(\beta_t\)</span>
 较小，<span class="math inline">\(\mathbb{E}\left[\mathbf{x}_0\right]\)</span>
 接近0时，才能使 <span class="math inline">\(\mathbb{E}\left[\mathbf{x}_T\right]\)</span>
-接近0？
-<span class="math display">\[\begin{aligned}
+接近0？ <span class="math display">\[\begin{aligned}
 \operatorname{Var}\left(\mathbf{x}_t\right)&amp;=\bar{\alpha}_t
 \operatorname{Var}\left(\mathbf{x}_0\right)+ \sum_{i=0}^{t-1} \alpha_t
 \alpha_{t-1} \cdots \alpha_{t-i+1}\beta_{t-i} \\ &amp;= \bar{\alpha}_t +
 (1-\alpha_t) + \alpha_t(1-\alpha_{t-1}) +
 \alpha_t\alpha_{t-1}(1-\alpha_{t-2}) + \cdots + \alpha_t\alpha_{t-1}
 \cdots \alpha_2(1-\alpha_1) \\ &amp;= 1 \end{aligned}\]</span>
-<p>存在的问题：哪里推导得不对？</p></font><p></p>
+存在的问题：哪里推导得不对？</font></p>
 </blockquote>
 <p>训练：通过 Variational Inference 训练，优化变分下界 <span class="math display">\[ \mathbb{E}\left[-\log
 p_\theta\left(\mathbf{x}_0\right)\right] \leq \mathbb{E}_q\left[-\log
