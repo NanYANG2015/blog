@@ -7,10 +7,12 @@
     <meta name="keywords" content="AudioLM, 梦园">
     <meta name="description" content="
 作者：Google, 2022.09。
-功能：输入 prompt 音频（3s），生成延续，在语法、语义上连贯，同时保持说话人的音色、韵律、录音环境。还能扩展到钢琴音乐延续。
+功能：输入 prompt
+音频（3s），生成延续，在语法、语义上连贯，同时保持说话人的音色、韵律、录音环境。还能扩展到钢琴音乐延续。
 创新点
 
-音频表示同时采用语义 token、声学 token，兼">
+音频表示同时采用语义 token、声学
+">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -379,109 +381,129 @@
             <div id="articleContent">
                 <ul>
 <li>作者：Google, 2022.09。</li>
-<li><font color="red">功能：输入 prompt 音频（3s），生成延续，在语法、语义上连贯，同时保持说话人的音色、韵律、录音环境。还能扩展到钢琴音乐延续。</font></li>
+<li><font color="red">功能：输入 prompt
+音频（3s），生成延续，在语法、语义上连贯，同时保持说话人的音色、韵律、录音环境。还能扩展到钢琴音乐延续。</font></li>
 <li>创新点
 <ul>
-<li>音频表示同时采用语义 token、声学 token，兼顾了长时结构的一致性（如语音中的语法、语义，音乐中的旋律、和弦、节奏）、高合成质量。</li>
-<li>采用3阶段 decoder-only Transformer LM，分别建模语义、粗粒度声学表示、细粒度声学表示。每个阶段的 token 序列长度更小。</li>
-</ul>
-</li>
+<li>音频表示同时采用语义 token、声学
+token，兼顾了长时结构的一致性（如语音中的语法、语义，音乐中的旋律、和弦、节奏）、高合成质量。</li>
+<li>采用3阶段 decoder-only Transformer
+LM，分别建模语义、粗粒度声学表示、细粒度声学表示。每个阶段的 token
+序列长度更小。</li>
+</ul></li>
 <li>优点
 <ul>
 <li>不需要带标注的训练音频。</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h1 id="系统结构">1.  系统结构</h1>
+<h1 id="系统结构">1. 系统结构</h1>
 <ul>
-<li>音频表示：离散 token<br>
-语义 token：采用自监督表示学习 w2v-BERT，表征局部内容、长时结构；<br>
-声学 token：采用 neural audio codec SoundStream，实现高质量的合成。<br>
+<li>音频表示：离散 token 语义 token：采用自监督表示学习
+w2v-BERT，表征局部内容、长时结构； 声学 token：采用 neural audio codec
+SoundStream，实现高质量的合成。
 <img src="https://note.youdao.com/yws/api/personal/file/WEB7e9ed734208fcc5c20f2e283870071c9?method=download&shareKey=48506717ee8cd986aeb067812c47179c" width="584"></li>
 <li>w2v-BERT XL 0.6B
 <ul>
 <li>基于 Conformer，MLM loss + 对比 loss。40ms 帧率。</li>
-<li>中间层表示（MLM 第7层）k-means 聚类。聚类前进行归一化（各维 0均值、单位方差）可以显著地提高音素区分性。</li>
-</ul>
-</li>
+<li>中间层表示（MLM 第7层）k-means 聚类。聚类前进行归一化（各维
+0均值、单位方差）可以显著地提高音素区分性。</li>
+</ul></li>
 <li>SoundStream
 <ul>
-<li>residual vector quantizer (RVQ) 由 Q 个词表为 N 的量化器组成。16kHz、20ms 帧率，比特率为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>50</mn><mo>∗</mo><mi>Q</mi><mo>∗</mo><msub><mo><mi>log</mi><mo>⁡</mo></mo><mn>2</mn></msub><mi>N</mi><mrow><mi mathvariant="normal">b</mi><mi mathvariant="normal">p</mi><mi mathvariant="normal">s</mi></mrow></mrow><annotation encoding="application/x-tex">50 * Q * \log_{2}{N} \mathrm{bps}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">5</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">Q</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.93858em;vertical-align:-0.24414em;"></span><span class="mop"><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.20696799999999996em;"><span style="top:-2.4558600000000004em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.24414em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10903em;">N</span></span><span class="mord"><span class="mord mathrm">b</span><span class="mord mathrm">p</span><span class="mord mathrm">s</span></span></span></span></span>。</li>
+<li>residual vector quantizer (RVQ) 由 Q 个词表为 N
+的量化器组成。16kHz、20ms 帧率，比特率为 <span class="math inline">\(50
+* Q * \log_{2}{N} \mathrm{bps}\)</span>。</li>
 <li>重建损失 + 对抗损失，端到端训练。</li>
-</ul>
-</li>
+</ul></li>
 <li>decoder-only Transformer 自回归 LM。</li>
 </ul>
-<h2 id="3-阶段建模">1.1.  3 阶段建模</h2>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB5478fde1b8235d245d20aa9cfba1f22e?method=download&shareKey=b38bac8bd4dceef3a7d5dd174c1b2a58" width="1184">
+<h2 id="阶段建模">1.1. 3 阶段建模</h2>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB5478fde1b8235d245d20aa9cfba1f22e?method=download&shareKey=b38bac8bd4dceef3a7d5dd174c1b2a58" width="1184"></p>
 <p>3 个 decoder-only Transformer。</p>
-<ol>
-<li>
-<p>语义建模：自回归预测语义 token <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi><mrow><mo fence="true">(</mo><msub><mi>z</mi><mi>t</mi></msub><mo>∣</mo><msub><mi>z</mi><mrow><mo>&lt;</mo><mi>t</mi></mrow></msub><mo fence="true">)</mo></mrow></mrow><annotation encoding="application/x-tex">p\left(z_t \mid z_{&lt;t}\right)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">p</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.04398em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∣</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.04398em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mrel mtight">&lt;</span><span class="mord mathdefault mtight">t</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.17737em;"><span></span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;">)</span></span></span></span></span>。</p>
-</li>
-<li>
-<p>粗声学建模：以语义 token 为条件，只建模粗声学 token（前 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>Q</mi><mo mathvariant="normal">′</mo></msup></mrow><annotation encoding="application/x-tex">Q^{\prime}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.946332em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault">Q</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.751892em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span> 个量化器），恢复说话人、录音环境等声学特性。token 序列为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo fence="true">(</mo><msub><mi>z</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>z</mi><mn>2</mn></msub><mo separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>z</mi><msub><mi>T</mi><mi>S</mi></msub></msub><mo separator="true">,</mo><msubsup><mi>y</mi><mn>1</mn><mn>1</mn></msubsup><mo separator="true">,</mo><msubsup><mi>y</mi><mn>1</mn><mn>2</mn></msubsup><mo separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msubsup><mi>y</mi><mn>1</mn><msup><mi>Q</mi><mo mathvariant="normal">′</mo></msup></msubsup><mo separator="true">,</mo><msubsup><mi>y</mi><mn>2</mn><mn>1</mn></msubsup><mo separator="true">,</mo><msubsup><mi>y</mi><mn>2</mn><mn>2</mn></msubsup><mo separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><mo separator="true">,</mo><msubsup><mi>y</mi><mn>2</mn><msup><mi>Q</mi><mo mathvariant="normal">′</mo></msup></msubsup><mo separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msubsup><mi>y</mi><msub><mi>T</mi><mi>A</mi></msub><msup><mi>Q</mi><mo mathvariant="normal">′</mo></msup></msubsup><mo fence="true">)</mo></mrow><annotation encoding="application/x-tex">\left(z_1, z_2, \ldots, z_{T_S}, y_1^1, y_1^2, \ldots, y_1^{Q^{\prime}}, y_2^1, y_2^2, \ldots,, y_2^{Q^{\prime}}, \ldots, y_{T_A}^{Q^{\prime}}\right)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.80002em;vertical-align:-0.65002em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size2">(</span></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.04398em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.04398em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner">…</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.04398em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3567071428571427em;margin-left:-0.13889em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathdefault mtight" style="margin-right:0.05764em;">S</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.14329285714285717em;"><span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.250305em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-2.4518920000000004em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.24810799999999997em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-2.4518920000000004em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.24810799999999997em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner">…</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.060388em;"><span style="top:-2.433692em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span><span style="top:-3.1809080000000005em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathdefault mtight">Q</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8278285714285715em;"><span style="top:-2.931em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.266308em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-2.4518920000000004em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.24810799999999997em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-2.4518920000000004em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.24810799999999997em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner">…</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.060388em;"><span style="top:-2.433692em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span><span style="top:-3.1809080000000005em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathdefault mtight">Q</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8278285714285715em;"><span style="top:-2.931em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.266308em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner">…</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.060388em;"><span style="top:-2.4064690000000004em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3567071428571427em;margin-left:-0.13889em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathdefault mtight">A</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.14329285714285717em;"><span></span></span></span></span></span></span></span></span></span><span style="top:-3.1809080000000005em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathdefault mtight">Q</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8278285714285715em;"><span style="top:-2.931em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.39383599999999996em;"><span></span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size2">)</span></span></span></span></span></span>，建模 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi><mrow><mo fence="true">(</mo><msubsup><mi>y</mi><mi>t</mi><mi>q</mi></msubsup><mo>∣</mo><mi>z</mi><mo separator="true">,</mo><msubsup><mi>y</mi><mrow><mo>&lt;</mo><mi>t</mi></mrow><mrow><mo>≤</mo><msup><mi>Q</mi><mo mathvariant="normal">′</mo></msup></mrow></msubsup><mo separator="true">,</mo><msubsup><mi>y</mi><mi>t</mi><mrow><mo>&lt;</mo><mi>q</mi></mrow></msubsup><mo fence="true">)</mo></mrow></mrow><annotation encoding="application/x-tex">p\left(y_t^q \mid z, y_{&lt;t}^{\leq Q^{\prime}}, y_t^{&lt;q}\right)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.80002em;vertical-align:-0.65002em;"></span><span class="mord mathdefault">p</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size2">(</span></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.7823em;"><span style="top:-2.454244em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span><span style="top:-3.1809080000000005em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.03588em;">q</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.24575599999999995em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∣</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.0603879999999999em;"><span style="top:-2.454244em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mrel mtight">&lt;</span><span class="mord mathdefault mtight">t</span></span></span></span><span style="top:-3.180908em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mrel mtight">≤</span><span class="mord mtight"><span class="mord mathdefault mtight">Q</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8278285714285715em;"><span style="top:-2.931em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2731259999999999em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.858278em;"><span style="top:-2.454244em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span><span style="top:-3.1809080000000005em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mrel mtight">&lt;</span><span class="mord mathdefault mtight" style="margin-right:0.03588em;">q</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.24575599999999995em;"><span></span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size2">)</span></span></span></span></span></span> <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>q</mi><mo>≤</mo><msup><mi>Q</mi><mo mathvariant="normal">′</mo></msup></mrow><annotation encoding="application/x-tex">q \leq Q^{\prime}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8304100000000001em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">q</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.946332em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault">Q</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.751892em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span>，其中，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span> 序列为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi><mo>+</mo><mi>o</mi></mrow><annotation encoding="application/x-tex">y+o</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7777700000000001em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">o</span></span></span></span>，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>o</mi><mi>i</mi></msub><mo>=</mo><mo stretchy="false">(</mo><mi>i</mi><mo>−</mo><mn>1</mn><mtext> </mtext><mrow><mi mathvariant="normal">m</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">d</mi></mrow><mtext> </mtext><msup><mi>Q</mi><mo mathvariant="normal">′</mo></msup><mo stretchy="false">)</mo><mo>⋅</mo><mi>N</mi></mrow><annotation encoding="application/x-tex">o_i=(i-1 \bmod Q^{\prime}) \cdot N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">o</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mspace" style="margin-right:0.05555555555555555em;"></span><span class="mbin"><span class="mord"><span class="mord mathrm">m</span><span class="mord mathrm">o</span><span class="mord mathrm">d</span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mspace" style="margin-right:0.05555555555555555em;"></span></span><span class="base"><span class="strut" style="height:1.001892em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault">Q</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.751892em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span></span></span></span>。<font color="green">训练时 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msubsup><mi>y</mi><mn>1</mn><mn>1</mn></msubsup></mrow><annotation encoding="application/x-tex">y_1^1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0622159999999998em;vertical-align:-0.24810799999999997em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-2.4518920000000004em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.24810799999999997em;"><span></span></span></span></span></span></span></span></span></span> 为第一个预测的 token。</font></p>
-</li>
-<li>
-<p>细粒度声学建模：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi><mrow><mo fence="true">(</mo><msubsup><mi>y</mi><mi>t</mi><mi>q</mi></msubsup><mo>∣</mo><msup><mi>y</mi><mrow><mo>≤</mo><msup><mi>Q</mi><mo mathvariant="normal">′</mo></msup></mrow></msup><mo separator="true">,</mo><msubsup><mi>y</mi><mrow><mo>&lt;</mo><mi>t</mi></mrow><mrow><mo>&gt;</mo><msup><mi>Q</mi><mo mathvariant="normal">′</mo></msup></mrow></msubsup><mo separator="true">,</mo><msubsup><mi>y</mi><mi>t</mi><mrow><mo>&lt;</mo><mi>q</mi></mrow></msubsup><mo fence="true">)</mo></mrow></mrow><annotation encoding="application/x-tex">p\left(y_t^q \mid y^{\leq Q^{\prime}}, y_{&lt;t}^{&gt;Q^{\prime}}, y_t^{&lt;q}\right)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.80002em;vertical-align:-0.65002em;"></span><span class="mord mathdefault">p</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size2">(</span></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.7823em;"><span style="top:-2.454244em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span><span style="top:-3.1809080000000005em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.03588em;">q</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.24575599999999995em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∣</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.94248em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mrel mtight">≤</span><span class="mord mtight"><span class="mord mathdefault mtight">Q</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8278285714285715em;"><span style="top:-2.931em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.0603879999999999em;"><span style="top:-2.454244em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mrel mtight">&lt;</span><span class="mord mathdefault mtight">t</span></span></span></span><span style="top:-3.180908em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mrel mtight">&gt;</span><span class="mord mtight"><span class="mord mathdefault mtight">Q</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8278285714285715em;"><span style="top:-2.931em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2731259999999999em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.858278em;"><span style="top:-2.454244em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span><span style="top:-3.1809080000000005em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mrel mtight">&lt;</span><span class="mord mathdefault mtight" style="margin-right:0.03588em;">q</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.24575599999999995em;"><span></span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size2">)</span></span></span></span></span></span> <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>q</mi><mo>&gt;</mo><msup><mi>Q</mi><mo mathvariant="normal">′</mo></msup></mrow><annotation encoding="application/x-tex">q &gt; Q^{\prime}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7335400000000001em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">q</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.946332em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault">Q</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.751892em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span>，去除第二阶段有损压缩导致的 artifacts。<br>
-由于细粒度声学 token 由粗粒度 token 局部确定，在 3s 的非重叠块上执行。因此，第3阶段不受目标音频序列长度影响，且可以采用更大的 Q 来实现更高的质量。</p>
-</li>
+<ol type="1">
+<li><p>语义建模：自回归预测语义 token <span class="math inline">\(p\left(z_t \mid
+z_{&lt;t}\right)\)</span>。</p></li>
+<li><p>粗声学建模：以语义 token 为条件，只建模粗声学 token（前 <span class="math inline">\(Q^{\prime}\)</span>
+个量化器），恢复说话人、录音环境等声学特性。token 序列为 <span class="math inline">\(\left(z_1, z_2, \ldots, z_{T_S}, y_1^1, y_1^2,
+\ldots, y_1^{Q^{\prime}}, y_2^1, y_2^2, \ldots,, y_2^{Q^{\prime}},
+\ldots, y_{T_A}^{Q^{\prime}}\right)\)</span>，建模 <span class="math inline">\(p\left(y_t^q \mid z, y_{&lt;t}^{\leq Q^{\prime}},
+y_t^{&lt;q}\right)\)</span> <span class="math inline">\(q \leq
+Q^{\prime}\)</span>，其中，<span class="math inline">\(y\)</span> 序列为
+<span class="math inline">\(y+o\)</span>，<span class="math inline">\(o_i=(i-1 \bmod Q^{\prime}) \cdot
+N\)</span>。<font color="green">训练时 <span class="math inline">\(y_1^1\)</span> 为第一个预测的
+token。</font></p></li>
+<li><p>细粒度声学建模：<span class="math inline">\(p\left(y_t^q \mid
+y^{\leq Q^{\prime}}, y_{&lt;t}^{&gt;Q^{\prime}},
+y_t^{&lt;q}\right)\)</span> <span class="math inline">\(q &gt;
+Q^{\prime}\)</span>，去除第二阶段有损压缩导致的 artifacts。
+由于细粒度声学 token 由粗粒度 token 局部确定，在 3s
+的非重叠块上执行。因此，第3阶段不受目标音频序列长度影响，且可以采用更大的
+Q 来实现更高的质量。</p></li>
 </ol>
 <ul>
-<li>条件独立假设：语义 token 与 声学 token 条件独立；细粒度声学 token 与语义 token 条件独立。</li>
-<li>优点：相较于语义 token、声学 token 交替，合并第2、第3阶段，该方案每个阶段的 token 序列长度减小了，计算更高效。</li>
+<li>条件独立假设：语义 token 与 声学 token 条件独立；细粒度声学 token
+与语义 token 条件独立。</li>
+<li>优点：相较于语义 token、声学 token
+交替，合并第2、第3阶段，该方案每个阶段的 token
+序列长度减小了，计算更高效。</li>
 </ul>
-<h2 id="推理">1.2.  推理</h2>
+<h2 id="推理">1.2. 推理</h2>
 <ul>
-<li>无条件生成。无条件采样语义 token。可以生成具有不同说话人、韵律、声学环境特征的，语法、语义一致的，多样化的语音。</li>
-<li>声学生成。给定语义 token，合成语音的文本一致，具有不同的声学特征。</li>
+<li>无条件生成。无条件采样语义
+token。可以生成具有不同说话人、韵律、声学环境特征的，语法、语义一致的，多样化的语音。</li>
+<li>声学生成。给定语义
+token，合成语音的文本一致，具有不同的声学特征。</li>
 <li>延续。输入简短的 prompt 音频。</li>
 </ul>
-<h1 id="实验">2.  实验</h1>
+<h1 id="实验">2. 实验</h1>
 <ul>
-<li>训练集<br>
-AudioLM 所有组件（w2v-BERT、k-means、SoundStream、decoder-only Transformer）的训练集都为 Libri-Light  unlab-60k（英语）。</li>
-<li>SoundStream<br>
-<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>Q</mi><mo>=</mo><mn>12</mn></mrow><annotation encoding="application/x-tex">Q=12</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">Q</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">2</span></span></span></span>，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>N</mi><mo>=</mo><mn>1024</mn></mrow><annotation encoding="application/x-tex">N=1024</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">2</span><span class="mord">4</span></span></span></span>，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>Q</mi><mo mathvariant="normal">′</mo></msup><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">Q^{\prime}=4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.946332em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault">Q</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.751892em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">4</span></span></span></span>。4个卷积 block stride (2,4,5,8)，音频采样率 16kHz，帧率 20ms。</li>
+<li>训练集 AudioLM
+所有组件（w2v-BERT、k-means、SoundStream、decoder-only
+Transformer）的训练集都为 Libri-Light unlab-60k（英语）。</li>
+<li>SoundStream <span class="math inline">\(Q=12\)</span>，<span class="math inline">\(N=1024\)</span>，<span class="math inline">\(Q^{\prime}=4\)</span>。4个卷积 block stride
+(2,4,5,8)，音频采样率 16kHz，帧率 20ms。</li>
 <li>decoder-only Transformer
 <ul>
 <li>3个阶段的模型结构一致，各 0.3B，参数详见论文。</li>
-<li>3个阶段，音频随机裁剪到 30s、10s、3s。删除语义 token 的连续重复。</li>
-</ul>
-</li>
-<li>训练<br>
-训练音频 encoder、decoder -&gt; 冻结，训练 LM。解耦、简化训练流程。</li>
-<li>推理<br>
+<li>3个阶段，音频随机裁剪到 30s、10s、3s。删除语义 token
+的连续重复。</li>
+</ul></li>
+<li>训练 训练音频 encoder、decoder -&gt; 冻结，训练
+LM。解耦、简化训练流程。</li>
+<li>推理
 3个阶段均采用采样，温度系数分别为0.6、0.8、0.6，权衡生成语音的多样性、语义一致性。</li>
 <li>对比语义 token、声学 token
 <ul>
 <li>音素区分性
 <ul>
-<li>方式：将 w2v-BERT k-means 聚类质心表示、SoundStream encoder 输出，转换为 RVQ embedding，计算 ABX 错误率。</li>
-<li>评价指标：ABX 错误率。考虑仅中心 phone 不同的 triphone，ABX 错误率为 X 更接近 B（中心 phone 不同）而不是 A（中心 phone 相同）的比例。
+<li>方式：将 w2v-BERT k-means 聚类质心表示、SoundStream encoder
+输出，转换为 RVQ embedding，计算 ABX 错误率。</li>
+<li>评价指标：ABX 错误率。考虑仅中心 phone 不同的 triphone，ABX 错误率为
+X 更接近 B（中心 phone 不同）而不是 A（中心 phone 相同）的比例。
 <ul>
 <li>within-speaker: A、B、X 来自同一说话人。</li>
 <li>across-speaker: A、B 来自同一说话人，X 来自另一说话人。</li>
-</ul>
-</li>
-</ul>
-</li>
+</ul></li>
+</ul></li>
 <li>重建质量
 <ul>
 <li>方式：训练 SoundStream decoder，输入 token 重建音频。</li>
 <li>评价指标：ViSQOL score，参考音频、重建音频之间的感知相似度。</li>
-</ul>
-</li>
+</ul></li>
 <li>训练 decoder-only Transformer，采用输出 token 合成音频。
 <ul>
 <li>采用语义 token，音频合成质量很差。</li>
-<li>采用声学 token，保留了说话人特征、录音环境，但内容往往类似于 babbling。</li>
-</ul>
-</li>
-</ul>
-</li>
+<li>采用声学 token，保留了说话人特征、录音环境，但内容往往类似于
+babbling。</li>
+</ul></li>
+</ul></li>
 </ul>
 <table>
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
 <thead>
 <tr>
 <th>实验</th>
@@ -493,47 +515,60 @@ AudioLM 所有组件（w2v-BERT、k-means、SoundStream、decoder-only Transform
 <tr>
 <td>对比语义 token、声学 token</td>
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEB83e195cc1dc022a6ca8f7ed21ba07560?method=download&shareKey=ac47314155debfbd09bb877c610ad6c1" width="1176"></td>
-<td>语义 token 包含了长时结构，声学 token 保留了说话人特征、录音环境。<br> 相较于 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>Q</mi><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">Q=4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">Q</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">4</span></span></span></span>（2000bps），<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>Q</mi><mo>=</mo><mn>12</mn></mrow><annotation encoding="application/x-tex">Q=12</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">Q</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">2</span></span></span></span>（6000bps）显著提高了生成音频的质量。</td>
+<td>语义 token 包含了长时结构，声学 token
+保留了说话人特征、录音环境。<br> 相较于 <span class="math inline">\(Q=4\)</span>（2000bps），<span class="math inline">\(Q=12\)</span>（6000bps）显著提高了生成音频的质量。</td>
 </tr>
 <tr>
 <td>语义建模超参数选择</td>
-<td><img src="https://note.youdao.com/yws/api/personal/file/WEB02ac67da6a5c3ae42d72104b22d776ba?method=download&shareKey=81e7f0785a75b8a07730ff360d98fd14" width="582"><br>* 另外，主观评价不同超参数下生成的音频。</td>
-<td>采用 w2v-BERT XL 0.6B MLM 第7层的表示；<br>k-means 聚类 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>K</mi><mo>=</mo><mn>1024</mn></mrow><annotation encoding="application/x-tex">K=1024</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">K</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">2</span><span class="mord">4</span></span></span></span>。</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEB02ac67da6a5c3ae42d72104b22d776ba?method=download&shareKey=81e7f0785a75b8a07730ff360d98fd14" width="582"><br>*
+另外，主观评价不同超参数下生成的音频。</td>
+<td>采用 w2v-BERT XL 0.6B MLM 第7层的表示；<br>k-means 聚类 <span class="math inline">\(K=1024\)</span>。</td>
 </tr>
 <tr>
 <td>语义 token<br>给定语义 token 生成音频，ASR</td>
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEB1f0c712205e17dfe0dd6bf60b00b639f?method=download&shareKey=181dadfdba4ff4d82fc6d21b074b6155" width="550"></td>
-<td>CER、WER 较低：语言内容被语义 token 完全表示。<br> AudioLM WER/CER 相对较高，而SoundStream 重建音频与原始音频的 WER/CER 接近：AudioLM WER/CER 主要来源于语义 token 到声学 token 的映射。<br>WER 的主要来源：专有名词合成、&lt;eos&gt;。</td>
+<td>CER、WER 较低：语言内容被语义 token 完全表示。<br> AudioLM WER/CER
+相对较高，而SoundStream 重建音频与原始音频的 WER/CER 接近：AudioLM
+WER/CER 主要来源于语义 token 到声学 token 的映射。<br>WER
+的主要来源：专有名词合成、&lt;eos&gt;。</td>
 </tr>
 <tr>
 <td>声学 token<br>说话人分类</td>
-<td>上一实验中，给定语义 token，多次采样，说话人、录音环境变化较大，韵律、语调变化较小。<br><img src="https://note.youdao.com/yws/api/personal/file/WEB4b8cffc907ad2ecacc2d2f04142be561?method=download&shareKey=4fdf85b21ff4a1f7d34537a84c9a97e3" width="564"></td>
+<td>上一实验中，给定语义
+token，多次采样，说话人、录音环境变化较大，韵律、语调变化较小。<br><img src="https://note.youdao.com/yws/api/personal/file/WEB4b8cffc907ad2ecacc2d2f04142be561?method=download&shareKey=4fdf85b21ff4a1f7d34537a84c9a97e3" width="564"></td>
 <td>说话人、录音环境信息由声学 token 表示。</td>
 </tr>
 <tr>
-<td>语义 token LM 的语言学知识<br>sWUGGY：给定单词、发音相近的 non-word，模型是否对正确单词有更高的概率。<br>sBLIMP：给定语法正确的句子、语法不正确的相似的句子，模型对前者概率更高的比例。</td>
+<td>语义 token LM 的语言学知识<br>sWUGGY：给定单词、发音相近的
+non-word，模型是否对正确单词有更高的概率。<br>sBLIMP：给定语法正确的句子、语法不正确的相似的句子，模型对前者概率更高的比例。</td>
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEBdc9cb9b175df27d911ee93bd08b6c3c8?method=download&shareKey=03cee79773d8ba262c19f6cacdcae155" width="580"></td>
 <td>不需要文本有监督数据，语义 token LM 词法、句法判断能力较强。</td>
 </tr>
 <tr>
-<td>主观评价<br>区分原始录音与AudioLM 生成的延续。原始录音也经过 SoundStream 压缩。</td>
+<td>主观评价<br>区分原始录音与AudioLM 生成的延续。原始录音也经过
+SoundStream 压缩。</td>
 <td>人工区分正确率 51.2%，接近随机猜。</td>
 <td></td>
 </tr>
 <tr>
-<td>钢琴延续<br>在钢琴音乐数据集上重训所有组件。Q=3, N=16384，不需要第3阶段。<br>主观评价：对仅基于声学 token 生成的延续、AudioLM 生成的偏好</td>
+<td>钢琴延续<br>在钢琴音乐数据集上重训所有组件。Q=3,
+N=16384，不需要第3阶段。<br>主观评价：对仅基于声学 token
+生成的延续、AudioLM 生成的偏好</td>
 <td>83.3% 偏好 AudioLM 的生成。</td>
 <td></td>
 </tr>
 </tbody>
 </table>
-<h1 id="安全性">3.  安全性</h1>
-<p>训练了分类器区分 AudioLM 生成的语音、压缩后的真实录音，准确率 98.6%。</p>
-<h1 id="其它">4.  其它</h1>
+<h1 id="安全性">3. 安全性</h1>
+<p>训练了分类器区分 AudioLM 生成的语音、压缩后的真实录音，准确率
+98.6%。</p>
+<h1 id="其它">4. 其它</h1>
 <ul>
-<li>Borsos Z, Marinier R, Vincent D, et al. Audiolm: a language modeling approach to audio generation[J]. IEEE/ACM Transactions on Audio, Speech, and Language Processing, 2023.</li>
-<li><a target="_blank" rel="noopener" href="https://google-research.github.io/seanet/audiolm/examples">https://google-research.github.io/seanet/audiolm/examples</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/lucidrains/audiolm-pytorch">https://github.com/lucidrains/audiolm-pytorch</a></li>
+<li>Borsos Z, Marinier R, Vincent D, et al. Audiolm: a language modeling
+approach to audio generation[J]. IEEE/ACM Transactions on Audio, Speech,
+and Language Processing, 2023.</li>
+<li><a target="_blank" rel="noopener" href="https://google-research.github.io/seanet/audiolm/examples" class="uri">https://google-research.github.io/seanet/audiolm/examples</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/lucidrains/audiolm-pytorch" class="uri">https://github.com/lucidrains/audiolm-pytorch</a></li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
