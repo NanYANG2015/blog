@@ -16,7 +16,11 @@
 
 
 作者：微软
-发表时间：2022.0">
+发表时间：2022.06
+
+
+
+CLAP：C">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -407,74 +411,82 @@
 <li>性能：部分任务上实现了 zero-shot 和有监督的 SOTA 性能。</li>
 </ul>
 </div>
-<h1 id="系统结构">1. 系统结构</h1>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB37ee42790442537f74c5ced911401d34?method=download&shareKey=56aca09377ebe06fd8cd215a373f2149" width="726"></p>
+<h1 id="系统结构">1.  系统结构</h1>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB37ee42790442537f74c5ced911401d34?method=download&shareKey=56aca09377ebe06fd8cd215a373f2149" width="726">
 <ul>
-<li><p>audio encoder + 线性层、text encoder +
-线性层。线性层用于投影到联合 embedding 空间，统一维度。</p></li>
-<li><p><font color="green">损失函数</font> <span class="math display">\[
-\begin{align} C &amp;= \tau *\left(E_t \cdot E_a^{\top}\right) \\
-\mathcal{L} &amp;= 0.5 *\left(\ell_{\text {text }}(C)+\ell_{\text {audio
-}}(C)\right) \\
-\ell_k &amp;= \frac{1}{N} \sum_{i=0}^N \log
-\operatorname{diag}(\operatorname{softmax}(C)) \end{align}\]</span></p>
-<p>其中，<span class="math inline">\(\tau\)</span> 为温度参数；<span class="math inline">\(C \in \mathbb{R}^{N \times
-N}\)</span>；沿文本、音频轴分别计算。</p></li>
-<li><p>推理：余弦相似度，softmax 或 sigmoid（multilabel）。</p></li>
+<li>
+<p>audio encoder + 线性层、text encoder + 线性层。线性层用于投影到联合 embedding 空间，统一维度。</p>
+</li>
+<li>
+<p><font color="green">损失函数</font></p>
+<p class="katex-block katex-error" title="ParseError: KaTeX parse error: No such environment: align at position 8:  \begin{̲a̲l̲i̲g̲n̲}̲ C &amp;= \tau *\le…"> \begin{align} C &amp;= \tau *\left(E_t \cdot E_a^{\top}\right) \\
+\mathcal{L} &amp;= 0.5 *\left(\ell_{\text {text }}(C)+\ell_{\text {audio }}(C)\right) \\
+\ell_k &amp;= \frac{1}{N} \sum_{i=0}^N \log \operatorname{diag}(\operatorname{softmax}(C)) \end{align}</p>
+<p>其中，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>τ</mi></mrow><annotation encoding="application/x-tex">\tau</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.1132em;">τ</span></span></span></span> 为温度参数；<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>C</mi><mo>∈</mo><msup><mi mathvariant="double-struck">R</mi><mrow><mi>N</mi><mo>×</mo><mi>N</mi></mrow></msup></mrow><annotation encoding="application/x-tex">C \in \mathbb{R}^{N \times N}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72243em;vertical-align:-0.0391em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8413309999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord"><span class="mord mathbb">R</span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.10903em;">N</span><span class="mbin mtight">×</span><span class="mord mathdefault mtight" style="margin-right:0.10903em;">N</span></span></span></span></span></span></span></span></span></span></span></span>；沿文本、音频轴分别计算。</p>
+</li>
+<li>
+<p>推理：余弦相似度，softmax 或 sigmoid（multilabel）。</p>
+</li>
 </ul>
-<h1 id="实验">2. 实验</h1>
-<h2 id="训练集">2.1. 训练集</h2>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB6af45c0fa3227c9941ff88d74ddf53c3?method=download&shareKey=ac1f8517e11579c994c72e2a65b8982b" width="256"></p>
+<h1 id="实验">2.  实验</h1>
+<h2 id="训练集">2.1.  训练集</h2>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB6af45c0fa3227c9941ff88d74ddf53c3?method=download&shareKey=ac1f8517e11579c994c72e2a65b8982b" width="256">
 <p>* FSD50k：拼接标题、描述，不采用类标签。</p>
 <p>合计 128k 音频-文本对</p>
-<h2 id="音频预处理">2.2. 音频预处理</h2>
-<p>44.1kHz，帧长 1024，帧移 320，mel 截止频率 [50, 8000]，64 bins。
+<h2 id="音频预处理">2.2.  音频预处理</h2>
+<p>44.1kHz，帧长 1024，帧移 320，mel 截止频率 [50, 8000]，64 bins。<br>
 随机截断或填充到 5s。</p>
-<h2 id="encoder">2.3. encoder</h2>
+<h2 id="encoder">2.3.  encoder</h2>
 <ul>
-<li>audio encoder：PANNs CNN14，embedding 2048
-维，<font color="green">采用 AudioSet 2M 音频预训练</font>。</li>
+<li>audio encoder：PANNs CNN14，embedding 2048 维，<font color="green">采用 AudioSet 2M 音频预训练</font>。</li>
 <li>text encoder：BERT base uncased。取 [CLS] embedding 768 维。
 <ul>
 <li>限制文本长度最多 100 字符。</li>
-</ul></li>
+</ul>
+</li>
 <li>线性层：输出 1024 维。</li>
-<li><span class="math inline">\(\tau\)</span>：可学习，初始值
-0.007。为了避免训练不稳定，<span class="math inline">\(\tau\)</span>
-缩放后的值采用最大值 100 进行裁剪。</li>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>τ</mi></mrow><annotation encoding="application/x-tex">\tau</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.1132em;">τ</span></span></span></span>：可学习，初始值 0.007。为了避免训练不稳定，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>τ</mi></mrow><annotation encoding="application/x-tex">\tau</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.1132em;">τ</span></span></span></span> 缩放后的值采用最大值 100 进行裁剪。</li>
 <li>训练：学习 encoder、线性层。</li>
 </ul>
-<h2 id="评价">2.4. 评价</h2>
+<h2 id="评价">2.4.  评价</h2>
 <ul>
-<li><p>测试集</p>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB3bb1bc41cf2234ec8ba1e6b49a6fa82a?method=download&shareKey=edcbbad952e44a80ecdc33a044feff3d" width="554"></p></li>
-<li><p>评价设置</p>
+<li>
+<p>测试集</p>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB3bb1bc41cf2234ec8ba1e6b49a6fa82a?method=download&shareKey=edcbbad952e44a80ecdc33a044feff3d" width="554">
+</li>
+<li>
+<p>评价设置</p>
 <ul>
-<li><p>zero-shot：泛化到未见的类、音频。</p>
+<li>
+<p>zero-shot：泛化到未见的类、音频。</p>
 <pre class="line-numbers language-none"><code class="language-none">This is a sound of [class label]
 this person is feeling [class label]
 keyword # Keyword Spotting
-[0-10] persons speaking<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
-<li><p>有监督特征提取：CLAP audio 表示 + 1~3 全连接层。</p></li>
-<li><p>有监督微调：微调 CLAP audio encoder + 1~3 全连接层。</p></li>
-</ul></li>
-<li><p>结果</p>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB742a4690fa66e99219cadba9cbe3aec7?method=download&shareKey=1ce8de8b894f5b166cc983dc6519416f" width="727"></p>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEBee1e8d11c7a3ebb67e5af3d1f5d98f08?method=download&shareKey=be36b9b1bb21391b42318fe6dfd2293c" width="672"></p>
-<p>*由于训练集中语音及其内容、描述较少，相较于声音事件等类型的任务，在情感识别、关键词检测等任务上性能略差。</p></li>
+[0-10] persons speaking<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li>
+<p>有监督特征提取：CLAP audio 表示 + 1~3 全连接层。</p>
+</li>
+<li>
+<p>有监督微调：微调 CLAP audio encoder + 1~3 全连接层。</p>
+</li>
 </ul>
-<h2 id="消融实验">2.5. 消融实验</h2>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEBa56e1c5a0194d2a3f1c2071670187f96?method=download&shareKey=58dd5b75f84df7b58878a859ab2e1f6e" width="350"></p>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB1541acd954f90f041b136b845fd22c7f?method=download&shareKey=b4923629cc8cdcb6d8ee66be4a1152dd" width="308"></p>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB1a086c3a86a1d9861d17b71cd688b7e7?method=download&shareKey=8b381473ddabfe08c7c142d6fcfc7dbc" width="307"></p>
-<p><font color="red">* 对比学习中，更大的 batch size
-可以提高性能。</font></p>
-<h1 id="其它">3. 其它</h1>
+</li>
+<li>
+<p>结果</p>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB742a4690fa66e99219cadba9cbe3aec7?method=download&shareKey=1ce8de8b894f5b166cc983dc6519416f" width="727">
+<img src="https://note.youdao.com/yws/api/personal/file/WEBee1e8d11c7a3ebb67e5af3d1f5d98f08?method=download&shareKey=be36b9b1bb21391b42318fe6dfd2293c" width="672">
+<p>*由于训练集中语音及其内容、描述较少，相较于声音事件等类型的任务，在情感识别、关键词检测等任务上性能略差。</p>
+</li>
+</ul>
+<h2 id="消融实验">2.5.  消融实验</h2>
+<img src="https://note.youdao.com/yws/api/personal/file/WEBa56e1c5a0194d2a3f1c2071670187f96?method=download&shareKey=58dd5b75f84df7b58878a859ab2e1f6e" width="350">
+<img src="https://note.youdao.com/yws/api/personal/file/WEB1541acd954f90f041b136b845fd22c7f?method=download&shareKey=b4923629cc8cdcb6d8ee66be4a1152dd" width="308">
+<img src="https://note.youdao.com/yws/api/personal/file/WEB1a086c3a86a1d9861d17b71cd688b7e7?method=download&shareKey=8b381473ddabfe08c7c142d6fcfc7dbc" width="307">
+<p><font color="red">* 对比学习中，更大的 batch size 可以提高性能。</font></p>
+<h1 id="其它">3.  其它</h1>
 <ul>
-<li>论文：Elizalde B, Deshmukh S, Al Ismail M, et al. Clap learning
-audio concepts from natural language supervision[C]//ICASSP 2023-2023
-IEEE International Conference on Acoustics, Speech and Signal Processing
-(ICASSP). IEEE, 2023: 1-5.</li>
+<li>论文：Elizalde B, Deshmukh S, Al Ismail M, et al. Clap learning audio concepts from natural language supervision[C]//ICASSP 2023-2023 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP). IEEE, 2023: 1-5.</li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 

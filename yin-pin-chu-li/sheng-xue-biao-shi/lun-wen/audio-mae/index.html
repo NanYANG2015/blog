@@ -5,8 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="Audio-MAE, 梦园">
-    <meta name="description" content="论文：Huang P Y, Xu H, Li J, et al. Masked autoencoders that
-listen[J]. Advances in Neural Information Processing Systems,">
+    <meta name="description" content="论文：Huang P Y, Xu H, Li J, et al. Masked autoencoders that listen[J]. Advances in Neural Information Processing Systems, ">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -373,54 +372,44 @@ listen[J]. Advances in Neural Information Processing Systems,">
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>论文：Huang P Y, Xu H, Li J, et al. Masked autoencoders that
-listen[J]. Advances in Neural Information Processing Systems, 2022, 35:
-28708-28720.</p>
-<p>代码、模型：<a target="_blank" rel="noopener" href="https://github.com/facebookresearch/AudioMAE" class="uri">https://github.com/facebookresearch/AudioMAE</a></p>
+                <p>论文：Huang P Y, Xu H, Li J, et al. Masked autoencoders that listen[J]. Advances in Neural Information Processing Systems, 2022, 35: 28708-28720.</p>
+<p>代码、模型：<a target="_blank" rel="noopener" href="https://github.com/facebookresearch/AudioMAE">https://github.com/facebookresearch/AudioMAE</a></p>
 <ul>
 <li>作者：来自 Meta AI、Carnegie Mellon University</li>
 <li>发表时间：2022.07</li>
 <li>创新点
 <ul>
-<li><a href="#系统结构">系统结构</a></li>
-<li><font color="red">减小 self-attention 计算量：encoder
-只处理很小部分的未 mask 的 patch、local attention。</font></li>
-</ul></li>
+<li><a href="#%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84">系统结构</a></li>
+<li><font color="red">减小 self-attention 计算量：encoder 只处理很小部分的未 mask 的 patch、local attention。</font></li>
+</ul>
+</li>
 <li>性能：在音频、语音分类任务上实现了 SOTA。</li>
 </ul>
-<h1 id="系统结构">1. 系统结构</h1>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEBc516d2e508e201291956025406d346db?method=download&shareKey=62c36a374c6394382237c5b1a26af3de" width="713"></p>
-<p>* patch embedding：送入 encoder、decoder 前均加 fixed 正弦位置
-embedding。</p>
+<h1 id="系统结构">1.  系统结构</h1>
+<img src="https://note.youdao.com/yws/api/personal/file/WEBc516d2e508e201291956025406d346db?method=download&shareKey=62c36a374c6394382237c5b1a26af3de" width="713">
+<p>* patch embedding：送入 encoder、decoder 前均加 fixed 正弦位置 embedding。</p>
 <p>* decoder 处理的 mask patch embedding 是可学习的。</p>
-<h1 id="实验">2. 实验</h1>
+<h1 id="实验">2.  实验</h1>
 <ul>
 <li>音频：16kHz、帧长 25ms、帧移 10ms、FBANK 128。</li>
 <li>encoder：12 层 ViT-Base。</li>
 <li>decoder：16 层 Transformer。</li>
 <li>预训练
 <ul>
-<li>数据集：AudioSet-2M，10s。随机采样开始时间、循环，得到 10s
-音频。随机抖动音频幅值至多 <span class="math inline">\(\pm 6
-\mathrm{~dB}\)</span>。不采用频谱增强，如 Specaugment、<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1905.04899">CutMix</a>、<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1710.09412">mixup</a>，因为发现在预训练阶段无收益或更差。</li>
-</ul></li>
+<li>数据集：AudioSet-2M，10s。随机采样开始时间、循环，得到 10s 音频。随机抖动音频幅值至多 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>±</mo><mn>6</mn><mrow><mtext> </mtext><mi mathvariant="normal">d</mi><mi mathvariant="normal">B</mi></mrow></mrow><annotation encoding="application/x-tex">\pm 6 \mathrm{~dB}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord">±</span><span class="mord">6</span><span class="mord"><span class="mspace nobreak"> </span><span class="mord mathrm">d</span><span class="mord mathrm">B</span></span></span></span></span>。不采用频谱增强，如 Specaugment、<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1905.04899">CutMix</a>、<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1710.09412">mixup</a>，因为发现在预训练阶段无收益或更差。</li>
+</ul>
+</li>
 <li>微调
 <ul>
-<li>数据集：AudioSet-2M（加权采样来均衡类别）、AudioSet-20K（类别均衡的）、ESC-50、Speech
-Commands（关键词检测）、VoxCeleb (SID，说话人识别)。</li>
+<li>数据集：AudioSet-2M（加权采样来均衡类别）、AudioSet-20K（类别均衡的）、ESC-50、Speech Commands（关键词检测）、VoxCeleb (SID，说话人识别)。</li>
 <li><font color="red">mask：用于正则化、减少计算量。</font></li>
 <li>丢弃预训练的 decoder。average pooling + 线性层分类。</li>
-<li>优化目标：当数据集为 multi-label 或采用 mixup 数据增强时，采用不带
-label smoothing 的 BCE loss。</li>
-</ul></li>
+<li>优化目标：当数据集为 multi-label 或采用 mixup 数据增强时，采用不带 label smoothing 的 BCE loss。</li>
 </ul>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB8d44422b421b13e0aea8542cab2a7094?method=download&shareKey=9f37f47ff4907317aebae8a0c4c71b26" width="573"></p>
+</li>
+</ul>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB8d44422b421b13e0aea8542cab2a7094?method=download&shareKey=9f37f47ff4907317aebae8a0c4c71b26" width="573">
 <table>
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
 <thead>
 <tr>
 <th>任务</th>
@@ -432,32 +421,12 @@ label smoothing 的 BCE loss。</li>
 <tr>
 <td>mask 策略</td>
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEB9c1743c6bcf2da26f4656404b23ee4b8?method=download&shareKey=0743aa5adbffae41c7b1a82607f11bf0" width="694"><br><img src="https://note.youdao.com/yws/api/personal/file/WEBbae3ff4a743b8043628d398c62da1b9e?method=download&shareKey=c7f92a4625ad3e6ff8b3479643d994c3" width="722"><br><img src="https://note.youdao.com/yws/api/personal/file/WEB42c63d532af87f8d243a56e739f14872?method=download&shareKey=0d091e3cc1c203e3dd56e43a2dcda5cd" width="709"></td>
-<td>1. mask 比例：<font color="red">预训练</font>采用高 mask 比例
-<font color="red">80%</font>，因为语音频谱、图像的高冗余特性；<font color="red">微调采用
-30%</font>。<br>2. mask 方式：<font color="red">预训练采用非结构化随机
-mask；微调时采用时间+频率 mask</font>。<br>3.
-预训练重建语谱图，采用非结构化随机 mask
-更容易，模型可以根据附近的上下文预测。而结构化 mask
-可能导致重建的语音单词缺失，如图 6e-3。<br>4. 随 mask 比例增加，结构化
-mask 性能下降，可能由于任务变得过于困难。</td>
+<td>1. mask 比例：<font color="red">预训练</font>采用高 mask 比例 <font color="red">80%</font>，因为语音频谱、图像的高冗余特性；<font color="red">微调采用 30%</font>。<br>2. mask 方式：<font color="red">预训练采用非结构化随机 mask；微调时采用时间+频率 mask</font>。<br>3. 预训练重建语谱图，采用非结构化随机 mask 更容易，模型可以根据附近的上下文预测。而结构化 mask 可能导致重建的语音单词缺失，如图 6e-3。<br>4. 随 mask 比例增加，结构化 mask 性能下降，可能由于任务变得过于困难。</td>
 </tr>
 <tr>
 <td>消融实验</td>
-<td><img src="https://note.youdao.com/yws/api/personal/file/WEB63452a24a08d4e8ca634842f50ec240f?method=download&shareKey=bfb24d23d4f49b5d0ff84218e56afed5" width="722"><br>(c)
-除少量的最后几层采用全局 attention 外，其它采用 local
-attention。<br>(e) decoder width 指 embedding
-维度。<br><img src="https://note.youdao.com/yws/api/personal/file/WEB05f2e146e741b4807ea1451dde0cafcb?method=download&shareKey=c616958be9a08e2f75ed1a63ba7f1cdd" width="257"><br><img src="https://note.youdao.com/yws/api/personal/file/WEB05a4e24e9e02a949dfb3ef013d2710ba?method=download&shareKey=cb5f035f4e319fd35056892d4053f3be" width="310"></td>
-<td>(a) patch：卷积
-kernel=stride=(16,16)，<font color="red">不重叠</font>。<br>相较于 AST
-采用重叠 patch 提高终端任务的性能，Audio-MAE
-中未观察到性能提升，<font color="red">可能由于自监督训练中
-short-cuts（捷径）</font>。<br>(b) encoder 大小：采用
-ViT-B，性能与开销的权衡。<br>采用更多域内数据微调时，不同模型大小间的性能差异可以显著减小。<br>(c)
-decoder attention 机制：采用 <font color="red">shifted local
-attention</font>。相邻层间向左上移 50%。<br>如图 5 所示，采用 local
-attention 可以更好地重建元音的谐波结构。<br>(f)
-预训练性能随数据量增加而单调提升。<br>类别是否均衡对预训练影响不大。<br>(h)
-领域外预训练（如 ImageNet）对 Audio-MAE 有损，可能由于领域偏差。</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEB63452a24a08d4e8ca634842f50ec240f?method=download&shareKey=bfb24d23d4f49b5d0ff84218e56afed5" width="722"><br>© 除少量的最后几层采用全局 attention 外，其它采用 local attention。<br>(e) decoder width 指 embedding 维度。<br><img src="https://note.youdao.com/yws/api/personal/file/WEB05f2e146e741b4807ea1451dde0cafcb?method=download&shareKey=c616958be9a08e2f75ed1a63ba7f1cdd" width="257"><br><img src="https://note.youdao.com/yws/api/personal/file/WEB05a4e24e9e02a949dfb3ef013d2710ba?method=download&shareKey=cb5f035f4e319fd35056892d4053f3be" width="310"></td>
+<td>(a) patch：卷积 kernel=stride=(16,16)，<font color="red">不重叠</font>。<br>相较于 AST 采用重叠 patch 提高终端任务的性能，Audio-MAE 中未观察到性能提升，<font color="red">可能由于自监督训练中 short-cuts（捷径）</font>。<br>(b) encoder 大小：采用 ViT-B，性能与开销的权衡。<br>采用更多域内数据微调时，不同模型大小间的性能差异可以显著减小。<br>© decoder attention 机制：采用 <font color="red">shifted local attention</font>。相邻层间向左上移 50%。<br>如图 5 所示，采用 local attention 可以更好地重建元音的谐波结构。<br>(f) 预训练性能随数据量增加而单调提升。<br>类别是否均衡对预训练影响不大。<br>(h) 领域外预训练（如 ImageNet）对 Audio-MAE 有损，可能由于领域偏差。</td>
 </tr>
 <tr>
 <td>预训练目标</td>
@@ -466,38 +435,34 @@ attention 可以更好地重建元音的谐波结构。<br>(f)
 </tr>
 <tr>
 <td>对比 SOTA</td>
-<td><img src="https://note.youdao.com/yws/api/personal/file/WEB173f7f39379f3d4ea111b7451f023db0?method=download&shareKey=bd192642d652ba52ff0dfebd7b95c9cc" width="714"><br>*
-SUPERB
-[53]：不完全可比，底层预训练模型未端到端微调。<br>采用不同的随机种子运行3次。</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEB173f7f39379f3d4ea111b7451f023db0?method=download&shareKey=bd192642d652ba52ff0dfebd7b95c9cc" width="714"><br>* SUPERB [53]：不完全可比，底层预训练模型未端到端微调。<br>采用不同的随机种子运行3次。</td>
 <td></td>
 </tr>
 <tr>
 <td>音频重建质量</td>
 <td>图7</td>
-<td>相较于音乐、声音事件有相对可预测的谱图模式，如跨时域的重复
-tempos（音乐）、跨频域的谐波，语音重建更具挑战性。</td>
+<td>相较于音乐、声音事件有相对可预测的谱图模式，如跨时域的重复 tempos（音乐）、跨频域的谐波，语音重建更具挑战性。</td>
 </tr>
 </tbody>
 </table>
-<h1 id="其它">3. 其它</h1>
+<h1 id="其它">3.  其它</h1>
 <ul>
-<li><p>展望：将 Audio-MAE decoder 用于 Voice over IP (VoIP)
-应用中的丢包重建（Packet Loss
-Concealment，PLC）、语音频带扩展等任务。</p></li>
-<li><p>局限性：数据集规模，音频持续时长（音频中的长时依赖性
-哪些场景存在？），transformer 建模长音频、高维数据计算量大。</p></li>
-<li><p>Transformer 用于长序列任务，减小 attention 计算量的方式</p>
+<li>
+<p>展望：将 Audio-MAE decoder 用于 Voice over IP (VoIP) 应用中的丢包重建（Packet Loss Concealment，PLC）、语音频带扩展等任务。</p>
+</li>
+<li>
+<p>局限性：数据集规模，音频持续时长（音频中的长时依赖性 哪些场景存在？），transformer 建模长音频、高维数据计算量大。</p>
+</li>
+<li>
+<p>Transformer 用于长序列任务，减小 attention 计算量的方式</p>
 <ul>
 <li>Swin-Transformer：shifted local attention</li>
 <li>MViT [20]：分层 Transformers，pooling attention</li>
-</ul></li>
-<li><p>音频自监督训练</p>
+</ul>
+</li>
+<li>
+<p>音频自监督训练</p>
 <table>
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
 <thead>
 <tr>
 <th>类别</th>
@@ -514,8 +479,7 @@ Concealment，PLC）、语音频带扩展等任务。</p></li>
 <tr>
 <td></td>
 <td>帧级特征</td>
-<td>HuBERT、AV-HuBERT、<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2110.07313">Conformer-Based Self-Supervised
-Learning for Non-Speech Audio Tasks [37]</a></td>
+<td>HuBERT、AV-HuBERT、<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2110.07313">Conformer-Based Self-Supervised Learning for Non-Speech Audio Tasks [37]</a></td>
 </tr>
 <tr>
 <td></td>
@@ -533,7 +497,8 @@ Learning for Non-Speech Audio Tasks [37]</a></td>
 <td>data2vec、AV-HuBERT、[37]、SS-AST</td>
 </tr>
 </tbody>
-</table></li>
+</table>
+</li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
@@ -587,14 +552,13 @@ Learning for Non-Speech Audio Tasks [37]</a></td>
     <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/blog/yin-pin-chu-li/sheng-xue-biao-shi/lun-wen/audio-mae/">
+                <a href="/blog/llm/mo-xing/llama-3.1-post-xun-lian-zhi-chang-wen-ben-neng-li/">
                     <div class="card-content">
-                        <span class="card-title">Audio-MAE</span>
+                        <span class="card-title">Llama 3.1 post 训练之长文本能力</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -604,31 +568,26 @@ Learning for Non-Speech Audio Tasks [37]</a></td>
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-07-27
-                                <i class="far fa-edit fa-fw icon-date"></i>2024-07-27
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-08-07
+                            <i class="far fa-edit fa-fw icon-date"></i>2024-08-07
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/blog/categories/%E9%9F%B3%E9%A2%91%E5%A4%84%E7%90%86/" class="post-category">
-                                    音频处理
+                            <a href="/blog/categories/LLM/" class="post-category">
+                                    LLM
                                 </a>
                             
-                            <a href="/blog/categories/%E9%9F%B3%E9%A2%91%E5%A4%84%E7%90%86/%E5%A3%B0%E9%9F%B3%E8%A1%A8%E7%A4%BA/" class="post-category">
-                                    声音表示
-                                </a>
-                            
-                            <a href="/blog/categories/%E9%9F%B3%E9%A2%91%E5%A4%84%E7%90%86/%E5%A3%B0%E9%9F%B3%E8%A1%A8%E7%A4%BA/%E8%AE%BA%E6%96%87/" class="post-category">
-                                    论文
+                            <a href="/blog/categories/LLM/%E6%A8%A1%E5%9E%8B/" class="post-category">
+                                    模型
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>
