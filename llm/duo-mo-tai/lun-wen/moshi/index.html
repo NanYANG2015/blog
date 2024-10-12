@@ -353,7 +353,7 @@ https://arxi">
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-10-10
+                    2024-10-12
                 </div>
                 
 
@@ -570,12 +570,16 @@ Helium，用于生成对话。</p>
 <h3 id="对话生成">2.1.2. 对话生成</h3>
 <ul>
 <li>一般知识：给定 Wikipedia 段落、StackExchange
-帖子、或者关于它自己的信息，作为 ，生成关于 Moshi
-的对话 ，进一步生成对话。</li>
-<li>声音指令：单轮，指示模型用  说关于 
-的内容（句子、诗歌等）。</li>
-<li>角色扮演：系统为  的 ，生成
-，进一步生成对话。Moshi 的文本可以包含说话风格、动作等，如
+帖子、或者关于它自己的信息，作为
+<code>&#123;&#123;context&#125;&#125;</code>，生成关于
+<code>&#123;&#123;title&#125;&#125;</code> 的对话
+<code>&#123;&#123;摘要&#125;&#125;</code>，进一步生成对话。</li>
+<li>声音指令：单轮，指示模型用 <code>&#123;&#123;特定的声音&#125;&#125;</code> 说关于
+<code>&#123;&#123;实体&#125;&#125;</code> 的内容（句子、诗歌等）。</li>
+<li>角色扮演：系统为 <code>&#123;&#123;特定情绪或说话风格&#125;&#125;</code> 的
+<code>&#123;&#123;角色&#125;&#125;</code>，生成
+<code>&#123;&#123;场景&#125;&#125;</code>，进一步生成对话。Moshi
+的文本可以包含说话风格、动作等，如
 <code>MOSHI: (relieved) *raises fists* Hooray! To the moon and beyond!</code>。</li>
 <li>安全性、数学、闲聊。</li>
 <li>特定 case，增强鲁棒性。
@@ -794,6 +798,12 @@ s}\left(H_{s: s+\omega}^k\right) &gt; \eta_{\text{noise}}
 <li>audio codec 不是 idempotent 的：从 tokens 生成音频、重新编码，tokens
 大概率不一致。token 对时间偏移不鲁棒。特别是仅采用感知对抗目标训练的
 audio codec。详见表 16。</li>
+<li>个人思考 Q&amp;A
+<ul>
+<li><font color="green">为什么需要语义 token：仅重建目标训练的 codec
+语言区分性较差，用于表征用户语音输入时难以表示语言内容。（生成时，先生成文本
+token，语义 token 的作用还大吗？）</font></li>
+</ul></li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
@@ -866,7 +876,7 @@ audio codec。详见表 16。</li>
                     <div class="publish-info">
                             <span class="publish-date">
                                 <i class="far fa-clock fa-fw icon-date"></i>2024-10-10
-                                <i class="far fa-edit fa-fw icon-date"></i>2024-10-10
+                                <i class="far fa-edit fa-fw icon-date"></i>2024-10-12
                             </span>
                         <span class="publish-author">
                             
