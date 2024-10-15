@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>wav2vec 2.0</title>
+      <link href="/blog/yu-yin/yu-yin-shi-bie/lun-wen/zi-jian-du-mo-xing/wav2vec-2.0/"/>
+      <url>/blog/yu-yin/yu-yin-shi-bie/lun-wen/zi-jian-du-mo-xing/wav2vec-2.0/</url>
+      
+        <content type="html"><![CDATA[<ul><li>Baevski A, Zhou Y, Mohamed A, et al. wav2vec 2.0: A framework forself-supervised learning of speech representations[J]. Advances inneural information processing systems, 2020, 33: 12449-12460.</li><li>作者：来自 Facebook。</li><li><a href="https://github.com/facebookresearch/fairseq" class="uri">https://github.com/facebookresearch/fairseq</a></li><li><font color="red">创新点：连续表示包含更多信息，用于上下文表示；对比loss采用量化之后的表示，连续表示包含说话人、背景声音等信息，使得对比任务更容易，但不利于学习用于语音识别的通用表示。</font></li><li>应用：提高低资源语种、仅少量标注数据的任务的性能。</li></ul><p><img src="https://note.youdao.com/yws/api/personal/file/WEBe09be0a8c22216d242172065f60f2c1a?method=download&shareKey=949ae65740f11026ac1c78e20212b481" width="603"></p><ul><li><p>CNN encoder：输入波形，输出约为 20ms/帧，感受野约为25ms。</p></li><li><p>Transformer</p><ul><li><font color="green">相对位置 embedding：采用类似 [37]的1个卷积层。</font></li><li>mask 策略：以概率 <span class="math inline">\(p=0.065\)</span>随机采样 mask 段的起始索引，mask 连续的 <span class="math inline">\(M=10\)</span> 帧，可能重叠。导致约 49% 的时刻被mask，平均 mask 长度约为 299ms。消融实验详见表 5。</li><li>mask 表示：全部替换为1个可学习的特征向量。</li></ul></li><li><p>量化：product quantization，<span class="math inline">\(G=2\)</span> 个码本，码本大小为 <span class="math inline">\(V=320\)</span>。采用 hard (argmax) Gumbelsoftmax，将 encoder 输出 <span class="math inline">\(z\)</span> 映射到<span class="math inline">\(\mathbf{l} \in \mathbb{R}^{G \timesV}\)</span>，选择第 <span class="math inline">\(g\)</span> 个码本中的第<span class="math inline">\(v\)</span> 个值的概率为 <span class="math display">\[p_{g, v}=\frac{\exp \left(l_{g, v}+n_v\right) /\tau}{\sum_{k=1}^V \exp \left(l_{g, k}+n_k\right) / \tau}\]</span> 其中<span class="math inline">\(n=-\log (-\log (u))\)</span>，<span class="math inline">\(u\)</span> 从 <span class="math inline">\(\mathcal{U}(0,1)\)</span> 中均匀采样，为服从Gumbel 分布的噪声。Gumbel softmax 接近 one-hot 向量。采用straight-through estimator，前向使用 argmax 选择码字，反向使用 Gumbelsoftmax 的梯度。训练时，<span class="math inline">\(\tau\)</span> 从 2逐步退火到 0.5（BASE）/ 0.1（LARGE）。</p></li><li><p><font color="red">对比 loss + 码本 diversity loss</font></p><p><span class="math display">\[\mathcal{L}=\mathcal{L}_m+\alpha \mathcal{L}_d \\\mathcal{L}_m=-\log \frac{\exp\left(\operatorname{sim}\left(\mathbf{c}_t, \mathbf{q}_t\right) /\kappa\right)}{\sum_{\tilde{\mathbf{q}} \sim \mathbf{Q}_t} \exp\left(\operatorname{sim}\left(\mathbf{c}_t, \tilde{\mathbf{q}}\right) /\kappa\right)} \\\mathcal{L}_d=\frac{1}{G V}\sum_{g=1}^G-H\left(\bar{p}_g\right)=\frac{1}{G V} \sum_{g=1}^G\sum_{v=1}^V \bar{p}_{g, v} \log \bar{p}_{g, v}\]</span></p><p>其中，<span class="math inline">\(\alpha=0.1\)</span>，<span class="math inline">\(\kappa=0.1\)</span>，<span class="math inline">\(\operatorname{sim}(\mathbf{a},\mathbf{b})\)</span> 为余弦相似度，<font color="green"><span class="math inline">\(\bar{p}_{g, v}\)</span> 为 batch 内所有句子的<span class="math inline">\(l_{g, v}\)</span> 的平均 softmax分布</font>，最大化其熵。对比 loss 中干扰项从同一句其它被 mask的时刻均匀采样 100 个。diversity loss激励模型训练时平等地使用每个码本中的所有条目。</p></li><li><p>结果分析：预训练模型得到的语音表示可以很容易地用于识别特定的声音，进一步微调可以使其对应到正确的单词拼写。</p></li></ul><p><img src="https://note.youdao.com/yws/api/personal/file/WEB6e2d0a270d5c34b615bde07ddbc48a83?method=download&shareKey=29a2a4a27bc8cb4a3c163a8c1c4923a0" width="477"></p><p><img src="https://note.youdao.com/yws/api/personal/file/WEB6c1acf9749fa2a3c26b294f25feea5d2?method=download&shareKey=54e0de694a42481b42c7f3d04e47fbc4" width="504"></p><p><img src="https://note.youdao.com/yws/api/personal/file/WEBa1788efa5756fb4faa43a1ed13ca01e8?method=download&shareKey=1f6d077c7e63248c87b2843aa5e42f91" width="498"></p><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      
+      
+      <categories>
+          
+          <category> 语音 </category>
+          
+          <category> 语音识别 </category>
+          
+          <category> 论文 </category>
+          
+          <category> 自监督模型 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Moshi</title>
       <link href="/blog/llm/duo-mo-tai/lun-wen/moshi/"/>
       <url>/blog/llm/duo-mo-tai/lun-wen/moshi/</url>
