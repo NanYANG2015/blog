@@ -404,17 +404,17 @@ straight-through estimator，前向使用 argmax 选择码字，反向使用 Gum
 softmax 的梯度。训练时，<span class="math inline">\(\tau\)</span> 从 2
 逐步退火到 0.5（BASE）/ 0.1（LARGE）。</p></li>
 <li><p><font color="red">对比 loss + 码本 diversity loss</font></p>
-<p><span class="math display">\[
-\mathcal{L}=\mathcal{L}_m+\alpha \mathcal{L}_d \\
-\mathcal{L}_m=-\log \frac{\exp
+<p><span class="math display">\[ \begin{align}
+\mathcal{L} &amp;=\mathcal{L}_m+\alpha \mathcal{L}_d \\
+\mathcal{L}_m &amp;=-\log \frac{\exp
 \left(\operatorname{sim}\left(\mathbf{c}_t, \mathbf{q}_t\right) /
 \kappa\right)}{\sum_{\tilde{\mathbf{q}} \sim \mathbf{Q}_t} \exp
 \left(\operatorname{sim}\left(\mathbf{c}_t, \tilde{\mathbf{q}}\right) /
 \kappa\right)} \\
-\mathcal{L}_d=\frac{1}{G V}
+\mathcal{L}_d &amp;=\frac{1}{G V}
 \sum_{g=1}^G-H\left(\bar{p}_g\right)=\frac{1}{G V} \sum_{g=1}^G
 \sum_{v=1}^V \bar{p}_{g, v} \log \bar{p}_{g, v}
-\]</span></p>
+\end{align}\]</span></p>
 <p>其中，<span class="math inline">\(\alpha=0.1\)</span>，<span class="math inline">\(\kappa=0.1\)</span>，<span class="math inline">\(\operatorname{sim}(\mathbf{a},
 \mathbf{b})\)</span> 为余弦相似度，<font color="green"><span class="math inline">\(\bar{p}_{g, v}\)</span> 为 batch 内所有句子的
 <span class="math inline">\(l_{g, v}\)</span> 的平均 softmax
