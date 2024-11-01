@@ -4,10 +4,10 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="w2v-BERT, 梦园">
+    <meta name="keywords" content="WavLM, 梦园">
     <meta name="description" content="
-Chung Y A, Zhang Y, Han W, et al. W2v-bert: Combining contrastive
-learning and masked language modeling for self-supe">
+Chen S, Wang C, Chen Z, et al. Wavlm: Large-scale self-supervised
+pre-training for full stack speech processing[J]. I">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +19,7 @@ learning and masked language modeling for self-supe">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>w2v-BERT | 梦园</title>
+    <title>WavLM | 梦园</title>
     <link rel="icon" type="image/png" href="/blog/favicon.png">
     
 
@@ -311,7 +311,7 @@ learning and masked language modeling for self-supe">
                     <div class="row">
                         <div class="col s12 m12 l12">
                             <div class="brand">
-                                <h1 class="description center-align post-title">w2v-BERT</h1>
+                                <h1 class="description center-align post-title">WavLM</h1>
                             </div>
                         </div>
                     </div>
@@ -328,11 +328,11 @@ learning and masked language modeling for self-supe">
                                 音频
                             </a>
                         
-                            <a href="/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%AD%E9%9F%B3%E8%A1%A8%E7%A4%BA/" class="post-category">
-                                语音表示
+                            <a href="/blog/categories/%E9%9F%B3%E9%A2%91/%E9%9F%B3%E9%A2%91%E8%A1%A8%E7%A4%BA/" class="post-category">
+                                音频表示
                             </a>
                         
-                            <a href="/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%AD%E9%9F%B3%E8%A1%A8%E7%A4%BA/%E8%AE%BA%E6%96%87/" class="post-category">
+                            <a href="/blog/categories/%E9%9F%B3%E9%A2%91/%E9%9F%B3%E9%A2%91%E8%A1%A8%E7%A4%BA/%E8%AE%BA%E6%96%87/" class="post-category">
                                 论文
                             </a>
                         
@@ -345,14 +345,14 @@ learning and masked language modeling for self-supe">
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2024-10-29
+                    2024-11-01
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-10-29
+                    2024-11-01
                 </div>
                 
 
@@ -375,39 +375,277 @@ learning and masked language modeling for self-supe">
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <ul>
-<li>Chung Y A, Zhang Y, Han W, et al. W2v-bert: Combining contrastive
-learning and masked language modeling for self-supervised speech
-pre-training[C]//2021 IEEE Automatic Speech Recognition and
-Understanding Workshop (ASRU). IEEE, 2021: 244-250.</li>
-<li><a target="_blank" rel="noopener" href="https://huggingface.co/facebook/w2v-bert-2.0" class="uri">https://huggingface.co/facebook/w2v-bert-2.0</a></li>
-<li>作者：来自 MIT、Google Brain</li>
-<li><font color="red">创新点：采用对比学习损失和掩码预测损失，端到端联合优化。对比学习损失避免了掩码预测训练中的码本坍塌（详见论文图
-2）。相较于 w2v-Conformer，验证了相较于仅采用对比损失性能有提升，mask
-预测有助于减轻对比学习中的简单负样本问题（见论文表 4）。</font></li>
-<li>相关研究：相较于先训练语音离散化模块，冻结，再训练表示学习模块，端到端联合优化总体的性能。</li>
+<li>Chen S, Wang C, Chen Z, et al. Wavlm: Large-scale self-supervised
+pre-training for full stack speech processing[J]. IEEE Journal of
+Selected Topics in Signal Processing, 2022, 16(6): 1505-1518.</li>
+<li>作者：来自微软</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/microsoft/unilm/tree/master/wavlm" class="uri">https://github.com/microsoft/unilm/tree/master/wavlm</a></li>
+<li>创新点
+<ul>
+<li><font color="red">模拟带噪、重叠语音，在掩码区域预测原始语音类
+HuBERT 获取的离散标签，对说话人相关的下游任务有显著提升。</font></li>
+<li><font color="red">采用 gated relative position
+bias，相较于卷积相对位置
+embedding，允许根据当前语音内容自适应地调整，对内容相关的下游任务有显著提升。</font></li>
+<li>训练数据：相较于之前的模型无监督语音主要为有声读物，与现实场景不匹配，采用
+Libri-Light + GigaSpeech + VoxPopuli，共 94kh 英文语音。</li>
+<li>在 SUPERB、说话人验证、语音分离、说话人分离任务上实现了 SOTA
+性能，ASR 性能与 wav2vec 2.0、HuBERT 相当。</li>
+</ul></li>
 </ul>
 <h1 id="模型结构">1. 模型结构</h1>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEBbc74d60a17658bd52f62abb94f5ee321?method=download&shareKey=9c2e348f15ffb523aa4f6787f453d92d" width="374"></p>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEBbdef8365154aba41333f1c21d7fe9cb4?method=download&shareKey=514eddc8bee9943db0051ab12342bbf7" width="593"></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBd6fdd8b95da68d43b01e834819e8cd3a?method=download&shareKey=5586dc923e86064d1747b4cef2dd8a1f" width="308"></p>
+<h1 id="gated-relative-position-bias">2. gated relative position bias</h1>
+<p><span class="math display">\[ \begin{aligned}
+a_{ij} &amp; \propto \exp \left\{\frac{\mathbf{q}_i \cdot
+\mathbf{k}_j}{\sqrt{d_k}}+r_{i-j}\right\} \\
+g_i^{(\text {update })}, g_i^{\text {(reset) }} &amp;=
+\sigma\left(\mathbf{q}_i \cdot \mathbf{u}\right),
+\sigma\left(\mathbf{q}_i \cdot \mathbf{w}\right) \\
+\tilde{r}_{i-j} &amp;= w g_i^{\text {(reset) }} d_{i-j} \\
+r_{i-j} &amp;= d_{i-j}+g_i^{\text {(update) }}
+d_{i-j}+\left(1-g_i^{\text {(update) }}\right) \tilde{r}_{i-j} \\
+d_{|i-j|} &amp;= \begin{cases}|i-j|, &amp; |i-j|&lt;\frac{n}{4} \\
+\left\lfloor\frac{n}{4}\left(\frac{\log (|i-j|)-\log
+\left(\frac{n}{4}\right)}{\log (m)-\log
+\left(\frac{n}{4}\right)}+1\right)\right\rfloor, &amp; \frac{n}{4}
+\leq|i-j|&lt;m \\ \frac{n}{2}-1, &amp; |i-j| \geq m\end{cases} \\
+d_{i-j} &amp;=d_{|i-j|}+\frac{n}{2} \cdot \mathbb{1}_{\{i-j&gt;0\}}
+\end{aligned} \]</span> 其中，<span class="math inline">\(a_{ij}\)</span> 为 attention 系数，<span class="math inline">\(r_{i-j}\)</span> 为 gated relative position
+bias，<span class="math inline">\(\sigma\)</span> 为 sigmoid 函数，<span class="math inline">\(w\)</span> 可学习，<span class="math inline">\(n=320\)</span>，<span class="math inline">\(m=800\)</span>。</p>
+<pre class="line-numbers language-Python" data-language="Python"><code class="language-Python">import numpy as np
+import matplotlib.pyplot as plt
+
+n &#x3D; 320
+m &#x3D; 800
+
+def d_ij(i_minus_j, n, m):
+    abs_diff &#x3D; np.abs(i_minus_j)
+    if abs_diff &lt; n &#x2F; 4:
+        d_abs &#x3D; abs_diff
+    elif n &#x2F; 4 &lt;&#x3D; abs_diff &lt; m:
+        d_abs &#x3D; np.floor(n &#x2F; 4 * (np.log10(abs_diff) - np.log10(n &#x2F; 4)) &#x2F; (np.log10(m) - np.log10(n &#x2F; 4)) + 1)
+    else:
+        d_abs &#x3D; n &#x2F; 2 - 1
+    return d_abs + (n &#x2F; 2) * (i_minus_j &gt; 0)
+
+# Values for i-j
+i_minus_j_values &#x3D; np.arange(-m-100, m+100, 1)
+d_values &#x3D; [d_ij(x, n, m) for x in i_minus_j_values]
+
+# Plot
+plt.figure(figsize&#x3D;(10, 6))
+plt.plot(i_minus_j_values, d_values)
+plt.xlabel(&#39;$i-j$&#39;)
+plt.ylabel(&#39;$d_&#123;i-j&#125;$&#39;)
+plt.grid(True)
+plt.show()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBbeab9936196d6399045598daccaeaa88?method=download&shareKey=a2e8354a005bfbabefcf2bf4bf470c5c" width="500"></p>
+<p><font color="green">存疑：代码实现？</font></p>
+<h1 id="模拟带噪重叠语音">3. 模拟带噪、重叠语音</h1>
+<p>随机选取噪声音频（取自 Deep Noise Suppression, DNS）或同一 batch
+的语音，根据能量比叠加，重叠区域不大于原音频的 50%。信噪比 <span class="math inline">\(r\)</span> 取值范围：噪声 [-5, 20]、重叠语音
+[-5,5]。 <span class="math display">\[ \begin{aligned}
+E^{\text {pri }} &amp;\leftarrow \frac{\sum \mathbf{u}^{\text {pri }}
+\cdot \mathbf{u}^{\text {pri }}}{L} \\
+scl &amp;\leftarrow \sqrt{\frac{E^{\mathrm{pri}}}{10^{\frac{r}{10}}
+E^{\mathrm{sec}}}} \\
+\mathbf{u}^{\mathrm{pri}}\left[s^{\mathrm{pri}}:
+s^{\mathrm{pri}}+l\right] &amp;\leftarrow
+\mathbf{u}^{\mathrm{pri}}\left[s^{\mathrm{pri}}:
+s^{\mathrm{pri}}+l\right]+s c l \cdot
+\mathbf{u}^{\mathrm{sec}}\left[s^{\mathrm{sec}}:
+s^{\mathrm{sec}}+l\right]
+\end{aligned} \]</span></p>
+<h1 id="训练-label">4. 训练 label</h1>
 <ul>
-<li>输入特征：80 维 FBANK。</li>
-<li>卷积下采样：4 倍。</li>
-<li>mask 位置被替换为随机向量。</li>
+<li>WavLM Base：采用 HuBERT Base 模型第一次迭代 transformer
+第6层的输出，聚类。</li>
+<li>WavLM Base+、WavLM Large：采用 HuBERT Base 模型第一次迭代
+transformer 第9层的输出，聚类。</li>
+<li>虽然 WavLM 第一轮迭代的模型优于 HuBERT，仍采用 HuBERT
+生成的伪标签可得到更好的 WavLM 第二轮迭代模型。</li>
+<li><font color="green">输入音频已被破坏，为了使输出表示降噪后、主说话人的语音，借助另一个模型基于原始音频生成伪标签？</font></li>
 </ul>
-<p><span class="math display">\[ \begin{align}
-\mathcal{L}_c &amp;=\mathcal{L}_w+\alpha \cdot \mathcal{L}_d \\
-\mathcal{L}_p &amp;=\beta \cdot \mathcal{L}_c+\gamma \cdot \mathcal{L}_m
-\end{align} \]</span> 其中，<span class="math inline">\(\mathcal{L}_c\)</span> 为对比学习损失，<span class="math inline">\(\mathcal{L}_m\)</span> 为 MLM loss，<span class="math inline">\(\mathcal{L}_d\)</span> 为码本 diversity
-loss。<span class="math inline">\(\alpha=0.1\)</span>，<span class="math inline">\(\beta = \gamma = 1\)</span></p>
-<h1 id="实验结果">2. 实验结果</h1>
+<h1 id="评价">5. 评价</h1>
 <ul>
-<li>微调：添加线性 projection 层和 RNNT decoder。采用 self
-training（伪标签）、SpecAugment、LM fusion。</li>
+<li>超参数：带噪、重叠语音概率 20%，其中重叠语音占比，WavLM Base
+100%，Base+、Large 模型 90%。</li>
+<li>下游任务语音表示：预训练模型各层隐藏状态的加权和，权重可学习。
+<ul>
+<li>分析各层表示的重要性时，用对应层隐藏状态的值对权重归一化，以消除隐藏状态值的大小引入的权重
+bias。</li>
+</ul></li>
 </ul>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEBaa18673c05b551f0a835a26cbfbec565?method=download&shareKey=0f5e5a144ccbd001e47cb06f049f6479" width="765"></p>
-<p>* 无监督数据采用 Libri-Light unlab-60k。</p>
+<table>
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr>
+<th>任务</th>
+<th>数据集</th>
+<th>下游模型</th>
+<th>结果</th>
+<th>分析</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>SUPERB</td>
+<td></td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEBda71e94430660854cc274dcfbc227974?method=download&shareKey=600a4127782d4047177fb22170d09220" width="1277"></td>
+<td><font color="red">1.
+（加噪、重叠语音）降噪目标对说话人分离任务有显著提升。<br>2.
+结构修改，即 gated 相对位置 bias，对内容相关的任务有显著提升。<br>3.
+说话人信息从低层表示学习，内容、语义信息从高层表示学习。</font></td>
+</tr>
+<tr>
+<td>说话人验证</td>
+<td>VoxCeleb1、VoxCeleb2</td>
+<td>ECAPA-TDNN (small)</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEB1f899ad40f46a0fa79a0f53e74c03ff4?method=download&shareKey=6e971559a9e1a06db66932b0f8cbbda1" width="316"></td>
+<td></td>
+</tr>
+<tr>
+<td>说话人分离</td>
+<td>CALLHOME</td>
+<td>[65]</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEB2e99d6351b6c41eacba3aa8abe0ec49a?method=download&shareKey=d201ea3c72baf33e30889e3873635954" width="502"></td>
+<td></td>
+</tr>
+<tr>
+<td>语音分离</td>
+<td>LibriCSS</td>
+<td>Conformer [22]</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEBb80c76930baabf2e1f2f38792dbe7001?method=download&shareKey=7966294b29d58ba942b029dd0d9ecb02" width="320"></td>
+<td></td>
+</tr>
+<tr>
+<td>ASR</td>
+<td>LibriSpeech</td>
+<td>Linear</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEB989415e3fcae2b996f93970c3291ffbe?method=download&shareKey=b84a900ab00d68470904a84fccf1bf7c" width="508"></td>
+<td><font color="red">1. 采用预训练表示优于直接有监督训练。<br>2. WavLM
+Large、HuBERT Large、wav2vec 2.0 Large 在 LibriSpeech 960h
+上性能相当。</font></td>
+</tr>
+</tbody>
+</table>
+<p><font color="red">* 训练、评价详见论文。</font></p>
+<table>
+<tbody>
+<tr>
+<td>SID</td>
+<td>Speaker Identification</td>
+<td></td>
+</tr>
+<tr>
+<td>ASV</td>
+<td>Automatic Speaker Verification</td>
+<td></td>
+</tr>
+<tr>
+<td>SD</td>
+<td>Speaker Diarization</td>
+<td></td>
+</tr>
+<tr>
+<td>PR</td>
+<td>Phoneme Recognition</td>
+<td></td>
+</tr>
+<tr>
+<td>ASR</td>
+<td>Automatic Speech Recognition</td>
+<td></td>
+</tr>
+<tr>
+<td>OOD-ASR</td>
+<td>Out-Of-Domain Automatic Speech Recognition</td>
+<td></td>
+</tr>
+<tr>
+<td>KS</td>
+<td>Keyword Spotting</td>
+<td></td>
+</tr>
+<tr>
+<td>QbE</td>
+<td>Query by Example Spoken Term Detection</td>
+<td></td>
+</tr>
+<tr>
+<td>ST</td>
+<td>Speech Translation</td>
+<td></td>
+</tr>
+<tr>
+<td>IC</td>
+<td>Intent Classification</td>
+<td></td>
+</tr>
+<tr>
+<td>SF</td>
+<td>Slot Filling</td>
+<td></td>
+</tr>
+<tr>
+<td>ER</td>
+<td>Emotion Recognition</td>
+<td></td>
+</tr>
+<tr>
+<td>SE</td>
+<td>Speech Enhancement</td>
+<td></td>
+</tr>
+<tr>
+<td>SS</td>
+<td>Speech Separation</td>
+<td></td>
+</tr>
+<tr>
+<td>VC</td>
+<td>Voice Conversion</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h1 id="其它">6. 其它</h1>
 <ul>
-<li>在谷歌语音搜索数据上验证时，由于相较于朗读语音，真实音频噪声大、静音更多，对比学习负采样有效性降低；短音频较多，采用堆叠3帧特征而不是卷积4倍下采样。</li>
+<li>相关工作
+<ul>
+<li>基于训练目标，SSL 方法可以分为生成式、判别式、多任务学习。
+<ul>
+<li>生成式：自编码器重建语音；自回归生成；非自回归模型恢复 mask
+帧。</li>
+<li>判别式：wav2vec 系列采用对比损失；HuBERT
+预测掩码区域的离散目标；w2v-BERT
+以端到端的方式结合上述对比损失、掩码预测损失。</li>
+<li>多任务：PASE [43]、PASE+ [44]
+采用多个目标，如波形生成、韵律回归、对比损失；UniSpeech [7]、JUST [45]
+结合 SSL 和 ASR 监督训练。</li>
+</ul></li>
+</ul></li>
+<li>解决 fp16 数值溢出问题，主要原因为 attention score <span class="math inline">\(\frac{\mathbf{q}_i \cdot
+\mathbf{k}_j}{\sqrt{d}}\)</span> 超出了 fp16 的上限，表现为 loss 为
+NaN。 <span class="math display">\[
+\begin{aligned}
+\alpha_{i, j} &amp; \propto \exp \left\{\frac{\mathbf{q}_i \cdot
+\mathbf{k}_j}{\sqrt{d}}+r_{i-j}\right\} \\
+&amp; =\exp \left\{\left(\frac{\mathbf{q}_i}{c \sqrt{d}} \cdot
+\mathbf{k}_j-\max _{j^{\prime} \leq T}\left(\frac{\mathbf{q}_i}{c
+\sqrt{d}} \cdot \mathbf{k}_{j^{\prime}}\right)\right) \times
+c+r_{i-j}\right\}
+\end{aligned}
+\]</span> 其中，<span class="math inline">\(c\)</span>
+为缩放系数超参数，本文取 32。</li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
@@ -461,12 +699,57 @@ training（伪标签）、SpecAugment、LM fusion。</li>
     <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/blog/llm/duo-mo-tai/lun-wen/glm-4-voice/">
+                    <div class="card-content">
+                        <span class="card-title">GLM-4-Voice</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-11-01
+                            <i class="far fa-edit fa-fw icon-date"></i>2024-11-01
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/blog/categories/LLM/" class="post-category">
+                                    LLM
+                                </a>
+                            
+                            <a href="/blog/categories/LLM/%E5%A4%9A%E6%A8%A1%E6%80%81/" class="post-category">
+                                    多模态
+                                </a>
+                            
+                            <a href="/blog/categories/LLM/%E5%A4%9A%E6%A8%A1%E6%80%81/%E8%AE%BA%E6%96%87/" class="post-category">
+                                    论文
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/blog/yin-pin/yu-yin-biao-shi/lun-wen/w2v-bert/">
+                <a href="/blog/yin-pin/yin-pin-biao-shi/lun-wen/w2v-bert/">
                     <div class="card-content">
                         <span class="card-title">w2v-BERT</span>
                     </div>
@@ -480,7 +763,7 @@ training（伪标签）、SpecAugment、LM fusion。</li>
                     <div class="publish-info">
                             <span class="publish-date">
                                 <i class="far fa-clock fa-fw icon-date"></i>2024-10-29
-                                <i class="far fa-edit fa-fw icon-date"></i>2024-10-29
+                                <i class="far fa-edit fa-fw icon-date"></i>2024-11-01
                             </span>
                         <span class="publish-author">
                             
@@ -490,58 +773,11 @@ training（伪标签）、SpecAugment、LM fusion。</li>
                                     音频
                                 </a>
                             
-                            <a href="/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%AD%E9%9F%B3%E8%A1%A8%E7%A4%BA/" class="post-category">
-                                    语音表示
+                            <a href="/blog/categories/%E9%9F%B3%E9%A2%91/%E9%9F%B3%E9%A2%91%E8%A1%A8%E7%A4%BA/" class="post-category">
+                                    音频表示
                                 </a>
                             
-                            <a href="/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%AD%E9%9F%B3%E8%A1%A8%E7%A4%BA/%E8%AE%BA%E6%96%87/" class="post-category">
-                                    论文
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/blog/yin-pin/yu-yin-biao-shi/lun-wen/google-usm/">
-                    <div class="card-content">
-                        <span class="card-title">Google USM</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-10-29
-                                <i class="far fa-edit fa-fw icon-date"></i>2024-10-29
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/blog/categories/%E9%9F%B3%E9%A2%91/" class="post-category">
-                                    音频
-                                </a>
-                            
-                            <a href="/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%AD%E9%9F%B3%E8%A1%A8%E7%A4%BA/" class="post-category">
-                                    语音表示
-                                </a>
-                            
-                            <a href="/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%AD%E9%9F%B3%E8%A1%A8%E7%A4%BA/%E8%AE%BA%E6%96%87/" class="post-category">
+                            <a href="/blog/categories/%E9%9F%B3%E9%A2%91/%E9%9F%B3%E9%A2%91%E8%A1%A8%E7%A4%BA/%E8%AE%BA%E6%96%87/" class="post-category">
                                     论文
                                 </a>
                             
