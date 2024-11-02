@@ -7,13 +7,15 @@
     <meta name="keywords" content="【综述】MM-LLMs, 梦园">
     <meta name="description" content="
 作者：腾讯
-MM-LLMs：利用预训练的 LLM，添加多模态理解、生成能力，以节省训练成本。
+MM-LLMs：利用预训练的
+LLM，添加多模态理解、生成能力，以节省训练成本。
 
-1.  模型架构
+1. 模型架构
 
 
-通常模态 encoder、LLM backbone、模态生成器 参数冻结，重点优化输入、输出投影层。
-1.1.  模态e">
+通常模态 encoder、LLM backbone、模态生成器
+参数冻结，重点优化输入、输出投影层。
+">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -382,14 +384,20 @@ MM-LLMs：利用预训练的 LLM，添加多模态理解、生成能力，以节
             <div id="articleContent">
                 <ul>
 <li>作者：腾讯</li>
-<li>MM-LLMs：利用预训练的 LLM，添加多模态理解、生成能力，以节省训练成本。</li>
+<li>MM-LLMs：利用预训练的
+LLM，添加多模态理解、生成能力，以节省训练成本。</li>
 </ul>
-<h1 id="模型架构">1.  模型架构</h1>
-<img src="https://note.youdao.com/yws/api/personal/file/WEBcb12cf55d3ce2b9bf66210923e52e1d7?method=download&shareKey=a3e24e6823eb1eeec7ec5c1c22385282" width="1568">
-<img src="https://note.youdao.com/yws/api/personal/file/WEB2d2861e84459234e2659bef4e9c5c3a3?method=download&shareKey=ceced6a9c135f61e2aa83705ba1b932c" width="2096">
-通常模态 encoder、LLM backbone、模态生成器 参数冻结，重点优化输入、输出投影层。
-<h2 id="模态encoder">1.1.  模态encoder</h2>
+<h1 id="模型架构">1. 模型架构</h1>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBcb12cf55d3ce2b9bf66210923e52e1d7?method=download&shareKey=a3e24e6823eb1eeec7ec5c1c22385282" width="1568"></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB2d2861e84459234e2659bef4e9c5c3a3?method=download&shareKey=ceced6a9c135f61e2aa83705ba1b932c" width="2096">
+通常模态 encoder、LLM backbone、模态生成器
+参数冻结，重点优化输入、输出投影层。</p>
+<h2 id="模态encoder">1.1. 模态encoder</h2>
 <table>
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
 <thead>
 <tr>
 <th>模态</th>
@@ -399,7 +407,9 @@ MM-LLMs：利用预训练的 LLM，添加多模态理解、生成能力，以节
 <tbody>
 <tr>
 <td>图像</td>
-<td>ViT、CLIP ViT、Eva-CLIP ViT、BEiT-3、Open-CLIP、Grounding-DINO-T、DINOv2、SAM-HQ、RAM++、InternViT、VCoder 等</td>
+<td>ViT、CLIP ViT、Eva-CLIP
+ViT、BEiT-3、Open-CLIP、Grounding-DINO-T、DINOv2、SAM-HQ、RAM++、InternViT、VCoder
+等</td>
 </tr>
 <tr>
 <td>视频</td>
@@ -414,80 +424,87 @@ MM-LLMs：利用预训练的 LLM，添加多模态理解、生成能力，以节
 <td>ULIP-2 (+ Point-BERT)</td>
 </tr>
 <tr>
-<td>图像、视频、文本、音频、heat map、inertial measurement units、depth</td>
+<td>图像、视频、文本、音频、heat map、inertial measurement
+units、depth</td>
 <td>ImageBind</td>
 </tr>
 </tbody>
 </table>
-<h2 id="输入投影层">1.2.  输入投影层</h2>
+<h2 id="输入投影层">1.2. 输入投影层</h2>
 <ul>
-<li>
-<p>线性层、MLP、cross-attention、Q-Former、P-Former、MQ-Former 等。</p>
-</li>
-<li>
-<p>训练：采用 X-text 数据集，最小化文本生成损失。</p>
-<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="bold-italic">P</mi><mi>X</mi></msub><mo>=</mo><msub><mi mathvariant="bold-italic">Θ</mi><mrow><mi>X</mi><mo>→</mo><mi>T</mi></mrow></msub><mrow><mo fence="true">(</mo><msub><mi mathvariant="bold-italic">F</mi><mi>X</mi></msub><mo fence="true">)</mo></mrow></mrow><annotation encoding="application/x-tex">\boldsymbol{P}_X=\boldsymbol{\Theta}_{X \rightarrow T}\left(\boldsymbol{F}_X\right) 
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83611em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord"><span class="mord"><span class="mord boldsymbol" style="margin-right:0.15972em;">P</span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.07847em;">X</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord"><span class="mord"><span class="mord boldsymbol" style="margin-right:0.03194em;">Θ</span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.07847em;">X</span><span class="mrel mtight">→</span><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;">(</span><span class="mord"><span class="mord"><span class="mord"><span class="mord boldsymbol" style="margin-right:0.15972em;">F</span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.07847em;">X</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;">)</span></span></span></span></span></span></p>
-<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><munder><mo><mi>arg</mi><mo>⁡</mo><mi>min</mi><mo>⁡</mo></mo><msub><mi mathvariant="normal">Θ</mi><mrow><mi>X</mi><mo>→</mo><mi>T</mi></mrow></msub></munder><msub><mi mathvariant="script">L</mi><mtext>txt-gen</mtext></msub><mrow><mo fence="true">(</mo><mi mathvariant="normal">LLM</mi><mo>⁡</mo><mrow><mo fence="true">(</mo><msub><mi mathvariant="bold-italic">P</mi><mi>X</mi></msub><mo separator="true">,</mo><msub><mi mathvariant="bold-italic">F</mi><mi>T</mi></msub><mo fence="true">)</mo></mrow><mo separator="true">,</mo><mi>t</mi><mo fence="true">)</mo></mrow></mrow><annotation encoding="application/x-tex">\underset{\Theta_{X \rightarrow T}}{\arg \min } \mathcal{L}_{\text {txt-gen}}\left(\operatorname{LLM}\left(\boldsymbol{P}_X, \boldsymbol{F}_T\right), t\right) 
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.7890759999999999em;vertical-align:-1.0390759999999999em;"></span><span class="mord"><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.6678600000000001em;"><span style="top:-1.8612290000000002em;margin-left:0em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mtight">Θ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3567071428571427em;margin-left:0em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.07847em;">X</span><span class="mrel mtight">→</span><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.14329285714285717em;"><span></span></span></span></span></span></span></span></span></span><span style="top:-2.7em;"><span class="pstrut" style="height:2.7em;"></span><span><span class="mop"><span class="mop">ar<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop">min</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.0390759999999999em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord"><span class="mord mathcal">L</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.28055599999999997em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">txt-gen</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;">(</span><span class="mop"><span class="mord mathrm">L</span><span class="mord mathrm">L</span><span class="mord mathrm">M</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;">(</span><span class="mord"><span class="mord"><span class="mord"><span class="mord boldsymbol" style="margin-right:0.15972em;">P</span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.07847em;">X</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord"><span class="mord"><span class="mord boldsymbol" style="margin-right:0.15972em;">F</span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;">)</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">t</span><span class="mclose delimcenter" style="top:0em;">)</span></span></span></span></span></span></p>
-<p>其中，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="bold-italic">F</mi><mi>X</mi></msub></mrow><annotation encoding="application/x-tex">\boldsymbol{F}_X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83611em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord"><span class="mord"><span class="mord boldsymbol" style="margin-right:0.15972em;">F</span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.07847em;">X</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 为其它模态 encoder 的特征，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="bold-italic">P</mi><mi>X</mi></msub></mrow><annotation encoding="application/x-tex">\boldsymbol{P}_X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83611em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord"><span class="mord"><span class="mord boldsymbol" style="margin-right:0.15972em;">P</span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.07847em;">X</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 为输入投影层的表示，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="bold-italic">F</mi><mi>T</mi></msub></mrow><annotation encoding="application/x-tex">\boldsymbol{F}_T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83611em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord"><span class="mord"><span class="mord boldsymbol" style="margin-right:0.15972em;">F</span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 为输入的文本特征，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">t</span></span></span></span> 为文本 label。</p>
-</li>
+<li><p>线性层、MLP、cross-attention、Q-Former、P-Former、MQ-Former
+等。</p></li>
+<li><p>训练：采用 X-text 数据集，最小化文本生成损失。 <span class="math display">\[ \boldsymbol{P}_X=\boldsymbol{\Theta}_{X
+\rightarrow T}\left(\boldsymbol{F}_X\right) \]</span></p>
+<p><span class="math display">\[ \underset{\Theta_{X \rightarrow
+T}}{\arg \min } \mathcal{L}_{\text
+{txt-gen}}\left(\operatorname{LLM}\left(\boldsymbol{P}_X,
+\boldsymbol{F}_T\right), t\right) \]</span></p>
+<p>其中，<span class="math inline">\(\boldsymbol{F}_X\)</span>
+为其它模态 encoder 的特征，<span class="math inline">\(\boldsymbol{P}_X\)</span>
+为输入投影层的表示，<span class="math inline">\(\boldsymbol{F}_T\)</span> 为输入的文本特征，<span class="math inline">\(t\)</span> 为文本 label。</p></li>
 </ul>
-<h2 id="llm">1.3.  LLM</h2>
+<h2 id="llm">1.3. LLM</h2>
 <ul>
-<li>Parameter-Efficient Fine-Tuning (PEFT)：Prefix-tuning、Adapter、LoRA、LayerNorm tuning 等。</li>
+<li>Parameter-Efficient Fine-Tuning
+(PEFT)：Prefix-tuning、Adapter、LoRA、LayerNorm tuning 等。</li>
 </ul>
-<h2 id="输出投影层">1.4.  输出投影层</h2>
+<h2 id="输出投影层">1.4. 输出投影层</h2>
 <ul>
-<li>训练：采用 X-text 数据集，最小化输出投影层的表示、模态生成器的 textual condition encoder 的表示的距离。<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><munder><mo><mi>arg</mi><mo>⁡</mo><mi>min</mi><mo>⁡</mo></mo><msub><mi mathvariant="bold-italic">Θ</mi><mrow><mi>T</mi><mo>→</mo><mi>X</mi></mrow></msub></munder><msub><mi mathvariant="script">L</mi><mrow><mi mathvariant="normal">m</mi><mi mathvariant="normal">s</mi><mi mathvariant="normal">e</mi></mrow></msub><mrow><mo fence="true">(</mo><msub><mi mathvariant="bold-italic">H</mi><mi>X</mi></msub><mo separator="true">,</mo><msub><mi>τ</mi><mi>X</mi></msub><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo fence="true">)</mo></mrow></mrow><annotation encoding="application/x-tex">\underset{\boldsymbol{\Theta}_{T \rightarrow X}}{\arg \min } \mathcal{L}_{\mathrm{mse}}\left(\boldsymbol{H}_X, \tau_X(t)\right) 
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.791022em;vertical-align:-1.041022em;"></span><span class="mord"><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.6678600000000001em;"><span style="top:-1.8592830000000005em;margin-left:0em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord boldsymbol mtight" style="margin-right:0.03194em;">Θ</span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3567071428571427em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span><span class="mrel mtight">→</span><span class="mord mathdefault mtight" style="margin-right:0.07847em;">X</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.14329285714285717em;"><span></span></span></span></span></span></span></span></span></span><span style="top:-2.7em;"><span class="pstrut" style="height:2.7em;"></span><span><span class="mop"><span class="mop">ar<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop">min</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.041022em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord"><span class="mord mathcal">L</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">m</span><span class="mord mathrm mtight">s</span><span class="mord mathrm mtight">e</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;">(</span><span class="mord"><span class="mord"><span class="mord"><span class="mord boldsymbol" style="margin-right:0.08229em;">H</span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.07847em;">X</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.1132em;">τ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.1132em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.07847em;">X</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault">t</span><span class="mclose">)</span><span class="mclose delimcenter" style="top:0em;">)</span></span></span></span></span></span></p>
-</li>
+<li>训练：采用 X-text 数据集，最小化输出投影层的表示、模态生成器的
+textual condition encoder 的表示的距离。 <span class="math display">\[
+\underset{\boldsymbol{\Theta}_{T \rightarrow X}}{\arg \min }
+\mathcal{L}_{\mathrm{mse}}\left(\boldsymbol{H}_X, \tau_X(t)\right)
+\]</span></li>
 </ul>
-<h2 id="模态生成器">1.5.  模态生成器</h2>
+<h2 id="模态生成器">1.5. 模态生成器</h2>
 <ul>
-<li>
-<p>Latent Diffusion Models (LDMs)</p>
+<li><p>Latent Diffusion Models (LDMs)</p>
 <ul>
 <li>图像：Stable Diffusion</li>
 <li>视频：Zeroscope</li>
 <li>音频：AudioLDM-2</li>
+</ul></li>
+<li><p>训练 将 ground truth 通过预训练的 VAE 转换为 latent 特征 <span class="math inline">\(z_0\)</span>，加噪 <span class="math inline">\(\epsilon\)</span>，得到噪声 latent 特征 <span class="math inline">\(z_t\)</span>，采用预训练的 Unet，通过优化损失</p>
+<p><span class="math display">\[ \mathcal{L}_{\mathrm{X} \text
+{-gen}}:=\mathbb{E}_{\epsilon \sim \mathcal{N}(0,1),
+t}\left\|\epsilon-\epsilon_X\left(z_t, t,
+\boldsymbol{H}_X\right)\right\|_2^2 \]</span></p>
+<p>来优化参数 <span class="math inline">\(\Theta_{X \rightarrow
+T}\)</span>、<span class="math inline">\(\Theta_{T \rightarrow
+X}\)</span>。</p></li>
 </ul>
-</li>
-<li>
-<p>训练<br>
-将 ground truth 通过预训练的 VAE 转换为 latent 特征 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>z</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">z_0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.04398em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，加噪 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>ϵ</mi></mrow><annotation encoding="application/x-tex">\epsilon</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">ϵ</span></span></span></span>，得到噪声 latent 特征 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>z</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">z_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.04398em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，采用预训练的 Unet，通过优化损失</p>
-<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="script">L</mi><mrow><mi mathvariant="normal">X</mi><mtext>-gen</mtext></mrow></msub><mo>:</mo><mo>=</mo><msub><mi mathvariant="double-struck">E</mi><mrow><mi>ϵ</mi><mo>∼</mo><mi mathvariant="script">N</mi><mo stretchy="false">(</mo><mn>0</mn><mo separator="true">,</mo><mn>1</mn><mo stretchy="false">)</mo><mo separator="true">,</mo><mi>t</mi></mrow></msub><msubsup><mrow><mo fence="true">∥</mo><mi>ϵ</mi><mo>−</mo><msub><mi>ϵ</mi><mi>X</mi></msub><mrow><mo fence="true">(</mo><msub><mi>z</mi><mi>t</mi></msub><mo separator="true">,</mo><mi>t</mi><mo separator="true">,</mo><msub><mi mathvariant="bold-italic">H</mi><mi>X</mi></msub><mo fence="true">)</mo></mrow><mo fence="true">∥</mo></mrow><mn>2</mn><mn>2</mn></msubsup></mrow><annotation encoding="application/x-tex">\mathcal{L}_{\mathrm{X} \text {-gen}}:=\mathbb{E}_{\epsilon \sim \mathcal{N}(0,1), t}\left\|\epsilon-\epsilon_X\left(z_t, t, \boldsymbol{H}_X\right)\right\|_2^2 
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord"><span class="mord mathcal">L</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.328331em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">X</span></span><span class="mord text mtight"><span class="mord mtight">-gen</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span></span><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.309208em;vertical-align:-0.3551999999999999em;"></span><span class="mord"><span class="mord"><span class="mord mathbb">E</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.34480000000000005em;"><span style="top:-2.5198em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">ϵ</span><span class="mrel mtight">∼</span><span class="mord mtight"><span class="mord mathcal mtight" style="margin-right:0.14736em;">N</span></span><span class="mopen mtight">(</span><span class="mord mtight">0</span><span class="mpunct mtight">,</span><span class="mord mtight">1</span><span class="mclose mtight">)</span><span class="mpunct mtight">,</span><span class="mord mathdefault mtight">t</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3551999999999999em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="minner"><span class="mopen delimcenter" style="top:0em;">∥</span><span class="mord mathdefault">ϵ</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathdefault">ϵ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.07847em;">X</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.04398em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">t</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord"><span class="mord"><span class="mord boldsymbol" style="margin-right:0.08229em;">H</span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.07847em;">X</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;">)</span></span><span class="mclose delimcenter" style="top:0em;">∥</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.954008em;"><span style="top:-2.4003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span><span style="top:-3.2029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.29969999999999997em;"><span></span></span></span></span></span></span></span></span></span></span></p>
-<p>来优化参数 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="normal">Θ</mi><mrow><mi>X</mi><mo>→</mo><mi>T</mi></mrow></msub></mrow><annotation encoding="application/x-tex">\Theta_{X \rightarrow T}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord">Θ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.07847em;">X</span><span class="mrel mtight">→</span><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>、<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="normal">Θ</mi><mrow><mi>T</mi><mo>→</mo><mi>X</mi></mrow></msub></mrow><annotation encoding="application/x-tex">\Theta_{T \rightarrow X}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord">Θ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span><span class="mrel mtight">→</span><span class="mord mathdefault mtight" style="margin-right:0.07847em;">X</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>。</p>
-</li>
-</ul>
-<h1 id="训练">2.  训练</h1>
-<h2 id="模态对齐预训练">2.1.  模态对齐预训练</h2>
-<p>对于多模态生成模型，输入投影层的优化目标还包含 ground truth 多模态 token 序列。</p>
-<h2 id="指令微调">2.2.  指令微调</h2>
+<h1 id="训练">2. 训练</h1>
+<h2 id="模态对齐预训练">2.1. 模态对齐预训练</h2>
+<p>对于多模态生成模型，输入投影层的优化目标还包含 ground truth 多模态
+token 序列。</p>
+<h2 id="指令微调">2.2. 指令微调</h2>
 <ul>
 <li>增强对话交互能力，更符合人类意图。</li>
-<li>Supervised Fine-Tuning (SFT)：将部分预训练阶段的数据转换为指令格式。</li>
+<li>Supervised Fine-Tuning
+(SFT)：将部分预训练阶段的数据转换为指令格式。</li>
 <li>Reinforcement Learning from Human Feedback (RLHF)。</li>
 </ul>
-<h2 id="经验">2.3.  经验</h2>
+<h2 id="经验">2.3. 经验</h2>
 <ul>
 <li>高质量的 SFT 数据可以显著提升特定任务的性能。</li>
-<li>更高的分辨率 有利于需要视觉细节的任务，如对富文本图像、表格、文档内容的理解。另外，需要处理高分辨率导致的序列长度问题。</li>
+<li>更高的分辨率
+有利于需要视觉细节的任务，如对富文本图像、表格、文档内容的理解。另外，需要处理高分辨率导致的序列长度问题。</li>
 <li>VILA
 <ul>
-<li>对 LLM 进行 PEFT，可以促进深层表示对齐，特别是 In-Context Learning (ICL)。</li>
+<li>对 LLM 进行 PEFT，可以促进深层表示对齐，特别是 In-Context Learning
+(ICL)。</li>
 <li>相较于图像-文本对，图文交错的数据更有益。</li>
-<li>SFT 中，纯文本指令数据与多模态指令数据混合，不仅可以缓解纯文本任务的退化，还能提升多模态任务的性能。</li>
+<li>SFT
+中，纯文本指令数据与多模态指令数据混合，不仅可以缓解纯文本任务的退化，还能提升多模态任务的性能。</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h1 id="数据集">3.  数据集</h1>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB70dd2ec2a24445592a2d301e6f9e06a4?method=download&shareKey=f5df9a327d406f34d530cd591875dc95" width="1518">
-<img src="https://note.youdao.com/yws/api/personal/file/WEB921a8568c36affbda4eb3c25e3fefcfc?method=download&shareKey=c8eee3f623fac1841335d5e30926bc70" width="2080">
-<h1 id="benchmark">4.  benchmark</h1>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB46c638f8fc83e29f66da98657d9f0e77?method=download&shareKey=f03cf409b22a6b8caefa59e382d27a0d" width="2082">
-<h1 id="未来的方向">5.  未来的方向</h1>
+<h1 id="数据集">3. 数据集</h1>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB70dd2ec2a24445592a2d301e6f9e06a4?method=download&shareKey=f5df9a327d406f34d530cd591875dc95" width="1518"></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB921a8568c36affbda4eb3c25e3fefcfc?method=download&shareKey=c8eee3f623fac1841335d5e30926bc70" width="2080"></p>
+<h1 id="benchmark">4. benchmark</h1>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB46c638f8fc83e29f66da98657d9f0e77?method=download&shareKey=f03cf409b22a6b8caefa59e382d27a0d" width="2082"></p>
+<h1 id="未来的方向">5. 未来的方向</h1>
 <ul>
 <li>研究趋势
 <ul>
@@ -496,55 +513,53 @@ MM-LLMs：利用预训练的 LLM，添加多模态理解、生成能力，以节
 <li><font color="green">多样化的模态扩展。</font></li>
 <li>更高质量的训练数据集。</li>
 <li>更高效的模型架构，如 Q/P-Former -&gt; 线性输入投影层。</li>
-</ul>
-</li>
+</ul></li>
 <li>更通用、智能的模型
 <ul>
 <li>扩展模态，如图表、网页等。</li>
 <li>各种类型、规模的LLMs，使得可以根据具体需求选择。</li>
 <li>高质量的指令集，多样化的指令。</li>
 <li>增强多模态生成能力。</li>
-</ul>
-</li>
+</ul></li>
 <li>benchmark</li>
-<li>移动设备/轻量级部署。如 MobileVLM、TinyGPT-V、Vary-toy、Mobile-Agent、MoE-LLaVA、MobileVLM V2。</li>
+<li>移动设备/轻量级部署。如
+MobileVLM、TinyGPT-V、Vary-toy、Mobile-Agent、MoE-LLaVA、MobileVLM
+V2。</li>
 <li>具身智能。如 PaLM-E、EmbodiedGPT。</li>
 <li>持续学习。如
 <ul>
-<li>He J, Guo H, Tang M, et al. Continual instruction tuning for large multimodal models[J]. arXiv preprint arXiv:2311.16206, 2023.</li>
-<li>挑战：灾难性遗忘；negative forward transfer 学习新任务时在未见任务上性能下降。</li>
-</ul>
-</li>
+<li>He J, Guo H, Tang M, et al. Continual instruction tuning for large
+multimodal models[J]. arXiv preprint arXiv:2311.16206, 2023.</li>
+<li>挑战：灾难性遗忘；negative forward transfer
+学习新任务时在未见任务上性能下降。</li>
+</ul></li>
 <li>减少幻觉。如
 <ul>
-<li>Han Z, Bai Z, Mei H, et al. Skip <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">\</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">\backslash n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">\</span><span class="mord mathdefault">n</span></span></span></span> : A simple method to reduce hallucination in Large Vision-Language Models[J]. arXiv preprint arXiv:2402.01345, 2024.</li>
-</ul>
-</li>
+<li>Han Z, Bai Z, Mei H, et al. Skip <span class="math inline">\(\backslash n\)</span> : A simple method to reduce
+hallucination in Large Vision-Language Models[J]. arXiv preprint
+arXiv:2402.01345, 2024.</li>
+</ul></li>
 <li>偏见和伦理。</li>
 </ul>
-<h1 id="其它">6.  其它</h1>
+<h1 id="其它">6. 其它</h1>
 <ul>
-<li>
-<p>Zhang D, Yu Y, Li C, et al. Mm-llms: Recent advances in multimodal large language models[J]. arXiv preprint arXiv:2401.13601, 2024.</p>
-</li>
-<li>
-<p><a target="_blank" rel="noopener" href="https://mm-llms.github.io/">https://mm-llms.github.io/</a></p>
-</li>
-<li>
-<p>MM-LLMs</p>
-<img src="https://note.youdao.com/yws/api/personal/file/WEBe4ffd5049651e7dd9fa60101c531f7e9?method=download&shareKey=ea622ff90b539918b59cf471b9ef1102" width="988">
-<img src="https://note.youdao.com/yws/api/personal/file/WEBdd8dd8d6495a66dfe3a1a910c88583bc?method=download&shareKey=23775301830797435d585d02fdd686c2" width="1564">
+<li><p>Zhang D, Yu Y, Li C, et al. Mm-llms: Recent advances in
+multimodal large language models[J]. arXiv preprint arXiv:2401.13601,
+2024.</p></li>
+<li><p><a target="_blank" rel="noopener" href="https://mm-llms.github.io/" class="uri">https://mm-llms.github.io/</a></p></li>
+<li><p>MM-LLMs</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBe4ffd5049651e7dd9fa60101c531f7e9?method=download&shareKey=ea622ff90b539918b59cf471b9ef1102" width="988"></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBdd8dd8d6495a66dfe3a1a910c88583bc?method=download&shareKey=23775301830797435d585d02fdd686c2" width="1564"></p>
 <ul>
 <li>Video-LLaMA：多分支跨模态预训练，在对话中同时处理视频、音频。</li>
 <li>BuboGPT：学习图像、音频、文本 共享的语义空间。</li>
-</ul>
-</li>
-<li>
-<p>相关工作</p>
+</ul></li>
+<li><p>相关工作</p>
 <ul>
-<li>Song S, Li X, Li S. How to bridge the gap between modalities: A comprehensive survey on multimodal large language model[J]. arXiv preprint arXiv:2311.07594, 2023.</li>
-</ul>
-</li>
+<li>Song S, Li X, Li S. How to bridge the gap between modalities: A
+comprehensive survey on multimodal large language model[J]. arXiv
+preprint arXiv:2311.07594, 2023.</li>
+</ul></li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
@@ -616,7 +631,7 @@ MM-LLMs：利用预训练的 LLM，添加多模态理解、生成能力，以节
                     <div class="publish-info">
                         <span class="publish-date">
                             <i class="far fa-clock fa-fw icon-date"></i>2024-06-19
-                            <i class="far fa-edit fa-fw icon-date"></i>2024-07-11
+                            <i class="far fa-edit fa-fw icon-date"></i>2024-11-03
                         </span>
                         <span class="publish-author">
                             

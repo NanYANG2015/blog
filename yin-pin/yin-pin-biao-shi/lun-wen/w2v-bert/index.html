@@ -6,7 +6,8 @@
     <meta charset="utf-8">
     <meta name="keywords" content="w2v-BERT, 梦园">
     <meta name="description" content="
-Chung Y A, Zhang Y, Han W, et al. W2v-bert: Combining contrastive learning and masked language modeling for self-superv">
+Chung Y A, Zhang Y, Han W, et al. W2v-bert: Combining contrastive
+learning and masked language modeling for self-supe">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -374,31 +375,36 @@ Chung Y A, Zhang Y, Han W, et al. W2v-bert: Combining contrastive learning and m
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <ul>
-<li>Chung Y A, Zhang Y, Han W, et al. W2v-bert: Combining contrastive learning and masked language modeling for self-supervised speech pre-training[C]//2021 IEEE Automatic Speech Recognition and Understanding Workshop (ASRU). IEEE, 2021: 244-250.</li>
-<li><a target="_blank" rel="noopener" href="https://huggingface.co/facebook/w2v-bert-2.0">https://huggingface.co/facebook/w2v-bert-2.0</a></li>
+<li>Chung Y A, Zhang Y, Han W, et al. W2v-bert: Combining contrastive
+learning and masked language modeling for self-supervised speech
+pre-training[C]//2021 IEEE Automatic Speech Recognition and
+Understanding Workshop (ASRU). IEEE, 2021: 244-250.</li>
+<li><a target="_blank" rel="noopener" href="https://huggingface.co/facebook/w2v-bert-2.0" class="uri">https://huggingface.co/facebook/w2v-bert-2.0</a></li>
 <li>作者：来自 MIT、Google Brain</li>
-<li><font color="red">创新点：采用对比学习损失和掩码预测损失，端到端联合优化。对比学习损失避免了掩码预测训练中的码本坍塌（详见论文图 2）。相较于 w2v-Conformer，验证了相较于仅采用对比损失性能有提升，mask 预测有助于减轻对比学习中的简单负样本问题（见论文表 4）。</font></li>
+<li><font color="red">创新点：采用对比学习损失和掩码预测损失，端到端联合优化。对比学习损失避免了掩码预测训练中的码本坍塌（详见论文图
+2）。相较于 w2v-Conformer，验证了相较于仅采用对比损失性能有提升，mask
+预测有助于减轻对比学习中的简单负样本问题（见论文表 4）。</font></li>
 <li>相关研究：相较于先训练语音离散化模块，冻结，再训练表示学习模块，端到端联合优化总体的性能。</li>
 </ul>
-<h1 id="模型结构">1.  模型结构</h1>
-<img src="https://note.youdao.com/yws/api/personal/file/WEBbc74d60a17658bd52f62abb94f5ee321?method=download&shareKey=9c2e348f15ffb523aa4f6787f453d92d" width="374">
-<img src="https://note.youdao.com/yws/api/personal/file/WEBbdef8365154aba41333f1c21d7fe9cb4?method=download&shareKey=514eddc8bee9943db0051ab12342bbf7" width="593">
+<h1 id="模型结构">1. 模型结构</h1>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBbc74d60a17658bd52f62abb94f5ee321?method=download&shareKey=9c2e348f15ffb523aa4f6787f453d92d" width="374"></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBbdef8365154aba41333f1c21d7fe9cb4?method=download&shareKey=514eddc8bee9943db0051ab12342bbf7" width="593"></p>
 <ul>
 <li>输入特征：80 维 FBANK。</li>
 <li>卷积下采样：4 倍。</li>
 <li>mask 位置被替换为随机向量。</li>
 </ul>
-<p class="katex-block katex-error" title="ParseError: KaTeX parse error: No such environment: align at position 8:  \begin{̲a̲l̲i̲g̲n̲}̲
-\mathcal{L}_c …"> \begin{align}
+<p><span class="math display">\[ \begin{align}
 \mathcal{L}_c &amp;=\mathcal{L}_w+\alpha \cdot \mathcal{L}_d \\
 \mathcal{L}_p &amp;=\beta \cdot \mathcal{L}_c+\gamma \cdot \mathcal{L}_m
-\end{align} </p>
-<p>其中，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="script">L</mi><mi>c</mi></msub></mrow><annotation encoding="application/x-tex">\mathcal{L}_c</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord"><span class="mord mathcal">L</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">c</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 为对比学习损失，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="script">L</mi><mi>m</mi></msub></mrow><annotation encoding="application/x-tex">\mathcal{L}_m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord"><span class="mord mathcal">L</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">m</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 为 MLM loss，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="script">L</mi><mi>d</mi></msub></mrow><annotation encoding="application/x-tex">\mathcal{L}_d</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord"><span class="mord mathcal">L</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">d</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 为码本 diversity loss。<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>α</mi><mo>=</mo><mn>0.1</mn></mrow><annotation encoding="application/x-tex">\alpha=0.1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.0037em;">α</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">1</span></span></span></span>，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>β</mi><mo>=</mo><mi>γ</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\beta = \gamma = 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05278em;">β</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05556em;">γ</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span></p>
-<h1 id="实验结果">2.  实验结果</h1>
+\end{align} \]</span> 其中，<span class="math inline">\(\mathcal{L}_c\)</span> 为对比学习损失，<span class="math inline">\(\mathcal{L}_m\)</span> 为 MLM loss，<span class="math inline">\(\mathcal{L}_d\)</span> 为码本 diversity
+loss。<span class="math inline">\(\alpha=0.1\)</span>，<span class="math inline">\(\beta = \gamma = 1\)</span></p>
+<h1 id="实验结果">2. 实验结果</h1>
 <ul>
-<li>微调：添加线性 projection 层和 RNNT decoder。采用 self training（伪标签）、SpecAugment、LM fusion。</li>
+<li>微调：添加线性 projection 层和 RNNT decoder。采用 self
+training（伪标签）、SpecAugment、LM fusion。</li>
 </ul>
-<img src="https://note.youdao.com/yws/api/personal/file/WEBaa18673c05b551f0a835a26cbfbec565?method=download&shareKey=0f5e5a144ccbd001e47cb06f049f6479" width="765">
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBaa18673c05b551f0a835a26cbfbec565?method=download&shareKey=0f5e5a144ccbd001e47cb06f049f6479" width="765"></p>
 <p>* 无监督数据采用 Libri-Light unlab-60k。</p>
 <ul>
 <li>在谷歌语音搜索数据上验证时，由于相较于朗读语音，真实音频噪声大、静音更多，对比学习负采样有效性降低；短音频较多，采用堆叠3帧特征而不是卷积4倍下采样。</li>
@@ -473,7 +479,7 @@ Chung Y A, Zhang Y, Han W, et al. W2v-bert: Combining contrastive learning and m
                     <div class="publish-info">
                         <span class="publish-date">
                             <i class="far fa-clock fa-fw icon-date"></i>2024-11-01
-                            <i class="far fa-edit fa-fw icon-date"></i>2024-11-01
+                            <i class="far fa-edit fa-fw icon-date"></i>2024-11-03
                         </span>
                         <span class="publish-author">
                             
