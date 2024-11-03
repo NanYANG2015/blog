@@ -365,7 +365,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-07-19
+                    2024-11-03
                 </div>
                 
 
@@ -413,11 +413,13 @@
 <li><p>audio encoder + 线性层、text encoder +
 线性层。线性层用于投影到联合 embedding 空间，统一维度。</p></li>
 <li><p><font color="green">损失函数</font> <span class="math display">\[
-\begin{align} C &amp;= \tau *\left(E_t \cdot E_a^{\top}\right) \\
+\begin{align}
+C &amp;= \tau *\left(E_t \cdot E_a^{\top}\right) \\
 \mathcal{L} &amp;= 0.5 *\left(\ell_{\text {text }}(C)+\ell_{\text {audio
 }}(C)\right) \\
 \ell_k &amp;= \frac{1}{N} \sum_{i=0}^N \log
-\operatorname{diag}(\operatorname{softmax}(C)) \end{align}\]</span></p>
+\operatorname{diag}(\operatorname{softmax}(C))
+\end{align}\]</span></p>
 <p>其中，<span class="math inline">\(\tau\)</span> 为温度参数；<span class="math inline">\(C \in \mathbb{R}^{N \times
 N}\)</span>；沿文本、音频轴分别计算。</p></li>
 <li><p>推理：余弦相似度，softmax 或 sigmoid（multilabel）。</p></li>

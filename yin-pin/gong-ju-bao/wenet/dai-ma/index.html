@@ -349,7 +349,7 @@ frame_num：训练集总帧数
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-10-29
+                    2024-11-03
                 </div>
                 
 
@@ -866,14 +866,13 @@ flowchart TD
 </ul>
 <h2 id="模型训练">3.6. 模型训练</h2>
 <ul>
-<li><p>LRScheduler <span class="math display">\[
-l_{r}=\begin{cases}
-l_{r} * \frac{\text { step }}{\text { warmup_step }} &amp; , \text {
+<li><p>LRScheduler</p>
+<p><span class="math display">\[l_{r}=\begin{cases}
+    l_{r} * \frac{\text { step }}{\text { warmup_step }} &amp; , \text {
 step } \leqslant \text { warmup_step } \\
-l_{r} * \sqrt{\frac{\text { warmup_step }}{\text { step }}} &amp; ,
+    l_{r} * \sqrt{\frac{\text { warmup_step }}{\text { step }}} &amp; ,
 \text { step }&gt;\text { warmup_step}
-\end{cases}
-\]</span></p></li>
+\end{cases}\]</span></p></li>
 <li><p>fp16梯度同步 <pre class="line-numbers language-none"><code class="language-none">model.cuda()
 model &#x3D; torch.nn.parallel.DistributedDataParallel(model, find_unused_parameters&#x3D;True)
 from torch.distributed.algorithms.ddp_comm_hooks import (default as comm_hooks,)
@@ -1008,9 +1007,9 @@ predictor：https://arxiv.org/pdf/2109.07513.pdf </font></li>
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/blog/yin-pin/yu-yin-ping-ce/ping-fen/shen-du-xue-xi/">
+                <a href="/blog/yin-pin/yu-yin-ping-ce/ping-fen/duo-wei-du-duo-li-du/">
                     <div class="card-content">
-                        <span class="card-title">基于深度学习的语音评分</span>
+                        <span class="card-title">多维度、多粒度语音评分</span>
                     </div>
                 </a>
                 <div class="card-content article-content">

@@ -405,11 +405,14 @@ g_i^{(\text {update })}, g_i^{\text {(reset) }} &amp;=
 \tilde{r}_{i-j} &amp;= w g_i^{\text {(reset) }} d_{i-j} \\
 r_{i-j} &amp;= d_{i-j}+g_i^{\text {(update) }}
 d_{i-j}+\left(1-g_i^{\text {(update) }}\right) \tilde{r}_{i-j} \\
-d_{|i-j|} &amp;= \begin{cases}|i-j|, &amp; |i-j|&lt;\frac{n}{4} \\
+d_{|i-j|} &amp;= \begin{cases}
+|i-j|, &amp; |i-j|&lt;\frac{n}{4} \\
 \left\lfloor\frac{n}{4}\left(\frac{\log (|i-j|)-\log
 \left(\frac{n}{4}\right)}{\log (m)-\log
 \left(\frac{n}{4}\right)}+1\right)\right\rfloor, &amp; \frac{n}{4}
-\leq|i-j|&lt;m \\ \frac{n}{2}-1, &amp; |i-j| \geq m\end{cases} \\
+\leq|i-j|&lt;m \\
+\frac{n}{2}-1, &amp; |i-j| \geq m
+\end{cases} \\
 d_{i-j} &amp;=d_{|i-j|}+\frac{n}{2} \cdot \mathbb{1}_{\{i-j&gt;0\}}
 \end{aligned} \]</span> 其中，<span class="math inline">\(a_{ij}\)</span> 为 attention 系数，<span class="math inline">\(r_{i-j}\)</span> 为 gated relative position
 bias，<span class="math inline">\(\sigma\)</span> 为 sigmoid 函数，<span class="math inline">\(w\)</span> 可学习，<span class="math inline">\(n=320\)</span>，<span class="math inline">\(m=800\)</span>。</p>
@@ -635,16 +638,14 @@ Large、HuBERT Large、wav2vec 2.0 Large 在 LibriSpeech 960h
 </ul></li>
 <li>解决 fp16 数值溢出问题，主要原因为 attention score <span class="math inline">\(\frac{\mathbf{q}_i \cdot
 \mathbf{k}_j}{\sqrt{d}}\)</span> 超出了 fp16 的上限，表现为 loss 为
-NaN。 <span class="math display">\[
-\begin{aligned}
+NaN。 <span class="math display">\[\begin{aligned}
 \alpha_{i, j} &amp; \propto \exp \left\{\frac{\mathbf{q}_i \cdot
 \mathbf{k}_j}{\sqrt{d}}+r_{i-j}\right\} \\
 &amp; =\exp \left\{\left(\frac{\mathbf{q}_i}{c \sqrt{d}} \cdot
 \mathbf{k}_j-\max _{j^{\prime} \leq T}\left(\frac{\mathbf{q}_i}{c
 \sqrt{d}} \cdot \mathbf{k}_{j^{\prime}}\right)\right) \times
 c+r_{i-j}\right\}
-\end{aligned}
-\]</span> 其中，<span class="math inline">\(c\)</span>
+\end{aligned}\]</span> 其中，<span class="math inline">\(c\)</span>
 为缩放系数超参数，本文取 32。</li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
