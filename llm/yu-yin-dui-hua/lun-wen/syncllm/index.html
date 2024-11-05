@@ -4,11 +4,10 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Freeze-Omni, 梦园">
+    <meta name="keywords" content="SyncLLM, 梦园">
     <meta name="description" content="
-Freeze-Omni: A Smart and Low Latency Speech-to-speech Dialogue Model
-with Frozen LLM
-https://arxiv.org/pdf/2411.0077">
+Veluri B, Peloquin B N, Yu B, et al. Beyond Turn-Based Interfaces:
+Synchronous LLMs as Full-Duplex Dialogue Agents[J]">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -20,7 +19,7 @@ https://arxiv.org/pdf/2411.0077">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Freeze-Omni | 梦园</title>
+    <title>SyncLLM | 梦园</title>
     <link rel="icon" type="image/png" href="/blog/favicon.png">
     
 
@@ -312,7 +311,7 @@ https://arxiv.org/pdf/2411.0077">
                     <div class="row">
                         <div class="col s12 m12 l12">
                             <div class="brand">
-                                <h1 class="description center-align post-title">Freeze-Omni</h1>
+                                <h1 class="description center-align post-title">SyncLLM</h1>
                             </div>
                         </div>
                     </div>
@@ -329,11 +328,11 @@ https://arxiv.org/pdf/2411.0077">
                                 LLM
                             </a>
                         
-                            <a href="/blog/categories/LLM/%E5%A4%9A%E6%A8%A1%E6%80%81/" class="post-category">
-                                多模态
+                            <a href="/blog/categories/LLM/%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/" class="post-category">
+                                语音对话
                             </a>
                         
-                            <a href="/blog/categories/LLM/%E5%A4%9A%E6%A8%A1%E6%80%81/%E8%AE%BA%E6%96%87/" class="post-category">
+                            <a href="/blog/categories/LLM/%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/%E8%AE%BA%E6%96%87/" class="post-category">
                                 论文
                             </a>
                         
@@ -346,14 +345,14 @@ https://arxiv.org/pdf/2411.0077">
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2024-11-04
+                    2024-11-06
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-11-04
+                    2024-11-06
                 </div>
                 
 
@@ -376,122 +375,81 @@ https://arxiv.org/pdf/2411.0077">
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <ul>
-<li>Freeze-Omni: A Smart and Low Latency Speech-to-speech Dialogue Model
-with Frozen LLM</li>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2411.00774v1" class="uri">https://arxiv.org/pdf/2411.00774v1</a></li>
-<li><a target="_blank" rel="noopener" href="https://freeze-omni.github.io/" class="uri">https://freeze-omni.github.io/</a></li>
-<li>作者：来自腾讯优图、西工大、南大</li>
-<li><font color="red">创新点：【VAD + speech encoder + LLM + TTS】冻结
-LLM 避免灾难遗忘。采用 <a target="_blank" rel="noopener" href="https://github.com/snakers4/silero-vad">VAD</a>
-检测“用户开始语音输入”。采用语音 encoder + adapter 接收 chunk-wise
-流式语音输入，LLM 预测状态：0 继续接收语音，1
-语音结束开始生成，<font color="green">2 语音结束不需要打断</font>。基于
-LLM 文本输出 + 隐藏状态，采用 NAR+AR 生成语音 token，采用流式 codec
-生成音频。系统平均延迟约
-1.2s。</font><font color="green">存疑：也可以利用 VAD
-打断模型生成？</font></li>
+<li>Veluri B, Peloquin B N, Yu B, et al. Beyond Turn-Based Interfaces:
+Synchronous LLMs as Full-Duplex Dialogue Agents[J]. arXiv preprint
+arXiv:2409.15594, 2024.</li>
+<li><a target="_blank" rel="noopener" href="https://syncllm.cs.washington.edu/" class="uri">https://syncllm.cs.washington.edu/</a></li>
+<li>作者：来自 Meta AI、华盛顿大学</li>
+<li><font color="red">创新点</font>
+<ul>
+<li><font color="red">通过对交替的用户语音 token chunk、系统语音 token
+chunk 自回归生成建模，支持全双工口语对话。</font></li>
+<li><font color="red">重复的语音 token
+影响模型的语义能力，去重。</font></li>
+<li><font color="red">考虑 240ms
+网络延迟，可能无法立即访问用户语音，采用延迟输入模式。交替地生成系统语音
+chunk N、用户语音 chunk（用户接下来可能说的话）、系统语音 chunk
+N+1，但预测后续系统语音 chunk <span class="math inline">\((\mathrm{N}+2,
+\mathrm{~N}+3, \ldots)\)</span> 时，替换为用户对 chunk N
+的真实响应。</font></li>
+</ul></li>
 </ul>
 <h1 id="系统结构">1. 系统结构</h1>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEBf972ed8dc6a6cdaf84ef64642c7d97e2?method=download&shareKey=52557e65674b126bb567f130523821ad" width="602"></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB3823dab3b33e456b07779fd6fc2edba4?method=download&shareKey=cad04b66be0bea1f303f3483b964a1f1" width="690"></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB85b7c0eece7cf97f0ff71dcc71021f8f?method=download&shareKey=9a61ab6ab1a3648c4dba252f741ddd0b" width="689"></p>
 <ul>
-<li>语音 encoder：4倍下采样多层卷积 + 24层 Transformer。输入为
-FBANK，10ms 帧移。</li>
-<li>adapter：2倍下采样多层卷积。与 encoder 合计 350M 参数量，12.5Hz
-帧率。</li>
-<li>LLM：Qwen2-7B-Instruct</li>
-<li>NAR/AR decoder：4层 Llama decoder 层</li>
-<li>流式 codec：<a target="_blank" rel="noopener" href="https://github.com/y-ren16/TiCodec">TiCodec</a>，单码本，码本大小
-1024，帧率 40Hz，输出 24kHz 音频。输入为固定 chunk size 40。</li>
+<li>Llama3-8b，上下文长度 8192。</li>
+<li>采用 speaker special token [S0] [S1] 分别指示两个说话人的 token
+序列起始位置。</li>
+<li>语音 tokenizer 与合成：参照 SPIRIT LM，采用 HuBERT +
+HiFi-GAN，25Hz，词典大小 501。</li>
+<li>重复的语音 token 影响模型的语义能力，去重。通过上述 speaker tag
+保留粗略的时间信息。注意：若 [S1] 新 chunk 不包含新的 token，删除 [S1]
+tag，但若 [S0] 出现上述情形，保留 [S0] 以保留时间信息。</li>
+<li>语音合成前对 token 序列插值：若 chunk 内有多个 token，每个 token
+重复相同的次数。观察到这种粗略的方式的影响难以察觉，可能由于误差上限被
+chunk 时长限制，且若包含多个 token，误差会更小。</li>
 </ul>
-<h1 id="训练">2. 训练</h1>
+<h1 id="阶段训练">2. 3阶段训练</h1>
 <ul>
-<li><p>语音输入 3 阶段训练</p>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEBbd65061dcdfe2e762861dadf1a66d1cc?method=download&shareKey=61dbd99983ac7586098669bef0ae891f" width="600"></p>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEBcbe37f6ae151285be8b526645867bb85?method=download&shareKey=755228648f266fa6023f1eaaeb55ff19" width="599"></p>
-<table>
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr>
-<th>阶段</th>
-<th>可训练的模块</th>
-<th>任务</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>encoder</td>
-<td>11wh 中英 ASR，CTC 损失</td>
-</tr>
-<tr>
-<td>2</td>
-<td>encoder + adapter + 添加的 special tokens</td>
-<td>ASR。<br>可采用 Wenet 中的动态 chunk 训练，本文采用固定
-chunk=4。</td>
-</tr>
-<tr>
-<td>3</td>
-<td>prompt embedding。<br>每个问题采用相同的 prompt embedding</td>
-<td>6w <a target="_blank" rel="noopener" href="https://huggingface.co/datasets/fnlp/moss-003-sft-data">moss-003-sft-data</a>
-语音-文本多轮问答（答案由冻结的文本 LLM 生成）+ chunk-wise
-打断状态预测</td>
-</tr>
-</tbody>
-</table></li>
-<li><p>语音输出 3 阶段训练</p>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEBc0cb3035a75a1ca8082d0a360512155f?method=download&shareKey=5444029dc55885d96bac1fb54800c4c2" width="601"></p>
-<table>
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr>
-<th>阶段</th>
-<th>可训练的模块</th>
-<th>任务</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>codec</td>
-<td>语音编解码</td>
-</tr>
-<tr>
-<td>2</td>
-<td><font color="green">NAR decoder + AR
-decoder（两者参数相同）</font></td>
-<td>3kh TTS。输入为 LLM text embedding，输出为 codec 的语音 token。</td>
-</tr>
-<tr>
-<td>3</td>
-<td>NAR prefix decoder</td>
-<td>文本-语音多轮问答。输入为 LLM 的隐藏状态和生成的文本
-token，输出为答案 TTS 音频的 codec token。</td>
-</tr>
-</tbody>
-</table></li>
+<li><p>turn-based 对话 <span class="math display">\[\text
+{[S1]&lt;sent0&gt;[S0]&lt;sent0&gt;&lt;sent1&gt;[S1].. }\]</span></p>
+<p>每个句子随机选择采用文本形式或去重的语音
+token，从下图的截断正态分布中采样序列中语音句子的百分比。相较于纯语音或逐步增加语音占比，训练更稳定。（附录
+A.2 句子级语音-文本交错优于 turn 级交错）</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB3e227beb79ff9cc5cd504779173a243d?method=download&shareKey=a545540cf98966054375499fcb179cca" width="336"></p>
+<ul>
+<li>数据：文本 SFT 数据 Bark TTS，193kh。</li>
+</ul></li>
+<li><p>无重叠的全双工对话，chunk 交替，一人说话人时另一人为静音。</p>
+<ul>
+<li>数据：文本对话数据 Bark TTS，20kh。SFT
+数据中系统回复较长，对话数据中 turn-taking 更频繁，语句较短。</li>
+</ul></li>
+<li><p>真实口语对话数据。Fisher 2kh。</p></li>
+<li><p>训练超参数详见附录 A.1</p></li>
 </ul>
 <h1 id="评价">3. 评价</h1>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEBd2a90ee6d8c29c6861d69822732fefbe?method=download&shareKey=291b42731a353ffd5c20dc3bdfbdcbc1" width="602"></p>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEBa19e7f12d7491db0bb0fdb752fcad057?method=download&shareKey=64d38a0b8f82a2dae564dd85252660b0" width="589"></p>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB64c78a3c26d609bc19075a16b67a5acf?method=download&shareKey=820a2924e456f7dda87a13f117e64d7e" width="607"></p>
 <ul>
-<li><a target="_blank" rel="noopener" href="https://github.com/google-research-datasets/LLAMA1-Test-Set">LlaMA-Questions</a>、<a target="_blank" rel="noopener" href="https://huggingface.co/datasets/Stanford/web_questions">Web
-Questions</a>、<a target="_blank" rel="noopener" href="https://nlp.cs.washington.edu/triviaqa/">Trivia
-QA</a>。Web Questions 和 Trivia QA 采用 <a target="_blank" rel="noopener" href="https://github.com/rany2/edge-tts">edge-tts</a> 合成问题。</li>
-</ul>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB7670801929419a6a6ccb9b17229d318c?method=download&shareKey=3e7c53b637bba853860ebcff2f5909a3" width="601"></p>
+<li><p>给定 10s 对话提示生成延续的 10-30s
+对话，忽略重叠语音，用文本对话模型计算 ASR 文本的 PPL。结果见论文图
+5。</p></li>
+<li><p>上述提示分别从 Fisher （集内）和
+Candor（集外）测试集中采样。结果见论文图 6。</p></li>
+<li><p>给定 30s 对话提示生成延续的 90s 对话，计算与 ground truth 延续的
+turn-taking event 时长的 Pearson correlation。结果见论文表 2。</p>
+<p>* Resynth-GT 考虑了本文的 tokenization 策略，作为方案上限。</p></li>
+<li><p>人工评价 N-MOS（turn-taking
+自然度）、M-MOS（Meaningfulness，内容连贯合理、可理解）。结果见论文表
+3。</p>
 <ul>
-<li>语音结束到 LLM 输出中断状态需要手动统计，约 160-320ms。</li>
-<li>文本 token 分段基于 sentence-split。</li>
-<li>考虑网络延迟约 200-300ms。系统平均延迟约 1.2s。</li>
+<li>评价指南详见附录 B。</li>
+</ul></li>
+<li><p>给定对话提示，用两个模型实例对话生成延续，考虑 one-chunk
+延迟。统计 ASR 文本的 PPL、人工 MOS 评分、turn-taking event 时长的
+Pearson correlation。分别见论文图 7、表 4、表 6。<font color="red">chunk
+size 为 160/200ms 时性能相当，240ms 时性能下降。</font></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB2de188a67b0606d85f10c348f8141985?method=download&shareKey=b87b04b26656943b914ab372ba6cbf11" width="323"></p></li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
@@ -550,9 +508,9 @@ QA</a>。Web Questions 和 Trivia QA 采用 <a target="_blank" rel="noopener" hr
                 <i class="far fa-dot-circle"></i>&nbsp;本篇
             </div>
             <div class="card">
-                <a href="/blog/llm/duo-mo-tai/lun-wen/freeze-omni/">
+                <a href="/blog/llm/yu-yin-dui-hua/lun-wen/syncllm/">
                     <div class="card-content">
-                        <span class="card-title">Freeze-Omni</span>
+                        <span class="card-title">SyncLLM</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -563,8 +521,8 @@ QA</a>。Web Questions 和 Trivia QA 采用 <a target="_blank" rel="noopener" hr
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-11-04
-                                <i class="far fa-edit fa-fw icon-date"></i>2024-11-04
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-11-06
+                                <i class="far fa-edit fa-fw icon-date"></i>2024-11-06
                             </span>
                         <span class="publish-author">
                             
@@ -574,11 +532,11 @@ QA</a>。Web Questions 和 Trivia QA 采用 <a target="_blank" rel="noopener" hr
                                     LLM
                                 </a>
                             
-                            <a href="/blog/categories/LLM/%E5%A4%9A%E6%A8%A1%E6%80%81/" class="post-category">
-                                    多模态
+                            <a href="/blog/categories/LLM/%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/" class="post-category">
+                                    语音对话
                                 </a>
                             
-                            <a href="/blog/categories/LLM/%E5%A4%9A%E6%A8%A1%E6%80%81/%E8%AE%BA%E6%96%87/" class="post-category">
+                            <a href="/blog/categories/LLM/%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/%E8%AE%BA%E6%96%87/" class="post-category">
                                     论文
                                 </a>
                             
@@ -597,9 +555,9 @@ QA</a>。Web Questions 和 Trivia QA 采用 <a target="_blank" rel="noopener" hr
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/blog/llm/duo-mo-tai/lun-wen/mini-omni/">
+                <a href="/blog/llm/yu-yin-dui-hua/lun-wen/omniflatten/">
                     <div class="card-content">
-                        <span class="card-title">Mini-Omni</span>
+                        <span class="card-title">OmniFlatten</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -610,8 +568,8 @@ QA</a>。Web Questions 和 Trivia QA 采用 <a target="_blank" rel="noopener" hr
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-11-04
-                                <i class="far fa-edit fa-fw icon-date"></i>2024-11-04
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-11-06
+                                <i class="far fa-edit fa-fw icon-date"></i>2024-11-06
                             </span>
                         <span class="publish-author">
                             
@@ -621,11 +579,11 @@ QA</a>。Web Questions 和 Trivia QA 采用 <a target="_blank" rel="noopener" hr
                                     LLM
                                 </a>
                             
-                            <a href="/blog/categories/LLM/%E5%A4%9A%E6%A8%A1%E6%80%81/" class="post-category">
-                                    多模态
+                            <a href="/blog/categories/LLM/%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/" class="post-category">
+                                    语音对话
                                 </a>
                             
-                            <a href="/blog/categories/LLM/%E5%A4%9A%E6%A8%A1%E6%80%81/%E8%AE%BA%E6%96%87/" class="post-category">
+                            <a href="/blog/categories/LLM/%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/%E8%AE%BA%E6%96%87/" class="post-category">
                                     论文
                                 </a>
                             
