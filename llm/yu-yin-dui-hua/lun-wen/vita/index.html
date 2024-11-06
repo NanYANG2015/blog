@@ -4,8 +4,10 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="分类: 音频事件, 梦园">
-    <meta name="description" content="愿，彼此相伴，走过流年">
+    <meta name="keywords" content="VITA, 梦园">
+    <meta name="description" content="
+Fu C, Lin H, Long Z, et al. Vita: Towards open-source interactive
+omni multimodal llm[J]. arXiv preprint arXiv:2408.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +19,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>分类: 音频事件 | 梦园</title>
+    <title>VITA | 梦园</title>
     <link rel="icon" type="image/png" href="/blog/favicon.png">
     
 
@@ -255,7 +257,22 @@
 
 </header>
 
-    <div class="bg-cover pd-header about-cover">
+    
+<script src="/blog/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/blog/';
+            }
+        }
+    })();
+</script>
+
+
+<div class="bg-cover pd-header about-cover">
     <div class="container">
     <div class="row">
     <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l1">
@@ -272,73 +289,459 @@
     </div>
 </div>
 
-<main class="content">
 
-    <div id="category-cloud" class="container chip-container">
+
+<main class="post-container content">
+
+    
+    <style>
+    /* 随视窗调整大小、滚动 */
+    #toc-content {
+        height: calc(100vh - 200px);
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
     <div class="card">
-        <div class="card-content">
-            <div class="category-chips">
-                <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E4%B9%A6%E7%B1%8D/">书籍</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E8%A7%86%E9%A2%91/">视频</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E6%96%87%E5%AD%97/">文字</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E6%96%87%E5%AD%97/%E8%AF%97%E8%AF%8D/">诗词</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/LLM/">LLM</a><span class="category-list-count">31</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/LLM/%E6%A8%A1%E5%9E%8B/">模型</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/LLM/%E5%BE%AE%E8%B0%83/">微调</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/LLM/%E5%A4%9A%E6%A8%A1%E6%80%81/">多模态</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/LLM/%E5%A4%9A%E6%A8%A1%E6%80%81/%E5%A4%9A%E6%A8%A1%E6%80%81%E8%A1%A8%E7%A4%BA/">多模态表示</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/LLM/%E5%A4%9A%E6%A8%A1%E6%80%81/%E5%A4%9A%E6%A8%A1%E6%80%81%E8%A1%A8%E7%A4%BA/%E8%AE%BA%E6%96%87/">论文</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/LLM/%E5%A4%9A%E6%A8%A1%E6%80%81/%E8%AE%BA%E6%96%87/">论文</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/LLM/%E9%9F%B3%E9%A2%91%E7%90%86%E8%A7%A3/">音频理解</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/LLM/%E9%9F%B3%E9%A2%91%E7%90%86%E8%A7%A3/%E8%AE%BA%E6%96%87/">论文</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/LLM/%E6%9D%A1%E4%BB%B6%E7%94%9F%E6%88%90/">条件生成</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/LLM/%E6%9D%A1%E4%BB%B6%E7%94%9F%E6%88%90/%E8%AE%BA%E6%96%87/">论文</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/LLM/%E6%9D%A1%E4%BB%B6%E7%94%9F%E6%88%90/%E8%AE%BA%E6%96%87/%E6%B3%9B%E8%AF%BB/">泛读</a><span class="category-list-count">1</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/LLM/%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/">语音对话</a><span class="category-list-count">8</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/LLM/%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/%E8%AE%BA%E6%96%87/">论文</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/LLM/%E9%9F%B3%E9%A2%91%E7%94%9F%E6%88%90/">音频生成</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/LLM/%E9%9F%B3%E9%A2%91%E7%94%9F%E6%88%90/%E8%AE%BA%E6%96%87/">论文</a><span class="category-list-count">3</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/NLP/">NLP</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/NLP/%E6%A8%A1%E5%9E%8B/">模型</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E9%9F%B3%E9%A2%91/">音频</a><span class="category-list-count">40</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/">语音对话</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%AD%E9%9F%B3%E5%AD%A6/">语音学</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%AD%E9%9F%B3%E5%90%88%E6%88%90/">语音合成</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%AD%E9%9F%B3%E5%90%88%E6%88%90/%E8%AE%BA%E6%96%87-%E4%BA%A7%E5%93%81/">论文&产品</a><span class="category-list-count">5</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%AD%E9%9F%B3%E8%AF%84%E6%B5%8B/">语音评测</a><span class="category-list-count">8</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%AD%E9%9F%B3%E8%AF%84%E6%B5%8B/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%AD%E9%9F%B3%E8%AF%84%E6%B5%8B/%E4%BA%A7%E5%93%81/">产品</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%AD%E9%9F%B3%E8%AF%84%E6%B5%8B/%E7%89%B9%E5%BE%81/">特征</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%AD%E9%9F%B3%E8%AF%84%E6%B5%8B/%E8%AF%84%E5%88%86/">评分</a><span class="category-list-count">4</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E9%9F%B3%E9%A2%91/%E5%B7%A5%E5%85%B7%E5%8C%85/">工具包</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E9%9F%B3%E9%A2%91/%E5%B7%A5%E5%85%B7%E5%8C%85/WeNet/">WeNet</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E9%9F%B3%E9%A2%91/%E5%B7%A5%E5%85%B7%E5%8C%85/Kaldi/">Kaldi</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E9%9F%B3%E9%A2%91/codec/">codec</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E9%9F%B3%E9%A2%91/codec/%E8%AE%BA%E6%96%87/">论文</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/">语音识别</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/%E6%95%B0%E6%8D%AE%E9%9B%86/">数据集</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/%E8%AE%BA%E6%96%87/">论文</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%AD%E9%9F%B3%E7%BF%BB%E8%AF%91/">语音翻译</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%AD%E9%9F%B3%E7%BF%BB%E8%AF%91/%E8%AE%BA%E6%96%87/">论文</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E9%9F%B3%E9%A2%91/%E9%9F%B3%E9%A2%91%E4%BA%8B%E4%BB%B6/">音频事件</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E9%9F%B3%E9%A2%91/%E9%9F%B3%E9%A2%91%E4%BA%8B%E4%BB%B6/%E8%AE%BA%E6%96%87/">论文</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%AF%86%E5%88%AB/">说话人识别</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E9%9F%B3%E9%A2%91/%E9%9F%B3%E9%A2%91%E8%A1%A8%E7%A4%BA/">音频表示</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E9%9F%B3%E9%A2%91/%E9%9F%B3%E9%A2%91%E8%A1%A8%E7%A4%BA/%E8%AE%BA%E6%96%87/">论文</a><span class="category-list-count">6</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a><span class="category-list-count">10</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/CNN/">CNN</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/loss/">loss</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83/">模型训练</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A1%86%E6%9E%B6/">框架</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B/">生成模型</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%B7%A5%E5%85%B7%E5%8C%85/">工具包</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%B7%A5%E5%85%B7%E5%8C%85/DeepSpeed/">DeepSpeed</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%B7%A5%E5%85%B7%E5%8C%85/transformers/">transformers</a><span class="category-list-count">1</span></li></ul></li></ul></li></ul>
+        <div class="card-content article-info">
+            <div class="pd-header post-cover">
+                <div class="container" style="right: 0px;left: 0px;">
+                    <div class="row">
+                        <div class="col s12 m12 l12">
+                            <div class="brand">
+                                <h1 class="description center-align post-title">VITA</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            <div class="tag-cate">
+                <div class="right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/blog/categories/LLM/" class="post-category">
+                                LLM
+                            </a>
+                        
+                            <a href="/blog/categories/LLM/%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/" class="post-category">
+                                语音对话
+                            </a>
+                        
+                            <a href="/blog/categories/LLM/%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/%E8%AE%BA%E6%96%87/" class="post-category">
+                                论文
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2024-11-07
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2024-11-07
+                </div>
+                
+
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/blog/libs/prism/prism.min.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <ul>
+<li>Fu C, Lin H, Long Z, et al. Vita: Towards open-source interactive
+omni multimodal llm[J]. arXiv preprint arXiv:2408.05211, 2024.</li>
+<li><a target="_blank" rel="noopener" href="https://vita-home.github.io" class="uri">https://vita-home.github.io</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/VITA-MLLM/VITA" class="uri">https://github.com/VITA-MLLM/VITA</a>
+开源了模型、训练代码、推理部署框架。</li>
+<li>作者：来自腾讯优图等</li>
+<li><font color="red">创新点</font>
+<ul>
+<li><font color="red">无需唤醒：采用 SileroVAD
+判断输入音频是否包含语音；若为语音，模型响应中第一个 token 为 state
+token，判断输入语音是否为提问，若非查询则停止生成。</font></li>
+<li><font color="red">双工部署：同时部署两个 VITA
+模型。一个为当前查询生成响应；另一个持续检测输入音频，若有新查询，打断当前生成，<font color="green">聚合历史
+context（共用重合的 kv
+cache？）</font>，为新查询生成响应；两个模型交换身份。</font></li>
+</ul></li>
+</ul>
+<h1 id="系统结构">1. 系统结构</h1>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB4a0ad9fa6e368f7347382dd47a645bf9?method=download&shareKey=54b409c0d3539cf3120b23fab6da3674" width="809"></p>
+<ul>
+<li>支持中英文视频、图像、文本、音频输入。级联 TTS。</li>
+</ul>
+<h1 id="训练">2. 训练</h1>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB48cf38f77a9bcb6fd0e9768fdc47eab9?method=download&shareKey=da1f410371158978b5c63ee0329c5f02&inline=true" width="803"></p>
+<ul>
+<li>提升 LLM 中文能力
+<ul>
+<li>基于 <a target="_blank" rel="noopener" href="https://huggingface.co/mistralai/Mixtral-8x7B-v0.1">Mixtral
+8×7B</a>，扩充中文词（32000-&gt;51747），进行中英双语纯文本指令微调（数据量
+500w）。</li>
+</ul></li>
+<li>多模态对齐
+<ul>
+<li>添加 visual encoder、audio encoder、各自的 2 层 MLP connector。</li>
+<li>视觉模态
+<ul>
+<li>encoder：<a target="_blank" rel="noopener" href="https://huggingface.co/OpenGVLab/InternViT-300M-448px">InternViT-300M-448px</a></li>
+<li>高分辨率图像：采用动态分块策略 [8] 来捕获局部细节。</li>
+<li>视频：采样图像帧。&lt;4s，均匀采样 4 帧；[4,
+16]s，1帧/s；&gt;16s，均匀采样 16
+帧。不进行动态分块以控制序列长度。</li>
+<li>视频 QA：重新标注 Video-ChatGPT、VideoChat。</li>
+<li>synthetic data: 采用 MLLM 模型生成回复。</li>
+<li>训练：拼接 QA 对使样本长度为 6k，支持长上下文，提高训练效率。</li>
+</ul></li>
+<li>音频模态
+<ul>
+<li>encoder：CNN 下采样 + 24层 Transformer，12.5Hz。</li>
+<li>训练集：ASR: Wenetspeech + Gigaspeech；音频字幕：Wavcaps AudioSet SL
+子集。</li>
+</ul></li>
+</ul></li>
+<li>多模态指令微调
+<ul>
+<li>在响应开头插入状态 token，实现无需音频唤醒。</li>
+<li>文本指令 TTS：<a target="_blank" rel="noopener" href="https://github.com/RVC-Boss/GPT-SoVITS">GPT-SoVITS</a></li>
+<li>不需要响应的语音：从答案中抽取，TTS。由于仅输出 &lt;2&gt;
+性能显著下降，训练时将 LLM 对其文本的响应作为 label，推理时将 &lt;2&gt;
+视为 EOS。</li>
+<li>通过提示区分图像、视频。</li>
+</ul></li>
+</ul>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB122e2cd2b4c94b73b1e9e9e6675a769b?method=download&shareKey=6e70dfe9846031258ff963c6c37a5eaa&inline=true" width="813"></p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <i class="fas fa-exclamation-circle"></i>
+            <span>
+                本文不允许转载。
+            </span>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/blog/llm/yu-yin-dui-hua/lun-wen/vita/">
+                    <div class="card-content">
+                        <span class="card-title">VITA</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-11-07
+                                <i class="far fa-edit fa-fw icon-date"></i>2024-11-07
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/blog/categories/LLM/" class="post-category">
+                                    LLM
+                                </a>
+                            
+                            <a href="/blog/categories/LLM/%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/" class="post-category">
+                                    语音对话
+                                </a>
+                            
+                            <a href="/blog/categories/LLM/%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/%E8%AE%BA%E6%96%87/" class="post-category">
+                                    论文
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/blog/llm/yu-yin-dui-hua/lun-wen/syncllm/">
+                    <div class="card-content">
+                        <span class="card-title">SyncLLM</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-11-06
+                                <i class="far fa-edit fa-fw icon-date"></i>2024-11-06
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/blog/categories/LLM/" class="post-category">
+                                    LLM
+                                </a>
+                            
+                            <a href="/blog/categories/LLM/%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/" class="post-category">
+                                    语音对话
+                                </a>
+                            
+                            <a href="/blog/categories/LLM/%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/%E8%AE%BA%E6%96%87/" class="post-category">
+                                    论文
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('50')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE' || selection.getRangeAt(0).commonAncestorContainer.nodeName === 'CODE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: 梦园<br />'
+            + '文章作者: nanyang<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/blog/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/blog/libs/prism/prism.min.js"></script>
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/blog/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/blog/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/blog/libs/codeBlock/codeShrink.js"></script>
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
         </div>
     </div>
 </div>
 
+<!-- TOC 悬浮按钮. -->
 
-    <article id="articles" class="container articles">
-        <div class="row tags-posts">
-            
-            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/blog/yin-pin/yin-pin-shi-jian/lun-wen/hts-at/">
-                        <div class="card-content" >
-                            <span class="card-title">HTS-AT</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <!--<div class="summary block-with-text">
-                            
-                                
-相较于传统 audio spectrogram
-transformer(AST)，采用分层结构、patch merge 减小了序列长度，采用 window
-attention 减小了 self attention
-计算量，减小了参
-                            
-                        </div>-->
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-07-21
-                                <i class="far fa-edit fa-fw icon-date"></i>2024-10-29
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/blog/categories/%E9%9F%B3%E9%A2%91/" class="post-category">
-                                    音频
-                                </a>
-                                
-                                <a href="/blog/categories/%E9%9F%B3%E9%A2%91/%E9%9F%B3%E9%A2%91%E4%BA%8B%E4%BB%B6/" class="post-category">
-                                    音频事件
-                                </a>
-                                
-                                <a href="/blog/categories/%E9%9F%B3%E9%A2%91/%E9%9F%B3%E9%A2%91%E4%BA%8B%E4%BB%B6/%E8%AE%BA%E6%96%87/" class="post-category">
-                                    论文
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
 
-                    
-                </div>
-            </div>
-            
-        </div>
-    </article>
+
+<script src="/blog/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('6'),
+            headingSelector: 'h1, h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
 </main>
 
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    });
+</script>
 
 
 
