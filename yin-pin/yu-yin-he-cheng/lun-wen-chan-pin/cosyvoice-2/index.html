@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="CosyVoice 2.md, 梦园">
+    <meta name="keywords" content="CosyVoice 2, 梦园">
     <meta name="description" content="
 Du, Zhihao et al. “CosyVoice 2: Scalable Streaming Speech Synthesis
 with Large Language Models.” (2024).
@@ -20,7 +20,7 @@ https://fun">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>CosyVoice 2.md | 梦园</title>
+    <title>CosyVoice 2 | 梦园</title>
     <link rel="icon" type="image/png" href="/blog/favicon.png">
     
 
@@ -312,7 +312,7 @@ https://fun">
                     <div class="row">
                         <div class="col s12 m12 l12">
                             <div class="brand">
-                                <h1 class="description center-align post-title">CosyVoice 2.md</h1>
+                                <h1 class="description center-align post-title">CosyVoice 2</h1>
                             </div>
                         </div>
                     </div>
@@ -380,20 +380,30 @@ https://fun">
 with Large Language Models.” (2024).</li>
 <li><a target="_blank" rel="noopener" href="https://funaudiollm.github.io/cosyvoice2" class="uri">https://funaudiollm.github.io/cosyvoice2</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/FunAudioLLM/CosyVoice" class="uri">https://github.com/FunAudioLLM/CosyVoice</a></li>
+<li>官方公众号介绍 <a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/BgRxjrbnFOhPL99rzf3lYw" class="uri">https://mp.weixin.qq.com/s/BgRxjrbnFOhPL99rzf3lYw</a></li>
 <li>作者来自阿里</li>
 <li><font color="red">优化点</font>
 <ul>
 <li><font color="red">采用 FSQ（finite-scalar
-quantization，有限标量量化）替换 VQ，提升码本利用率。</font></li>
+quantization，有限标量量化）替换 VQ，提升码本利用率（23% -&gt;
+100%），发音准确度显著提升。</font></li>
 <li><font color="red">采用预训练的 LLM Qwen2.5-0.5B，删除 text encoder
-模块、speaker embedding。</font></li>
+模块、speaker embedding。预训练 LLM
+文本语义建模能力更强，在可控生成、音频-文本的情感匹配、多音字发音上会有明显的收益。</font></li>
 <li><font color="red">模型同时支持流式、非流式合成。语言模型采用文本、语音
 token 交错的数据格式 <span class="math inline">\(\text{N text tokens + M
 speech tokens}\)</span>，flow matching 采用 chunk-aware causal
-attention。</font></li>
+attention。接收5个文字就可以合成首包音频，延迟大致在150ms。</font></li>
 <li><font color="red">多说话人同时
 SFT，以覆盖更多韵律和发音。同一模型也支持 zero-shot
-克隆音色、韵律和风格。支持更多控制指令。</font></li>
+克隆音色、韵律和风格。支持更多细粒度的控制指令。</font></li>
+</ul></li>
+<li>相较于 CosyVoice 1.0
+<ul>
+<li>发音错误相对下降30%～50%，在Seed-TTS 测试集的 hard
+测试集上取得当前最低的字错误率。合成绕口令、多音字、生僻字上具有明显的提升。</li>
+<li>跨语言语音合成具有明显提升。</li>
+<li>合成音频的韵律、音质、情感匹配具有明显提升，支持更多细粒度的情感控制。</li>
 </ul></li>
 </ul>
 <h1 id="系统结构">1. 系统结构</h1>
@@ -535,8 +545,8 @@ Gumbel-Softmax 会增加计算复杂度和数值不稳定性；实践证明直�
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEBc33f6434dce3bbe84f359223b881461e?method=download&shareKey=1b38fd65280c3803eb1a1ef02c131c07" width="595"><br>3.
 量化前，不同说话人的语音表示分布有差异；量化后，几乎不可分。见论文图4。<br>4.
 采用量化前的表示训练可收敛；采用量化后的表示训练不收敛。见论文图5。</td>
-<td>1+2: VQ -&gt; FSQ，码本利用率显著提升（23% -&gt; 100%），合成音频
-ASR 错误率显著下降。<br>3+4:
+<td>1+2: VQ -&gt; FSQ，码本利用率显著提升（23% -&gt;
+100%），发音准确度显著提升。<br>3+4:
 量化前的语音表示包含说话人信息，量化后解耦。</td>
 </tr>
 <tr>
@@ -586,14 +596,15 @@ E 只有中文训练数据。</td>
 <td></td>
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEB45a7273fc46d8d342df5a5dbcb5606f1?method=download&shareKey=1b38fd65280c3803eb1a1ef02c131c07" width="597"><br>FM:
 flow matching</td>
-<td>流式、非流式合成性能差异较小，仅在难样本上可懂度有下降。</td>
+<td>流式、非流式合成性能差异较小，仅在难样本上发音准确性有下降。</td>
 </tr>
 <tr>
 <td>消融实验</td>
 <td></td>
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEBa50f6889e8385e73b25a31ea09ba3d28?method=download&shareKey=1b38fd65280c3803eb1a1ef02c131c07" width="570"><br>pitch
 loss：加入 speech tokenizer 训练。</td>
-<td>1. LLM 初始化可懂度、说话人相似度均有显著提升，模型能力更强。<br>2.
+<td>1. LLM
+初始化：发音准确性、说话人相似度均有显著提升，文本语义建模能力更强，在可控生成、音频-文本的情感匹配、多音字发音上会有明显的收益。<br>2.
 speaker embedding 还包含语种和副语言信息，影响跨语言能力，LM 移除
 speaker embedding 输入后识别错误显著减少，说话人相似度由后续的 flow
 matching 保留。<br>4. speech tokenizer 训练加入 pitch
@@ -668,7 +679,7 @@ loss，识别错误显著减少，但说话人相似度略有下降。</td>
             <div class="card">
                 <a href="/blog/yin-pin/yu-yin-he-cheng/lun-wen-chan-pin/cosyvoice-2/">
                     <div class="card-content">
-                        <span class="card-title">CosyVoice 2.md</span>
+                        <span class="card-title">CosyVoice 2</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
