@@ -9,9 +9,8 @@
 作者：复旦大学等。
 贡献
 
-基于离散 token，实现了 any-to-any 多模态
-LLM，即支持理解、生成各种模态，包含语音、文本、图像、音乐。以文本为中心，通过将其它模态与文本对齐，实现所有模态之间的相互对齐。
-any">
+基于离散 token，实现了 any-to-any 多模态 LLM，即支持理解、生成各种模态，包含语音、文本、图像、音乐。以文本为中心，通过将其它模态与文本对齐，实现所有模态之间的相互对齐。
+any-to-an">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -56,6 +55,13 @@ any">
 
     <script src="/blog/libs/jquery/jquery-3.6.0.min.js"></script>
 
+    <!-- Google Site Verification -->
+    
+        <meta name="google-site-verification" content="wJ93QtauTaHcAdSnPmDKlVioh-uZJAIGPiJ5sKqbkYA">
+    
+
+    <!-- Bing Site Verification -->
+    
 <meta name="generator" content="Hexo 6.1.0"></head>
 
 
@@ -382,61 +388,48 @@ any">
 <li>作者：复旦大学等。</li>
 <li>贡献
 <ul>
-<li>基于离散 token，实现了 any-to-any 多模态
-LLM，即支持理解、生成各种模态，包含语音、文本、图像、音乐。以文本为中心，通过将其它模态与文本对齐，实现所有模态之间的相互对齐。</li>
-<li><font color="red">any-to-any 多模态交叉指令数据集
-AnyInstruct-108k：108k 多轮对话样本，交替各种模态，约 205k 图像、503k
-语音、113k 音乐。</font></li>
+<li>基于离散 token，实现了 any-to-any 多模态 LLM，即支持理解、生成各种模态，包含语音、文本、图像、音乐。以文本为中心，通过将其它模态与文本对齐，实现所有模态之间的相互对齐。</li>
+<li><font color="red">any-to-any 多模态交叉指令数据集 AnyInstruct-108k：108k 多轮对话样本，交替各种模态，约 205k 图像、503k 语音、113k 音乐。</font></li>
 <li>zero-shot 性能接近各模态的专业模型（可能的优化方案：MOE）。</li>
-<li><font color="red">指令集、模型、推理代码 <a target="_blank" rel="noopener" href="https://junzhan2000.github.io/AnyGPT.github.io/" class="uri">https://junzhan2000.github.io/AnyGPT.github.io/</a></font></li>
-</ul></li>
+<li><font color="red">指令集、模型、推理代码 <a target="_blank" rel="noopener" href="https://junzhan2000.github.io/AnyGPT.github.io/">https://junzhan2000.github.io/AnyGPT.github.io/</a></font></li>
 </ul>
-<h1 id="系统结构">1. 系统结构</h1>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB436e3f864d535f6b821f2f970b44e0ef?method=download&shareKey=c11e72ae89e80223520d040165dd091b" width="715"></p>
-<h2 id="tokenization">1.1. Tokenization</h2>
+</li>
+</ul>
+<h1 id="系统结构">1.  系统结构</h1>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB436e3f864d535f6b821f2f970b44e0ef?method=download&shareKey=c11e72ae89e80223520d040165dd091b" width="715">
+<h2 id="tokenization">1.1.  Tokenization</h2>
 <ul>
 <li><font color="red">图像：SEED + diffusion</font></li>
 <li><font color="red">语音：SpeechTokenizer + SoundStorm</font>
 <ul>
 <li>SpeechTokenizer
 <ul>
-<li>residual vector quantization (RVQ)
-结构，<font color="green">第一层捕捉语义，第 2-8 层编码副语言细节。LLM
-只对语义 token 进行建模，语音词表大小 1024。副语言信息采用 voice clone
-模型。AnyGPT 可以根据 3s 的语音提示复制任意说话人的声音。</font></li>
+<li>residual vector quantization (RVQ) 结构，<font color="green">第一层捕捉语义，第 2-8 层编码副语言细节。LLM 只对语义 token 进行建模，语音词表大小 1024。副语言信息采用 voice clone 模型。AnyGPT 可以根据 3s 的语音提示复制任意说话人的声音。</font></li>
 <li>在 Commonvoice、Librispeech 上预训练。20ms 帧率。</li>
-</ul></li>
+</ul>
+</li>
 <li>SoundStorm
 <ul>
-<li>MLM，根据 SpeechTokenizer 的语义 token 生成声学 token。然后
-SpeechTokenizer decoder 将所有语音 token 转换为 raw 音频。</li>
+<li>MLM，根据 SpeechTokenizer 的语义 token 生成声学 token。然后 SpeechTokenizer decoder 将所有语音 token 转换为 raw 音频。</li>
 <li>在 Multilingual LibriSpeech 上训练。</li>
-</ul></li>
-</ul></li>
-<li><font color="red">音乐：<a target="_blank" rel="noopener" href="https://huggingface.co/facebook/encodec_32khz">Encodec</a></font>，卷积自编码器，encoder
-+ decoder，RVQ 潜空间量化。
-<ul>
-<li>在 2w 乐曲上预训练，输入 32k 单声道音乐，20ms 帧率。RVQ 量化，4 *
-2048。</li>
-<li><font color="green">音乐生成限制为 5s。</font></li>
-</ul></li>
-<li>离散 token
-过滤了高频的、特定模态的感知信息，保留了必要的低频语义信息。</li>
 </ul>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB2fa1bf645d5680429cfba93adc3cafc2?method=download&shareKey=067c38c16000dadd9331d733a4e8f494" width="258"></p>
-<h2 id="llm">1.2. LLM</h2>
+</li>
+</ul>
+</li>
+<li><font color="red">音乐：<a target="_blank" rel="noopener" href="https://huggingface.co/facebook/encodec_32khz">Encodec</a></font>，卷积自编码器，encoder + decoder，RVQ 潜空间量化。
+<ul>
+<li>在 2w 乐曲上预训练，输入 32k 单声道音乐，20ms 帧率。RVQ 量化，4 * 2048。</li>
+<li><font color="green">音乐生成限制为 5s。</font></li>
+</ul>
+</li>
+<li>离散 token 过滤了高频的、特定模态的感知信息，保留了必要的低频语义信息。</li>
+</ul>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB2fa1bf645d5680429cfba93adc3cafc2?method=download&shareKey=067c38c16000dadd9331d733a4e8f494" width="258">
+<h2 id="llm">1.2.  LLM</h2>
 <p><font color="red">LLaMA-2 7B</font></p>
-<h1 id="数据集">2. 数据集</h1>
-<h2 id="多模态对齐预训练">2.1. 多模态对齐预训练</h2>
-<table style="width:100%;">
-<colgroup>
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-</colgroup>
+<h1 id="数据集">2.  数据集</h1>
+<h2 id="多模态对齐预训练">2.1.  多模态对齐预训练</h2>
+<table>
 <thead>
 <tr>
 <th>模态</th>
@@ -517,8 +510,7 @@ SpeechTokenizer decoder 将所有语音 token 转换为 raw 音频。</li>
 <td></td>
 <td>Youtube-Music-1M</td>
 <td>100M</td>
-<td>Spotify，收集音乐音频、视频标题、描述、关键词、播放列表名称、歌词。将上述元数据输入
-GPT-4，生成简洁、连贯的标题，减少幻觉。</td>
+<td>Spotify，收集音乐音频、视频标题、描述、关键词、播放列表名称、歌词。将上述元数据输入 GPT-4，生成简洁、连贯的标题，减少幻觉。</td>
 <td>0.25</td>
 </tr>
 <tr>
@@ -532,67 +524,61 @@ GPT-4，生成简洁、连贯的标题，减少幻觉。</td>
 </tbody>
 </table>
 <ul>
-<li>图片 - 文本 低质量数据集 数据清洗 根据文本质量、图像 aspect
-ratio、clip score 等，产生 300M 对。</li>
+<li>图片 - 文本 低质量数据集 数据清洗<br>
+根据文本质量、图像 aspect ratio、clip score 等，产生 300M 对。</li>
 </ul>
-<h2 id="dataloader">2.2. dataloader</h2>
+<h2 id="dataloader">2.2.  dataloader</h2>
 <ul>
 <li>对数据量少的模态过采样。</li>
 <li>同一数据集的样本拼接为长序列，直到最大序列长度。</li>
 <li>模板
 <ul>
-<li>由 GPT-4 生成数百条双向指令，多样化，如
-<code>Please generate an image based on the provided text.</code>。</li>
-<li>格式
-<code>[Human]: &#123;I&#125;.&#123;S&#125;&lt;eoh&gt;. [AnyGPT]: &#123;T&#125;&lt;eos&gt;</code>
-<code>[Human]: &#123;I&#125;. This is input:&#123;T&#125;&lt;eoh&gt;. [AnyGPT]: &#123;S&#125;&lt;eos&gt;</code>
+<li>由 GPT-4 生成数百条双向指令，多样化，如  <code>Please generate an image based on the provided text.</code>。</li>
+<li>格式<br>
+<code>[Human]: &#123;I&#125;.&#123;S&#125;&lt;eoh&gt;. [AnyGPT]: &#123;T&#125;&lt;eos&gt;</code><br>
+<code>[Human]: &#123;I&#125;. This is input:&#123;T&#125;&lt;eoh&gt;. [AnyGPT]: &#123;S&#125;&lt;eos&gt;</code><br>
 其中，I 表示指令，S 表示非文本 token，T 表示文本。
 <ul>
 <li>图文交错的文档，直接用 token 序列替换非文本内容。</li>
-</ul></li>
-<li>非文本模态 token 首尾有 special token。</li>
-</ul></li>
 </ul>
-<h2 id="指令集">2.3. 指令集</h2>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB60ebd3a144c7cf7c44a0bc0148a7d925?method=download&shareKey=d653d84b187f916aece00b1519b24c7a" width="1810"></p>
+</li>
+<li>非文本模态 token 首尾有 special token。</li>
+</ul>
+</li>
+</ul>
+<h2 id="指令集">2.3.  指令集</h2>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB60ebd3a144c7cf7c44a0bc0148a7d925?method=download&shareKey=d653d84b187f916aece00b1519b24c7a" width="1810">
 <ul>
-<li>【主题】基于与视听相关的100个元主题，采用 GPT-4 扩展到 2w 个。
+<li>【主题】基于与视听相关的100个元主题，采用 GPT-4 扩展到 2w 个。<br>
 <img src="https://note.youdao.com/yws/api/personal/file/WEBdcd33d92f7fc311374afbc87ff508c33?method=download&shareKey=47cb053ecdd3bba7dfad5d6fe2910556" width="711"></li>
-<li>【场景】准备包含尽可能多的模态组合的示例，采样，作为示例提示 LLM
-生成基于主题的对话场景。
+<li>【场景】准备包含尽可能多的模态组合的示例，采样，作为示例提示 LLM 生成基于主题的对话场景。<br>
 <img src="https://note.youdao.com/yws/api/personal/file/WEBf5dabb56f4f3541e19537c261990be15?method=download&shareKey=bdc90db057c01773833b46d22d633c47" width="712"></li>
-<li>【对话】提供示例，用 GPT-4
-生成基于场景的多轮对话，图像、音乐等用详细的文本描绘。
+<li>【对话】提供示例，用 GPT-4 生成基于场景的多轮对话，图像、音乐等用详细的文本描绘。<br>
 <img src="https://note.youdao.com/yws/api/personal/file/WEB4276f1e30d2eb13305f5960512634fd5?method=download&shareKey=0731046843fa6e3ac456f88f0ea9e0d4" width="536"></li>
 <li>【Text-to-Multimodality 转换】
 <ul>
 <li>OpenAI DALL-E-3 生成图像</li>
 <li>MusicGen 音乐作曲</li>
 <li>Microsoft Azure TTS 合成用户指令、模型的响应。</li>
-</ul></li>
+</ul>
+</li>
 <li>从现有的纯文本指令数据集中提取适合口语的对话，TTS，100k。</li>
 </ul>
-<h1 id="训练">3. 训练</h1>
-<p>由于训练数据含噪声，影响生成质量，在预训练后，采用高质量数据继续预训练
-4k 步。</p>
+<h1 id="训练">3.  训练</h1>
+<p>由于训练数据含噪声，影响生成质量，在预训练后，采用高质量数据继续预训练 4k 步。</p>
 <ul>
 <li>文本 - 图片：JouneyDB、LAION-Aesthetics。</li>
 <li>图片 - 文本：LAION-COCO。</li>
-<li>音乐：AnyInstruct-108k
+<li>音乐：AnyInstruct-108k<br>
 <img src="https://note.youdao.com/yws/api/personal/file/WEBbbb79fe94bfc41ec8a7113ba7364bac5?method=download&shareKey=fac4dccc7555914869ae0cf95384561e" width="474"></li>
 </ul>
-<h1 id="评价">4. 评价</h1>
+<h1 id="评价">4.  评价</h1>
 <ul>
-<li>解码策略
+<li>解码策略<br>
 <img src="https://note.youdao.com/yws/api/personal/file/WEB2f2b9467db62d315cdd387f572d53592?method=download&shareKey=a81f36c8b17e86b51d8557dfecbb98cb" width="532"></li>
 <li>zero-shot</li>
 </ul>
 <table>
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
 <thead>
 <tr>
 <th>任务</th>
@@ -609,8 +595,7 @@ ratio、clip score 等，产生 300M 对。</li>
 <tr>
 <td>图像生成</td>
 <td>MS-COCO validation set，随机选 30k 图像</td>
-<td><img src="https://note.youdao.com/yws/api/personal/file/WEB665e85fd658b9c419d393aa4e2f133f0?method=download&shareKey=a5bd2764ef2fe772ef3a19a54032da47" width="569"><br>*采用
-CLIP-ViT-L</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEB665e85fd658b9c419d393aa4e2f133f0?method=download&shareKey=a5bd2764ef2fe772ef3a19a54032da47" width="569"><br>*采用 CLIP-ViT-L</td>
 </tr>
 <tr>
 <td>ASR</td>
@@ -620,9 +605,7 @@ CLIP-ViT-L</td>
 <tr>
 <td>TTS</td>
 <td>VCTK<br>3s 的说话人语音提示</td>
-<td><img src="https://note.youdao.com/yws/api/personal/file/WEBa9ca38ee011dfd8f2c22d4efd8e0843b?method=download&shareKey=f3666e9f88ba06e029ca837cc69bf3a4" width="277"><br><em>WER：采用
-Whisper medium 识别<br></em>SIM：说话人相似度，采用 <a target="_blank" rel="noopener" href="https://github.com/yangdongchao/UniAudio/blob/main/UniAudio/tools/evaluation/compute_similarity_vc.py">WavLM-TDNN</a>
-提取说话人 embedding，计算余弦相似度。</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEBa9ca38ee011dfd8f2c22d4efd8e0843b?method=download&shareKey=f3666e9f88ba06e029ca837cc69bf3a4" width="277"><br>*WER：采用 Whisper medium 识别<br>*SIM：说话人相似度，采用 <a target="_blank" rel="noopener" href="https://github.com/yangdongchao/UniAudio/blob/main/UniAudio/tools/evaluation/compute_similarity_vc.py">WavLM-TDNN</a> 提取说话人 embedding，计算余弦相似度。</td>
 </tr>
 <tr>
 <td>音乐理解、生成</td>
@@ -631,17 +614,14 @@ Whisper medium 识别<br></em>SIM：说话人相似度，采用 <a target="_blan
 </tr>
 </tbody>
 </table>
-<h1 id="未来工作">5. 未来工作</h1>
+<h1 id="未来工作">5.  未来工作</h1>
 <ul>
 <li>相较于单模态，性能有损。可能的优化方案：MOE。</li>
-<li><font color="red">tokenizer
-的质量设定了模型理解、生成潜力的上限。</font></li>
+<li><font color="red">tokenizer 的质量设定了模型理解、生成潜力的上限。</font></li>
 </ul>
-<h1 id="其它">6. 其它</h1>
+<h1 id="其它">6.  其它</h1>
 <ul>
-<li>Zhan J, Dai J, Ye J, et al. AnyGPT: Unified Multimodal LLM with
-Discrete Sequence Modeling[J]. arXiv preprint arXiv:2402.12226,
-2024.</li>
+<li>Zhan J, Dai J, Ye J, et al. AnyGPT: Unified Multimodal LLM with Discrete Sequence Modeling[J]. arXiv preprint arXiv:2402.12226, 2024.</li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 

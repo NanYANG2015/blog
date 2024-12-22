@@ -6,8 +6,7 @@
     <meta charset="utf-8">
     <meta name="keywords" content="Mini-Omni, AI, 语音, 算法">
     <meta name="description" content="
-Xie Z, Wu C. Mini-omni2: Towards open-source gpt-4o model with
-vision, speech and duplex[J]. arXiv preprint arXiv:241">
+Xie Z, Wu C. Mini-omni2: Towards open-source gpt-4o model with vision, speech and duplex[J]. arXiv preprint arXiv:2410.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -52,6 +51,13 @@ vision, speech and duplex[J]. arXiv preprint arXiv:241">
 
     <script src="/blog/libs/jquery/jquery-3.6.0.min.js"></script>
 
+    <!-- Google Site Verification -->
+    
+        <meta name="google-site-verification" content="wJ93QtauTaHcAdSnPmDKlVioh-uZJAIGPiJ5sKqbkYA">
+    
+
+    <!-- Bing Site Verification -->
+    
 <meta name="generator" content="Hexo 6.1.0"></head>
 
 
@@ -375,42 +381,29 @@ vision, speech and duplex[J]. arXiv preprint arXiv:241">
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <ul>
-<li>Xie Z, Wu C. Mini-omni2: Towards open-source gpt-4o model with
-vision, speech and duplex[J]. arXiv preprint arXiv:2410.11190,
-2024.</li>
-<li>Xie Z, Wu C. Mini-Omni: Language Models Can Hear, Talk While
-Thinking in Streaming[J]. arXiv preprint arXiv:2408.16725, 2024.</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/gpt-omni/mini-omni2" class="uri">https://github.com/gpt-omni/mini-omni2</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/gpt-omni/mini-omni" class="uri">https://github.com/gpt-omni/mini-omni</a></li>
-<li>数据集：<a target="_blank" rel="noopener" href="https://huggingface.co/datasets/gpt-omni/VoiceAssistant-400K" class="uri">https://huggingface.co/datasets/gpt-omni/VoiceAssistant-400K</a></li>
+<li>Xie Z, Wu C. Mini-omni2: Towards open-source gpt-4o model with vision, speech and duplex[J]. arXiv preprint arXiv:2410.11190, 2024.</li>
+<li>Xie Z, Wu C. Mini-Omni: Language Models Can Hear, Talk While Thinking in Streaming[J]. arXiv preprint arXiv:2408.16725, 2024.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/gpt-omni/mini-omni2">https://github.com/gpt-omni/mini-omni2</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/gpt-omni/mini-omni">https://github.com/gpt-omni/mini-omni</a></li>
+<li>数据集：<a target="_blank" rel="noopener" href="https://huggingface.co/datasets/gpt-omni/VoiceAssistant-400K">https://huggingface.co/datasets/gpt-omni/VoiceAssistant-400K</a></li>
 <li>作者：来自 Inspirai、清华。</li>
-<li><font color="red">特点：语音、图像输入采用 encoder + adapter，与文本
-embedding 拼接。多个输出头，同时输出文本、音频多码本 token，采用
-1-1-1-1-1-1-1 delay 模式。音频流式合成。</font>
+<li><font color="red">特点：语音、图像输入采用 encoder + adapter，与文本 embedding 拼接。多个输出头，同时输出文本、音频多码本 token，采用 1-1-1-1-1-1-1 delay 模式。音频流式合成。</font>
 <ul>
-<li>出发点：ASR 训练得到的表示与语义强对齐。离散 token
-不足以可靠地传达语音内容（相较于语义表示，用于 ASR
-性能较差）；一段音频的 token 受前后内容影响（Moshi: 生成音频-重新编码
-不一致；对时间偏移不鲁棒）；训练中音频 loss
-较高。<font color="green">存疑：为什么输出音频采用离散
-token？</font></li>
-</ul></li>
-<li>Mini-Omni2 还支持在生成过程中输入用户音频离散
-token，根据语义打断生成，如 “Stop
-Omni”。<font color="red">出发点：双工训练不稳定。</font><font color="green">存疑：应用中用户仍需要发起录音、结束录音请求回答，也可通过应用中的停止操作打断生成。</font></li>
+<li>出发点：ASR 训练得到的表示与语义强对齐。离散 token 不足以可靠地传达语音内容（相较于语义表示，用于 ASR 性能较差）；一段音频的 token 受前后内容影响（Moshi: 生成音频-重新编码 不一致；对时间偏移不鲁棒）；训练中音频 loss 较高。<font color="green">存疑：为什么输出音频采用离散 token？</font></li>
 </ul>
-<h1 id="系统结构">1. 系统结构</h1>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEBa077bec80194feb0b5194b64e64dac3d?method=download&shareKey=a94c85c210a5fbcc2802a5a400bb8481" width="510"></p>
+</li>
+<li>Mini-Omni2 还支持在生成过程中输入用户音频离散 token，根据语义打断生成，如 “Stop Omni”。<font color="red">出发点：双工训练不稳定。</font><font color="green">存疑：应用中用户仍需要发起录音、结束录音请求回答，也可通过应用中的停止操作打断生成。</font></li>
+</ul>
+<h1 id="系统结构">1.  系统结构</h1>
+<img src="https://note.youdao.com/yws/api/personal/file/WEBa077bec80194feb0b5194b64e64dac3d?method=download&shareKey=a94c85c210a5fbcc2802a5a400bb8481" width="510">
 <ul>
-<li>Qwen2-0.5B base，扩充 <span class="math inline">\(7 \times
-4160\)</span> 个输出 token。</li>
+<li>Qwen2-0.5B base，扩充 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>7</mn><mo>×</mo><mn>4160</mn></mrow><annotation encoding="application/x-tex">7 \times 4160</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">7</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">4</span><span class="mord">1</span><span class="mord">6</span><span class="mord">0</span></span></span></span> 个输出 token。</li>
 <li>语音 encoder: whisper-small。</li>
-<li>visual encoder: CLIP ViT-B/32，一张图转为序列长度 49的 patch 特征 +
-1维全局语义特征。</li>
+<li>visual encoder: CLIP ViT-B/32，一张图转为序列长度 49的 patch 特征 + 1维全局语义特征。</li>
 <li>adapter: 1 层 LlamaMLP。</li>
 <li>音频 codec: SNAC。</li>
 </ul>
-<h1 id="训练">2. 训练</h1>
+<h1 id="训练">2.  训练</h1>
 <table>
 <thead>
 <tr>
@@ -437,21 +430,18 @@ Omni”。<font color="red">出发点：双工训练不稳定。</font><font col
 </tr>
 </tbody>
 </table>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEBb7e9aa0543ef6203ebf75443caf8213b?method=download&shareKey=77238bbfb4d2b38c43178f6a987a076b" width="597"></p>
+<img src="https://note.youdao.com/yws/api/personal/file/WEBb7e9aa0543ef6203ebf75443caf8213b?method=download&shareKey=77238bbfb4d2b38c43178f6a987a076b" width="597">
 <ul>
 <li>数据集构建
 <ul>
-<li>用户音频：CosyVoice 合成，将 ASR
-数据集作为随机音色库；系统音频：内部 TTS，固定音色。</li>
-<li>打断数据集：TTS 合成 "stop omni"，拼接在 ASR 音频或 MUSAN
-噪声音频后。模型同时输出帧级状态 token，“stop omni” 之后状态为
-irq，之前为 n-irq。</li>
-</ul></li>
+<li>用户音频：CosyVoice 合成，将 ASR 数据集作为随机音色库；系统音频：内部 TTS，固定音色。</li>
+<li>打断数据集：TTS 合成 “stop omni”，拼接在 ASR 音频或 MUSAN 噪声音频后。模型同时输出帧级状态 token，“stop omni” 之后状态为 irq，之前为 n-irq。</li>
+</ul>
+</li>
 <li>训练框架：<a target="_blank" rel="noopener" href="https://github.com/Lightning-AI/litgpt">LitGPT</a></li>
 </ul>
-<h1 id="评价">3. 评价</h1>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB7d3c619e555147d66debf7771988d4e9?method=download&shareKey=18da9e31b3b79cb575c42cacacabcd6f" width="600"></p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+<h1 id="评价">3.  评价</h1>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB7d3c619e555147d66debf7771988d4e9?method=download&shareKey=18da9e31b3b79cb575c42cacacabcd6f" width="600"><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
             </div>
             <hr/>
