@@ -9,7 +9,7 @@
 
 
 
-0.1.  挑战及相关研究
+0.1. 挑战及相关研究
 
 数据
 
@@ -19,7 +19,7 @@
 
 Task2Vec 多样性系数
 
-Beyond scale: the diversity coefficient as a data qua">
+Beyond scale: the diversity coefficient ">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -180,7 +180,7 @@ Beyond scale: the diversity coefficient as a data qua">
         <div class="logo-name">梦园</div>
         <div class="logo-desc">
             
-            愿，彼此相伴，走过流年
+            欢迎来到梦园，这里主要记录、分享 语音、AI 相关论文、算法与思考，欢迎关注与交流！
             
         </div>
     </div>
@@ -393,11 +393,11 @@ Beyond scale: the diversity coefficient as a data qua">
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <img src="https://note.youdao.com/yws/api/personal/file/WEBf7b42a1dcca3826722bfb869e7d16a19?method=download&shareKey=b76ad3086d46deea069f8625e8444bdd" width="569">
-<img src="https://note.youdao.com/yws/api/personal/file/WEB4fc000d4d20dcdd3c8a2264480532cc1?method=download&shareKey=365f06979a52b883d23bebbc4043cfd6" width="1027">
-<img src="https://note.youdao.com/yws/api/personal/file/WEB71a2143616d1ea04b4d00c03dc74101e?method=download&shareKey=347f39c4944f6a40d174fc4f7b72a583" width="881">
-<img src="https://note.youdao.com/yws/api/personal/file/WEBffab066395e72298d16d59faecc8520f?method=download&shareKey=1b3519e92610fbb9ccfe94664511ad10" width="649">
-<h2 id="挑战及相关研究">0.1.  挑战及相关研究</h2>
+                <p><img src="https://note.youdao.com/yws/api/personal/file/WEBf7b42a1dcca3826722bfb869e7d16a19?method=download&shareKey=b76ad3086d46deea069f8625e8444bdd" width="569"></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB4fc000d4d20dcdd3c8a2264480532cc1?method=download&shareKey=365f06979a52b883d23bebbc4043cfd6" width="1027"></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB71a2143616d1ea04b4d00c03dc74101e?method=download&shareKey=347f39c4944f6a40d174fc4f7b72a583" width="881"></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBffab066395e72298d16d59faecc8520f?method=download&shareKey=1b3519e92610fbb9ccfe94664511ad10" width="649"></p>
+<h2 id="挑战及相关研究">0.1. 挑战及相关研究</h2>
 <ul>
 <li>数据
 <ul>
@@ -407,75 +407,76 @@ Beyond scale: the diversity coefficient as a data qua">
 <ul>
 <li>Task2Vec 多样性系数
 <ul>
-<li>Beyond scale: the diversity coefficient as a data quality metric demonstrates llms are pre-trained on formally diverse data</li>
-</ul>
-</li>
+<li>Beyond scale: the diversity coefficient as a data quality metric
+demonstrates llms are pre-trained on formally diverse data</li>
+</ul></li>
 <li>min-max optimisation
 <ul>
-<li>Doremi: Optimizing data mixtures speeds up language model pretraining</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
+<li>Doremi: Optimizing data mixtures speeds up language model
+pretraining</li>
+</ul></li>
+</ul></li>
+</ul></li>
 <li>Tokenisation
 <ul>
-<li>tokenisation 固有的问题：固定的词汇量、language reliance、新词、信息损失、计算成本、有限的可解释性等。</li>
+<li>tokenisation 固有的问题：固定的词汇量、language
+reliance、新词、信息损失、计算成本、有限的可解释性等。</li>
 <li><font color="red">音频信号的独特挑战：
 <ul>
 <li>分辨率</li>
 <li>重叠的语音</li>
 <li>副语言信息，如情感</li>
 <li>……</li></ul></font></li>
-</ul>
-</li>
+</ul></li>
 <li>wav2tok: Deep sequence tokenizer for audio retrieval</li>
-<li>Speechtokenizer: Unified speech tokenizer for speech large language models</li>
+<li>Speechtokenizer: Unified speech tokenizer for speech large language
+models</li>
 </ul>
-
 <li><font color="red">有限的上下文长度</font>
 <ul>
 <li>高效的 attention 机制
 <ul>
-<li>Colt5: Faster long-range transformers with conditional computation</li>
+<li>Colt5: Faster long-range transformers with conditional
+computation</li>
 <li>Longnet: Scaling transformers to 1,000,000,000 tokens</li>
-<li>No train no gain: Revisiting efficient training algorithms for transformer-based language models</li>
+<li>No train no gain: Revisiting efficient training algorithms for
+transformer-based language models</li>
 <li>Focused transformer: Contrastive training for context scaling</li>
-</ul>
-</li>
+</ul></li>
 <li>长度泛化
 <ul>
 <li>Roformer: Enhanced transformer with rotary position embedding</li>
-</ul>
-</li>
+</ul></li>
 <li>transformer alternatives [285–288]</li>
-</ul>
-</li>
+</ul></li>
 <li>提示敏感</li>
 <li>幻觉：响应存在事实性错误
 <ul>
 <li>优化方法：对抗训练、结合人工反馈、对比学习、正则化</li>
 <li>Survey of hallucination in natural language generation</li>
-<li>Selfcheckgpt: Zero-resource black-box hallucination detection for generative large language models</li>
+<li>Selfcheckgpt: Zero-resource black-box hallucination detection for
+generative large language models</li>
 <li>Trapping llm hallucinations using tagged context prompts</li>
-<li>Sources of hallucination by large language models on inference tasks</li>
+<li>Sources of hallucination by large language models on inference
+tasks</li>
 <li>Contrastive learning reduces hallucination in conversations</li>
-</ul>
-</li>
+</ul></li>
 <li>训练成本高
 <ul>
-<li>Glam: Efficient scaling of language models with mixture-ofexperts</li>
-<li>nuqmm: Quantized matmul for efficient inference of large-scale generative language models</li>
-<li>Spikegpt: Generative pre-trained language model with spiking neural networks</li>
-</ul>
-</li>
+<li>Glam: Efficient scaling of language models with
+mixture-ofexperts</li>
+<li>nuqmm: Quantized matmul for efficient inference of large-scale
+generative language models</li>
+<li>Spikegpt: Generative pre-trained language model with spiking neural
+networks</li>
+</ul></li>
 <li>安全性</li>
 
-<h2 id="其它">0.2.  其它</h2>
+<h2 id="其它">0.2. 其它</h2>
 <ul>
-<li>Latif S, Shoukat M, Shamshad F, et al. Sparks of large audio models: A survey and outlook[J]. arXiv preprint arXiv:2308.12792, 2023.</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/EmulationAI/awesome-large-audio-models">https://github.com/EmulationAI/awesome-large-audio-models</a></li>
+<li>Latif S, Shoukat M, Shamshad F, et al. Sparks of large audio models:
+A survey and outlook[J]. arXiv preprint arXiv:2308.12792, 2023.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/EmulationAI/awesome-large-audio-models" class="uri">https://github.com/EmulationAI/awesome-large-audio-models</a></li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
@@ -840,7 +841,7 @@ Beyond scale: the diversity coefficient as a data qua">
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2019-2024</span>
+                <span id="year">2019-2025</span>
             
             <a href="/blog/about" target="_blank">nanyang</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>

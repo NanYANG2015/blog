@@ -6,7 +6,8 @@
     <meta charset="utf-8">
     <meta name="keywords" content="SyncLLM, AI, 语音, 算法">
     <meta name="description" content="
-Veluri B, Peloquin B N, Yu B, et al. Beyond Turn-Based Interfaces: Synchronous LLMs as Full-Duplex Dialogue Agents[J]. ">
+Veluri B, Peloquin B N, Yu B, et al. Beyond Turn-Based Interfaces:
+Synchronous LLMs as Full-Duplex Dialogue Agents[J]">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -167,7 +168,7 @@ Veluri B, Peloquin B N, Yu B, et al. Beyond Turn-Based Interfaces: Synchronous L
         <div class="logo-name">梦园</div>
         <div class="logo-desc">
             
-            愿，彼此相伴，走过流年
+            欢迎来到梦园，这里主要记录、分享 语音、AI 相关论文、算法与思考，欢迎关注与交流！
             
         </div>
     </div>
@@ -381,73 +382,81 @@ Veluri B, Peloquin B N, Yu B, et al. Beyond Turn-Based Interfaces: Synchronous L
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <ul>
-<li>Veluri B, Peloquin B N, Yu B, et al. Beyond Turn-Based Interfaces: Synchronous LLMs as Full-Duplex Dialogue Agents[J]. arXiv preprint arXiv:2409.15594, 2024.</li>
-<li><a target="_blank" rel="noopener" href="https://syncllm.cs.washington.edu/">https://syncllm.cs.washington.edu/</a></li>
+<li>Veluri B, Peloquin B N, Yu B, et al. Beyond Turn-Based Interfaces:
+Synchronous LLMs as Full-Duplex Dialogue Agents[J]. arXiv preprint
+arXiv:2409.15594, 2024.</li>
+<li><a target="_blank" rel="noopener" href="https://syncllm.cs.washington.edu/" class="uri">https://syncllm.cs.washington.edu/</a></li>
 <li>作者：来自 Meta AI、华盛顿大学</li>
 <li><font color="red">创新点</font>
 <ul>
-<li><font color="red">通过对交替的用户语音 token chunk、系统语音 token chunk 自回归生成建模，支持全双工口语对话。</font></li>
-<li><font color="red">重复的语音 token 影响模型的语义能力，去重。</font></li>
-<li><font color="red">考虑 240ms 网络延迟，可能无法立即访问用户语音，采用延迟输入模式。交替地生成系统语音 chunk N、用户语音 chunk（用户接下来可能说的话）、系统语音 chunk N+1，但预测后续系统语音 chunk <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo stretchy="false">(</mo><mi mathvariant="normal">N</mi><mo>+</mo><mn>2</mn><mo separator="true">,</mo><mrow><mtext> </mtext><mi mathvariant="normal">N</mi></mrow><mo>+</mo><mn>3</mn><mo separator="true">,</mo><mo>…</mo><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(\mathrm{N}+2, \mathrm{~N}+3, \ldots)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathrm">N</span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mspace nobreak"> </span><span class="mord mathrm">N</span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">3</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner">…</span><span class="mclose">)</span></span></span></span> 时，替换为用户对 chunk N 的真实响应。</font></li>
+<li><font color="red">通过对交替的用户语音 token chunk、系统语音 token
+chunk 自回归生成建模，支持全双工口语对话。</font></li>
+<li><font color="red">重复的语音 token
+影响模型的语义能力，去重。</font></li>
+<li><font color="red">考虑 240ms
+网络延迟，可能无法立即访问用户语音，采用延迟输入模式。交替地生成系统语音
+chunk N、用户语音 chunk（用户接下来可能说的话）、系统语音 chunk
+N+1，但预测后续系统语音 chunk <span class="math inline">\((\mathrm{N}+2,
+\mathrm{~N}+3, \ldots)\)</span> 时，替换为用户对 chunk N
+的真实响应。</font></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h1 id="系统结构">1.  系统结构</h1>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB3823dab3b33e456b07779fd6fc2edba4?method=download&shareKey=cad04b66be0bea1f303f3483b964a1f1" width="690">
-<img src="https://note.youdao.com/yws/api/personal/file/WEB85b7c0eece7cf97f0ff71dcc71021f8f?method=download&shareKey=9a61ab6ab1a3648c4dba252f741ddd0b" width="689">
+<h1 id="系统结构">1. 系统结构</h1>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB3823dab3b33e456b07779fd6fc2edba4?method=download&shareKey=cad04b66be0bea1f303f3483b964a1f1" width="690"></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB85b7c0eece7cf97f0ff71dcc71021f8f?method=download&shareKey=9a61ab6ab1a3648c4dba252f741ddd0b" width="689"></p>
 <ul>
 <li>Llama3-8b，上下文长度 8192。</li>
-<li>采用 speaker special token [S0] [S1] 分别指示两个说话人的 token 序列起始位置。</li>
-<li>语音 tokenizer 与合成：参照 SPIRIT LM，采用 HuBERT + HiFi-GAN，25Hz，词典大小 501。</li>
-<li>重复的语音 token 影响模型的语义能力，去重。通过上述 speaker tag 保留粗略的时间信息。注意：若 [S1] 新 chunk 不包含新的 token，删除 [S1] tag，但若 [S0] 出现上述情形，保留 [S0] 以保留时间信息。</li>
-<li>语音合成前对 token 序列插值：若 chunk 内有多个 token，每个 token 重复相同的次数。观察到这种粗略的方式的影响难以察觉，可能由于误差上限被 chunk 时长限制，且若包含多个 token，误差会更小。</li>
+<li>采用 speaker special token [S0] [S1] 分别指示两个说话人的 token
+序列起始位置。</li>
+<li>语音 tokenizer 与合成：参照 SPIRIT LM，采用 HuBERT +
+HiFi-GAN，25Hz，词典大小 501。</li>
+<li>重复的语音 token 影响模型的语义能力，去重。通过上述 speaker tag
+保留粗略的时间信息。注意：若 [S1] 新 chunk 不包含新的 token，删除 [S1]
+tag，但若 [S0] 出现上述情形，保留 [S0] 以保留时间信息。</li>
+<li>语音合成前对 token 序列插值：若 chunk 内有多个 token，每个 token
+重复相同的次数。观察到这种粗略的方式的影响难以察觉，可能由于误差上限被
+chunk 时长限制，且若包含多个 token，误差会更小。</li>
 </ul>
-<h1 id="3阶段训练">2.  3阶段训练</h1>
+<h1 id="阶段训练">2. 3阶段训练</h1>
 <ul>
-<li>
-<p>turn-based 对话</p>
-<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mtext>[S1]&lt;sent0&gt;[S0]&lt;sent0&gt;&lt;sent1&gt;[S1].. </mtext></mrow><annotation encoding="application/x-tex">\text {[S1]&lt;sent0&gt;[S0]&lt;sent0&gt;&lt;sent1&gt;[S1].. }
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">[S1]&lt;sent0&gt;[S0]&lt;sent0&gt;&lt;sent1&gt;[S1].. </span></span></span></span></span></span></p>
-<p>每个句子随机选择采用文本形式或去重的语音 token，从下图的截断正态分布中采样序列中语音句子的百分比。相较于纯语音或逐步增加语音占比，训练更稳定。（附录 A.2 句子级语音-文本交错优于 turn 级交错）</p>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB3e227beb79ff9cc5cd504779173a243d?method=download&shareKey=a545540cf98966054375499fcb179cca" width="336">
+<li><p>turn-based 对话 <span class="math display">\[\text
+{[S1]&lt;sent0&gt;[S0]&lt;sent0&gt;&lt;sent1&gt;[S1].. }\]</span></p>
+<p>每个句子随机选择采用文本形式或去重的语音
+token，从下图的截断正态分布中采样序列中语音句子的百分比。相较于纯语音或逐步增加语音占比，训练更稳定。（附录
+A.2 句子级语音-文本交错优于 turn 级交错）</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB3e227beb79ff9cc5cd504779173a243d?method=download&shareKey=a545540cf98966054375499fcb179cca" width="336"></p>
 <ul>
 <li>数据：文本 SFT 数据 Bark TTS，193kh。</li>
-</ul>
-</li>
-<li>
-<p>无重叠的全双工对话，chunk 交替，一人说话人时另一人为静音。</p>
+</ul></li>
+<li><p>无重叠的全双工对话，chunk 交替，一人说话人时另一人为静音。</p>
 <ul>
-<li>数据：文本对话数据 Bark TTS，20kh。SFT 数据中系统回复较长，对话数据中 turn-taking 更频繁，语句较短。</li>
+<li>数据：文本对话数据 Bark TTS，20kh。SFT
+数据中系统回复较长，对话数据中 turn-taking 更频繁，语句较短。</li>
+</ul></li>
+<li><p>真实口语对话数据。Fisher 2kh。</p></li>
+<li><p>训练超参数详见附录 A.1</p></li>
 </ul>
-</li>
-<li>
-<p>真实口语对话数据。Fisher 2kh。</p>
-</li>
-<li>
-<p>训练超参数详见附录 A.1</p>
-</li>
-</ul>
-<h1 id="评价">3.  评价</h1>
+<h1 id="评价">3. 评价</h1>
 <ul>
-<li>
-<p>给定 10s 对话提示生成延续的 10-30s 对话，忽略重叠语音，用文本对话模型计算 ASR 文本的 PPL。结果见论文图 5。</p>
-</li>
-<li>
-<p>上述提示分别从 Fisher （集内）和 Candor（集外）测试集中采样。结果见论文图 6。</p>
-</li>
-<li>
-<p>给定 30s 对话提示生成延续的 90s 对话，计算与 ground truth 延续的 turn-taking event 时长的 Pearson correlation。结果见论文表 2。</p>
-<p>* Resynth-GT 考虑了本文的 tokenization 策略，作为方案上限。</p>
-</li>
-<li>
-<p>人工评价 N-MOS（turn-taking 自然度）、M-MOS（Meaningfulness，内容连贯合理、可理解）。结果见论文表 3。</p>
+<li><p>给定 10s 对话提示生成延续的 10-30s
+对话，忽略重叠语音，用文本对话模型计算 ASR 文本的 PPL。结果见论文图
+5。</p></li>
+<li><p>上述提示分别从 Fisher （集内）和
+Candor（集外）测试集中采样。结果见论文图 6。</p></li>
+<li><p>给定 30s 对话提示生成延续的 90s 对话，计算与 ground truth 延续的
+turn-taking event 时长的 Pearson correlation。结果见论文表 2。</p>
+<p>* Resynth-GT 考虑了本文的 tokenization 策略，作为方案上限。</p></li>
+<li><p>人工评价 N-MOS（turn-taking
+自然度）、M-MOS（Meaningfulness，内容连贯合理、可理解）。结果见论文表
+3。</p>
 <ul>
 <li>评价指南详见附录 B。</li>
-</ul>
-</li>
-<li>
-<p>给定对话提示，用两个模型实例对话生成延续，考虑 one-chunk 延迟。统计 ASR 文本的 PPL、人工 MOS 评分、turn-taking event 时长的 Pearson correlation。分别见论文图 7、表 4、表 6。<font color="red">chunk size 为 160/200ms 时性能相当，240ms 时性能下降。</font></p>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB2de188a67b0606d85f10c348f8141985?method=download&shareKey=b87b04b26656943b914ab372ba6cbf11" width="323"></li>
+</ul></li>
+<li><p>给定对话提示，用两个模型实例对话生成延续，考虑 one-chunk
+延迟。统计 ASR 文本的 PPL、人工 MOS 评分、turn-taking event 时长的
+Pearson correlation。分别见论文图 7、表 4、表 6。<font color="red">chunk
+size 为 160/200ms 时性能相当，240ms 时性能下降。</font></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB2de188a67b0606d85f10c348f8141985?method=download&shareKey=b87b04b26656943b914ab372ba6cbf11" width="323"></p></li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
@@ -816,7 +825,7 @@ Veluri B, Peloquin B N, Yu B, et al. Beyond Turn-Based Interfaces: Synchronous L
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2019-2024</span>
+                <span id="year">2019-2025</span>
             
             <a href="/blog/about" target="_blank">nanyang</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>

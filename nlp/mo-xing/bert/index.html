@@ -5,11 +5,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="BERT, AI, 语音, 算法">
-    <meta name="description" content="BERT: Bidirectional Encoder Representations from Transformers。无监督预训练的语言表示模型。
+    <meta name="description" content="BERT: Bidirectional Encoder Representations from
+Transformers。无监督预训练的语言表示模型。
 创新点：
 
-
-双向性：采用 Transformer 的 Encoder 结构、mask">
+双向性：采用 Transformer 的 Encoder 结构、m">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -170,7 +170,7 @@
         <div class="logo-name">梦园</div>
         <div class="logo-desc">
             
-            愿，彼此相伴，走过流年
+            欢迎来到梦园，这里主要记录、分享 语音、AI 相关论文、算法与思考，欢迎关注与交流！
             
         </div>
     </div>
@@ -379,116 +379,123 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>BERT: Bidirectional Encoder Representations from Transformers。无监督预训练的语言表示模型。</p>
+                <p>BERT: Bidirectional Encoder Representations from
+Transformers。无监督预训练的语言表示模型。</p>
 <p><font color="red">创新点：</font></p>
 <ul>
-<li>
-<p>双向性：采用 Transformer 的 Encoder 结构、masked LM 预训练策略，能够同时考虑左右上下文的信息，更好地建模上下文信息和语义关系，学习深度双向表示，而传统的表示学习只学习单向 LM，或者独立训练 left-to-right（LTR）、right-to-left LM，再简单地拼接两个方向的表示。</p>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB6d2dd6042429f8d7362ba9a48585da8a?method=download&shareKey=03683aa46038f4e89675a79b985b5e00" width="703">
-</li>
-<li>
-<p>预训练策略：通过 masked LM、预测是否为下一个句子（NSP）两个预训练目标，来学习 token 级的上下文语义表示 和 句子间的关系。对于涉及文本对的下游任务，拼接文本对 + self-attention 有效地包含了文本对的 bidirectional cross attention。可以简单地加输出层 fine-tuning，得到广泛的NLP任务的SOTA模型，而不需要特定于任务的架构修改。</p>
-</li>
+<li><p>双向性：采用 Transformer 的 Encoder 结构、masked LM
+预训练策略，能够同时考虑左右上下文的信息，更好地建模上下文信息和语义关系，学习深度双向表示，而传统的表示学习只学习单向
+LM，或者独立训练 left-to-right（LTR）、right-to-left
+LM，再简单地拼接两个方向的表示。</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB6d2dd6042429f8d7362ba9a48585da8a?method=download&shareKey=03683aa46038f4e89675a79b985b5e00" width="703"></p></li>
+<li><p>预训练策略：通过 masked
+LM、预测是否为下一个句子（NSP）两个预训练目标，来学习 token
+级的上下文语义表示 和 句子间的关系。对于涉及文本对的下游任务，拼接文本对
++ self-attention 有效地包含了文本对的 bidirectional cross
+attention。可以简单地加输出层
+fine-tuning，得到广泛的NLP任务的SOTA模型，而不需要特定于任务的架构修改。</p></li>
 </ul>
-<h1 id="模型结构">1.  模型结构</h1>
-<h2 id="输入表示">1.1.  输入表示</h2>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB2076aca79516cbb11b75e1f084cce145?method=download&shareKey=f107d1cd5cb7e44a8f03992d8985d099" width="699">
+<h1 id="模型结构">1. 模型结构</h1>
+<h2 id="输入表示">1.1. 输入表示</h2>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB2076aca79516cbb11b75e1f084cce145?method=download&shareKey=f107d1cd5cb7e44a8f03992d8985d099" width="699"></p>
 <p>其中，token embedding 采用 WordPiece embedding，共 3万 tokens。</p>
-<h2 id="模型结构-2">1.2.  模型结构</h2>
+<h2 id="模型结构-1">1.2. 模型结构</h2>
 <p>Transformer 结构</p>
-<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mrow><mi mathvariant="normal">B</mi><mi mathvariant="normal">E</mi><mi mathvariant="normal">R</mi><mi mathvariant="normal">T</mi></mrow><mrow><mi mathvariant="normal">B</mi><mi mathvariant="normal">A</mi><mi mathvariant="normal">S</mi><mi mathvariant="normal">E</mi></mrow></msub></mrow><annotation encoding="application/x-tex">\mathrm{BERT}_{\mathrm{BASE}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord"><span class="mord mathrm">B</span><span class="mord mathrm">E</span><span class="mord mathrm">R</span><span class="mord mathrm">T</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">B</span><span class="mord mathrm mtight">A</span><span class="mord mathrm mtight">S</span><span class="mord mathrm mtight">E</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>: L=12, H=768, A=12, 总参数量 110M，与 GPT 模型大小相同。</p>
-<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mrow><mi mathvariant="normal">B</mi><mi mathvariant="normal">E</mi><mi mathvariant="normal">R</mi><mi mathvariant="normal">T</mi></mrow><mrow><mi mathvariant="normal">L</mi><mi mathvariant="normal">A</mi><mi mathvariant="normal">R</mi><mi mathvariant="normal">G</mi><mi mathvariant="normal">E</mi></mrow></msub></mrow><annotation encoding="application/x-tex">\mathrm{BERT}_{\mathrm{LARGE}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord"><span class="mord mathrm">B</span><span class="mord mathrm">E</span><span class="mord mathrm">R</span><span class="mord mathrm">T</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">L</span><span class="mord mathrm mtight">A</span><span class="mord mathrm mtight">R</span><span class="mord mathrm mtight">G</span><span class="mord mathrm mtight">E</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>: L=24, H=1024, A=16, 总参数量 340M。</p>
-<p>其中，L 为 Transformer block 数，H 为 hidden size，A 为 self-attention 的头数，feed-forward size 为 4H。</p>
-<h2 id="无监督预训练目标">1.3.  无监督预训练目标</h2>
+<p><span class="math inline">\(\mathrm{BERT}_{\mathrm{BASE}}\)</span>:
+L=12, H=768, A=12, 总参数量 110M，与 GPT 模型大小相同。</p>
+<p><span class="math inline">\(\mathrm{BERT}_{\mathrm{LARGE}}\)</span>:
+L=24, H=1024, A=16, 总参数量 340M。</p>
+<p>其中，L 为 Transformer block 数，H 为 hidden size，A 为
+self-attention 的头数，feed-forward size 为 4H。</p>
+<h2 id="无监督预训练目标">1.3. 无监督预训练目标</h2>
 <ul>
 <li>masked LM (MLM，完形填空)
 <ul>
-<li>每个序列随机 mask 15% 的 token。80% 替换为 [MASK] token，10% 替换为随机 token，10% 保留原 token。被 mask 的 token 对应的输出表示接1层分类层，预测被 mask 的 token 的词表ID。</li>
+<li>每个序列随机 mask 15% 的 token。80% 替换为 [MASK] token，10%
+替换为随机 token，10% 保留原 token。被 mask 的 token
+对应的输出表示接1层分类层，预测被 mask 的 token 的词表ID。</li>
 <li>分词后，对于partial word pieces，mask 时不特别考虑。</li>
-</ul>
-</li>
+</ul></li>
 <li>预测是否为下一个句子 (NSP)
 <ul>
-<li>50% 为实际的下一个句子，50% 从语料库中随机选取。[CLS] token 对应的最终输出表示，接1层分类层。</li>
+<li>50% 为实际的下一个句子，50% 从语料库中随机选取。[CLS] token
+对应的最终输出表示，接1层分类层。</li>
 <li>本文的“句子”可以是连续文本的任意跨度，而不是语言学意义上的1句，从而可以学习长序列。</li>
 <li>对问答、自然语言推理等涉及句子间关系的任务都非常有益。</li>
 <li>最终模型 NSP 准确率为 97%-98%。</li>
-<li><font color="teal">若不 fine-tuning，[CLS] token 对应的最终输出表示不是有意义的句子表示。</font></li>
+<li><font color="teal">若不 fine-tuning，[CLS] token
+对应的最终输出表示不是有意义的句子表示。</font></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h2 id="用于特定任务">1.4.  用于特定任务</h2>
+<h2 id="用于特定任务">1.4. 用于特定任务</h2>
 <p>将预训练表示用于下游任务的两种策略：</p>
 <ul>
 <li>fine-tuning：在预训练模型上添加较少的随机初始化的参数，并在下游任务上对所有参数联合微调。如GPT、BERT。</li>
 <li>基于特征：从预训练模型中提取固定的特征表示，采用特定于任务的模型架构。如ELMo。
 <ul>
 <li>拼接 BERT 最后 4 层的表示。</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<p>在 1 个 Cloud TPU 上训练最多 1h，在 1 个 GPU 上几个小时，就可以复现本文结果。</p>
-<h1 id="实验">2.  实验</h1>
-<h2 id="参数">2.1.  参数</h2>
+<p>在 1 个 Cloud TPU 上训练最多 1h，在 1 个 GPU
+上几个小时，就可以复现本文结果。</p>
+<h1 id="实验">2. 实验</h1>
+<h2 id="参数">2.1. 参数</h2>
 <ul>
 <li>绝对位置embedding，最大长度为512。</li>
 <li>激活函数：gelu</li>
-<li>优化器：各层 dropout 概率 0.1，L2 weight decay 0.01，学习率 1e-4，前 1w 步 warmup，学习率线性衰减，Adam，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>β</mi><mn>1</mn></msub><mo>=</mo><mn>0.9</mn></mrow><annotation encoding="application/x-tex">\beta_1=0.9</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05278em;">β</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.05278em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">9</span></span></span></span>，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>β</mi><mn>2</mn></msub><mo>=</mo><mn>0.999</mn></mrow><annotation encoding="application/x-tex">\beta_2=0.999</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05278em;">β</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.05278em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">9</span><span class="mord">9</span><span class="mord">9</span></span></span></span>。</li>
+<li>优化器：各层 dropout 概率 0.1，L2 weight decay 0.01，学习率 1e-4，前
+1w 步 warmup，学习率线性衰减，Adam，<span class="math inline">\(\beta_1=0.9\)</span>，<span class="math inline">\(\beta_2=0.999\)</span>。</li>
 <li>预训练语料库：约 3.3 billion 单词。</li>
 <li>预训练：batch size 256，1 百万步，约为 40 epochs。</li>
-<li>由于长序列 attention 计算量较大，为了加速预训练，90% 的 step 采用序列长度 128，剩下的 10% 采用序列长度 512 来学习位置 embedding。<font color="green">batch 的序列长度为 batch 内序列的最大长度，是动态变化的？</font></li>
-<li>在16个TPU芯片上训练<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mrow><mi mathvariant="normal">B</mi><mi mathvariant="normal">E</mi><mi mathvariant="normal">R</mi><mi mathvariant="normal">T</mi></mrow><mrow><mi mathvariant="normal">B</mi><mi mathvariant="normal">A</mi><mi mathvariant="normal">S</mi><mi mathvariant="normal">E</mi></mrow></msub></mrow><annotation encoding="application/x-tex">\mathrm{BERT}_{\mathrm{BASE}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord"><span class="mord mathrm">B</span><span class="mord mathrm">E</span><span class="mord mathrm">R</span><span class="mord mathrm">T</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">B</span><span class="mord mathrm mtight">A</span><span class="mord mathrm mtight">S</span><span class="mord mathrm mtight">E</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，64个TPU芯片上训练<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mrow><mi mathvariant="normal">B</mi><mi mathvariant="normal">E</mi><mi mathvariant="normal">R</mi><mi mathvariant="normal">T</mi></mrow><mrow><mi mathvariant="normal">L</mi><mi mathvariant="normal">A</mi><mi mathvariant="normal">R</mi><mi mathvariant="normal">G</mi><mi mathvariant="normal">E</mi></mrow></msub></mrow><annotation encoding="application/x-tex">\mathrm{BERT}_{\mathrm{LARGE}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord"><span class="mord mathrm">B</span><span class="mord mathrm">E</span><span class="mord mathrm">R</span><span class="mord mathrm">T</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">L</span><span class="mord mathrm mtight">A</span><span class="mord mathrm mtight">R</span><span class="mord mathrm mtight">G</span><span class="mord mathrm mtight">E</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，预训练需要4天。</li>
+<li>由于长序列 attention 计算量较大，为了加速预训练，90% 的 step
+采用序列长度 128，剩下的 10% 采用序列长度 512 来学习位置
+embedding。<font color="green">batch 的序列长度为 batch
+内序列的最大长度，是动态变化的？</font></li>
+<li>在16个TPU芯片上训练<span class="math inline">\(\mathrm{BERT}_{\mathrm{BASE}}\)</span>，64个TPU芯片上训练<span class="math inline">\(\mathrm{BERT}_{\mathrm{LARGE}}\)</span>，预训练需要4天。</li>
 </ul>
-<h2 id="对比-消融实验">2.2.  对比、消融实验</h2>
-<h3 id="预训练">2.2.1.  预训练</h3>
+<h2 id="对比消融实验">2.2. 对比、消融实验</h2>
+<h3 id="预训练">2.2.1. 预训练</h3>
 <ul>
-<li>
-<p>训练目标<br>
+<li><p>训练目标
 <img src="https://note.youdao.com/yws/api/personal/file/WEBcf8bec39f002e85aa5fb5027951b5e5f?method=download&shareKey=920d74916d4d5ec4f76f379662396ba7" width="354"></p>
 <p>在所有任务上，LTR LM 都不如 masked LM。</p>
-<p>NSP 训练目标对问答、自然语言推理等涉及句子间关系的任务都非常有益。</p>
-</li>
-<li>
-<p>mask 策略<br>
+<p>NSP
+训练目标对问答、自然语言推理等涉及句子间关系的任务都非常有益。</p></li>
+<li><p>mask 策略
 <img src="https://note.youdao.com/yws/api/personal/file/WEB1fd4195f93f978a1079f18c1b5e74f08?method=download&shareKey=fb92e712f10869f86ed9672d46c077e0" width="343"></p>
-<p>若仅使用 [MASK]、或仅使用随机替换，性能较差。</p>
-</li>
-<li>
-<p>收敛速度<br>
+<p>若仅使用 [MASK]、或仅使用随机替换，性能较差。</p></li>
+<li><p>收敛速度
 <img src="https://note.youdao.com/yws/api/personal/file/WEB39173a9a2ea7b31c1008345bb24c5f0a?method=download&shareKey=a22a8addcd76420edd8b8b83b94b59b7" width="340"></p>
-<p>由于 masked LM 只对每个 batch 中 15% 的 token 进行预测，相较于 LTR LM，收敛速度更慢，但性能更好。</p>
-</li>
-<li>
-<p>训练步数<br>
-相较于 500k 步的预训练，1M 步提升了约 1% 的准确度。</p>
-</li>
-<li>
-<p>模型大小<br>
-模型越大，预训练表示更有表现力，性能越好（前提是该模型已经被充分地预训练），特别是在训练集较小的下游任务上。但是，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mrow><mi mathvariant="normal">B</mi><mi mathvariant="normal">E</mi><mi mathvariant="normal">R</mi><mi mathvariant="normal">T</mi></mrow><mrow><mi mathvariant="normal">L</mi><mi mathvariant="normal">A</mi><mi mathvariant="normal">R</mi><mi mathvariant="normal">G</mi><mi mathvariant="normal">E</mi></mrow></msub></mrow><annotation encoding="application/x-tex">\mathrm{BERT}_{\mathrm{LARGE}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord"><span class="mord mathrm">B</span><span class="mord mathrm">E</span><span class="mord mathrm">R</span><span class="mord mathrm">T</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">L</span><span class="mord mathrm mtight">A</span><span class="mord mathrm mtight">R</span><span class="mord mathrm mtight">G</span><span class="mord mathrm mtight">E</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 在小数据集上 fine-tuning 时有时不稳定。</p>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB72c21baeb6fdf2488dd9d5ae9193eaa9?method=download&shareKey=c61e41cf5801f4ab251b5518ebc2ccb0" width="340">
-</li>
+<p>由于 masked LM 只对每个 batch 中 15% 的 token 进行预测，相较于 LTR
+LM，收敛速度更慢，但性能更好。</p></li>
+<li><p>训练步数 相较于 500k 步的预训练，1M 步提升了约 1%
+的准确度。</p></li>
+<li><p>模型大小
+模型越大，预训练表示更有表现力，性能越好（前提是该模型已经被充分地预训练），特别是在训练集较小的下游任务上。但是，<span class="math inline">\(\mathrm{BERT}_{\mathrm{LARGE}}\)</span>
+在小数据集上 fine-tuning 时有时不稳定。</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB72c21baeb6fdf2488dd9d5ae9193eaa9?method=download&shareKey=c61e41cf5801f4ab251b5518ebc2ccb0" width="340"></p></li>
 </ul>
-<h3 id="fine-tuning">2.2.2.  fine-tuning</h3>
+<h3 id="fine-tuning">2.2.2. fine-tuning</h3>
 <ul>
-<li>
-<p>虽然最优超参数值是特定于任务的，但以下可能值范围对于所有任务都能 work well。由于fine-tuning 非常快，最优超参数可以在开发集上穷举搜索。</p>
+<li><p>虽然最优超参数值是特定于任务的，但以下可能值范围对于所有任务都能
+work well。由于fine-tuning
+非常快，最优超参数可以在开发集上穷举搜索。</p>
 <ul>
 <li>batch size：16、32</li>
 <li>学习率：5e-5, 3e-5, 2e-5</li>
 <li>epoch 数：2, 3, 4</li>
-</ul>
-</li>
-<li>
-<p>11 个 NLP 任务（GLUE 数据集包含的 8 个NLP任务（排除了1个有问题的数据集）、SQuAD v1.1、SQuAD 2.0、SWAG）上均取得了 SOTA 结果，包括 token 级任务（如 NER、QA）和句子级任务（如自然语言推理）。</p>
- <img src="https://note.youdao.com/yws/api/personal/file/WEBe2aef02cb0d986bf1a9c23c56e23d3e0?method=download&shareKey=2e29b4a63754a221ae493376b3ff1897" width="704">
+</ul></li>
+<li><p>11 个 NLP 任务（GLUE 数据集包含的 8
+个NLP任务（排除了1个有问题的数据集）、SQuAD v1.1、SQuAD
+2.0、SWAG）上均取得了 SOTA 结果，包括 token 级任务（如
+NER、QA）和句子级任务（如自然语言推理）。</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBe2aef02cb0d986bf1a9c23c56e23d3e0?method=download&shareKey=2e29b4a63754a221ae493376b3ff1897" width="704"></p>
 <table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
 <tbody>
 <tr>
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEB072fe8e332c1500ac0cc84064971fa90?method=download&shareKey=319c32231b3458bb01e6ce25118cbe1e"></td>
@@ -499,66 +506,88 @@
 </table>
 <ul>
 <li>GLUE 数据集介绍详见论文附录B。</li>
-<li>The Stanford Question Answering Dataset (SQuAD v1.1): 包含10万个众包问题/答案对，给定1个问题和1个wikipidea中包含答案的段落，任务是预测答案在段落中的跨度。
+<li>The Stanford Question Answering Dataset (SQuAD v1.1):
+包含10万个众包问题/答案对，给定1个问题和1个wikipidea中包含答案的段落，任务是预测答案在段落中的跨度。
 <ul>
-<li><font color="green">fine-tuning 时引入开始向量 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi><mo>∈</mo><msup><mi mathvariant="double-struck">R</mi><mi>H</mi></msup></mrow><annotation encoding="application/x-tex">S \in \mathbb{R}^H</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72243em;vertical-align:-0.0391em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8413309999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord"><span class="mord mathbb">R</span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.08125em;">H</span></span></span></span></span></span></span></span></span></span></span> 和结束向量 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>E</mi></mrow><annotation encoding="application/x-tex">E</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span></span></span></span></font>，第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 个token为答案区间起点的概率为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>P</mi><mi>i</mi></msub><mo>=</mo><mfrac><msup><mi>e</mi><mrow><mi>S</mi><mo>⋅</mo><msub><mi>T</mi><mi>i</mi></msub></mrow></msup><mrow><msub><mo>∑</mo><mi>j</mi></msub><msup><mi>e</mi><mrow><mi>S</mi><mo>⋅</mo><msub><mi>T</mi><mi>j</mi></msub></mrow></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">P_i=\frac{e^{S \cdot T_i}}{\sum_j e^{S \cdot T_j}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.841262em;vertical-align:-0.803897em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.0373649999999999em;"><span style="top:-2.5183299999999997em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mop mtight"><span class="mop op-symbol small-op mtight" style="position:relative;top:-0.0000050000000000050004em;">∑</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.14964714285714287em;"><span style="top:-2.1785614285714283em;margin-left:0em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.46032428571428574em;"><span></span></span></span></span></span></span><span class="mspace mtight" style="margin-right:0.19516666666666668em;"></span><span class="mord mtight"><span class="mord mathdefault mtight">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.9595285714285715em;"><span style="top:-2.9714357142857146em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.05764em;">S</span><span class="mbin mtight">⋅</span><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3448em;margin-left:-0.13889em;margin-right:0.1em;"><span class="pstrut" style="height:2.65952em;"></span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.5091600000000001em;"><span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathdefault mtight">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.9190928571428572em;"><span style="top:-2.931em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.05764em;">S</span><span class="mbin mtight">⋅</span><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3448em;margin-left:-0.13889em;margin-right:0.1em;"><span class="pstrut" style="height:2.65952em;"></span><span class="mord mathdefault mtight">i</span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.31472em;"><span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.803897em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span>。</li>
-<li>训练目标：答案区间正确的开始位置、结束位置的 log-likelihood 的和。</li>
-<li>预测：候选答案区间的得分为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi><mo>⋅</mo><msub><mi>T</mi><mi>i</mi></msub><mo>+</mo><mi>E</mi><mo>⋅</mo><msub><mi>T</mi><mi>j</mi></msub></mrow><annotation encoding="application/x-tex">S \cdot T_i+E \cdot T_j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>，选取 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>j</mi><mo>≥</mo><mi>i</mi></mrow><annotation encoding="application/x-tex">j \geq i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 且得分最大的区间。</li>
-<li>fine-tuning：先用 TriviaQA 数据集，再用 SQuAD v1.1 数据集。即使不用 TriviaQA 数据集，仍然在很大程度上优于所有的现有系统。</li>
-</ul>
-</li>
+<li><font color="green">fine-tuning 时引入开始向量 <span class="math inline">\(S \in \mathbb{R}^H\)</span> 和结束向量 <span class="math inline">\(E\)</span></font>，第 <span class="math inline">\(i\)</span> 个token为答案区间起点的概率为<span class="math inline">\(P_i=\frac{e^{S \cdot T_i}}{\sum_j e^{S \cdot
+T_j}}\)</span>。</li>
+<li>训练目标：答案区间正确的开始位置、结束位置的 log-likelihood
+的和。</li>
+<li>预测：候选答案区间的得分为 <span class="math inline">\(S \cdot T_i+E
+\cdot T_j\)</span>，选取 <span class="math inline">\(j \geq i\)</span>
+且得分最大的区间。</li>
+<li>fine-tuning：先用 TriviaQA 数据集，再用 SQuAD v1.1 数据集。即使不用
+TriviaQA 数据集，仍然在很大程度上优于所有的现有系统。</li>
+</ul></li>
 <li>SQuAD 2.0：段落中可能不包含答案。
 <ul>
-<li>用开始、结束位置均对应 [CLS] token 来建模。对比 没有答案的得分 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>s</mi><mrow><mi>n</mi><mi>u</mi><mi>l</mi><mi>l</mi></mrow></msub><mo>=</mo><mi>S</mi><mo>⋅</mo><mi>C</mi><mo>+</mo><mi>E</mi><mo>⋅</mo><mi>C</mi></mrow><annotation encoding="application/x-tex">s_{null} = S \cdot C + E \cdot C</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span><span class="mord mathdefault mtight">u</span><span class="mord mathdefault mtight" style="margin-right:0.01968em;">l</span><span class="mord mathdefault mtight" style="margin-right:0.01968em;">l</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span></span></span></span> 和 非零跨度的最佳得分 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mover accent="true"><msub><mi>s</mi><mrow><mi>i</mi><mo separator="true">,</mo><mi>j</mi></mrow></msub><mo>^</mo></mover><mo>=</mo><msub><mo><mi>max</mi><mo>⁡</mo></mo><mrow><mi>j</mi><mo>≥</mo><mi>i</mi></mrow></msub><mi>S</mi><mo>⋅</mo><msub><mi>T</mi><mi>i</mi></msub><mo>+</mo><mi>E</mi><mo>⋅</mo><msub><mi>T</mi><mi>j</mi></msub></mrow><annotation encoding="application/x-tex">\hat{s_{i, j}}=\max _{j \geq i} S \cdot T_i+E \cdot T_j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.980548em;vertical-align:-0.286108em;"></span><span class="mord accent"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.69444em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathdefault">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mpunct mtight">,</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.25em;">^</span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="mop"><span class="mop">max</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span><span class="mrel mtight">≥</span><span class="mord mathdefault mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>，若 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mover accent="true"><msub><mi>s</mi><mrow><mi>i</mi><mo separator="true">,</mo><mi>j</mi></mrow></msub><mo>^</mo></mover><mo>&gt;</mo><msub><mi>s</mi><mrow><mi mathvariant="normal">n</mi><mi mathvariant="normal">u</mi><mi mathvariant="normal">l</mi><mi mathvariant="normal">l</mi></mrow></msub><mo>+</mo><mi>τ</mi></mrow><annotation encoding="application/x-tex">\hat{s_{i, j}}&gt;s_{\mathrm{null}}+\tau</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.980548em;vertical-align:-0.286108em;"></span><span class="mord accent"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.69444em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathdefault">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mpunct mtight">,</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.25em;">^</span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.73333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">n</span><span class="mord mathrm mtight">u</span><span class="mord mathrm mtight">l</span><span class="mord mathrm mtight">l</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.1132em;">τ</span></span></span></span> 则预测为包含答案，其中 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>τ</mi></mrow><annotation encoding="application/x-tex">\tau</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.1132em;">τ</span></span></span></span> 在开发集上选择以最大化 F1 值。</li>
-</ul>
-</li>
-<li>SWAG (Situations With Adversarial Generations)：给定 1 个句子，从 4 个选项中选择最合理的延续。
+<li>用开始、结束位置均对应 [CLS] token 来建模。对比 没有答案的得分 <span class="math inline">\(s_{null} = S \cdot C + E \cdot C\)</span> 和
+非零跨度的最佳得分 <span class="math inline">\(\hat{s_{i, j}}=\max _{j
+\geq i} S \cdot T_i+E \cdot T_j\)</span>，若 <span class="math inline">\(\hat{s_{i, j}}&gt;s_{\mathrm{null}}+\tau\)</span>
+则预测为包含答案，其中 <span class="math inline">\(\tau\)</span>
+在开发集上选择以最大化 F1 值。</li>
+</ul></li>
+<li>SWAG (Situations With Adversarial Generations)：给定 1 个句子，从 4
+个选项中选择最合理的延续。
 <ul>
-<li>将给定句子与候选分别拼接为 4 个输入序列，<font color="green">引入 1 个向量</font>，其与 [CLS] 的最终输出表示的点积作为每个候选的得分，并用 softmax 层归一化。</li>
+<li>将给定句子与候选分别拼接为 4 个输入序列，<font color="green">引入 1
+个向量</font>，其与 [CLS] 的最终输出表示的点积作为每个候选的得分，并用
+softmax 层归一化。</li>
+</ul></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="基于特征的方法">2.2.3.  基于特征的方法</h3>
-<img src="https://note.youdao.com/yws/api/personal/file/WEBd1026d3f97d6217753114ba637726d93?method=download&shareKey=9ac5c0784b9a1b4ccb76822110f43bc9" width="344">
+<h3 id="基于特征的方法">2.2.3. 基于特征的方法</h3>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBd1026d3f97d6217753114ba637726d93?method=download&shareKey=9ac5c0784b9a1b4ccb76822110f43bc9" width="344"></p>
 <p>NER 任务：将第一个 sub-token 的表示作为输入。</p>
 <p>拼接 BERT 最后 4 层的表示，性能最好。</p>
-<h3 id="bert-elmo-gpt-表示学习模型对比">2.2.4.  BERT, ELMo, GPT 表示学习模型对比</h3>
+<h3 id="bert-elmo-gpt-表示学习模型对比">2.2.4. BERT, ELMo, GPT
+表示学习模型对比</h3>
 <ul>
 <li>BERT、GPT 微调。
 <ul>
-<li>双向性和两个预训练目标是 BERT 性能更优的主要原因（见论文Tabel 5的消融实验）。</li>
+<li>双向性和两个预训练目标是 BERT 性能更优的主要原因（见论文Tabel
+5的消融实验）。</li>
 <li>其它区别
 <ul>
-<li>训练语料：GPT BooksCorpus(800M words), BERT BooksCorpus(800M words) + English Wikipedia(2500M words，只使用文本段落，忽略列表、表格、标题)。</li>
-<li>GPT 只在微调时引入[SEP]、[CLS] token，BERT 在预训练时学习 [SEP]、[CLS] 和 segment embedding。</li>
-</ul>
-</li>
-</ul>
-</li>
+<li>训练语料：GPT BooksCorpus(800M words), BERT BooksCorpus(800M words)
++ English Wikipedia(2500M
+words，只使用文本段落，忽略列表、表格、标题)。</li>
+<li>GPT 只在微调时引入[SEP]、[CLS] token，BERT 在预训练时学习
+[SEP]、[CLS] 和 segment embedding。</li>
+</ul></li>
+</ul></li>
 <li>ELMo 基于特征。</li>
 </ul>
-<h1 id="论文">3.  论文</h1>
+<h1 id="论文">3. 论文</h1>
 <ul>
-<li>Devlin J, Chang M W, Lee K, et al. Bert: Pre-training of deep bidirectional Transformers for language understanding[J]. arXiv preprint arXiv:1810.04805, 2018.</li>
+<li>Devlin J, Chang M W, Lee K, et al. Bert: Pre-training of deep
+bidirectional Transformers for language understanding[J]. arXiv preprint
+arXiv:1810.04805, 2018.</li>
 <li><a target="_blank" rel="noopener" href="https://github.com/google-research/bert">代码、预训练模型</a></li>
 </ul>
-<h1 id="个人思考">4.  个人思考</h1>
+<h1 id="个人思考">4. 个人思考</h1>
 <ul>
 <li>表示学习的理解
 <ul>
-<li>神经网络LM：神经网络倒数第二层的表示，经过最后一个分类层，输出词表中每个单词的概率分布。由于上文/下文/上下文不同时，当前词的概率分布不同，因此，模型倒数第二层的表示 蕴含了输入文本的信息。包括：句子中各个词之间的语义关系，句子中其它词与当前词的语义相关性，不同词的语义重要性等等。体现了模型的语义理解和表达能力。</li>
-<li>预训练模型：例如，在 LTR LM 预训练中，每个 token 对应的输出表示都蕴含了 包含当前 token 的上文信息，可以用于下游任务。</li>
+<li>神经网络LM：神经网络倒数第二层的表示，经过最后一个分类层，输出词表中每个单词的概率分布。由于上文/下文/上下文不同时，当前词的概率分布不同，因此，模型倒数第二层的表示
+蕴含了输入文本的信息。包括：句子中各个词之间的语义关系，句子中其它词与当前词的语义相关性，不同词的语义重要性等等。体现了模型的语义理解和表达能力。</li>
+<li>预训练模型：例如，在 LTR LM 预训练中，每个 token
+对应的输出表示都蕴含了 包含当前 token
+的上文信息，可以用于下游任务。</li>
 <li>masked LM 预训练
 <ul>
-<li>[MASK] token 对应的输出表示蕴含了上下文信息。由于[MASK] 在句子中的位置随机，所以句子中各个位置的输出表示都蕴含了上下文信息。<font color="green"> 但是，由于 [MASK] token 无语义信息，仅使用 [MASK] token 替换当前词时，当前位置的输出表示 与 当前输入的关联性较差，因此，当下游任务采用基于特征的方法时，相较于采用 BERT 提出的 mask 策略，性能较差。</font></li>
+<li>[MASK] token 对应的输出表示蕴含了上下文信息。由于[MASK]
+在句子中的位置随机，所以句子中各个位置的输出表示都蕴含了上下文信息。<font color="green">
+但是，由于 [MASK] token 无语义信息，仅使用 [MASK] token
+替换当前词时，当前位置的输出表示 与
+当前输入的关联性较差，因此，当下游任务采用基于特征的方法时，相较于采用
+BERT 提出的 mask 策略，性能较差。</font></li>
 <li>保留当前词：当上下文不足以推断当前位置信息时，该策略会驱使模型也考虑当前位置的输入。而同时采用其它两种替换策略，避免了模型原样输出。同时，缓解预训练与下游任务的不匹配，因为实际预测时不会出现[MASK]。</li>
-<li>随机替换：该策略可以促使模型学习上下文和当前词的关系。实际应用中，输入可能包含错误单词，可以提高模型的鲁棒性。另外，由于模型无法区分句子中的原始单词 和 随机替换的单词，也不知道需要预测的单词的位置，所以驱使模型学习每个位置的token表示。<font color="green">（避免模型在正常词的位置原样输出，[MASK]对应的位置输出上下文表示）</font></li>
-</ul>
-</li>
-</ul>
-</li>
+<li>随机替换：该策略可以促使模型学习上下文和当前词的关系。实际应用中，输入可能包含错误单词，可以提高模型的鲁棒性。另外，由于模型无法区分句子中的原始单词
+和
+随机替换的单词，也不知道需要预测的单词的位置，所以驱使模型学习每个位置的token表示。<font color="green">（避免模型在正常词的位置原样输出，[MASK]对应的位置输出上下文表示）</font></li>
+</ul></li>
+</ul></li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
@@ -923,7 +952,7 @@
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2019-2024</span>
+                <span id="year">2019-2025</span>
             
             <a href="/blog/about" target="_blank">nanyang</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>

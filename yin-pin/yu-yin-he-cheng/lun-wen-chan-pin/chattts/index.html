@@ -6,14 +6,10 @@
     <meta charset="utf-8">
     <meta name="keywords" content="ChatTTS, AI, 语音, 算法">
     <meta name="description" content="
-
 开发者：2noise
-
-
 推出时间：2024.05
-
-
-TN (homophone 替换) + 文本口语化 (stream_batch，text2text) + GPT + GroupedResidualVQ + VAE (mel) +">
+TN (homophone 替换) + 文本口语化
+(stream_batch，text2text) + GPT + GroupedResidualVQ + VAE (mel) + ">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -174,7 +170,7 @@ TN (homophone 替换) + 文本口语化 (stream_batch，text2text) + GPT + Group
         <div class="logo-name">梦园</div>
         <div class="logo-desc">
             
-            愿，彼此相伴，走过流年
+            欢迎来到梦园，这里主要记录、分享 语音、AI 相关论文、算法与思考，欢迎关注与交流！
             
         </div>
     </div>
@@ -388,23 +384,16 @@ TN (homophone 替换) + 文本口语化 (stream_batch，text2text) + GPT + Group
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <ul>
-<li>
-<p>开发者：2noise</p>
-</li>
-<li>
-<p>推出时间：2024.05</p>
-</li>
-<li>
-<p><font color="green">TN (homophone 替换) + 文本口语化 (stream_batch，text2text) + GPT + GroupedResidualVQ + VAE (mel) + vocos (wav)</font></p>
-</li>
-<li>
-<p>针对 LLM 助手对话场景设计，训练集包含大量口语内容，支持对文本进行口语化处理。</p>
-</li>
-<li>
-<p>训练数据 10wh+，SFT。开源版本仅 4wh，w/o SFT，通过加少量高频噪声、采用 MP3 格式压缩了音质。</p>
-</li>
-<li>
-<p><font color="green">细粒度控制，支持控制语速、音色相关度，支持笑声、停顿、感叹词。</font><br>
+<li><p>开发者：2noise</p></li>
+<li><p>推出时间：2024.05</p></li>
+<li><p><font color="green">TN (homophone 替换) + 文本口语化
+(stream_batch，text2text) + GPT + GroupedResidualVQ + VAE (mel) + vocos
+(wav)</font></p></li>
+<li><p>针对 LLM
+助手对话场景设计，训练集包含大量口语内容，支持对文本进行口语化处理。</p></li>
+<li><p>训练数据 10wh+，SFT。开源版本仅 4wh，w/o
+SFT，通过加少量高频噪声、采用 MP3 格式压缩了音质。</p></li>
+<li><p><font color="green">细粒度控制，支持控制语速、音色相关度，支持笑声、停顿、感叹词。</font>
 <img src="https://github.com/libukai/Awesome-ChatTTS/raw/main/readme/WebUI-CN.png" width="720"></p>
 <pre class="line-numbers language-Python" data-language="Python"><code class="language-Python">params_infer_code &#x3D; ChatTTS.Chat.InferCodeParams(
     prompt&#x3D;&quot;[speed_5]&quot;,
@@ -422,33 +411,21 @@ params_refine_text &#x3D; ChatTTS.Chat.RefineTextParams(
 # For word level manual control.
 # 目前仅支持 [laugh]、[uv_break]和[lbreak]
 text &#x3D; &#39;What is [uv_break]your favorite english food?[laugh][lbreak]&#39;
-wavs &#x3D; chat.infer(text, skip_refine_text&#x3D;True, params_refine_text&#x3D;params_refine_text,  params_infer_code&#x3D;params_infer_code)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li>
-<p><font color="green">支持流式生成。</font></p>
-</li>
-<li>
-<p>支持中文、英语、中英混合。</p>
-</li>
-<li>
-<p>4090 GPU RTF 约为 0.3。</p>
-</li>
-<li>
-<p>稳定性不好，存在多说话人、音质差的问题，自回归模型 (for bark and valle) 普遍存在。合成质量可能受文本复杂度、长度影响。</p>
-</li>
-<li>
-<p><a target="_blank" rel="noopener" href="https://github.com/2noise/ChatTTS/tree/main">官方仓库</a></p>
-</li>
-<li>
-<p><a target="_blank" rel="noopener" href="https://github.com/libukai/Awesome-ChatTTS">社区扩展项目</a></p>
+wavs &#x3D; chat.infer(text, skip_refine_text&#x3D;True, params_refine_text&#x3D;params_refine_text,  params_infer_code&#x3D;params_infer_code)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li><p><font color="green">支持流式生成。</font></p></li>
+<li><p>支持中文、英语、中英混合。</p></li>
+<li><p>4090 GPU RTF 约为 0.3。</p></li>
+<li><p>稳定性不好，存在多说话人、音质差的问题，自回归模型 (for bark and
+valle) 普遍存在。合成质量可能受文本复杂度、长度影响。</p></li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/2noise/ChatTTS/tree/main">官方仓库</a></p></li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/libukai/Awesome-ChatTTS">社区扩展项目</a></p>
 <ul>
-<li><a target="_blank" rel="noopener" href="http://region-9.autodl.pro:41137/">音色克隆：提取说话人 embedding</a></li>
-<li><a target="_blank" rel="noopener" href="https://huggingface.co/spaces/doby4u/chattts/raw/ab5e9864eba39bc14e74db3381026b42939369c5/ChatTTS/experimental/llm.py">LLM 生成日常对话回复 + LLM TN + ChatTTS</a></li>
-</ul>
-</li>
-<li>
-<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1zn4y1o7iV/">介绍1</a>、<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=L4klnZ5Lox8&amp;ab_channel=SamWitteveen">2</a></p>
-</li>
+<li><a target="_blank" rel="noopener" href="http://region-9.autodl.pro:41137/">音色克隆：提取说话人
+embedding</a></li>
+<li><a target="_blank" rel="noopener" href="https://huggingface.co/spaces/doby4u/chattts/raw/ab5e9864eba39bc14e74db3381026b42939369c5/ChatTTS/experimental/llm.py">LLM
+生成日常对话回复 + LLM TN + ChatTTS</a></li>
+</ul></li>
+<li><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1zn4y1o7iV/">介绍1</a>、<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=L4klnZ5Lox8&amp;ab_channel=SamWitteveen">2</a></p></li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
@@ -806,7 +783,7 @@ wavs &#x3D; chat.infer(text, skip_refine_text&#x3D;True, params_refine_text&#x3D
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2019-2024</span>
+                <span id="year">2019-2025</span>
             
             <a href="/blog/about" target="_blank">nanyang</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>

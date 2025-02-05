@@ -6,8 +6,8 @@
     <meta charset="utf-8">
     <meta name="keywords" content="GLM-4-Voice, AI, 语音, 算法">
     <meta name="description" content="
-
-Zeng A, Du Z, Liu M, et al. GLM-4-Voice: Towards Intelligent and Human-Like End-to-End Spoken Chatbot[J]. arXiv prepri">
+Zeng A, Du Z, Liu M, et al. GLM-4-Voice: Towards Intelligent and
+Human-Like End-to-End Spoken Chatbot[J]. arXiv prepr">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -168,7 +168,7 @@ Zeng A, Du Z, Liu M, et al. GLM-4-Voice: Towards Intelligent and Human-Like End-
         <div class="logo-name">梦园</div>
         <div class="logo-desc">
             
-            愿，彼此相伴，走过流年
+            欢迎来到梦园，这里主要记录、分享 语音、AI 相关论文、算法与思考，欢迎关注与交流！
             
         </div>
     </div>
@@ -382,125 +382,124 @@ Zeng A, Du Z, Liu M, et al. GLM-4-Voice: Towards Intelligent and Human-Like End-
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <ul>
-<li>
-<p>Zeng A, Du Z, Liu M, et al. GLM-4-Voice: Towards Intelligent and Human-Like End-to-End Spoken Chatbot[J]. arXiv preprint arXiv:2412.02612, 2024.</p>
-</li>
-<li>
-<p><a target="_blank" rel="noopener" href="https://github.com/THUDM/GLM-4-Voice">https://github.com/THUDM/GLM-4-Voice</a></p>
-</li>
-<li>
-<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/bX8-PDyFq9Xuk_IHaX23Aw">官方微信公众号介绍</a></p>
-</li>
-<li>
-<p>作者来自智谱、清华</p>
-</li>
-<li>
-<p><a target="_blank" rel="noopener" href="https://github.com/THUDM/GLM-4-Voice/issues/26">turn based speech-to-speech 对话模型，不支持微信公众号中提到的“随时打断”。</a> 支持音频或文本输入，文本+音频交错输出，降低语音输出的延迟。支持中、英语音。</p>
-</li>
-<li>
-<p>出发点</p>
+<li><p>Zeng A, Du Z, Liu M, et al. GLM-4-Voice: Towards Intelligent and
+Human-Like End-to-End Spoken Chatbot[J]. arXiv preprint
+arXiv:2412.02612, 2024.</p></li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/THUDM/GLM-4-Voice" class="uri">https://github.com/THUDM/GLM-4-Voice</a></p></li>
+<li><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/bX8-PDyFq9Xuk_IHaX23Aw">官方微信公众号介绍</a></p></li>
+<li><p>作者来自智谱、清华</p></li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/THUDM/GLM-4-Voice/issues/26">turn
+based speech-to-speech
+对话模型，不支持微信公众号中提到的“随时打断”。</a>
+支持音频或文本输入，文本+音频交错输出，降低语音输出的延迟。支持中、英语音。</p></li>
+<li><p>出发点</p>
 <ul>
 <li>为了捕捉语音丰富的细微差别及表现力，需要进行语音预训练。</li>
-<li>语音数据相对稀缺，利用文本预训练数据集合成文本-语音交错数据，用于文本、语音 token 的对齐。</li>
-<li>speech tokenizer：语音 token 与文本对齐，以迁移预训练 LM 的知识。</li>
+<li>语音数据相对稀缺，利用文本预训练数据集合成文本-语音交错数据，用于文本、语音
+token 的对齐。</li>
+<li>speech tokenizer：语音 token 与文本对齐，以迁移预训练 LM
+的知识。</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h1 id="系统结构">1.  系统结构</h1>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB34bcc0fd0e1130da03da03f9aa09135f?method=download&shareKey=37bd6cde91d375c52a296f0994fbce28" width="796">
+<h1 id="系统结构">1. 系统结构</h1>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB34bcc0fd0e1130da03da03f9aa09135f?method=download&shareKey=37bd6cde91d375c52a296f0994fbce28" width="796"></p>
 <ul>
-<li>交替生成 13 个文本 token、26 个语音 token，token 不足整数倍的不 pad。若最后文本 token 已生成结束，而音频 token 还没有，一次性输出所有剩余音频 token。1:2 保证文本快于语音。26 基于经验，使得 TTS 前先生成一段连贯的内容。</li>
+<li>交替生成 13 个文本 token、26 个语音 token，token 不足整数倍的不
+pad。若最后文本 token 已生成结束，而音频 token
+还没有，一次性输出所有剩余音频 token。1:2 保证文本快于语音。26
+基于经验，使得 TTS 前先生成一段连贯的内容。</li>
 </ul>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB1345e12d07810d67c2cb44dfb3441275?method=download&shareKey=4a4f320189ab1653e75c4b625b6e5bdf" width="416">
-<h2 id="speech-tokenizaion">1.1.  Speech Tokenizaion</h2>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB1345e12d07810d67c2cb44dfb3441275?method=download&shareKey=4a4f320189ab1653e75c4b625b6e5bdf" width="416"></p>
+<h2 id="speech-tokenizaion">1.1. Speech Tokenizaion</h2>
 <ul>
-<li>基于 whisper-large-v3 encoder，添加 pooling、VQ 层，有监督微调。</li>
-<li>流式推理、因果：whisper encoder 采用因果卷积、block 因果 attention。</li>
+<li>基于 whisper-large-v3 encoder，添加 pooling、VQ
+层，有监督微调。</li>
+<li>流式推理、因果：whisper encoder 采用因果卷积、block 因果
+attention。</li>
 <li>码本：采用指数移动平均（EMA）学习码本向量，当某个向量的使用率低于指定阈值时，重置为随机的连续表示，以避免码本坍塌。</li>
-<li>训练：ASR 数据集 + 70wh 伪标签数据（en: whisper-large-v3, zh: paraformer-large）。</li>
+<li>训练：ASR 数据集 + 70wh 伪标签数据（en: whisper-large-v3, zh:
+paraformer-large）。</li>
 </ul>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB79cd84d88e735d34329e04cacbf9d137?method=download&shareKey=75be5c908c3503651416bcc8617f0240" width="808">
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB79cd84d88e735d34329e04cacbf9d137?method=download&shareKey=75be5c908c3503651416bcc8617f0240" width="808"></p>
 <ul>
-<li>重建质量在 LibriSpeech 上测试。<font color="green">(Moshi 中文重建质量？)</font></li>
+<li>重建质量在 LibriSpeech 上测试。<font color="green">(Moshi
+中文重建质量？)</font></li>
 <li>为了补偿 pooling 的信息损失，帧率减小时增大码本大小。</li>
 <li>GLM-4-Voice 采用 12.5Hz 的 tokenizer。</li>
 </ul>
-<h2 id="speech-decoder">1.2.  Speech Decoder</h2>
+<h2 id="speech-decoder">1.2. Speech Decoder</h2>
 <ul>
 <li>从头训练语音 token encoder、flow matching 模型。
 <ul>
 <li>预训练：所有无监督语音数据，覆盖多种说话人与语音质量。</li>
 <li>微调：单一说话人，高质量数据。</li>
-</ul>
-</li>
+</ul></li>
 <li>流式推理
 <ul>
-<li>将语音 token 分为长为 10 的 chunk，实现最少需要 10 个 token 来生成初始语音。</li>
-<li>微调阶段：引入截断的音频样本，即长度为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">n</mi><mo>=</mo><mn>1</mn><mi mathvariant="normal">、</mi><mn>2</mn><mi mathvariant="normal">、</mi><mn>3</mn><mo>⋯</mo><mo>⋯</mo></mrow><annotation encoding="application/x-tex">\mathrm{n}=1 、 2 、 3 \cdots \cdots</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord"><span class="mord mathrm">n</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord cjk_fallback">、</span><span class="mord">2</span><span class="mord cjk_fallback">、</span><span class="mord">3</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner">⋯</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner">⋯</span></span></span></span> 个 chunk。</li>
-<li>推理：将前 (n-1) 个 chunk 的语音作为提示，预测第 n 个 chunk 的语音。</li>
+<li>将语音 token 分为长为 10 的 chunk，实现最少需要 10 个 token
+来生成初始语音。</li>
+<li>微调阶段：引入截断的音频样本，即长度为 <span class="math inline">\(\mathrm{n}=1 、 2 、 3 \cdots \cdots\)</span> 个
+chunk。</li>
+<li>推理：将前 (n-1) 个 chunk 的语音作为提示，预测第 n 个 chunk
+的语音。</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h1 id="训练">2.  训练</h1>
-<h2 id="语音-文本联合预训练">2.1.  语音-文本联合预训练</h2>
+<h1 id="训练">2. 训练</h1>
+<h2 id="语音-文本联合预训练">2.1. 语音-文本联合预训练</h2>
 <ul>
-<li>
-<p>初始模型：GLM-4-9B，非 chat 版。</p>
-</li>
-<li>
-<p>训练集</p>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB3ea0efc3f1e5dbdb2f38bdeb40a0cd7a?method=download&shareKey=28ce4a78325f57cffdc47eaf065235bc" width="272">
+<li><p>初始模型：GLM-4-9B，非 chat 版。</p></li>
+<li><p>训练集</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB3ea0efc3f1e5dbdb2f38bdeb40a0cd7a?method=download&shareKey=28ce4a78325f57cffdc47eaf065235bc" width="272"></p>
 <ul>
 <li>合计 1T tokens，其中纯文本占比 30%。</li>
-<li>语音-文本交错数据：利用文本预训练数据集，采用 <font color="green">text-to-token 模型</font>合成。</li>
+<li>语音-文本交错数据：利用文本预训练数据集，采用
+<font color="green">text-to-token 模型</font>合成。</li>
 <li>无监督语音数据：70wh。</li>
+</ul></li>
+<li><p>预训练数据、流程详见论文 <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2411.17607">Zeng A, Du Z, Liu M, et al.
+Scaling Speech-Text Pre-training with Synthetic Interleaved Data[J].
+arXiv preprint arXiv:2411.17607, 2024.</a></p></li>
+<li><p>学习率：6e-5 衰减到 6e-6。</p></li>
 </ul>
-</li>
-<li>
-<p>预训练数据、流程详见论文 <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2411.17607">Zeng A, Du Z, Liu M, et al. Scaling Speech-Text Pre-training with Synthetic Interleaved Data[J]. arXiv preprint arXiv:2411.17607, 2024.</a></p>
-</li>
-<li>
-<p>学习率：6e-5 衰减到 6e-6。</p>
-</li>
-</ul>
-<h2 id="sft">2.2.  SFT</h2>
+<h2 id="sft">2.2. SFT</h2>
 <ul>
 <li>训练集
 <ul>
-<li>多轮口语对话：文本对话 TTS <font color="green">+ 人工朗读录制？</font></li>
+<li>多轮口语对话：文本对话 TTS <font color="green">+
+人工朗读录制？</font></li>
 <li>输出语音风格控制 多轮对话：如情感、语调、语速、方言。</li>
-</ul>
-</li>
-<li>由于相较于学习语音输出，学习文本输出更快。分别 mask 语音输出、文本输出 loss，学习文本输出，从输入语音、输出文本学习语音输出。在语音输出上微调 20 个 epoch，文本上 4 个 epoch（<font color="green">训练顺序？</font>）。为了避免过拟合，dropout=0.5。</li>
+</ul></li>
+<li>由于相较于学习语音输出，学习文本输出更快。分别 mask
+语音输出、文本输出
+loss，学习文本输出，从输入语音、输出文本学习语音输出。在语音输出上微调
+20 个 epoch，文本上 4 个
+epoch（<font color="green">训练顺序？</font>）。为了避免过拟合，dropout=0.5。</li>
 <li>学习率：1e-5 衰减到 1e-6。</li>
 </ul>
-<h1 id="评价">3.  评价</h1>
-<h2 id="base-模型">3.1.  base 模型</h2>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB6d4e738c139099d3ca537275e792c7d8?method=download&shareKey=77efab8183601e21fbe94630582bfd50" width="504">
-<img src="https://note.youdao.com/yws/api/personal/file/WEB2a9c9b15d0e90f859ce259fa87e61104?method=download&shareKey=db193aa1a7d03784cc988d27a49984c0" width="501">
-<img src="https://note.youdao.com/yws/api/personal/file/WEB3c32e646d61e7f70012c4851bfce6152?method=download&shareKey=266461e44eb3fdb55b584a14a94a9b74" width="503">
+<h1 id="评价">3. 评价</h1>
+<h2 id="base-模型">3.1. base 模型</h2>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB6d4e738c139099d3ca537275e792c7d8?method=download&shareKey=77efab8183601e21fbe94630582bfd50" width="504"></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB2a9c9b15d0e90f859ce259fa87e61104?method=download&shareKey=db193aa1a7d03784cc988d27a49984c0" width="501"></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB3c32e646d61e7f70012c4851bfce6152?method=download&shareKey=266461e44eb3fdb55b584a14a94a9b74" width="503"></p>
 <ul>
-<li><font color="green"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi><mo>→</mo><mi>T</mi></mrow><annotation encoding="application/x-tex">S \rightarrow T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span></span> 准确度始终高于 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi><mo>→</mo><mi>S</mi></mrow><annotation encoding="application/x-tex">S \rightarrow S</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span></span></span></span></font>，语音回复仍需要文本指导。</li>
+<li><font color="green"><span class="math inline">\(S \rightarrow
+T\)</span> 准确度始终高于 <span class="math inline">\(S \rightarrow
+S\)</span></font>，语音回复仍需要文本指导。</li>
 </ul>
-<h2 id="chat-模型">3.2.  chat 模型</h2>
-<img src="https://note.youdao.com/yws/api/personal/file/WEBc88adf04928634d687b6e67366b8e352?method=download&shareKey=0cb22c1254c70b7e13dbb38dde747325" width="466">
+<h2 id="chat-模型">3.2. chat 模型</h2>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBc88adf04928634d687b6e67366b8e352?method=download&shareKey=0cb22c1254c70b7e13dbb38dde747325" width="466"></p>
 <ul>
-<li>
-<p>测试集</p>
+<li>测试集
 <ul>
-<li>
-<p>General QA：AlpacaEval helpful base、vicuna 子集，去除数学相关问题。</p>
-<p>参照 MT-Bench，采用 GPT-4o 对回复打分 1-10。</p>
-</li>
-<li>
-<p>Knowledge：从 Web Questions, Llama Questions, TriviaQA 中选取100个问题。</p>
-<p>GPT-4o 判断回复是否正确。评分由 0%-100% 归一化为 0-10。</p>
-</li>
-</ul>
-</li>
-<li>
-<p>ASR-WER：GLM-4-Voice 有时会用中文回答英文问题。为了可比，将输出限制为英文 token。</p>
-</li>
+<li><p>General QA：AlpacaEval helpful base、vicuna
+子集，去除数学相关问题。</p>
+<p>参照 MT-Bench，采用 GPT-4o 对回复打分 1-10。</p></li>
+<li><p>Knowledge：从 Web Questions, Llama Questions, TriviaQA
+中选取100个问题。</p>
+<p>GPT-4o 判断回复是否正确。评分由 0%-100% 归一化为 0-10。</p></li>
+</ul></li>
+<li>ASR-WER：GLM-4-Voice
+有时会用中文回答英文问题。为了可比，将输出限制为英文 token。</li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
@@ -869,7 +868,7 @@ Zeng A, Du Z, Liu M, et al. GLM-4-Voice: Towards Intelligent and Human-Like End-
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2019-2024</span>
+                <span id="year">2019-2025</span>
             
             <a href="/blog/about" target="_blank">nanyang</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>

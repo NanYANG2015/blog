@@ -6,10 +6,10 @@
     <meta charset="utf-8">
     <meta name="keywords" content="LibriSpeech, AI, 语音, 算法">
     <meta name="description" content="
-作者：陈果果、Daniel Povey 等，The Johns Hopkins University，2015。
-1000h，英语（口音接近美音），朗读，原始数据来自 LibriVox 项目的audiobooks。音频：16kHz。
-
-t">
+作者：陈果果、Daniel Povey 等，The Johns Hopkins
+University，2015。
+1000h，英语（口音接近美音），朗读，原始数据来自 LibriVox
+项目的audiobooks。音频：16kHz">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -170,7 +170,7 @@ t">
         <div class="logo-name">梦园</div>
         <div class="logo-desc">
             
-            愿，彼此相伴，走过流年
+            欢迎来到梦园，这里主要记录、分享 语音、AI 相关论文、算法与思考，欢迎关注与交流！
             
         </div>
     </div>
@@ -384,8 +384,10 @@ t">
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <ul>
-<li>作者：陈果果、Daniel Povey 等，The Johns Hopkins University，2015。</li>
-<li>1000h，英语（口音接近美音），朗读，原始数据来自 LibriVox 项目的audiobooks。音频：16kHz。<br>
+<li>作者：陈果果、Daniel Povey 等，The Johns Hopkins
+University，2015。</li>
+<li>1000h，英语（口音接近美音），朗读，原始数据来自 LibriVox
+项目的audiobooks。音频：16kHz。
 <img src="https://note.youdao.com/yws/api/personal/file/WEBd8b20e97d041a654467f6d1f413ff011?method=download&shareKey=7c647fdd6723bd9aaf62cdec107210fb" width="387"></li>
 <li>text normalization：转大写，删标点符号，扩展缩写、非标准单词。</li>
 <li>词典：CMUdict，删除重音标记，OOV 词 G2P 生成发音。</li>
@@ -395,50 +397,48 @@ t">
 <ul>
 <li>AM：kaldi gmm-decode-faster，约 100h 域内数据训练。</li>
 <li>LM：本书文本训练 2gram，Witten-Bell 平滑。</li>
-</ul>
-</li>
-<li><font color="red">识别结果、参考文本匹配</font>：Smith-Waterman 对齐算法。相较于 Levenshtein 对齐，该算法不要求消费完整的参考或识别文本，各种错误类型的权重可调。保留最大的匹配片段，丢弃多余的。</li>
+</ul></li>
+<li><font color="red">识别结果、参考文本匹配</font>：Smith-Waterman
+对齐算法。相较于 Levenshtein
+对齐，该算法不要求消费完整的参考或识别文本，各种错误类型的权重可调。保留最大的匹配片段，丢弃多余的。</li>
 <li><font color="red">置信区间：在对齐区域内，若识别结果与参考文本完全匹配的长度超过12个音素，则视为置信区间。</font></li>
-<li>segment：<font color="green">采用DP算法</font>，将音频分割为 &lt;= 35s 的片段，仅允许在置信区间内、至少0.5s的静音处分割。</li>
-</ul>
-</li>
+<li>segment：<font color="green">采用DP算法</font>，将音频分割为 &lt;=
+35s 的片段，仅允许在置信区间内、至少0.5s的静音处分割。</li>
+</ul></li>
 <li>强制对齐 + 过滤
 <ul>
-<li>
-<p>错误来源：增、删、插入、换位、不流畅、TN 错误、G2P 错误等。</p>
-</li>
-<li>
-<p>AM：说话人自适应。</p>
-</li>
-<li>
-<p><font color="red">强制对齐构图</font></p>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB856b4642f5b67712976cfcb5a448193c?method=download&shareKey=a9399af51dc78a98a82f641be5904626" width="485">
-</li>
-<li>
-<p>修改解码器，从单词 x 处进入 bigram 部分后，仅能返回 x（插入）或 x+1 （替换）处。若拷贝多个 bigram 副本，解码图很大。</p>
-</li>
-<li>
-<p>相较于单音素的 filler 模型，音素级 bigram 效果更好。</p>
-</li>
-</ul>
-</li>
+<li><p>错误来源：增、删、插入、换位、不流畅、TN 错误、G2P
+错误等。</p></li>
+<li><p>AM：说话人自适应。</p></li>
+<li><p><font color="red">强制对齐构图</font></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB856b4642f5b67712976cfcb5a448193c?method=download&shareKey=a9399af51dc78a98a82f641be5904626" width="485"></p></li>
+<li><p>修改解码器，从单词 x 处进入 bigram 部分后，仅能返回 x（插入）或
+x+1 （替换）处。若拷贝多个 bigram 副本，解码图很大。</p></li>
+<li><p>相较于单音素的 filler 模型，音素级 bigram
+效果更好。</p></li>
+</ul></li>
 <li>segment
 <ul>
 <li>训练集：超过0.3s的静音处分割。</li>
 <li>开发集、测试集：仅上述静音段与参考文本中的句子边界重合时分割。</li>
-</ul>
-</li>
+</ul></li>
 <li>后处理
 <ul>
-<li><font color="red">多说话人：采用 LIUM speaker diarization 工具，过滤多说话人的片段。</font></li>
+<li><font color="red">多说话人：采用 LIUM speaker diarization
+工具，过滤多说话人的片段。</font></li>
 <li>丢弃有严重音质问题的数据。</li>
 <li>说话人性别均衡。</li>
-</ul>
-</li>
-<li>LM：LM 训练集 与开发集、测试集中的文本不重叠。文本过滤策略详见论文 chapter 4。</li>
-<li>实验：在 WSJ 测试集上，相较于用 WSJ 训练集（82h）训练的模型，在 Librispeech 上训练的模型识别效果更好，说明数据量的提升超过了音频不匹配的影响。</li>
-<li>Panayotov V, Chen G, Povey D, et al. Librispeech: an asr corpus based on public domain audio books[C]//2015 IEEE international conference on acoustics, speech and signal processing (ICASSP). IEEE, 2015: 5206-5210.</li>
-<li><a target="_blank" rel="noopener" href="http://www.openslr.org/12/">http://www.openslr.org/12/</a></li>
+</ul></li>
+<li>LM：LM 训练集 与开发集、测试集中的文本不重叠。文本过滤策略详见论文
+chapter 4。</li>
+<li>实验：在 WSJ 测试集上，相较于用 WSJ 训练集（82h）训练的模型，在
+Librispeech
+上训练的模型识别效果更好，说明数据量的提升超过了音频不匹配的影响。</li>
+<li>Panayotov V, Chen G, Povey D, et al. Librispeech: an asr corpus
+based on public domain audio books[C]//2015 IEEE international
+conference on acoustics, speech and signal processing (ICASSP). IEEE,
+2015: 5206-5210.</li>
+<li><a target="_blank" rel="noopener" href="http://www.openslr.org/12/" class="uri">http://www.openslr.org/12/</a></li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
@@ -800,7 +800,7 @@ t">
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2019-2024</span>
+                <span id="year">2019-2025</span>
             
             <a href="/blog/about" target="_blank">nanyang</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>

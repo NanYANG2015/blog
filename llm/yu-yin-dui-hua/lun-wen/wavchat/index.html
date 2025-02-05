@@ -1,0 +1,1590 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="语音对话, LLM, 全双工">
+    <meta name="description" content="本文综述了语音对话系统的相关研究，包含系统功能、架构、训练策略、数据集、评价与 benchmark，以及语音表示、全双工对话的实现，诚意之作。">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>WavChat | 梦园</title>
+    <link rel="icon" type="image/png" href="/blog/favicon.png">
+    
+
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/blog/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/blog/css/my.css">
+<link rel="stylesheet" type="text/css" href="/blog/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/blog/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/blog/css/post.css">
+
+
+
+
+    
+
+
+
+    <script src="/blog/libs/jquery/jquery-3.6.0.min.js"></script>
+
+    <!-- Google Site Verification -->
+    
+        <meta name="google-site-verification" content="wJ93QtauTaHcAdSnPmDKlVioh-uZJAIGPiJ5sKqbkYA">
+    
+
+    <!-- Bing Site Verification -->
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">梦园</div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/blog/" class="waves-effect waves-light">
+      
+      <i class="fas fa-list" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/blog/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/blog/about">
+          
+          <i class="fas fa-user-circle" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>我</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/blog/words">
+          
+          <i class="fas fa-pen" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>文字</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/blog/books">
+          
+          <i class="fas fa-book" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>书</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/blog/videos">
+          
+          <i class="fas fa-film" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>视频</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/blog/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">梦园</div>
+        <div class="logo-desc">
+            
+            欢迎来到梦园，这里主要记录、分享 语音、AI 相关论文、算法与思考，欢迎关注与交流！
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/blog/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-list"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/blog/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  style="background:  ;" >
+              
+                <li>
+
+                  <a href="/blog/about " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-user-circle" style="position: absolute;left:50px" ></i>
+			      
+		          <span>我</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/blog/words " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-pen" style="position: absolute;left:50px" ></i>
+			      
+		          <span>文字</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/blog/books " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-book" style="position: absolute;left:50px" ></i>
+			      
+		          <span>书</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/blog/videos " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-film" style="position: absolute;left:50px" ></i>
+			      
+		          <span>视频</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+<script src="/blog/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/blog/';
+            }
+        }
+    })();
+</script>
+
+
+<div class="bg-cover pd-header about-cover">
+    <div class="container">
+    <div class="row">
+    <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l1">
+        <div class="brand">
+            <div class="title">
+                
+                愿，彼此相伴，走过流年
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <style>
+    /* 随视窗调整大小、滚动 */
+    #toc-content {
+        height: calc(100vh - 200px);
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="pd-header post-cover">
+                <div class="container" style="right: 0px;left: 0px;">
+                    <div class="row">
+                        <div class="col s12 m12 l12">
+                            <div class="brand">
+                                <h1 class="description center-align post-title">WavChat</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tag-cate">
+                <div class="right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/blog/categories/LLM/" class="post-category">
+                                LLM
+                            </a>
+                        
+                            <a href="/blog/categories/LLM/%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/" class="post-category">
+                                语音对话
+                            </a>
+                        
+                            <a href="/blog/categories/LLM/%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/%E8%AE%BA%E6%96%87/" class="post-category">
+                                论文
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2025-01-04
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2025-01-04
+                </div>
+                
+
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/blog/libs/prism/prism.min.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <ul>
+<li>Ji S, Chen Y, Fang M, et al. WavChat: A Survey of Spoken Dialogue
+Models[J]. arXiv preprint arXiv:2411.13577, 2024.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/jishengpeng/WavChat" class="uri">https://github.com/jishengpeng/WavChat</a></li>
+</ul>
+<h1 id="相关研究">1. 相关研究</h1>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB69e58a871dd44f74f79ad7c5dc63b59e?method=download&shareKey=8d91fa1e08facf65c9b922dc8fd5b499" width="802"></p>
+<p>Table 5: A comprehensive list of publicly available spoken dialogue
+models and their URL</p>
+<table>
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr>
+<th>Model</th>
+<th>URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AudioGPT</td>
+<td>https://github.com/AIGC-Audio/AudioGPT</td>
+</tr>
+<tr>
+<td>SpeechGPT</td>
+<td>https://github.com/0nutation/SpeechGPT</td>
+</tr>
+<tr>
+<td>Freeze-Omni</td>
+<td>https://github.com/VITA-MLLM/Freeze-Omni</td>
+</tr>
+<tr>
+<td>Baichuan-Omni</td>
+<td>https://github.com/westlake-baichuan-mllm/bc-omni</td>
+</tr>
+<tr>
+<td>GLM-4-Voice</td>
+<td>https://github.com/THUDM/GLM-4-Voice</td>
+</tr>
+<tr>
+<td>Mini-Omni</td>
+<td>https://github.com/gpt-omni/mini-omni</td>
+</tr>
+<tr>
+<td>Mini-Omni2</td>
+<td>https://github.com/gpt-omni/mini-omni2</td>
+</tr>
+<tr>
+<td>FunAudioLLM</td>
+<td>https://github.com/FunAudioLLM</td>
+</tr>
+<tr>
+<td>Qwen-Audio</td>
+<td>https://github.com/QwenLM/Qwen-Audio</td>
+</tr>
+<tr>
+<td>Qwen2-Audio</td>
+<td>https://github.com/QwenLM/Qwen2-Audio</td>
+</tr>
+<tr>
+<td>LLaMA3.1</td>
+<td>https://www.llama.com</td>
+</tr>
+<tr>
+<td>Audio Flamingo</td>
+<td>https://github.com/NVIDIA/audio-flamingo</td>
+</tr>
+<tr>
+<td>Spirit LM</td>
+<td>https://github.com/facebookresearch/spiritlm</td>
+</tr>
+<tr>
+<td>dGSLM</td>
+<td>https://github.com/facebookresearch/fairseq/tree/main/examples/textless_nlp/dgslm</td>
+</tr>
+<tr>
+<td>Spoken-LLM</td>
+<td>https://arxiv.org/abs/2305.11000</td>
+</tr>
+<tr>
+<td>LLaMA-Omni</td>
+<td>https://github.com/ictnlp/LLaMA-Omni</td>
+</tr>
+<tr>
+<td>Moshi</td>
+<td>https://github.com/kyutai-labs/moshi</td>
+</tr>
+<tr>
+<td>SALMONN</td>
+<td>https://github.com/bytedance/SALMONN</td>
+</tr>
+<tr>
+<td>LTU-AS</td>
+<td>https://github.com/YuanGongND/ltu</td>
+</tr>
+<tr>
+<td>VITA</td>
+<td>https://github.com/VITA-MLLM/VITA</td>
+</tr>
+<tr>
+<td>SpeechGPT-Gen</td>
+<td>https://github.com/0nutation/SpeechGPT</td>
+</tr>
+<tr>
+<td>Westlake-Omni</td>
+<td>https://github.com/xinchen-ai/Westlake-Omni</td>
+</tr>
+<tr>
+<td>MooER-Omni</td>
+<td>https://github.com/MooreThreads/MooER</td>
+</tr>
+<tr>
+<td>Hertz-dev</td>
+<td>https://github.com/Standard-Intelligence/hertz-dev</td>
+</tr>
+<tr>
+<td>Fish-Agent</td>
+<td>https://github.com/fishaudio/fish-speech</td>
+</tr>
+<tr>
+<td>SpeechGPT2</td>
+<td>https://0nutation.github.io/SpeechGPT2.github.io/</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>本文提到的其它口语对话系统：Spectron, USDM, EMOVA, PSLM,
+IntrinsicVoice, OmniFlatten, SyncLLM, Parrot.</li>
+<li>音视频口语对话系统
+<ul>
+<li>Park S J, Kim C W, Rha H, et al. Let's Go Real Talk: Spoken Dialogue
+Model for Face-to-Face Conversation[J]. arXiv preprint arXiv:2406.07867,
+2024.</li>
+</ul></li>
+</ul>
+<h1 id="语音对话系统的能力">2. 语音对话系统的能力</h1>
+<ul>
+<li>理解音频中的语言、副语言、声学信息，并相应地生成响应。如 E-chat
+[227]
+中一个经典的示例，如果用户以愉快的语气问“我的手机无法开机，我该怎么办？”，系统可能会回答“看起来你对购买新手机很兴奋。你对什么类型的手机感兴趣？”相反，如果用户以悲伤的语气问同样的问题，系统可能会回答“很遗憾你的手机无法使用。如果你已经熟悉了维修政策，让我们继续下一步。”。支持多语种，进一步的，自动以用户使用的语言进行响应。</li>
+<li>生成语音的可控性，如音色、风格、口音、情感、音高、语速等，或自动根据用户调整回复语音的风格。（音色克隆：提供该能力有安全性问题）</li>
+<li>音频、音乐理解与生成。</li>
+<li>长上下文多轮对话。</li>
+<li>流式生成，低延迟。</li>
+<li>全双工对话，支持 normal turn
+exchanges、打断、backchannel（不打断的反馈，如 OK、I
+see）。具体的，用户说完后立即响应、正确处理用户语音中间的停顿、检测用户的打断、用户说话时的
+backchannel、<font color="green">必要时打断用户（是个真实需求吗？）</font>。</li>
+<li>扩展更多模态与能力，如图像、视频等。</li>
+<li>安全性。</li>
+</ul>
+<h1 id="系统结构">3. 系统结构</h1>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBfc39b5dd45589a54031be773aef56582?method=download&shareKey=8d91fa1e08facf65c9b922dc8fd5b499" width="603"></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB681679cc19dcf3df708511dfd38733c0?method=download&shareKey=8d91fa1e08facf65c9b922dc8fd5b499" width="719"></p>
+<ul>
+<li>模态 adapter：如 Window-Level Q-Former [121]。</li>
+<li>交错生成文本、语音，如 <font color="green">Spirit-LM
+通过可视化表明采用这种数据格式训练，文本、语音特征的相似度更高</font>。</li>
+<li>并行生成文本、语音，如 PSLM、Llama-Omni、Mini-Omni。</li>
+</ul>
+<h1 id="语音表示">4. 语音表示</h1>
+<h2 id="semantic-vs-acoustic">4.1. Semantic vs Acoustic</h2>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBe62e830e638898aeb81f9220e345197b?method=download&shareKey=8d91fa1e08facf65c9b922dc8fd5b499" width="634"></p>
+<ul>
+<li>语义
+<ul>
+<li>自监督：如 HuBERT、Wav2Vec、XLS-R、WavLM、SPIRAL 等。</li>
+<li>有监督：如 Whisper、supervised semantic speech(<span class="math inline">\(S^3\)</span>) tokenizer 等。</li>
+</ul></li>
+<li>声学：如 Encodec。</li>
+<li>语义 + 声学：如 SpeechTokenizer（RVQ-1 蒸馏 HuBERT）、mimi（split
+RVQ）。</li>
+<li>音频生成
+<ul>
+<li>语义 token
+<ul>
+<li>如 HuBERT + HuBERT unit-based HiFi-GAN，<span class="math inline">\(S^3\)</span> tokenizer + flow matching +
+HiFi-GAN。</li>
+<li>存在的问题：语音、声音事件、音乐统一建模。</li>
+</ul></li>
+<li>声学 token: vocoder</li>
+<li>LLM 隐藏表示
+<ul>
+<li>如 Freeze-Omni（LLM 隐藏表示 + 输出文本 token -&gt; NAR decoder
+-&gt; AR decoder -&gt; vocoder）、IntrinsicVoice (Group-Former)。</li>
+</ul></li>
+</ul></li>
+<li>副语言信息的理解：语音表示中蕴含或提供额外的表示，如 speech
+embedding、副语言属性等。</li>
+<li>展望：将语音表示对齐到 LLM 的文本表示空间，减轻 LLM
+的生成负担。</li>
+</ul>
+<h2 id="连续-vs-离散">4.2. 连续 vs 离散</h2>
+<ul>
+<li>CV 领域整合离散、连续表示的工作
+<ul>
+<li>Zhou C, Yu L, Babu A, et al. Transfusion: Predict the next token and
+diffuse images with one multi-modal model[J]. arXiv preprint
+arXiv:2408.11039, 2024.</li>
+<li>Show-o: One single transformer to unify multimodal understanding and
+generation.</li>
+</ul></li>
+</ul>
+<h2 id="量化器-单层-vs-多层">4.3. 量化器 单层 vs 多层</h2>
+<ul>
+<li>RVQ 多层表示：delay 并行生成、moshi depth transformer
+并行生成。</li>
+<li>单层：如 WavTokenizer [90], Single-Codec [119], BigCodec
+[224]。</li>
+</ul>
+<h2 id="是否包含文本指导">4.4. 是否包含文本指导</h2>
+<ul>
+<li>在语音输入、语音输出中间插入文本任务，类似 chain-of-thought。</li>
+</ul>
+<h1 id="多阶段训练">5. 多阶段训练</h1>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB51a3525b1b26c8611eec864884669e56?method=download&shareKey=8d91fa1e08facf65c9b922dc8fd5b499" width="379"></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBb0a5c6f47baf60766ce4fb56ba39e456?method=download&shareKey=8d91fa1e08facf65c9b922dc8fd5b499" width="492"></p>
+<ul>
+<li>对齐语音-文本模态以保证一致的理解与生成。</li>
+<li>偏好优化（RL）
+<ul>
+<li>DPO：如 Qwen-Audio 2、Align-SLM（semantic metrics）。</li>
+<li>REINFORCE：如 <a href="https://nanyang2015.github.io/blog/yin-pin/yu-yin-he-cheng/lun-wen-chan-pin/seed-tts/#%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0">Seed-TTS</a>。</li>
+</ul></li>
+</ul>
+<h1 id="流式">6. 流式</h1>
+<ul>
+<li>模型结构优化：因果卷积、chunk-wise causal attention。</li>
+<li>长序列生成优化：如 speech tokenizer 帧率压缩、IntrinsicVoice
+GroupFormer。</li>
+<li>流式音频生成 如 Encodec、LLama-Omni。另外，流式 ASR 如 U2++
+Conformer、流式 TTS 如 XTTS-v2。</li>
+</ul>
+<h1 id="全双工">7. 全双工</h1>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBc4b94b0aad4a9e4a0aad64f245f9fae9?method=download&shareKey=8d91fa1e08facf65c9b922dc8fd5b499" width="561"></p>
+<h2 id="级联系统">7.1. 级联系统</h2>
+<ul>
+<li>Duplex Conversation [130]：3个核心模块
+<ul>
+<li>用户状态检测：多模态模型，输入音频和文本，结合韵律、音高、停顿等特征，检测用户意图为
+switch turn、继续说话或犹豫。</li>
+<li>响应信号选取：采用 multi-label 分类，在适当的时间插入适合对话情境的
+backchannel。</li>
+<li>打断检测：多模态模型，输入音频和文本，识别用户中断，并避免将背景噪声、非预期的声音信号误判为中断。</li>
+</ul></li>
+<li>Outbound Agent System [98]：采用有限状态机。
+<ul>
+<li>采用基于 BERT 的流式文本分类器，每 300ms 对 ASR
+结果进行语义分析，以识别中断（并避免 backchannel 被识别为中断）。</li>
+<li>处理用户提及命名实体时的停顿、不连续表达，避免被检测为对话结束。</li>
+</ul></li>
+<li>Full-duplex LLM [211]：采用神经有限状态机、流式 ASR、流式 TTS。</li>
+<li>CleanS2S [159]：VAD + ASR + LLM + TTS。</li>
+</ul>
+<h2 id="端到端系统">7.2. 端到端系统</h2>
+<p>如 dGSLM、Moshi、SyncLLM、OmniFlatten。</p>
+<h1 id="数据集">8. 数据集</h1>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB5133929439e840d2769d501c6415ca1e?method=download&shareKey=8d91fa1e08facf65c9b922dc8fd5b499" width="981"></p>
+<p>Table 4: Music and Non-Speech Sound Datasets</p>
+<table>
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr>
+<th>Dataset</th>
+<th>Size</th>
+<th>URL</th>
+<th>Modality</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ESC-50</td>
+<td>2,000 clips (5s each)</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/karoldvl/ESC-50">https://github.com/karoldvl/ESC-50</a></td>
+<td>Sound</td>
+</tr>
+<tr>
+<td>UrbanSound8K</td>
+<td>8,732 clips (&lt;=4s each)</td>
+<td><a target="_blank" rel="noopener" href="https://urbansounddataset.weebly.com/urbansound8k.html">https://urbansounddataset.weebly.com/urbansound8k.html</a></td>
+<td>Sound</td>
+</tr>
+<tr>
+<td>AudioSet</td>
+<td>2000k+ clips (10s each)</td>
+<td><a target="_blank" rel="noopener" href="https://research.google.com/audioset/">https://research.google.com/audioset/</a></td>
+<td>Sound</td>
+</tr>
+<tr>
+<td>TUT Acoustic Scenes 2017</td>
+<td>52,630 segments</td>
+<td><a target="_blank" rel="noopener" href="https://zenodo.org/record/400515">https://zenodo.org/record/400515</a></td>
+<td>Sound</td>
+</tr>
+<tr>
+<td>Warblr</td>
+<td>10,000 clips</td>
+<td><a target="_blank" rel="noopener" href="https://warblr.net/">https://warblr.net/</a></td>
+<td>Sound</td>
+</tr>
+<tr>
+<td>FSD50K</td>
+<td>51,197 clips (total 108.3 hours)</td>
+<td><a target="_blank" rel="noopener" href="https://zenodo.org/record/4060432">https://zenodo.org/record/4060432</a></td>
+<td>Sound</td>
+</tr>
+<tr>
+<td>DCASE Challenge</td>
+<td>varies annually</td>
+<td><a target="_blank" rel="noopener" href="http://dcase.community/">http://dcase.community/</a></td>
+<td>Sound</td>
+</tr>
+<tr>
+<td>IRMAS</td>
+<td>6,705 audio files (3s each)</td>
+<td><a target="_blank" rel="noopener" href="https://www.upf.edu/web/mtg/irmas">https://www.upf.edu/web/mtg/irmas</a></td>
+<td>Music</td>
+</tr>
+<tr>
+<td>FMA</td>
+<td>106,574 tracks</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/mdeff/fma">https://github.com/mdeff/fma</a></td>
+<td>Music</td>
+</tr>
+<tr>
+<td>NSynth</td>
+<td>305,979 notes</td>
+<td><a target="_blank" rel="noopener" href="https://magenta.tensorflow.org/datasets/nsynth">https://magenta.tensorflow.org/datasets/nsynth</a></td>
+<td>Music</td>
+</tr>
+<tr>
+<td>EMOMusic</td>
+<td>744 songs</td>
+<td><a target="_blank" rel="noopener" href="https://cvml.unige.ch/databases/emoMusic/">https://cvml.unige.ch/databases/emoMusic/</a></td>
+<td>Music</td>
+</tr>
+<tr>
+<td>MedleyDB</td>
+<td>122 multitrack recordings</td>
+<td><a target="_blank" rel="noopener" href="https://medleydb.weebly.com">https://medleydb.weebly.com</a></td>
+<td>Music</td>
+</tr>
+<tr>
+<td>MagnaTagATune</td>
+<td>25,863 clips (30s each)</td>
+<td><a target="_blank" rel="noopener" href="https://mirg.city.ac.uk/codeapps/the-magnatagatune-dataset">https://mirg.city.ac.uk/codeapps/the-magnatagatune-dataset</a></td>
+<td>Music</td>
+</tr>
+<tr>
+<td>MUSDB</td>
+<td>150 songs</td>
+<td><a target="_blank" rel="noopener" href="https://paperswithcode.com/dataset/musdb18">https://paperswithcode.com/dataset/musdb18</a></td>
+<td>Music</td>
+</tr>
+<tr>
+<td>M4Singer</td>
+<td>700 songs</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/M4Singer/M4Singer">https://github.com/M4Singer/M4Singer</a></td>
+<td>Music</td>
+</tr>
+<tr>
+<td>Jamendo</td>
+<td>600k songs</td>
+<td><a target="_blank" rel="noopener" href="https://www.jamendo.com/?language=en">https://www.jamendo.com/?language=en</a></td>
+<td>Music</td>
+</tr>
+</tbody>
+</table>
+<h1 id="评价">9. 评价</h1>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBe56a19b8ea4238bb657b6ec245178f58?method=download&shareKey=8d91fa1e08facf65c9b922dc8fd5b499" width="1007"></p>
+<p>其中，SUPERB、AudioBench、AIR-Bench Foundation、SD-Eval、<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2410.19168">MMAU</a>
+主要为语音、音频、音乐理解相关任务，VoiceBench、AudioBench、AIR-Bench
+chat 还包含一般知识、指令跟随相关任务。VoiceBench
+还评价在不同说话风格、声学环境、口语错误表达下的鲁棒性。SpokenWOZ
+评价任务导向的口语对话中能否正确完成用户请求。SuperCLUE 非开源。</p>
+<table>
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr>
+<th>维度</th>
+<th>评价方式与指标</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>文本智能</td>
+<td>测试集如
+知识问答（TriviaQA）、专业考试（MMLU、C-Eval）、数学推理（GSM8K）、指令跟随（Flan、Self-instruct）、多轮对话（CoQA、OpenAssistant）。<br>封闭式问题，如多项选择、给定答案关键词，可采用准确度相关的评价指标。<br>开放式问题，可采用机器翻译中
+BLEU, METEOR, ROUGE 等文本相似度指标；或者 BertScore
+等语义相似度指标；或者采用 GPT4o 等 LLM
+评价生成文本是否符合人类偏好。</td>
+</tr>
+<tr>
+<td>语音智能</td>
+<td>能否基于不同的声学信息生成适当的响应。</td>
+</tr>
+<tr>
+<td>音频智能</td>
+<td>音频理解与生成：如语音情感识别准确度、自动音频字幕、声音事件检测、声学场景分类、音乐相关任务等。</td>
+</tr>
+<tr>
+<td>语音生成质量</td>
+<td>发音准确度（WER/CER）、清晰度和自然度（MOS）。</td>
+</tr>
+<tr>
+<td>多语种能力</td>
+<td>语音翻译任务、能否自动以用户使用的语言进行响应。</td>
+</tr>
+<tr>
+<td>context learning</td>
+<td>记忆能力、用户修改关键信息后的正确响应。</td>
+</tr>
+<tr>
+<td>延迟</td>
+<td>流式：first token
+delay（用户说完话到收到第一帧回复语音的延迟）。<br>turn-based：RTF。</td>
+</tr>
+<tr>
+<td>交互能力</td>
+<td>用户打断，适当的 backchannel、打断用户。</td>
+</tr>
+</tbody>
+</table>
+<h1 id="资源">10. 资源</h1>
+<p>Table 6: A comprehensive list of publicly available codec models and
+their URL</p>
+<table>
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr>
+<th>Model</th>
+<th>URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Encodec [43]</td>
+<td>https://github.com/facebookresearch/encodec</td>
+</tr>
+<tr>
+<td>SoundStream [238]</td>
+<td>https://github.com/wesbz/SoundStream</td>
+</tr>
+<tr>
+<td>DAC [113]</td>
+<td>https://github.com/descriptinc/descript-audio-codec</td>
+</tr>
+<tr>
+<td>WavTokenizer [90]</td>
+<td>https://github.com/jishengpeng/WavTokenizer</td>
+</tr>
+<tr>
+<td>SpeechTokenizer [249]</td>
+<td>https://github.com/ZhangXInFD/SpeechTokenizer</td>
+</tr>
+<tr>
+<td>SNAC [193]</td>
+<td>https://github.com/hubertsiuzdak/snac</td>
+</tr>
+<tr>
+<td>SemantiCodec [135]</td>
+<td>https://github.com/haoheliu/SemantiCodec-inference</td>
+</tr>
+<tr>
+<td>Mimi [44]</td>
+<td>https://github.com/kyutai-labs/moshi</td>
+</tr>
+<tr>
+<td>HiFi-Codec [230]</td>
+<td>https://github.com/yangdongchao/AcademiCodec</td>
+</tr>
+<tr>
+<td>FunCodec [51]</td>
+<td>https://github.com/modelscope/FunCodec</td>
+</tr>
+<tr>
+<td>APCodec [4]</td>
+<td>https://github.com/YangAi520/APCodec/tree/main</td>
+</tr>
+<tr>
+<td>AudioDec [220]</td>
+<td>https://github.com/facebookresearch/AudioDec</td>
+</tr>
+<tr>
+<td>FACodec [100]</td>
+<td>https://github.com/lifeiteng/naturalspeech3_facodec</td>
+</tr>
+<tr>
+<td>Language-Codec [89]</td>
+<td>https://github.com/jishengpeng/Languagecodec</td>
+</tr>
+<tr>
+<td>XCodec [236]</td>
+<td>https://github.com/zhenye234/xcodec</td>
+</tr>
+<tr>
+<td>TiCodec [177]</td>
+<td>https://github.com/y-ren16/TiCodec</td>
+</tr>
+<tr>
+<td>SoCodec [70]</td>
+<td>https://github.com/hhguo/SoCodec</td>
+</tr>
+<tr>
+<td>FUVC [253]</td>
+<td>https://github.com/z21110008/FUVC</td>
+</tr>
+<tr>
+<td>HILCodec [3]</td>
+<td>https://github.com/aask1357/hilcodec</td>
+</tr>
+<tr>
+<td>LaDiffCodec [233]</td>
+<td>https://github.com/haiciyang/LaDiffCodec</td>
+</tr>
+<tr>
+<td>LLM-Codec [229]</td>
+<td>https://github.com/yangdongchao/LLM-Codec</td>
+</tr>
+<tr>
+<td>SpatialCodec [226]</td>
+<td>https://github.com/XZWY/SpatialCodec</td>
+</tr>
+<tr>
+<td>BigCodec [224]</td>
+<td>https://github.com/Aria-K-Alethia/BigCodec</td>
+</tr>
+<tr>
+<td>SuperCodec [254]</td>
+<td>https://github.com/exercise-book-yq/Supercodec</td>
+</tr>
+<tr>
+<td>RepCodec [86]</td>
+<td>https://github.com/mct10/RepCodec</td>
+</tr>
+<tr>
+<td>EnCodecMAE [164]</td>
+<td>https://github.com/habla-liaa/encodecmae</td>
+</tr>
+<tr>
+<td>MuCodec [225]</td>
+<td>https://github.com/xuyaoxun/MuCodec</td>
+</tr>
+<tr>
+<td>SPARC [32]</td>
+<td>https://github.com/Berkeley-Speech-Group/Speech-Articulatory-Coding</td>
+</tr>
+<tr>
+<td>BANC [172]</td>
+<td>https://github.com/anton-jeran/MULTI-AUDIODEC</td>
+</tr>
+<tr>
+<td>SpeechRVQ [188]</td>
+<td>https://huggingface.co/ibm/DAC.speech.v1.0</td>
+</tr>
+<tr>
+<td>QINCo [87]</td>
+<td>https://github.com/facebookresearch/Qinco</td>
+</tr>
+<tr>
+<td>SimVQ [257]</td>
+<td>https://github.com/youngsheen/SimVQ</td>
+</tr>
+</tbody>
+</table>
+<h1 id="其它">11. 其它</h1>
+<ul>
+<li>Turn-taking cues 包含嗓音、韵律、呼吸、注视或手势。</li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <i class="fas fa-exclamation-circle"></i>
+            <span>
+                本文不允许转载。
+            </span>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/blog/llm/yu-yin-dui-hua/lun-wen/wavchat/">
+                    <div class="card-content">
+                        <span class="card-title">WavChat</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            本文综述了语音对话系统的相关研究，包含系统功能、架构、训练策略、数据集、评价与 benchmark，以及语音表示、全双工对话的实现，诚意之作。
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-01-04
+                                <i class="far fa-edit fa-fw icon-date"></i>2025-01-04
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/blog/categories/LLM/" class="post-category">
+                                    LLM
+                                </a>
+                            
+                            <a href="/blog/categories/LLM/%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/" class="post-category">
+                                    语音对话
+                                </a>
+                            
+                            <a href="/blog/categories/LLM/%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/%E8%AE%BA%E6%96%87/" class="post-category">
+                                    论文
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/blog/yin-pin/yu-yin-he-cheng/lun-wen-chan-pin/cosyvoice-2/">
+                    <div class="card-content">
+                        <span class="card-title">CosyVoice 2</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            TTS 模型 CosyVoice 2.0 版本。1. 同时支持流式、非流式，且两者性能相当。LLM 采用文本、语音 token 交错的数据格式，flow matching 采用 chunk-aware causal attention，首包延迟约 150ms。2. FSQ 替换 VQ，码本利用率 23% -> 100%，发音准确度显著提升。3. 采用预训练的 LLM Qwen2.5-0.5B。4. 增加 DPO 训练，进一步提升发音准确度。
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-12-21
+                                <i class="far fa-edit fa-fw icon-date"></i>2024-12-23
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/blog/categories/%E9%9F%B3%E9%A2%91/" class="post-category">
+                                    音频
+                                </a>
+                            
+                            <a href="/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%AD%E9%9F%B3%E5%90%88%E6%88%90/" class="post-category">
+                                    语音合成
+                                </a>
+                            
+                            <a href="/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%AD%E9%9F%B3%E5%90%88%E6%88%90/%E8%AE%BA%E6%96%87-%E4%BA%A7%E5%93%81/" class="post-category">
+                                    论文&产品
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('50')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE' || selection.getRangeAt(0).commonAncestorContainer.nodeName === 'CODE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: 梦园<br />'
+            + '文章作者: nanyang<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/blog/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/blog/libs/prism/prism.min.js"></script>
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/blog/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/blog/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/blog/libs/codeBlock/codeShrink.js"></script>
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/blog/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('6'),
+            headingSelector: 'h1, h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    });
+</script>
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/blog/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="5001011615"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/blog/libs/aplayer/APlayer.min.js"></script>
+<script src="/blog/libs/aplayer/Meting.min.js"></script>
+
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2019-2025</span>
+            
+            <a href="/blog/about" target="_blank">nanyang</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+            <br>
+            
+            
+            
+            
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link ">
+    <a href="https://github.com/NanYANG2015" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:2271348390@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=2271348390" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 2271348390" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/blog/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/blog/libs/materialize/materialize.min.js"></script>
+    <script src="/blog/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/blog/libs/aos/aos.js"></script>
+    <script src="/blog/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/blog/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/blog/js/matery.js"></script>
+
+    
+        <!-- <script src='https://unpkg.com/mermaid@latest/dist/mermaid.min.js'></script> -->
+        <script src='/blog/libs/mermaid/mermaid.min.js'></script>
+        <script>
+          if (window.mermaid) {
+            mermaid.initialize({theme: 'neutral'});
+          }
+        </script>
+    
+
+    
+
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/blog/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

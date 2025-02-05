@@ -4,12 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="hertz-dev, AI, 语音, 算法">
-    <meta name="description" content="
-https://si.inc/hertz-dev/
-https://github.com/Standard-Intelligence/hertz-dev
-
-">
+    <meta name="keywords" content="语音对话, 全双工">
+    <meta name="description" content="全双工音频对话 base 模型，8.5B，仅音频。">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -170,7 +166,7 @@ https://github.com/Standard-Intelligence/hertz-dev
         <div class="logo-name">梦园</div>
         <div class="logo-desc">
             
-            愿，彼此相伴，走过流年
+            欢迎来到梦园，这里主要记录、分享 语音、AI 相关论文、算法与思考，欢迎关注与交流！
             
         </div>
     </div>
@@ -361,7 +357,7 @@ https://github.com/Standard-Intelligence/hertz-dev
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-11-07
+                    2025-01-04
                 </div>
                 
 
@@ -384,8 +380,31 @@ https://github.com/Standard-Intelligence/hertz-dev
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <ul>
-<li><a target="_blank" rel="noopener" href="https://si.inc/hertz-dev/">https://si.inc/hertz-dev/</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/Standard-Intelligence/hertz-dev">https://github.com/Standard-Intelligence/hertz-dev</a></li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/Standard-Intelligence/hertz-dev" class="uri">https://github.com/Standard-Intelligence/hertz-dev</a></p></li>
+<li><p><a target="_blank" rel="noopener" href="https://si.inc/hertz-dev/" class="uri">https://si.inc/hertz-dev/</a></p></li>
+<li><p>hertz-codec</p>
+<ul>
+<li>VAE，采用因果卷积，<font color="green">6s 感受野，</font>输出 8Hz
+32维 latent。</li>
+<li>采用重建、对抗、KL 正则损失训练。</li>
+<li>参数量：encoder 5M、decoder 95M。</li>
+</ul></li>
+<li><p>hertz-codec quantizer：MLP + FSQ。将 latent 投影为语音学相关的
+15-bit 量化表示。</p></li>
+<li><p>hertz-ar：8.4B，40层 decoder-only transformer。</p>
+<ul>
+<li>前 32 层输入历史 latent 预测 next 15-bit 量化 latent。随机初始化或从
+LM 初始化。</li>
+<li>后8层基于历史 latent 和 15-bit 量化 latent 预测 next latent。</li>
+<li>上下文长度为 2048，约 4.5min。</li>
+</ul></li>
+<li><p>训练</p>
+<ul>
+<li>duplex post-training。</li>
+</ul></li>
+<li><p>延迟：理论 80ms，实际 RTX 4090 120ms = 62.5ms
+(给定任意句子到得到1个 token 的平均时间) + forward +
+往返网络延迟。</p></li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
@@ -451,13 +470,13 @@ https://github.com/Standard-Intelligence/hertz-dev
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            TTS 模型 CosyVoice 2.0 版本。1. 同时支持流式、非流式，且两者性能相当。LLM 采用文本、语音 token 交错的数据格式，flow matching 采用 chunk-aware causal attention，首包延迟约 150ms。2. FSQ 替换 VQ，码本利用率 23% -> 100%，发音准确度显著提升。3. 采用预训练的 LLM Qwen2.5-0.5B。4. 增加 DPO 训练，进一步提升发音准确度。
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
                             <i class="far fa-clock fa-fw icon-date"></i>2024-12-21
-                            <i class="far fa-edit fa-fw icon-date"></i>2024-12-21
+                            <i class="far fa-edit fa-fw icon-date"></i>2024-12-23
                         </span>
                         <span class="publish-author">
                             
@@ -754,7 +773,7 @@ https://github.com/Standard-Intelligence/hertz-dev
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2019-2024</span>
+                <span id="year">2019-2025</span>
             
             <a href="/blog/about" target="_blank">nanyang</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>

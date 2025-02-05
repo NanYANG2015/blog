@@ -6,7 +6,10 @@
     <meta charset="utf-8">
     <meta name="keywords" content="HTS-AT, AI, 语音, 算法">
     <meta name="description" content="
-相较于传统 audio spectrogram transformer(AST)，采用分层结构、patch merge 减小了序列长度，采用 window attention 减小了 self attention 计算量，减小了参数量、训">
+相较于传统 audio spectrogram
+transformer(AST)，采用分层结构、patch merge 减小了序列长度，采用 window
+attention 减小了 self attention
+计算量，减小了参">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -167,7 +170,7 @@
         <div class="logo-name">梦园</div>
         <div class="logo-desc">
             
-            愿，彼此相伴，走过流年
+            欢迎来到梦园，这里主要记录、分享 语音、AI 相关论文、算法与思考，欢迎关注与交流！
             
         </div>
     </div>
@@ -381,59 +384,83 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <ul>
-<li><font color="red">相较于传统 audio spectrogram transformer(AST)，采用分层结构、patch merge 减小了序列长度，采用 window attention 减小了 self attention 计算量，减小了参数量、训练时间。</font></li>
-<li><font color="red">声音事件时间定位：添加 token-semantic CNN 层。</font></li>
+<li><font color="red">相较于传统 audio spectrogram
+transformer(AST)，采用分层结构、patch merge 减小了序列长度，采用 window
+attention 减小了 self attention
+计算量，减小了参数量、训练时间。</font></li>
+<li><font color="red">声音事件时间定位：添加 token-semantic CNN
+层。</font></li>
 <li>性能：优于或与 SOTA 相当。</li>
 </ul>
-<h1 id="系统结构">1.  系统结构</h1>
-<img src="https://note.youdao.com/yws/api/personal/file/WEBbd464af80c97209dcb0033874c43a5c8?method=download&shareKey=64e7d83163db068a4976710c2efd7a6f" width="1157">
-<h2 id="patch-merge">1.1.  patch merge</h2>
-<p><font color="green"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo fence="true">(</mo><mfrac><mi>T</mi><mi>P</mi></mfrac><mo>×</mo><mfrac><mi>F</mi><mi>P</mi></mfrac><mo separator="true">,</mo><mi>D</mi><mo fence="true">)</mo></mrow><annotation encoding="application/x-tex">\left(\frac{T}{P} \times \frac{F}{P}, D\right)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.222341em;vertical-align:-0.35001em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size1">(</span></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.872331em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">P</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.872331em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">P</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">F</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size1">)</span></span></span></span></span></span> -&gt; <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo fence="true">(</mo><mfrac><mi>T</mi><mrow><mn>2</mn><mi>P</mi></mrow></mfrac><mo>×</mo><mfrac><mi>F</mi><mrow><mn>2</mn><mi>P</mi></mrow></mfrac><mo separator="true">,</mo><mn>4</mn><mi>D</mi><mo fence="true">)</mo></mrow><annotation encoding="application/x-tex">\left(\frac{T}{2P} \times \frac{F}{2P}, 4D\right)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.222341em;vertical-align:-0.35001em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size1">(</span></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.872331em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span><span class="mord mathdefault mtight" style="margin-right:0.13889em;">P</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.872331em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span><span class="mord mathdefault mtight" style="margin-right:0.13889em;">P</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">F</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">4</span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size1">)</span></span></span></span></span></span> -&gt; 线性层 -&gt; <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo fence="true">(</mo><mfrac><mi>T</mi><mrow><mn>2</mn><mi>P</mi></mrow></mfrac><mo>×</mo><mfrac><mi>F</mi><mrow><mn>2</mn><mi>P</mi></mrow></mfrac><mo separator="true">,</mo><mn>2</mn><mi>D</mi><mo fence="true">)</mo></mrow><annotation encoding="application/x-tex">\left(\frac{T}{2P} \times \frac{F}{2P}, 2D\right)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.222341em;vertical-align:-0.35001em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size1">(</span></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.872331em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span><span class="mord mathdefault mtight" style="margin-right:0.13889em;">P</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.872331em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span><span class="mord mathdefault mtight" style="margin-right:0.13889em;">P</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">F</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">2</span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size1">)</span></span></span></span></span></span></font></p>
-<h2 id="swin-transformer">1.2.  Swin Transformer</h2>
-<p>采用 swin transformer，将 transformer block 中的全局 self attention 替换为 window attention：分别计算多个非重叠 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>M</mi><mo>×</mo><mi>M</mi></mrow><annotation encoding="application/x-tex">M \times M</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span></span></span></span> 的窗内的 attention 矩阵。用于减少计算量。对于维度为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo stretchy="false">(</mo><mi>t</mi><mo separator="true">,</mo><mi>f</mi><mo separator="true">,</mo><mi>D</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(t,f,D)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">t</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="mclose">)</span></span></span></span> 的音频表示，计算复杂度分别为：</p>
-<p class="katex-block katex-error" title="ParseError: KaTeX parse error: Can&#039;t use function &#039;$&#039; in math mode at position 47: … t)^2 D\right) $̲$ $$ WA: \mathc…">GA: \mathcal{O}\left(f t D^2+(f t)^2 D\right) $$ $$ WA: \mathcal{O}\left(f t D^2+M^2 f t D\right) 
-</p>
+<h1 id="系统结构">1. 系统结构</h1>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBbd464af80c97209dcb0033874c43a5c8?method=download&shareKey=64e7d83163db068a4976710c2efd7a6f" width="1157"></p>
+<h2 id="patch-merge">1.1. patch merge</h2>
+<p><font color="green"><span class="math inline">\(\left(\frac{T}{P}
+\times \frac{F}{P}, D\right)\)</span> -&gt; <span class="math inline">\(\left(\frac{T}{2P} \times \frac{F}{2P},
+4D\right)\)</span> -&gt; 线性层 -&gt; <span class="math inline">\(\left(\frac{T}{2P} \times \frac{F}{2P},
+2D\right)\)</span></font></p>
+<h2 id="swin-transformer">1.2. Swin Transformer</h2>
+<p>采用 swin transformer，将 transformer block 中的全局 self attention
+替换为 window attention：分别计算多个非重叠 <span class="math inline">\(M \times M\)</span> 的窗内的 attention
+矩阵。用于减少计算量。对于维度为 <span class="math inline">\((t,f,D)\)</span> 的音频表示，计算复杂度分别为：
+<span class="math display">\[ GA: \mathcal{O}\left(f t D^2+(f t)^2
+D\right) \]</span> <span class="math display">\[ WA: \mathcal{O}\left(f
+t D^2+M^2 f t D\right) \]</span></p>
 <blockquote>
-<p>其中，D 维的表示经过 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>D</mi><mo>×</mo><mi>D</mi></mrow><annotation encoding="application/x-tex">D \times D</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span></span></span></span> 的矩阵进行映射，复杂度为 $\mathcal{O}\left(f t D^2\right) $<br>
-self attention QK 计算复杂度为 $\mathcal{O}\left((f t)^2 D\right) $<br>
-window attention QK 计算复杂度为 $\mathcal{O}\left((M M)^2 D \times \frac{t}{M} \times \frac{f}{M}\right) = \mathcal{O}\left(M^2 f t D\right) $</p>
+<p>其中，D 维的表示经过 <span class="math inline">\(D \times D\)</span>
+的矩阵进行映射，复杂度为 $(f t D^2) $ self attention QK 计算复杂度为
+$((f t)^2 D) $ window attention QK 计算复杂度为 $((M M)^2 D ) = (M^2 f t
+D) $</p>
 </blockquote>
-<h2 id="token-semantic-module">1.3.  Token-Semantic Module</h2>
-<p><font color="green">kernel <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo fence="true">(</mo><mn>3</mn><mo separator="true">,</mo><mfrac><mi>F</mi><mrow><mn>8</mn><mi>P</mi></mrow></mfrac><mo fence="true">)</mo></mrow><annotation encoding="application/x-tex">\left(3, \frac{F}{8 P}\right)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.222341em;vertical-align:-0.35001em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size1">(</span></span><span class="mord">3</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.872331em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">8</span><span class="mord mathdefault mtight" style="margin-right:0.13889em;">P</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">F</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size1">)</span></span></span></span></span></span>，输出 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo fence="true">(</mo><mfrac><mi>T</mi><mrow><mn>8</mn><mi>P</mi></mrow></mfrac><mo separator="true">,</mo><mi>C</mi><mo fence="true">)</mo></mrow><annotation encoding="application/x-tex">\left(\frac{T}{8 P}, C\right)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.222341em;vertical-align:-0.35001em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size1">(</span></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.872331em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">8</span><span class="mord mathdefault mtight" style="margin-right:0.13889em;">P</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size1">)</span></span></span></span></span></span></font></p>
-<h1 id="评价">2.  评价</h1>
-<h2 id="测试集">2.1.  测试集</h2>
+<h2 id="token-semantic-module">1.3. Token-Semantic Module</h2>
+<p><font color="green">kernel <span class="math inline">\(\left(3,
+\frac{F}{8 P}\right)\)</span>，输出 <span class="math inline">\(\left(\frac{T}{8 P}, C\right)\)</span></font></p>
+<h1 id="评价">2. 评价</h1>
+<h2 id="测试集">2.1. 测试集</h2>
 <ul>
 <li>声音事件分类：AudioSet、ESC-50</li>
 <li>关键词提取：Speech Command V2</li>
 <li>声音事件检测：DESED</li>
 </ul>
-<h2 id="模型结构">2.2.  模型结构</h2>
+<h2 id="模型结构">2.2. 模型结构</h2>
 <ul>
-<li>音频预处理：10s 音频，mel 谱，64 bins，mel 谱补 24 个全 0 帧，得到维度为 (1024, 64) 的表示。</li>
-<li>patch：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>4</mn><mo>×</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">4 \times 4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">4</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">4</span></span></span></span>，窗 256 帧。</li>
-<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>D</mi><mo>=</mo><mn>96</mn></mrow><annotation encoding="application/x-tex">D=96</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">9</span><span class="mord">6</span></span></span></span>。</li>
-<li>swin-transformer group 中分别包含 2、2、6、2 个 blocks。window attention：窗 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>8</mn><mo>×</mo><mn>8</mn></mrow><annotation encoding="application/x-tex">8 \times 8</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">8</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">8</span></span></span></span>。</li>
-<li>采用 ImageNet 预训练模型 <a target="_blank" rel="noopener" href="https://github.com/microsoft/Swin-Transformer">Swin-T/C24</a>，由于 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>256</mn><mo>×</mo><mn>256</mn><mo>=</mo><mn>1024</mn><mo>×</mo><mn>64</mn></mrow><annotation encoding="application/x-tex">256 \times 256 = 1024 \times 64</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">2</span><span class="mord">5</span><span class="mord">6</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord">5</span><span class="mord">6</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">2</span><span class="mord">4</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">6</span><span class="mord">4</span></span></span></span>，可以直接迁移预训练权重。</li>
+<li>音频预处理：10s 音频，mel 谱，64 bins，mel 谱补 24 个全 0
+帧，得到维度为 (1024, 64) 的表示。</li>
+<li>patch：<span class="math inline">\(4 \times 4\)</span>，窗 256
+帧。</li>
+<li><span class="math inline">\(D=96\)</span>。</li>
+<li>swin-transformer group 中分别包含 2、2、6、2 个 blocks。window
+attention：窗 <span class="math inline">\(8 \times 8\)</span>。</li>
+<li>采用 ImageNet 预训练模型 <a target="_blank" rel="noopener" href="https://github.com/microsoft/Swin-Transformer">Swin-T/C24</a>，由于
+<span class="math inline">\(256 \times 256 = 1024 \times
+64\)</span>，可以直接迁移预训练权重。</li>
 </ul>
-<h2 id="训练">2.3.  训练</h2>
+<h2 id="训练">2.3. 训练</h2>
 <ul>
-<li><font color="green">采用 balance sampler，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>α</mi><mo>=</mo><mn>0.5</mn></mrow><annotation encoding="application/x-tex">\alpha=0.5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.0037em;">α</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">5</span></span></span></span> mix-up</font> ( [19] mixup: Beyond empirical risk minimization)。</li>
+<li><font color="green">采用 balance sampler，<span class="math inline">\(\alpha=0.5\)</span> mix-up</font> ( [19] mixup:
+Beyond empirical risk minimization)。</li>
 <li>集成：权重平均。</li>
 </ul>
-<h2 id="结果">2.4.  结果</h2>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB9cca8567f58687f7113b2b21ef7a8c26?method=download&shareKey=bcd9b92b28b737333cf2b22edb2388bd" width="326">
-<p>* H: 分层结构；HC: + token-semantic 模块；HCP：++ 预训练视觉模型。</p>
+<h2 id="结果">2.4. 结果</h2>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB9cca8567f58687f7113b2b21ef7a8c26?method=download&shareKey=bcd9b92b28b737333cf2b22edb2388bd" width="326"></p>
+<p>* H: 分层结构；HC: + token-semantic 模块；HCP：++
+预训练视觉模型。</p>
 <ul>
 <li>采用预训练的视觉模型，基于其较强的模式识别能力，显著提升了性能。</li>
 </ul>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB42aeddd7ffdd43d236f0ffa1eeddc403?method=download&shareKey=151c5bb89274150bd29145531651b329" width="353">
-<p>*基于 best AudioSet-pretrained HTS-AT 训练。benchmark 模型也在 AudioSet 或其它数据上进行了预训练。</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB42aeddd7ffdd43d236f0ffa1eeddc403?method=download&shareKey=151c5bb89274150bd29145531651b329" width="353"></p>
+<p>*基于 best AudioSet-pretrained HTS-AT 训练。benchmark 模型也在
+AudioSet 或其它数据上进行了预训练。</p>
 <p>*复制音频直到 10s。</p>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB85b93b3c4afea72ec379ca8cbb7c3925?method=download&shareKey=8a4b405603e9f634cd0609391c1d4a18" width="722">
-<p>* <a target="_blank" rel="noopener" href="https://github.com/audioanalytic/psds_eval">event-based F1-scores Python 实现</a></p>
-<h1 id="其它">3.  其它</h1>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB85b93b3c4afea72ec379ca8cbb7c3925?method=download&shareKey=8a4b405603e9f634cd0609391c1d4a18" width="722"></p>
+<p>* <a target="_blank" rel="noopener" href="https://github.com/audioanalytic/psds_eval">event-based
+F1-scores Python 实现</a></p>
+<h1 id="其它">3. 其它</h1>
 <ul>
-<li>Chen K, Du X, Zhu B, et al. Hts-at: A hierarchical token-semantic audio transformer for sound classification and detection[C]//ICASSP 2022-2022 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP). IEEE, 2022: 646-650.</li>
+<li>Chen K, Du X, Zhu B, et al. Hts-at: A hierarchical token-semantic
+audio transformer for sound classification and detection[C]//ICASSP
+2022-2022 IEEE International Conference on Acoustics, Speech and Signal
+Processing (ICASSP). IEEE, 2022: 646-650.</li>
 <li><a target="_blank" rel="noopener" href="https://github.com/RetroCirce/HTS-Audio-Transformer">代码</a></li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
@@ -803,7 +830,7 @@ window attention QK 计算复杂度为 $\mathcal{O}\left((M M)^2 D \times \frac{
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2019-2024</span>
+                <span id="year">2019-2025</span>
             
             <a href="/blog/about" target="_blank">nanyang</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>

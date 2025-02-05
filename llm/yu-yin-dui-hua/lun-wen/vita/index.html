@@ -6,7 +6,8 @@
     <meta charset="utf-8">
     <meta name="keywords" content="VITA, AI, 语音, 算法">
     <meta name="description" content="
-Fu C, Lin H, Long Z, et al. Vita: Towards open-source interactive omni multimodal llm[J]. arXiv preprint arXiv:2408.052">
+Fu C, Lin H, Long Z, et al. Vita: Towards open-source interactive
+omni multimodal llm[J]. arXiv preprint arXiv:2408.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -167,7 +168,7 @@ Fu C, Lin H, Long Z, et al. Vita: Towards open-source interactive omni multimoda
         <div class="logo-name">梦园</div>
         <div class="logo-desc">
             
-            愿，彼此相伴，走过流年
+            欢迎来到梦园，这里主要记录、分享 语音、AI 相关论文、算法与思考，欢迎关注与交流！
             
         </div>
     </div>
@@ -381,30 +382,37 @@ Fu C, Lin H, Long Z, et al. Vita: Towards open-source interactive omni multimoda
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <ul>
-<li>Fu C, Lin H, Long Z, et al. Vita: Towards open-source interactive omni multimodal llm[J]. arXiv preprint arXiv:2408.05211, 2024.</li>
-<li><a target="_blank" rel="noopener" href="https://vita-home.github.io">https://vita-home.github.io</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/VITA-MLLM/VITA">https://github.com/VITA-MLLM/VITA</a> 开源了模型、训练代码、推理部署框架。</li>
+<li>Fu C, Lin H, Long Z, et al. Vita: Towards open-source interactive
+omni multimodal llm[J]. arXiv preprint arXiv:2408.05211, 2024.</li>
+<li><a target="_blank" rel="noopener" href="https://vita-home.github.io" class="uri">https://vita-home.github.io</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/VITA-MLLM/VITA" class="uri">https://github.com/VITA-MLLM/VITA</a>
+开源了模型、训练代码、推理部署框架。</li>
 <li>作者：来自腾讯优图等</li>
 <li><font color="red">创新点</font>
 <ul>
-<li><font color="red">无需唤醒：采用 SileroVAD 判断输入音频是否包含语音；若为语音，模型响应中第一个 token 为 state token，判断输入语音是否为提问，若非查询则停止生成。</font></li>
-<li><font color="red">双工部署：同时部署两个 VITA 模型。一个为当前查询生成响应；另一个持续检测输入音频，若有新查询，打断当前生成，<font color="green">聚合历史 context（共用重合的 kv cache？）</font>，为新查询生成响应；两个模型交换身份。</font></li>
+<li><font color="red">无需唤醒：采用 SileroVAD
+判断输入音频是否包含语音；若为语音，模型响应中第一个 token 为 state
+token，判断输入语音是否为提问，若非查询则停止生成。</font></li>
+<li><font color="red">双工部署：同时部署两个 VITA
+模型。一个为当前查询生成响应；另一个持续检测输入音频，若有新查询，打断当前生成，<font color="green">聚合历史
+context（共用重合的 kv
+cache？）</font>，为新查询生成响应；两个模型交换身份。</font></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h1 id="系统结构">1.  系统结构</h1>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB4a0ad9fa6e368f7347382dd47a645bf9?method=download&shareKey=54b409c0d3539cf3120b23fab6da3674" width="809">
+<h1 id="系统结构">1. 系统结构</h1>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB4a0ad9fa6e368f7347382dd47a645bf9?method=download&shareKey=54b409c0d3539cf3120b23fab6da3674" width="809"></p>
 <ul>
 <li>支持中英文视频、图像、文本、音频输入。级联 TTS。</li>
 </ul>
-<h1 id="训练">2.  训练</h1>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB48cf38f77a9bcb6fd0e9768fdc47eab9?method=download&shareKey=da1f410371158978b5c63ee0329c5f02&inline=true" width="803">
+<h1 id="训练">2. 训练</h1>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB48cf38f77a9bcb6fd0e9768fdc47eab9?method=download&shareKey=da1f410371158978b5c63ee0329c5f02&inline=true" width="803"></p>
 <ul>
 <li>提升 LLM 中文能力
 <ul>
-<li>基于 <a target="_blank" rel="noopener" href="https://huggingface.co/mistralai/Mixtral-8x7B-v0.1">Mixtral 8×7B</a>，扩充中文词（32000-&gt;51747），进行中英双语纯文本指令微调（数据量 500w）。</li>
-</ul>
-</li>
+<li>基于 <a target="_blank" rel="noopener" href="https://huggingface.co/mistralai/Mixtral-8x7B-v0.1">Mixtral
+8×7B</a>，扩充中文词（32000-&gt;51747），进行中英双语纯文本指令微调（数据量
+500w）。</li>
+</ul></li>
 <li>多模态对齐
 <ul>
 <li>添加 visual encoder、audio encoder、各自的 2 层 MLP connector。</li>
@@ -412,30 +420,32 @@ Fu C, Lin H, Long Z, et al. Vita: Towards open-source interactive omni multimoda
 <ul>
 <li>encoder：<a target="_blank" rel="noopener" href="https://huggingface.co/OpenGVLab/InternViT-300M-448px">InternViT-300M-448px</a></li>
 <li>高分辨率图像：采用动态分块策略 [8] 来捕获局部细节。</li>
-<li>视频：采样图像帧。&lt;4s，均匀采样 4 帧；[4, 16]s，1帧/s；&gt;16s，均匀采样 16 帧。不进行动态分块以控制序列长度。</li>
+<li>视频：采样图像帧。&lt;4s，均匀采样 4 帧；[4,
+16]s，1帧/s；&gt;16s，均匀采样 16
+帧。不进行动态分块以控制序列长度。</li>
 <li>视频 QA：重新标注 Video-ChatGPT、VideoChat。</li>
 <li>synthetic data: 采用 MLLM 模型生成回复。</li>
 <li>训练：拼接 QA 对使样本长度为 6k，支持长上下文，提高训练效率。</li>
-</ul>
-</li>
+</ul></li>
 <li>音频模态
 <ul>
 <li>encoder：CNN 下采样 + 24层 Transformer，12.5Hz。</li>
-<li>训练集：ASR: Wenetspeech + Gigaspeech；音频字幕：Wavcaps AudioSet SL 子集。</li>
-</ul>
-</li>
-</ul>
-</li>
+<li>训练集：ASR: Wenetspeech + Gigaspeech；音频字幕：Wavcaps AudioSet SL
+子集。</li>
+</ul></li>
+</ul></li>
 <li>多模态指令微调
 <ul>
 <li>在响应开头插入状态 token，实现无需音频唤醒。</li>
 <li>文本指令 TTS：<a target="_blank" rel="noopener" href="https://github.com/RVC-Boss/GPT-SoVITS">GPT-SoVITS</a></li>
-<li>不需要响应的语音：从答案中抽取，TTS。由于仅输出 &lt;2&gt; 性能显著下降，训练时将 LLM 对其文本的响应作为 label，推理时将 &lt;2&gt; 视为 EOS。</li>
+<li>不需要响应的语音：从答案中抽取，TTS。由于仅输出 &lt;2&gt;
+性能显著下降，训练时将 LLM 对其文本的响应作为 label，推理时将 &lt;2&gt;
+视为 EOS。</li>
 <li>通过提示区分图像、视频。</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB122e2cd2b4c94b73b1e9e9e6675a769b?method=download&shareKey=6e70dfe9846031258ff963c6c37a5eaa&inline=true" width="813"><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB122e2cd2b4c94b73b1e9e9e6675a769b?method=download&shareKey=6e70dfe9846031258ff963c6c37a5eaa&inline=true" width="813"></p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
             </div>
             <hr/>
@@ -499,13 +509,13 @@ Fu C, Lin H, Long Z, et al. Vita: Towards open-source interactive omni multimoda
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            全双工音频对话 base 模型，8.5B，仅音频。
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
                             <i class="far fa-clock fa-fw icon-date"></i>2024-11-07
-                            <i class="far fa-edit fa-fw icon-date"></i>2024-11-07
+                            <i class="far fa-edit fa-fw icon-date"></i>2025-01-04
                         </span>
                         <span class="publish-author">
                             
@@ -802,7 +812,7 @@ Fu C, Lin H, Long Z, et al. Vita: Towards open-source interactive omni multimoda
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2019-2024</span>
+                <span id="year">2019-2025</span>
             
             <a href="/blog/about" target="_blank">nanyang</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
