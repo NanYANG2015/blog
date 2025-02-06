@@ -6,7 +6,8 @@
     <meta charset="utf-8">
     <meta name="keywords" content="Deepspeed, AI, 语音, 算法">
     <meta name="description" content="
-Rajbhandari S, Rasley J, Ruwase O, et al. Zero: Memory optimizations toward training trillion parameter models[C]//SC20">
+Rajbhandari S, Rasley J, Ruwase O, et al. Zero: Memory optimizations
+toward training trillion parameter models[C]//SC">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -377,33 +378,38 @@ Rajbhandari S, Rasley J, Ruwase O, et al. Zero: Memory optimizations toward trai
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <ul>
-<li>Rajbhandari S, Rasley J, Ruwase O, et al. Zero: Memory optimizations toward training trillion parameter models[C]//SC20: International Conference for High Performance Computing, Networking, Storage and Analysis. IEEE, 2020: 1-16.</li>
-<li>Rajbhandari S, Ruwase O, Rasley J, et al. Zero-infinity: Breaking the gpu memory wall for extreme scale deep learning[C]//Proceedings of the international conference for high performance computing, networking, storage and analysis. 2021: 1-14.</li>
+<li>Rajbhandari S, Rasley J, Ruwase O, et al. Zero: Memory optimizations
+toward training trillion parameter models[C]//SC20: International
+Conference for High Performance Computing, Networking, Storage and
+Analysis. IEEE, 2020: 1-16.</li>
+<li>Rajbhandari S, Ruwase O, Rasley J, et al. Zero-infinity: Breaking
+the gpu memory wall for extreme scale deep learning[C]//Proceedings of
+the international conference for high performance computing, networking,
+storage and analysis. 2021: 1-14.</li>
 <li>作者来自 Microsoft</li>
 <li>支持大模型、低资源 训练、推理</li>
 </ul>
-<h1 id="zero">1.  ZeRO</h1>
+<h1 id="zero">1. ZeRO</h1>
 <ul>
 <li>将各类模型训练状态（优化器、梯度、参数）切分到各个设备上。</li>
 <li>ZeRO-1：优化器状态分区，如 Adam 优化器的一阶、二阶动量。</li>
 <li>ZeRO-2：梯度分区。
 <ul>
-<li><a target="_blank" rel="noopener" href="https://www.microsoft.com/en-us/research/blog/ZeRO-2-deepspeed-shattering-barriers-of-deep-learning-speed-scale/">在 V100 上支持训练高达 13B 的模型而不需模型并行。</a></li>
-</ul>
-</li>
+<li><a target="_blank" rel="noopener" href="https://www.microsoft.com/en-us/research/blog/ZeRO-2-deepspeed-shattering-barriers-of-deep-learning-speed-scale/">在
+V100 上支持训练高达 13B 的模型而不需模型并行。</a></li>
+</ul></li>
 <li>ZeRO-3：参数分区。</li>
 <li>ZeRO-Infinity：offload 到 CPU、NVMe memory。</li>
 </ul>
-<h1 id="配置">2.  配置</h1>
+<h1 id="配置">2. 配置</h1>
 <ul>
-<li>ZeRO-1<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+<li>ZeRO-1 <pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
     <span class="token property">"zero_optimization"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
         <span class="token property">"stage"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
         <span class="token property">"reduce_bucket_size"</span><span class="token operator">:</span> <span class="token number">5e8</span>
     <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li>ZeRO-2<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li>ZeRO-2 <pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
     <span class="token property">"zero_optimization"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
         <span class="token property">"stage"</span><span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
         <span class="token property">"contiguous_gradients"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>  <span class="token comment">// 避免显存碎片化，提高访问效率</span>
@@ -412,9 +418,8 @@ Rajbhandari S, Rasley J, Ruwase O, et al. Zero: Memory optimizations toward trai
         <span class="token property">"reduce_bucket_size"</span><span class="token operator">:</span> <span class="token number">5e8</span><span class="token punctuation">,</span>
         <span class="token property">"allgather_bucket_size"</span><span class="token operator">:</span> <span class="token number">5e8</span>
     <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li>ZeRO-3<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li>ZeRO-3 <pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
     <span class="token property">"zero_optimization"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
         <span class="token property">"stage"</span><span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
         <span class="token property">"contiguous_gradients"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
@@ -431,19 +436,19 @@ Rajbhandari S, Rasley J, Ruwase O, et al. Zero: Memory optimizations toward trai
             <span class="token property">"device"</span><span class="token operator">:</span> <span class="token string">"cpu"</span>
         <span class="token punctuation">&#125;</span>
     <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 </ul>
-<h1 id="其它">3.  其它</h1>
+<h1 id="其它">3. 其它</h1>
 <ul>
-<li><a target="_blank" rel="noopener" href="https://www.deepspeed.ai/tutorials/mixture-of-experts/">MoE 专家并行</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.deepspeed.ai/tutorials/mixture-of-experts/">MoE
+专家并行</a></li>
 </ul>
-<h1 id="相关资源">4.  相关资源</h1>
+<h1 id="相关资源">4. 相关资源</h1>
 <ul>
-<li><a target="_blank" rel="noopener" href="https://github.com/microsoft/DeepSpeed">https://github.com/microsoft/DeepSpeed</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.deepspeed.ai/">https://www.deepspeed.ai/</a></li>
-<li><a target="_blank" rel="noopener" href="https://deepspeed.readthedocs.io/en/latest/index.html">https://deepspeed.readthedocs.io/en/latest/index.html</a></li>
-<li><a target="_blank" rel="noopener" href="https://huggingface.co/docs/transformers/v4.18.0/en/main_classes/deepspeed">https://huggingface.co/docs/transformers/v4.18.0/en/main_classes/deepspeed</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/microsoft/DeepSpeed" class="uri">https://github.com/microsoft/DeepSpeed</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.deepspeed.ai/" class="uri">https://www.deepspeed.ai/</a></li>
+<li><a target="_blank" rel="noopener" href="https://deepspeed.readthedocs.io/en/latest/index.html" class="uri">https://deepspeed.readthedocs.io/en/latest/index.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://huggingface.co/docs/transformers/v4.18.0/en/main_classes/deepspeed" class="uri">https://huggingface.co/docs/transformers/v4.18.0/en/main_classes/deepspeed</a></li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 

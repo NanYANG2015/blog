@@ -5,14 +5,16 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="ECAPA-TDNN, AI, 语音, 算法">
-    <meta name="description" content="1.  结构特点
-集成了计算机视觉领域最新的增强模块：Res2Net、SE block，聚合多层的特征，并采用 channel-dependent 帧注意力改进了统计池化模块。
-2.  系统结构
+    <meta name="description" content="1. 结构特点
+集成了计算机视觉领域最新的增强模块：Res2Net、SE
+block，聚合多层的特征，并采用 channel-dependent
+帧注意力改进了统计池化模块。
+2. 系统结构
 
 
-3.  特征提取
+3. 特征提取
 
-数据增强：为每句话生">
+数据增强">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -382,116 +384,119 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="结构特点">1.  结构特点</h1>
-<p>集成了计算机视觉领域最新的增强模块：Res2Net、SE block，聚合多层的特征，并采用 channel-dependent 帧注意力改进了统计池化模块。</p>
-<h1 id="系统结构">2.  系统结构</h1>
-<img src="https://note.youdao.com/yws/api/personal/file/WEBe03b7ab1ccd2402b22ce13eb3be6ce5a?method=download&shareKey=c864e0ebfeafd8d51f27e9d819df55e5" width="443">
-<img src="https://note.youdao.com/yws/api/personal/file/WEBb244ce5a3bcad0e1a25fa95a504b6f89?method=download&shareKey=3f37b0c013ccdeb9c16a91877158c65c" width="440">
-<h1 id="特征提取">3.  特征提取</h1>
+                <h1 id="结构特点">1. 结构特点</h1>
+<p>集成了计算机视觉领域最新的增强模块：Res2Net、SE
+block，聚合多层的特征，并采用 channel-dependent
+帧注意力改进了统计池化模块。</p>
+<h1 id="系统结构">2. 系统结构</h1>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBe03b7ab1ccd2402b22ce13eb3be6ce5a?method=download&shareKey=c864e0ebfeafd8d51f27e9d819df55e5" width="443">
+<img src="https://note.youdao.com/yws/api/personal/file/WEBb244ce5a3bcad0e1a25fa95a504b6f89?method=download&shareKey=3f37b0c013ccdeb9c16a91877158c65c" width="440"></p>
+<h1 id="特征提取">3. 特征提取</h1>
 <ul>
 <li>数据增强：为每句话生成6个额外的样本
 <ul>
 <li>kaldi 加噪（MUSAN babble、noise）、加混响（RIR数据集[21]）</li>
-<li>SoX 变速（tempo up, tempo down）、FFmpeg 压缩（交替 opus 或 aac 压缩）</li>
+<li>SoX 变速（tempo up, tempo down）、FFmpeg 压缩（交替 opus 或 aac
+压缩）</li>
 <li>speechbrain 实现
 <ul>
-<li>concat_augment：可选择多种数据增强方式 串行（样本量不变） 或 1个batch内并行（batch_size *= X）</li>
+<li>concat_augment：可选择多种数据增强方式 串行（样本量不变） 或
+1个batch内并行（batch_size *= X）</li>
 <li>时域增强
 <ul>
-<li>变速：采用基于sinc的插值进行重采样，比如重采样到原始音频长度的[90%, 100%, 110%]。<font color="green">注意：由于特征提取时默认所有信号为原始采样率，所以重采样到90%采样率的实际效果，为语速*1.11，音高*1.11 </font></li>
+<li>变速：采用基于sinc的插值进行重采样，比如重采样到原始音频长度的[90%,
+100%,
+110%]。<font color="green">注意：由于特征提取时默认所有信号为原始采样率，所以重采样到90%采样率的实际效果，为语速*1.11，音高*1.11
+</font></li>
 <li>采用滤波器随机mask部分频带。<font color="red">作用：帮助模型学习到依赖所有频带，而不是其中的少部分</font></li>
 <li>随机mask部分音频片段，可选是否填充白噪声<code>4A * torch.rand() - 2A</code>，其中<code>A</code>为原始音频的平均幅值，默认全部置0。作用：帮助模型学习到依赖整个信号</li>
 <li>上述3种增强方式 可选是否添加，串行</li>
-</ul>
-</li>
+</ul></li>
 <li>环境扰动
 <ul>
 <li>加混响：采用room 冲击响应
 <ul>
-<li><a target="_blank" rel="noopener" href="http://www.openslr.org/resources/28/rirs_noises.zip">http://www.openslr.org/resources/28/rirs_noises.zip</a></li>
-</ul>
-</li>
+<li><a target="_blank" rel="noopener" href="http://www.openslr.org/resources/28/rirs_noises.zip" class="uri">http://www.openslr.org/resources/28/rirs_noises.zip</a></li>
+</ul></li>
 <li>加babble</li>
 <li>加噪</li>
 <li>上述3种增强方式 可选是否添加，串行</li>
-</ul>
-</li>
-<li>由此导致的音频长度改变 需要通过末尾截断 或 补0 来与原音频保持一致</li>
+</ul></li>
+<li>由此导致的音频长度改变 需要通过末尾截断 或 补0
+来与原音频保持一致</li>
 <li>实现详见<code>speechbrain.processing.speech_augmentation</code></li>
-</ul>
-</li>
-</ul>
-</li>
-<li>输入特征：80维 MFCCs，<font color="green">随机裁剪为2s的片段</font>，倒谱均值减法，不加VAD。
+</ul></li>
+</ul></li>
+<li>输入特征：80维
+MFCCs，<font color="green">随机裁剪为2s的片段</font>，倒谱均值减法，不加VAD。
 <ul>
 <li>speechbrain 实现：60维 Fbank</li>
-</ul>
-</li>
+</ul></li>
 <li>SpecAugment</li>
 </ul>
-<h1 id="res2net">4.  Res2Net</h1>
+<h1 id="res2net">4. Res2Net</h1>
 <p><a href="https://nanyang2015.github.io/blog/ji-qi-xue-xi/cnn/res2net/">Res2Net</a>：表示多尺度的特征，增大感受野。</p>
-<p>论文与 speechbrain 实现的差异：论文中 Res2 Dilated Conv1D 前后的dense layer，前一个 dense layer 降低通道维度，后一个 dense layer 恢复通道维度，从而控制参数量。</p>
-<h1 id="squeeze-excitation-block">5.  Squeeze-Excitation Block</h1>
-<p><a href="https://nanyang2015.github.io/blog/ji-qi-xue-xi/cnn/senet/">SE Block</a>：显式地建模通道间的相关性，根据输入的全局特征，自适应地对各个通道的 feature map 重新加权。</p>
-<h1 id="多层特征聚合">6.  多层特征聚合</h1>
+<p>论文与 speechbrain 实现的差异：论文中 Res2 Dilated Conv1D 前后的dense
+layer，前一个 dense layer 降低通道维度，后一个 dense layer
+恢复通道维度，从而控制参数量。</p>
+<h1 id="squeeze-excitation-block">5. Squeeze-Excitation Block</h1>
+<p><a href="https://nanyang2015.github.io/blog/ji-qi-xue-xi/cnn/senet/">SE
+Block</a>：显式地建模通道间的相关性，根据输入的全局特征，自适应地对各个通道的
+feature map 重新加权。</p>
+<h1 id="多层特征聚合">6. 多层特征聚合</h1>
 <p>出发点：浅层的特征也有助于更鲁棒的embedding。</p>
 <ul>
 <li>拼接所有SE-Res2Blocks的输出feature map，经过1层dense层。</li>
-<li>SE-Res2Block 的残差连接实现为前面所有SE-Res2Blocks的输出的和。求和，而不是拼接，用于约束模型参数量。（speechbrain 未实现）</li>
+<li>SE-Res2Block
+的残差连接实现为前面所有SE-Res2Blocks的输出的和。求和，而不是拼接，用于约束模型参数量。（speechbrain
+未实现）</li>
 </ul>
-<h1 id="channel-dependent-attentive-statistics-pooling">7.  channel-dependent attentive statistics pooling</h1>
+<h1 id="channel-dependent-attentive-statistics-pooling">7. channel-dependent
+attentive statistics pooling</h1>
 <ul>
-<li><font color="red">出发点：将时间注意力机制进一步扩展到通道维度，使得网络可以关注不会同时激活的说话人特征，如元音和辅音属性（不同 channel 的时间注意力系数不一样）。</font></li>
+<li><font color="red">出发点：将时间注意力机制进一步扩展到通道维度，使得网络可以关注不会同时激活的说话人特征，如元音和辅音属性（不同
+channel 的时间注意力系数不一样）。</font></li>
 <li>实现
 <ul>
-<li>
-<p><font color="red">将 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="bold-italic">h</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">\boldsymbol{h}_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord"><span class="mord"><span class="mord boldsymbol">h</span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 与其整句的 非加权的均值、标准差拼接（<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>C</mi><mo>∗</mo><mo>=</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">C*=3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mord">∗</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span></span></span></span>），使得attention能自适应句子的全局属性，如噪声、录音环境。</font></p>
-</li>
-<li>
-<p>channel attention：channel 维的 bottleneck 结构的两层全连接，所有时刻参数共享。</p>
+<li><p><font color="red">将 <span class="math inline">\(\boldsymbol{h}_t\)</span> 与其整句的
+非加权的均值、标准差拼接（<span class="math inline">\(C*=3\)</span>），使得attention能自适应句子的全局属性，如噪声、录音环境。</font></p></li>
+<li><p>channel attention：channel 维的 bottleneck
+结构的两层全连接，所有时刻参数共享。</p>
 <ul>
-<li>speechbrain 实现<pre class="line-numbers language-none"><code class="language-none">self.tdnn &#x3D; TDNNBlock(channels * 3, attention_channels, 1, 1)  # 降维
+<li>speechbrain 实现 <pre class="line-numbers language-none"><code class="language-none">self.tdnn &#x3D; TDNNBlock(channels * 3, attention_channels, 1, 1)  # 降维
 self.tanh &#x3D; nn.Tanh()
 self.conv &#x3D; Conv1d(in_channels&#x3D;attention_channels, out_channels&#x3D;channels, kernel_size&#x3D;1)  # 恢复原始形状
 
 attn &#x3D; self.conv(self.tanh(self.tdnn(attn)))
-attn &#x3D; F.softmax(attn, dim&#x3D;2)  # 沿时间轴做softmax<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
+attn &#x3D; F.softmax(attn, dim&#x3D;2)  # 沿时间轴做softmax<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul></li>
+<li><p><font color="red">attentive statistics pooling：attention
+到不同帧，类似VAD以检测无关的非语音帧。</font></p>
+<p>加权均值： <span class="math display">\[\tilde{\mu}_c=\sum_t^T
+\alpha_{t, c} h_{t, c}\]</span></p>
+<p>加权标准差： <span class="math display">\[\tilde{\sigma}_c=\sqrt{\sum_t^T \alpha_{t, c}
+(h_{t, c}-\tilde{\mu}_c)^2}=\sqrt{\sum_t^T \alpha_{t, c} h_{t,
+c}^2-\tilde{\mu}_c^2}\]</span></p>
+<p>pooling层的输出为 <span class="math inline">\(\tilde{\mu}\)</span>、<span class="math inline">\(\tilde{\sigma}\)</span> 拼接</p></li>
+</ul></li>
 </ul>
-</li>
-<li>
-<p><font color="red">attentive statistics pooling：attention 到不同帧，类似VAD以检测无关的非语音帧。</font></p>
-<p>加权均值：</p>
-<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mover accent="true"><mi>μ</mi><mo>~</mo></mover><mi>c</mi></msub><mo>=</mo><munderover><mo>∑</mo><mi>t</mi><mi>T</mi></munderover><msub><mi>α</mi><mrow><mi>t</mi><mo separator="true">,</mo><mi>c</mi></mrow></msub><msub><mi>h</mi><mrow><mi>t</mi><mo separator="true">,</mo><mi>c</mi></mrow></msub></mrow><annotation encoding="application/x-tex">\tilde{\mu}_c=\sum_t^T \alpha_{t, c} h_{t, c}
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8622999999999998em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord accent"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.6678599999999999em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault">μ</span></span></span><span style="top:-3.35em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.22222em;">~</span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.19444em;"><span></span></span></span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">c</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:3.078341em;vertical-align:-1.250005em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.8283360000000002em;"><span style="top:-1.8999949999999999em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span><span style="top:-3.0500049999999996em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.300005em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.250005em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.0037em;">α</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.28055599999999997em;"><span style="top:-2.5500000000000003em;margin-left:-0.0037em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">t</span><span class="mpunct mtight">,</span><span class="mord mathdefault mtight">c</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault">h</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.28055599999999997em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">t</span><span class="mpunct mtight">,</span><span class="mord mathdefault mtight">c</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span></span></p>
-<p>加权标准差：</p>
-<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mover accent="true"><mi>σ</mi><mo>~</mo></mover><mi>c</mi></msub><mo>=</mo><msqrt><mrow><munderover><mo>∑</mo><mi>t</mi><mi>T</mi></munderover><msub><mi>α</mi><mrow><mi>t</mi><mo separator="true">,</mo><mi>c</mi></mrow></msub><mo stretchy="false">(</mo><msub><mi>h</mi><mrow><mi>t</mi><mo separator="true">,</mo><mi>c</mi></mrow></msub><mo>−</mo><msub><mover accent="true"><mi>μ</mi><mo>~</mo></mover><mi>c</mi></msub><msup><mo stretchy="false">)</mo><mn>2</mn></msup></mrow></msqrt><mo>=</mo><msqrt><mrow><munderover><mo>∑</mo><mi>t</mi><mi>T</mi></munderover><msub><mi>α</mi><mrow><mi>t</mi><mo separator="true">,</mo><mi>c</mi></mrow></msub><msubsup><mi>h</mi><mrow><mi>t</mi><mo separator="true">,</mo><mi>c</mi></mrow><mn>2</mn></msubsup><mo>−</mo><msubsup><mover accent="true"><mi>μ</mi><mo>~</mo></mover><mi>c</mi><mn>2</mn></msubsup></mrow></msqrt></mrow><annotation encoding="application/x-tex">\tilde{\sigma}_c=\sqrt{\sum_t^T \alpha_{t, c} (h_{t, c}-\tilde{\mu}_c)^2}=\sqrt{\sum_t^T \alpha_{t, c} h_{t, c}^2-\tilde{\mu}_c^2}
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8178599999999999em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6678599999999999em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">σ</span></span></span><span style="top:-3.35em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.25em;">~</span></span></span></span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">c</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:3.3060909999999994em;vertical-align:-1.250005em;"></span><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.0560859999999996em;"><span class="svg-align" style="top:-5.266090999999999em;"><span class="pstrut" style="height:5.266090999999999em;"></span><span class="mord" style="padding-left:1.056em;"><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.8283360000000002em;"><span style="top:-1.8999949999999999em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span><span style="top:-3.0500049999999996em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.300005em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.250005em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.0037em;">α</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.28055599999999997em;"><span style="top:-2.5500000000000003em;margin-left:-0.0037em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">t</span><span class="mpunct mtight">,</span><span class="mord mathdefault mtight">c</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">h</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.28055599999999997em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">t</span><span class="mpunct mtight">,</span><span class="mord mathdefault mtight">c</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord accent"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.6678599999999999em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault">μ</span></span></span><span style="top:-3.35em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.22222em;">~</span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.19444em;"><span></span></span></span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">c</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.740108em;"><span style="top:-2.9890000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span><span style="top:-4.016086em;"><span class="pstrut" style="height:5.266090999999999em;"></span><span class="hide-tail" style="min-width:0.742em;height:3.346091em;"><svg width="400em" height="3.346091em" viewbox="0 0 400000 3346" preserveaspectratio="xMinYMin slice"><path d="M702 80H400000v40H742v3212l-4 4-4 4c-.667.7
--2 1.5-4 2.5s-4.167 1.833-6.5 2.5-5.5 1-9.5 1h-12l-28-84c-16.667-52-96.667
--294.333-240-727l-212 -643 -85 170c-4-3.333-8.333-7.667-13 -13l-13-13l77-155
- 77-156c66 199.333 139 419.667 219 661 l218 661zM702 80H400000v40H742z"/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.250005em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:3.3060909999999994em;vertical-align:-1.250005em;"></span><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.0560859999999996em;"><span class="svg-align" style="top:-5.266090999999999em;"><span class="pstrut" style="height:5.266090999999999em;"></span><span class="mord" style="padding-left:1.056em;"><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.8283360000000002em;"><span style="top:-1.8999949999999999em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span><span style="top:-3.0500049999999996em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.300005em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.250005em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.0037em;">α</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.28055599999999997em;"><span style="top:-2.5500000000000003em;margin-left:-0.0037em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">t</span><span class="mpunct mtight">,</span><span class="mord mathdefault mtight">c</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault">h</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.795908em;"><span style="top:-2.4542440000000005em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">t</span><span class="mpunct mtight">,</span><span class="mord mathdefault mtight">c</span></span></span></span><span style="top:-3.0448000000000004em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.38186399999999987em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord accent"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.6678599999999999em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault">μ</span></span></span><span style="top:-3.35em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.22222em;">~</span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.19444em;"><span></span></span></span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.740108em;"><span style="top:-2.4530000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">c</span></span></span><span style="top:-2.9890000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.247em;"><span></span></span></span></span></span></span></span></span><span style="top:-4.016086em;"><span class="pstrut" style="height:5.266090999999999em;"></span><span class="hide-tail" style="min-width:0.742em;height:3.346091em;"><svg width="400em" height="3.346091em" viewbox="0 0 400000 3346" preserveaspectratio="xMinYMin slice"><path d="M702 80H400000v40H742v3212l-4 4-4 4c-.667.7
--2 1.5-4 2.5s-4.167 1.833-6.5 2.5-5.5 1-9.5 1h-12l-28-84c-16.667-52-96.667
--294.333-240-727l-212 -643 -85 170c-4-3.333-8.333-7.667-13 -13l-13-13l77-155
- 77-156c66 199.333 139 419.667 219 661 l218 661zM702 80H400000v40H742z"/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.250005em;"><span></span></span></span></span></span></span></span></span></span></p>
-<p>pooling层的输出为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mover accent="true"><mi>μ</mi><mo>~</mo></mover></mrow><annotation encoding="application/x-tex">\tilde{\mu}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8622999999999998em;vertical-align:-0.19444em;"></span><span class="mord accent"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.6678599999999999em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault">μ</span></span></span><span style="top:-3.35em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.22222em;">~</span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.19444em;"><span></span></span></span></span></span></span></span></span>、<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mover accent="true"><mi>σ</mi><mo>~</mo></mover></mrow><annotation encoding="application/x-tex">\tilde{\sigma}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6678599999999999em;vertical-align:0em;"></span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6678599999999999em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">σ</span></span></span><span style="top:-3.35em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.25em;">~</span></span></span></span></span></span></span></span></span> 拼接</p>
-</li>
-</ul>
-</li>
-</ul>
-<h1 id="bottleneck-结构的两层全连接">8.  bottleneck 结构的两层全连接</h1>
+<h1 id="bottleneck-结构的两层全连接">8. bottleneck 结构的两层全连接</h1>
 <p>bottleneck 层的输出可以作为低维的说话人embedding。</p>
-<h1 id="训练">9.  训练</h1>
+<h1 id="训练">9. 训练</h1>
 <ul>
-<li>采用参考文献[23]中的 triangular2 policy，循环学习率，[1e-8, 1e-3]，一次循环为 130k 迭代。</li>
-<li><font color="green">AAM-softmax，margin 0.2，softmax prescaling of 30 for 4 cycles。</font></li>
+<li>采用参考文献[23]中的 triangular2 policy，循环学习率，[1e-8,
+1e-3]，一次循环为 130k 迭代。</li>
+<li><font color="green">AAM-softmax，margin 0.2，softmax prescaling of
+30 for 4 cycles。</font></li>
 </ul>
-<h1 id="实验结果">10.  实验结果</h1>
-<img src="https://note.youdao.com/yws/api/personal/file/WEBe9098186e1d400650ef1821ea33629ef?method=download&shareKey=f434762b2145eb1db885eb270b0c89d4" width="727">
-<img src="https://note.youdao.com/yws/api/personal/file/WEB08c933cf955a2b189352633460c292fb?method=download&shareKey=0a0a54795b59fa9de701da3df3d15f9e" width="350">
-<h1 id="论文">11.  论文</h1>
+<h1 id="实验结果">10. 实验结果</h1>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBe9098186e1d400650ef1821ea33629ef?method=download&shareKey=f434762b2145eb1db885eb270b0c89d4" width="727"></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB08c933cf955a2b189352633460c292fb?method=download&shareKey=0a0a54795b59fa9de701da3df3d15f9e" width="350"></p>
+<h1 id="论文">11. 论文</h1>
 <ul>
-<li>Desplanques B, Thienpondt J, Demuynck K. ECAPA-TDNN: Emphasized channel attention, propagation and aggregation in TDNN based speaker verification[J]. arXiv preprint arXiv:2005.07143, 2020.</li>
+<li>Desplanques B, Thienpondt J, Demuynck K. ECAPA-TDNN: Emphasized
+channel attention, propagation and aggregation in TDNN based speaker
+verification[J]. arXiv preprint arXiv:2005.07143, 2020.</li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 

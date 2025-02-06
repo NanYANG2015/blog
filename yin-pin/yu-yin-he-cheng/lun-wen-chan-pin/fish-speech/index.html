@@ -6,17 +6,14 @@
     <meta charset="utf-8">
     <meta name="keywords" content="Fish Speech, AI, 语音, 算法">
     <meta name="description" content="
-
 开发者：Fish Audio Fish Speech
-
-
-系统结构 V1
-
-
+系统结构
+V1
 
 VQGAN + LLAMA。30wh 数据训练。在高质量数据集上 SFT。
 
-存疑：更新日志中，V1.1 引入了 VITS Decoder 来降低 WER、">
+存疑：更新日志中，V1.1 引入了 VITS Decoder 来降低
+W">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -391,53 +388,35 @@ VQGAN + LLAMA。30wh 数据训练。在高质量数据集上 SFT。
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <ul>
-<li>
-<p>开发者：Fish Audio Fish Speech</p>
-</li>
-<li>
-<p><a target="_blank" rel="noopener" href="https://huggingface.co/blog/lengyue233/fish-speech-1">系统结构 V1</a><br>
-<img src="https://speech.fish.audio/assets/figs/diagram.png" width="1111"></p>
-</li>
-<li>
-<p>VQGAN + LLAMA。30wh 数据训练。在高质量数据集上 SFT。</p>
+<li><p>开发者：Fish Audio Fish Speech</p></li>
+<li><p><a target="_blank" rel="noopener" href="https://huggingface.co/blog/lengyue233/fish-speech-1">系统结构
+V1</a>
+<img src="https://speech.fish.audio/assets/figs/diagram.png" width="1111"></p></li>
+<li><p>VQGAN + LLAMA。30wh 数据训练。在高质量数据集上 SFT。</p>
 <blockquote>
-<p>存疑：更新日志中，V1.1 引入了 VITS Decoder 来降低 WER、提高音色相似度；V1.2 删除了 VITS 解码器，极大地增强了零样本能力。</p>
-</blockquote>
-</li>
-<li>
-<p>推理</p>
+<p>存疑：更新日志中，V1.1 引入了 VITS Decoder 来降低
+WER、提高音色相似度；V1.2 删除了 VITS
+解码器，极大地增强了零样本能力。</p>
+</blockquote></li>
+<li><p>推理</p>
 <ul>
 <li>使用 VQGAN 对给定的约 10 秒语音进行编码。</li>
 <li>将编码后的语义标记和对应的文本作为示例输入到语言模型中。</li>
 <li>给定一段新的文本，让模型生成相应的语义token。</li>
 <li>将生成的语义token输入到VITS/VQGAN中进行解码并生成相应的语音。</li>
 <li><font color="green">HTTP API 支持流式返回。</font></li>
-</ul>
-</li>
-<li>
-<p>支持音色克隆，最短 10s 参考音频。支持说话人、情绪 音频-文本对提示。</p>
-</li>
-<li>
-<p>支持中文、日语、英语。</p>
-</li>
-<li>
-<p><a target="_blank" rel="noopener" href="https://huggingface.co/blog/lengyue233/fish-speech-1">推理速度：V1、4090 GPU, 20 tokens/s。</a></p>
-</li>
-<li>
-<p>扩大模型容量、增大训练数据量，性能显著提升。</p>
-</li>
-<li>
-<p><a target="_blank" rel="noopener" href="https://speech.fish.audio/en/finetune/">LoRA 微调代码</a></p>
-</li>
-<li>
-<p><a target="_blank" rel="noopener" href="https://huggingface.co/fishaudio/fish-speech-1.2">checkpoint</a></p>
-</li>
-<li>
-<p><a target="_blank" rel="noopener" href="https://fish.audio/zh-CN/">Demo</a></p>
-</li>
-<li>
-<p><a target="_blank" rel="noopener" href="https://speech.fish.audio/samples/">示例</a></p>
-</li>
+</ul></li>
+<li><p>支持音色克隆，最短 10s 参考音频。支持说话人、情绪
+音频-文本对提示。</p></li>
+<li><p>支持中文、日语、英语。</p></li>
+<li><p><a target="_blank" rel="noopener" href="https://huggingface.co/blog/lengyue233/fish-speech-1">推理速度：V1、4090
+GPU, 20 tokens/s。</a></p></li>
+<li><p>扩大模型容量、增大训练数据量，性能显著提升。</p></li>
+<li><p><a target="_blank" rel="noopener" href="https://speech.fish.audio/en/finetune/">LoRA
+微调代码</a></p></li>
+<li><p><a target="_blank" rel="noopener" href="https://huggingface.co/fishaudio/fish-speech-1.2">checkpoint</a></p></li>
+<li><p><a target="_blank" rel="noopener" href="https://fish.audio/zh-CN/">Demo</a></p></li>
+<li><p><a target="_blank" rel="noopener" href="https://speech.fish.audio/samples/">示例</a></p></li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 

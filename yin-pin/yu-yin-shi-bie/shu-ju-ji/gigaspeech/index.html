@@ -5,15 +5,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="GigaSpeech, AI, 语音, 算法">
-    <meta name="description" content="1.  特点
+    <meta name="description" content="1. 特点
 
 英文，1wh 高质量标注数据，总共 4wh 音频
 可扩展，记录的元数据使其还可用于其它任务，如说话人识别
 包含原始转录与Normalized转录（包含标点符号，大小写、日期、时间normalization等）
 
-
-
-数据集中">
+">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -387,93 +385,88 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="特点">1.  特点</h1>
+                <h1 id="特点">1. 特点</h1>
 <ul>
 <li>英文，1wh 高质量标注数据，总共 4wh 音频</li>
 <li>可扩展，记录的元数据使其还可用于其它任务，如说话人识别</li>
 <li>包含原始转录与Normalized转录（包含标点符号，大小写、日期、时间normalization等）</li>
 </ul>
-<img src="https://note.youdao.com/yws/api/personal/file/WEBa7fad614ff99cd2d545715d908a8dea4?method=download&shareKey=8a6e7521cb75ad12ad21d5ddc756372a" width="300">
-<img src="https://note.youdao.com/yws/api/personal/file/WEB95143dfb41ac6dc13714c70986e567e3?method=download&shareKey=195f09710a7b3356ad610b7caaafc1d9" width="210">
-<p>数据集中不包含Librispeech dev-* test-*，因此它们也可以作为开发、测试集</p>
-<h1 id="音频格式">2.  音频格式</h1>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBa7fad614ff99cd2d545715d908a8dea4?method=download&shareKey=8a6e7521cb75ad12ad21d5ddc756372a" width="300"></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB95143dfb41ac6dc13714c70986e567e3?method=download&shareKey=195f09710a7b3356ad610b7caaafc1d9" width="210"></p>
+<p>数据集中不包含Librispeech dev-*
+test-*，因此它们也可以作为开发、测试集</p>
+<h1 id="音频格式">2. 音频格式</h1>
 <ul>
 <li>16kHz, 16bit, 单声道</li>
-<li>压缩：Opus格式，压缩比为8，比特率 32 kbps。压缩的影响：WER 0.1-0.2% 的损失<br>
+<li>压缩：Opus格式，压缩比为8，比特率 32 kbps。压缩的影响：WER 0.1-0.2%
+的损失
 <img src="https://note.youdao.com/yws/api/personal/file/WEB301b29a3f6d8c45a9748f0a6ec4b7296?method=download&shareKey=9d159edb144886027b1260aa3e2298ab" width="281"></li>
 </ul>
-<h1 id="创建流程">3.  创建流程</h1>
+<h1 id="创建流程">3. 创建流程</h1>
 <ul>
-<li>
-<p>定义主题：24类，分别为Arts, Business, Education, Autos and Vehicles, Comedy, Crime, Entertainment, Film and Animation, Gaming, Health and Fitness, History, Howto and Style, Kids and Family, Leisure, Music, News and Politics, Nonprofits and Activism, People and Blogs, Pets and Animals, Religion and Spirituality, Science and Technology, Society and Culture, Sports, Travel and Events.</p>
+<li>定义主题：24类，分别为Arts, Business, Education, Autos and Vehicles,
+Comedy, Crime, Entertainment, Film and Animation, Gaming, Health and
+Fitness, History, Howto and Style, Kids and Family, Leisure, Music, News
+and Politics, Nonprofits and Activism, People and Blogs, Pets and
+Animals, Religion and Spirituality, Science and Technology, Society and
+Culture, Sports, Travel and Events.
 <ul>
-<li>播客：上述类别，带人工转写；Youtube 将上述类别作为<font color="green">种子关键词</font>，带人工字幕。有声读物：不限定类别。</li>
-</ul>
-</li>
-<li>
-<p>文本normalization：大小写，数字到单词重写，日期/时间重写，删除特殊符号，可用于含 normalization 的端到端ASR。</p>
-</li>
-<li>
-<p><font color="red">识别+文本匹配：Youtube 字幕中的时间戳不够准确。kaldi 对齐。用于获取句子级片段。</font></p>
+<li>播客：上述类别，带人工转写；Youtube
+将上述类别作为<font color="green">种子关键词</font>，带人工字幕。有声读物：不限定类别。</li>
+</ul></li>
+<li>文本normalization：大小写，数字到单词重写，日期/时间重写，删除特殊符号，可用于含
+normalization 的端到端ASR。</li>
+<li><font color="red">识别+文本匹配：Youtube
+字幕中的时间戳不够准确。kaldi 对齐。用于获取句子级片段。
 <ul>
 <li>音频和文本分别均匀地分为小片段；</li>
 <li>用biased LM解码，生成带时间戳的识别结果；</li>
 <li>根据TF-IDF相似性匹配识别结果片段与转写片段；</li>
 <li>采用修改的Smith-Waterman算法进一步对齐，并处理静音和标点符号；</li>
-<li>先采用close-domain AM 进行对齐与segment，然后用约3000h 上述数据训练领域内AM，用于对齐整个数据集。</li>
-</ul>
-</li>
-<li>
-<p>segment规则</p>
+<li>先采用close-domain AM 进行对齐与segment，然后用约3000h
+上述数据训练领域内AM，用于对齐整个数据集。</li>
+</ul></font></li>
+<li>segment规则
 <ul>
 <li>超过1s的静音处</li>
 <li>超过0.2s静音的标点符号（,.?!）处</li>
 <li>删除WER &gt;= 75% 的片段</li>
 <li>删除长度 &gt;= 20s 的片段</li>
 <li>片段边界处的静音保留0.15s</li>
-<li>,.?! 分别用 &lt;COMMA&gt;, &lt;PERIOD&gt;, &lt;QUESTIONMARK&gt;, &lt;EXCLAMATIONMARK&gt; 表示</li>
-</ul>
-</li>
-<li>
-<p>过滤</p>
+<li>,.?! 分别用 &lt;COMMA&gt;, &lt;PERIOD&gt;, &lt;QUESTIONMARK&gt;,
+&lt;EXCLAMATIONMARK&gt; 表示</li>
+</ul></li>
+<li>过滤
 <ul>
-<li>强制对齐构图<br>
+<li>强制对齐构图
 <img src="https://note.youdao.com/yws/api/personal/file/WEB951ba23cbefa17c329b5353f0611649e?method=download&shareKey=a04c09454c654eb908a590f2b41a154f" width="350"></li>
 </ul>
-<p>podcasts, YouTube 部分 WER 限定为4%，audiobooks和小的训练子集WER限定在0%</p>
-</li>
-<li>
-<p>修正 label</p>
+podcasts, YouTube 部分 WER
+限定为4%，audiobooks和小的训练子集WER限定在0%</li>
+<li>修正 label
 <ul>
 <li>filler loop
 <ul>
 <li>fillers，如 AH, UH, UM, ER, ERR, YOU KNOW, I MEAN, SORT OF 等</li>
 <li>连词，如 AND, OR, BUT 等</li>
-</ul>
-</li>
+</ul></li>
 <li>disfluency detector
 <ul>
-<li>如 It’s it’s it’s a great thing!</li>
-</ul>
-</li>
+<li>如 It's it's it's a great thing!</li>
+</ul></li>
 <li>对于XL子集，符合上述类型的插入不计入WER</li>
-</ul>
-</li>
-<li>
-<p>选取working point</p>
+</ul></li>
+<li>选取working point
 <ul>
-<li>
-<p>选取 working point，使得各子集满足 WER 约束</p>
-<img src="https://note.youdao.com/yws/api/personal/file/WEBcf45e4dd3e789232c8c5ffdb605f96c1?method=download&shareKey=e284e0d5b94f7e2ac015dab8f91d793c" width="355">
-</li>
-</ul>
-</li>
-<li>
-<p><a target="_blank" rel="noopener" href="https://github.com/SpeechColab/GigaSpeech">https://github.com/SpeechColab/GigaSpeech</a></p>
-</li>
-<li>
-<p>Chen G, Chai S, Wang G, et al. GigaSpeech: An evolving, multi-domain ASR corpus with 10,000 hours of transcribed audio[C]//22nd Annual Conference of the International Speech Communication Association, INTERSPEECH 2021. International Speech Communication Association, 2021: 4376-4380.</p>
-</li>
+<li><p>选取 working point，使得各子集满足 WER 约束</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBcf45e4dd3e789232c8c5ffdb605f96c1?method=download&shareKey=e284e0d5b94f7e2ac015dab8f91d793c" width="355"></p></li>
+</ul></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/SpeechColab/GigaSpeech" class="uri">https://github.com/SpeechColab/GigaSpeech</a></li>
+<li>Chen G, Chai S, Wang G, et al. GigaSpeech: An evolving, multi-domain
+ASR corpus with 10,000 hours of transcribed audio[C]//22nd Annual
+Conference of the International Speech Communication Association,
+INTERSPEECH 2021. International Speech Communication Association, 2021:
+4376-4380.</li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 

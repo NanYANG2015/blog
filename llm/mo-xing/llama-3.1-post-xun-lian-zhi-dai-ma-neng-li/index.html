@@ -6,10 +6,11 @@
     <meta charset="utf-8">
     <meta name="keywords" content="Llama 3.1 post 训练之代码能力, AI, 语音, 算法">
     <meta name="description" content="
-高优语言：Python, Java, Javascript, C/C++, Typescript, Rust, PHP, HTML/CSS, SQL, bash/shell。
+高优语言：Python, Java, Javascript, C/C++, Typescript, Rust, PHP,
+HTML/CSS, SQL, bash/shell。
 能力：代码生成、文档编写、调试、review。
 
-1.  专家">
+1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -380,70 +381,60 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <ul>
-<li>高优语言：Python, Java, Javascript, C/C++, Typescript, Rust, PHP, HTML/CSS, SQL, bash/shell。</li>
+<li>高优语言：Python, Java, Javascript, C/C++, Typescript, Rust, PHP,
+HTML/CSS, SQL, bash/shell。</li>
 <li>能力：代码生成、文档编写、调试、review。</li>
 </ul>
-<h1 id="专家训练">1.  专家训练</h1>
+<h1 id="专家训练">1. 专家训练</h1>
 <ul>
 <li>用于收集高质量的代码、代码提示的拒绝采样。</li>
-<li>基于预训练模型，在主要为代码的数据上 continue pre-training、在仓库级代码上进行长上下文微调、post 训练。</li>
+<li>基于预训练模型，在主要为代码的数据上 continue
+pre-training、在仓库级代码上进行长上下文微调、post 训练。</li>
 </ul>
-<h1 id="合成数据">2.  合成数据</h1>
+<h1 id="合成数据">2. 合成数据</h1>
 <p>采用 Llama 3、代码专家生成 SFT 对话。</p>
-<h2 id="执行反馈">2.1.  执行反馈</h2>
+<h2 id="执行反馈">2.1. 执行反馈</h2>
 <ul>
-<li>
-<p>生成问题描述</p>
-<p>从各种来源随机采样代码片段，提示模型生成编程问题。</p>
-</li>
-<li>
-<p>生成解决方案</p>
-<p>提示 Llama 3 用指定的编程语言响应。在提示中添加通用的好的编程规则、<font color="red">要求其在注释中解释思维过程</font>，提高生成质量。</p>
-</li>
-<li>
-<p><font color="red">正确性分析</font></p>
+<li><p>生成问题描述</p>
+<p>从各种来源随机采样代码片段，提示模型生成编程问题。</p></li>
+<li><p>生成解决方案</p>
+<p>提示 Llama 3
+用指定的编程语言响应。在提示中添加通用的好的编程规则、<font color="red">要求其在注释中解释思维过程</font>，提高生成质量。</p></li>
+<li><p><font color="red">正确性分析</font></p>
 <ul>
-<li>
-<p>静态分析</p>
-<p>采用解析器、linter。</p>
-</li>
-<li>
-<p>生成单元测试、执行</p>
-<p>对于每个问题、解决方案，提示模型生成单元测试。在容器化环境中执行。</p>
-</li>
+<li><p>静态分析</p>
+<p>采用解析器、linter。</p></li>
+<li><p>生成单元测试、执行</p>
+<p>对于每个问题、解决方案，提示模型生成单元测试。在容器化环境中执行。</p></li>
+</ul></li>
+<li><p><font color="red">错误反馈</font>，迭代自我修正</p></li>
+<li><p>微调，迭代改进</p></li>
 </ul>
-</li>
-<li>
-<p><font color="red">错误反馈</font>，迭代自我修正</p>
-</li>
-<li>
-<p>微调，迭代改进</p>
-</li>
-</ul>
-<h2 id="编程语言翻译">2.2.  编程语言翻译</h2>
-<p>提示 Llama 3 将常见的编程语言的数据翻译为较少使用的语言。并采用上述执行反馈保证质量。</p>
-<h2 id="font-colorredbacktranslation">2.3.  backtranslation</h2>
+<h2 id="编程语言翻译">2.2. 编程语言翻译</h2>
+<p>提示 Llama 3
+将常见的编程语言的数据翻译为较少使用的语言。并采用上述执行反馈保证质量。</p>
+<h2 id="backtranslation">2.3. backtranslation</h2>
 <p>用于提高文档编写、解释能力。</p>
 <ul>
 <li>提示 Llama 3，为代码片段添加注释、docstrings，或解释代码片段。</li>
 <li>提示模型仅根据文档或解释生成代码。</li>
-<li>将原始代码作为参考，提示 Llama 3 确定生成代码的质量，如相较于原始代码的忠实度。采用高分数据用于 SFT。</li>
+<li>将原始代码作为参考，提示 Llama 3
+确定生成代码的质量，如相较于原始代码的忠实度。采用高分数据用于
+SFT。</li>
 </ul>
 <blockquote>
 <p>回译过程确认了文档、解释的准确性、完整性。</p>
 </blockquote>
-<h1 id="拒绝采样">3.  拒绝采样</h1>
-<h2 id="采用系统提示引导">3.1.  采用系统提示引导</h2>
-<p>用于提高代码的可读性、文档、全面性 thoroughness、specificity，如添加必要的注释、使用信息更丰富的变量名、节省内存等。</p>
-<h2 id="过滤">3.2.  过滤</h2>
+<h1 id="拒绝采样">3. 拒绝采样</h1>
+<h2 id="采用系统提示引导">3.1. 采用系统提示引导</h2>
+<p>用于提高代码的可读性、文档、全面性
+thoroughness、specificity，如添加必要的注释、使用信息更丰富的变量名、节省内存等。</p>
+<h2 id="过滤">3.2. 过滤</h2>
 <ul>
-<li>
-<p>执行。</p>
-</li>
-<li>
-<p>对于不可执行的代码，如用户明确要求的伪代码、非常小的代码片段等，采用 Llama 3 分别对代码正确性、代码风格进行 0-1 打分，只保留 2 分样本。</p>
-<p>由于上述策略<font color="red">过度移除了难样本</font>，下游性能下降。修正被分类为最具挑战性的编程数据的响应，使其满足上述模型判断标准。</p>
-</li>
+<li><p>执行。</p></li>
+<li><p>对于不可执行的代码，如用户明确要求的伪代码、非常小的代码片段等，采用
+Llama 3 分别对代码正确性、代码风格进行 0-1 打分，只保留 2 分样本。</p>
+<p>由于上述策略<font color="red">过度移除了难样本</font>，下游性能下降。修正被分类为最具挑战性的编程数据的响应，使其满足上述模型判断标准。</p></li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 

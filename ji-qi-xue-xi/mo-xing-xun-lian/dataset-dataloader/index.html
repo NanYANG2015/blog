@@ -5,9 +5,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="Dataset &amp; DataLoader, AI, 语音, 算法">
-    <meta name="description" content="1.  音频读取
+    <meta name="description" content="1. 音频读取
 
-采用 torchaudio，支持后缀为 wav、mp3（如 common voice）、flac（如 Librispeech）、raw、WAV（如 TIMIT）、mp4（如 MELD）、m4a（如 Voxceleb） 等">
+采用 torchaudio，支持后缀为 wav、mp3（如 common voice）、flac（如
+Librispeech）、raw、WAV（如 TIMIT）、mp4（如 MELD）、m4a（如 Voxceleb）">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -377,9 +378,11 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="音频读取">1.  音频读取</h1>
+                <h1 id="音频读取">1. 音频读取</h1>
 <ul>
-<li>采用 torchaudio，支持后缀为 wav、mp3（如 common voice）、flac（如 Librispeech）、raw、WAV（如 TIMIT）、mp4（如 MELD）、m4a（如 Voxceleb） 等的音频文件。</li>
+<li>采用 torchaudio，支持后缀为 wav、mp3（如 common voice）、flac（如
+Librispeech）、raw、WAV（如 TIMIT）、mp4（如 MELD）、m4a（如 Voxceleb）
+等的音频文件。</li>
 <li>截取指定时间段</li>
 <li>转单声道</li>
 <li>重采样</li>
@@ -389,24 +392,26 @@
 <li>音量缩放</li>
 <li>……</li>
 </ul>
-<h1 id="特征提取">2.  特征提取</h1>
+<h1 id="特征提取">2. 特征提取</h1>
 <ul>
 <li>直接输入原始波形 或 FBANK</li>
 </ul>
-<h1 id="dataset-dataloader">3.  Dataset &amp; DataLoader</h1>
+<h1 id="dataset-dataloader">3. Dataset &amp; DataLoader</h1>
 <ul>
 <li>相关实现
 <ul>
 <li><a target="_blank" rel="noopener" href="https://wenet.org.cn/wenet/UIO.html">WeNet UIO</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/PBq3p9RR9LwENAdQQOJimw">Lhotse</a></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h2 id="dataset">3.1.  Dataset</h2>
+<h2 id="dataset">3.1. Dataset</h2>
 <ul>
-<li>
-<p>dataset 存储音频路径。</p>
+<li><p>dataset 存储音频路径。</p>
 <table>
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
 <thead>
 <tr>
 <th>dataset</th>
@@ -420,32 +425,33 @@
 </tr>
 <tr>
 <td>原始波形或频谱特征</td>
-<td>占用另外的存储空间；<br>对于输入不同的模型需要分别准备数据；<br>训练时 shuffle，变回非连续存储，访问慢</td>
+<td>占用另外的存储空间；<br>对于输入不同的模型需要分别准备数据；<br>训练时
+shuffle，变回非连续存储，访问慢</td>
 </tr>
 </tbody>
 </table>
-<p>如 1wh 16kHz、16bit、单声道 采样点数据、80维 FBANK 均约为 1TB。<br>
-<code>10000 h * 3600 s/h * 16000 samples/s * 2 byte/sample / (2 ** (10 * 4)) ~= 1.05 TB</code><br>
-<code>10000 h * 3600 s/h * 100 frames/s * 80 dim/frame * 4 byte (float) / (2 ** (10 * 4)) ~= 1.05 TB</code></p>
-</li>
-<li>
-<p>另外，WeNet UIO 通过将数据集做成多个压缩包（含音频、文本），shuffle 压缩包，顺序读取一个压缩包内的数据，优化随机读性能慢的问题。</p>
-</li>
-<li>
-<p>dataset 采用 <a target="_blank" rel="noopener" href="https://huggingface.co/docs/datasets/about_arrow">🤗 Datasets，Arrow 格式</a>。</p>
+<p>如 1wh 16kHz、16bit、单声道 采样点数据、80维 FBANK 均约为 1TB。
+<code>10000 h * 3600 s/h * 16000 samples/s * 2 byte/sample / (2 ** (10 * 4)) ~= 1.05 TB</code>
+<code>10000 h * 3600 s/h * 100 frames/s * 80 dim/frame * 4 byte (float) / (2 ** (10 * 4)) ~= 1.05 TB</code></p></li>
+<li><p>另外，WeNet UIO
+通过将数据集做成多个压缩包（含音频、文本），shuffle
+压缩包，顺序读取一个压缩包内的数据，优化随机读性能慢的问题。</p></li>
+<li><p>dataset 采用 <a target="_blank" rel="noopener" href="https://huggingface.co/docs/datasets/about_arrow">🤗
+Datasets，Arrow 格式</a>。</p>
 <p>优点：从磁盘进行内存映射，允许在设备内存相对较小的机器上使用大型数据集。</p>
-<p>存在的问题：<a target="_blank" rel="noopener" href="https://huggingface.co/docs/datasets/about_mapstyle_vs_iterable">🤗 Datasets 基于 Arrow，训练时 shuffle 可达10x 慢。<br>
-优化：采用 🤗 IterableDataset，shuffle shards。</a></p>
-</li>
-<li>
-<p>特征提取在生成 batch 时计算。</p>
+<p>存在的问题：<a target="_blank" rel="noopener" href="https://huggingface.co/docs/datasets/about_mapstyle_vs_iterable">🤗
+Datasets 基于 Arrow，训练时 shuffle 可达10x 慢。 优化：采用 🤗
+IterableDataset，shuffle shards。</a></p></li>
+<li><p>特征提取在生成 batch 时计算。</p>
 <ul>
-<li>可通过 <code>Dataset.__getitem__</code> 或 <code>DataLoader.collate_fn</code> 实现。通常，batch 处理更高效，如 <a target="_blank" rel="noopener" href="https://huggingface.co/docs/datasets/v2.20.0/en/about_map_batch">🤗 Tokenizers</a>、<code>torch.stft</code> 支持 batch。</li>
-<li>FBANK 实现：🤗 transformers&gt;=4.40.0 支持 <code>torch.stft</code> GPU batch 计算。</li>
+<li>可通过 <code>Dataset.__getitem__</code> 或
+<code>DataLoader.collate_fn</code> 实现。通常，batch 处理更高效，如 <a target="_blank" rel="noopener" href="https://huggingface.co/docs/datasets/v2.20.0/en/about_map_batch">🤗
+Tokenizers</a>、<code>torch.stft</code> 支持 batch。</li>
+<li>FBANK 实现：🤗 transformers&gt;=4.40.0 支持 <code>torch.stft</code>
+GPU batch 计算。</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h2 id="dataloader">3.2.  DataLoader</h2>
+<h2 id="dataloader">3.2. DataLoader</h2>
 <ul>
 <li><font color="green">动态 batch</font></li>
 </ul>

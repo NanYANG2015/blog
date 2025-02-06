@@ -6,13 +6,13 @@
     <meta charset="utf-8">
     <meta name="keywords" content="Llama 3.1 post 训练之多语种能力, AI, 语音, 算法">
     <meta name="description" content="德、法、意大利、葡萄牙、印地、西班牙、泰
-1.  专家训练
+1. 专家训练
 
 用于检索、生成高质量的指令微调数据。
-基于预训练模型，在主要为多语种 token 的数据上 continue pre-training、post 训练。
+基于预训练模型，在主要为多语种 token 的数据上 continue
+pre-training、post 训练。
 
-2.  SFT 数据
-">
+2. SF">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -383,13 +383,19 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>德、法、意大利、葡萄牙、印地、西班牙、泰</p>
-<h1 id="专家训练">1.  专家训练</h1>
+<h1 id="专家训练">1. 专家训练</h1>
 <ul>
 <li>用于检索、生成高质量的指令微调数据。</li>
-<li>基于预训练模型，在主要为多语种 token 的数据上 continue pre-training、post 训练。</li>
+<li>基于预训练模型，在主要为多语种 token 的数据上 continue
+pre-training、post 训练。</li>
 </ul>
-<h1 id="sft-数据">2.  SFT 数据</h1>
+<h1 id="sft-数据">2. SFT 数据</h1>
 <table>
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
 <thead>
 <tr>
 <th>类型</th>
@@ -406,12 +412,17 @@
 <tr>
 <td>NLP 任务中的多语种数据</td>
 <td>44.2</td>
-<td>1. 改写为对话格式。<br>2. 采用 GlobalVoices、Wikimedia 中的平行文本，提高语言对齐。并<font color="red">应用<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2109.01652">模板</a>，模拟翻译、语言学习场景中的真实生活化对话</font>。<br>3. 基于 LID、Blaser2.0 过滤低质数据。<br></td>
+<td>1. 改写为对话格式。<br>2. 采用 GlobalVoices、Wikimedia
+中的平行文本，提高语言对齐。并<font color="red">应用<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2109.01652">模板</a>，模拟翻译、语言学习场景中的真实生活化对话</font>。<br>3.
+基于 LID、Blaser2.0 过滤低质数据。<br></td>
 </tr>
 <tr>
 <td>拒绝采样</td>
 <td>18.8</td>
-<td>1. 对人工标注的提示进行生成，<br>早期随机选择温度参数 [0.2, 1] 来生成多样化的响应，但容易出现不必要的 code-switching。最后一轮采用 0.6。<br>采用系统提示改善格式、结构、可读性。<br>2. 采样<br>先检查提示、响应之间的语言匹配。基于奖励模型。</td>
+<td>1. 对人工标注的提示进行生成，<br>早期随机选择温度参数 [0.2, 1]
+来生成多样化的响应，但容易出现不必要的 code-switching。最后一轮采用
+0.6。<br>采用系统提示改善格式、结构、可读性。<br>2.
+采样<br>先检查提示、响应之间的语言匹配。基于奖励模型。</td>
 </tr>
 <tr>
 <td><font color="red">翻译数学推理数据</font></td>
@@ -420,7 +431,8 @@
 </tr>
 </tbody>
 </table>
-<p>* 尽量避免采用机器翻译数据微调模型，以避免翻译腔，可能的名称、性别、文化偏见。</p>
+<p>*
+尽量避免采用机器翻译数据微调模型，以避免翻译腔，可能的名称、性别、文化偏见。</p>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
             </div>

@@ -401,18 +401,16 @@
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                    1.  能力
-
+                                    1. 能力
 
 搜索引擎
-采用 Brave Search 回答关于超出其知识截止日期的近期事件、需要从网络检索特定信息的问题。
-
-
+采用 Brave Search
+回答关于超出其知识截止日期的近期事件、需要从网络检索特定信息的问题。
 Python 解释器
 
 支持生成、执行代码，进行复杂计算。如读取用户上传的文件进行分析。
 
-文件类型：.t
+文件
                                 
                             </div>
                             <div class="publish-info">
@@ -463,13 +461,13 @@ Python 解释器
                             <div class="summary block-with-text">
                                 
                                     德、法、意大利、葡萄牙、印地、西班牙、泰
-1.  专家训练
+1. 专家训练
 
 用于检索、生成高质量的指令微调数据。
-基于预训练模型，在主要为多语种 token 的数据上 continue pre-training、post 训练。
+基于预训练模型，在主要为多语种 token 的数据上 continue
+pre-training、post 训练。
 
-2.  SFT 数据
-
+2. SF
                                 
                             </div>
                             <div class="publish-info">
@@ -520,10 +518,11 @@ Python 解释器
                             <div class="summary block-with-text">
                                 
                                     
-高优语言：Python, Java, Javascript, C/C++, Typescript, Rust, PHP, HTML/CSS, SQL, bash/shell。
+高优语言：Python, Java, Javascript, C/C++, Typescript, Rust, PHP,
+HTML/CSS, SQL, bash/shell。
 能力：代码生成、文档编写、调试、review。
 
-1.  专家
+1
                                 
                             </div>
                             <div class="publish-info">
@@ -577,10 +576,9 @@ Python 解释器
 仅采用短文本 SFT，长文本能力显著退化。
 主要的长文本用例：（多轮）问答、长文本摘要、代码库推理
 
-
 问答
-将预训练数据中的长文本分为 8K token 的块，采用早期版本基于文本块生成 QA 对。SFT 训练时将整个文档作为上下文。
-
+将预训练数据中的长文本分为 8K token 的块，采用早期版本基于文本块生成
+QA 对。SFT 训练时将整个文档作为
                                 
                             </div>
                             <div class="publish-info">
@@ -635,7 +633,8 @@ Python 解释器
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                    论文：Huang P Y, Xu H, Li J, et al. Masked autoencoders that listen[J]. Advances in Neural Information Processing Systems, 
+                                    论文：Huang P Y, Xu H, Li J, et al. Masked autoencoders that
+listen[J]. Advances in Neural Information Processing Systems,
                                 
                             </div>
                             <div class="publish-info">
@@ -690,7 +689,8 @@ Python 解释器
                             <div class="summary block-with-text">
                                 
                                     
-Bai Y, Chen J, Chen J, et al. Seed-ASR: Understanding Diverse Speech and Contexts with LLM-based Speech Recognition[J].
+Bai Y, Chen J, Chen J, et al. Seed-ASR: Understanding Diverse Speech
+and Contexts with LLM-based Speech Recognition[J
                                 
                             </div>
                             <div class="publish-info">
@@ -745,10 +745,8 @@ Bai Y, Chen J, Chen J, et al. Seed-ASR: Understanding Diverse Speech and Context
                             <div class="summary block-with-text">
                                 
                                     
-
-论文：Towards Achieving Human Parity on End-to-end Simultaneous Speech Translation via LLM Agent
-
-
+论文：Towards Achieving Human Parity on End-to-end Simultaneous
+Speech Translation via LLM Agent
 https://byteresearchcl
                                 
                             </div>
@@ -813,8 +811,7 @@ https://byteresearchcl
     }
 
 
-
-论文：SpeechTeam T. FunAudioLL
+论文：SpeechTeam T. F
                                 
                             </div>
                             <div class="publish-info">
@@ -868,7 +865,8 @@ https://byteresearchcl
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                    论文：Chen P, Sun S, Shan C, et al. Streaming Decoder-Only Automatic Speech Recognition with Discrete Speech Units: A Pilot
+                                    论文：Chen P, Sun S, Shan C, et al. Streaming Decoder-Only Automatic
+Speech Recognition with Discrete Speech Units: A Pilo
                                 
                             </div>
                             <div class="publish-info">
@@ -923,7 +921,10 @@ https://byteresearchcl
                             <div class="summary block-with-text">
                                 
                                     
-相较于传统 audio spectrogram transformer(AST)，采用分层结构、patch merge 减小了序列长度，采用 window attention 减小了 self attention 计算量，减小了参数量、训
+相较于传统 audio spectrogram
+transformer(AST)，采用分层结构、patch merge 减小了序列长度，采用 window
+attention 减小了 self attention
+计算量，减小了参
                                 
                             </div>
                             <div class="publish-info">
@@ -980,18 +981,13 @@ https://byteresearchcl
                                     
 优化
 
-
 对话能力，支持输入音频或文本，输出文本。指令微调 + DPO。
 
 SFT 数据的质量、复杂度严重影响模型性能。
 
-
-
 扩大训练数据量。
 
-
-
-预训练阶段，复杂的结构化的任务描述 special tokens -&gt; 自然语言
+预训练阶段，复杂的结构化的任务描述 special tokens -&gt;
                                 
                             </div>
                             <div class="publish-info">
@@ -1049,14 +1045,15 @@ SFT 数据的质量、复杂度严重影响模型性能。
 作者：微软
 发表时间：2023.09
 创新点：更大的训练集、更新 encoder。
-性能：在 26 个下游任务上的广泛评估显示了模型较好的泛化性，且在其中几个任务上建立了新的 SOTA。
+性能：在 26
+个下游任务上的广泛评估显示了模型较好的泛化性，且在其中几个任务上建立了新的
+SOTA。
 
 
-1.  训练
-
+1. 训练
 
 训练集
-4.6M 音频-文本
+
                                 
                             </div>
                             <div class="publish-info">
@@ -1125,11 +1122,7 @@ SFT 数据的质量、复杂度严重影响模型性能。
 
 
 作者：微软
-发表时间：2022.06
-
-
-
-CLAP：C
+发表时间：2022.0
                                 
                             </div>
                             <div class="publish-info">
@@ -1188,16 +1181,13 @@ CLAP：C
                             <div class="summary block-with-text">
                                 
                                     
-
 作者：Meta AI
-
-
 发表时间：2023.05
-
-
 核心思想
 
-仅采用与图像自然配对的无监督数据（除图文数据外）、对比 loss，训练6种模态：视觉、文本、音频、深度、thermal、Inertial Measurement Uni
+仅采用与图像自然配对的无监督数据（除图文数据外）、对比
+loss，训练6种模态：视觉、文本、音频、深度、thermal、Inertial Measurement
+U
                                 
                             </div>
                             <div class="publish-info">
@@ -1266,8 +1256,7 @@ CLAP：C
 
 
 作者：字节
-发表时间：2024.06
-支持英语、中文普通
+发表时间：2024.0
                                 
                             </div>
                             <div class="publish-info">
@@ -1322,8 +1311,8 @@ CLAP：C
                             <div class="summary block-with-text">
                                 
                                     
-
-论文：Shen X, Zhang R, Zhao X, et al. PMG: Personalized Multimodal Generation with Large Language Models[C]//Proceedings 
+论文：Shen X, Zhang R, Zhao X, et al. PMG: Personalized
+Multimodal Generation with Large Language Models[C]//Proceedings
                                 
                             </div>
                             <div class="publish-info">
@@ -1382,15 +1371,12 @@ CLAP：C
                             <div class="summary block-with-text">
                                 
                                     
-
 作者：西北工业大学、出门问问等，2022。
-
-
 ASR数据集，中文普通话，多领域，万小时级。
 
 
 音频格式：16kHz，16bit，单声道，比特率 32 kbps，Opus 压缩。
-S(100h), M(1000h) 训练子集置信度为1
+S(100h), M(1000h) 训练子集置信
                                 
                             </div>
                             <div class="publish-info">
@@ -1444,15 +1430,13 @@ S(100h), M(1000h) 训练子集置信度为1
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                    1.  特点
+                                    1. 特点
 
 英文，1wh 高质量标注数据，总共 4wh 音频
 可扩展，记录的元数据使其还可用于其它任务，如说话人识别
 包含原始转录与Normalized转录（包含标点符号，大小写、日期、时间normalization等）
 
 
-
-数据集中
                                 
                             </div>
                             <div class="publish-info">

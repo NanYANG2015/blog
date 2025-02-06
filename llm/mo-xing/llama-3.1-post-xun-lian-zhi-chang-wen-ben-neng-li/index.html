@@ -9,10 +9,9 @@
 仅采用短文本 SFT，长文本能力显著退化。
 主要的长文本用例：（多轮）问答、长文本摘要、代码库推理
 
-
 问答
-将预训练数据中的长文本分为 8K token 的块，采用早期版本基于文本块生成 QA 对。SFT 训练时将整个文档作为上下文。
-">
+将预训练数据中的长文本分为 8K token 的块，采用早期版本基于文本块生成
+QA 对。SFT 训练时将整个文档作为">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -386,22 +385,19 @@
 <li>仅采用短文本 SFT，长文本能力显著退化。</li>
 <li>主要的长文本用例：（多轮）问答、长文本摘要、代码库推理
 <ul>
-<li>
-<p>问答</p>
-<p>将预训练数据中的长文本分为 8K token 的块，采用早期版本基于文本块生成 QA 对。SFT 训练时将整个文档作为上下文。</p>
-</li>
-<li>
-<p>摘要</p>
-<p>采用 8K 模型对 8K token 的文本块进行摘要，再对摘要进行摘要。SFT 时对完整文档进行摘要。</p>
-<p>基于文档摘要生成需要全局理解的 QA 对。</p>
-</li>
-<li>
-<p>代码推理</p>
-<p>基于 Python <code>import</code> 语句，从代码仓库中删除最常被依赖的文本之一。提示模型识别依赖于缺失文件的文件、生成缺失的代码。</p>
-</li>
-</ul>
-</li>
-<li>进行消融实验，确定采用短文本数据 + <font color="red">0.1%</font> 合成的长文本数据。</li>
+<li><p>问答</p>
+<p>将预训练数据中的长文本分为 8K token 的块，采用早期版本基于文本块生成
+QA 对。SFT 训练时将整个文档作为上下文。</p></li>
+<li><p>摘要</p>
+<p>采用 8K 模型对 8K token 的文本块进行摘要，再对摘要进行摘要。SFT
+时对完整文档进行摘要。</p>
+<p>基于文档摘要生成需要全局理解的 QA 对。</p></li>
+<li><p>代码推理</p>
+<p>基于 Python <code>import</code>
+语句，从代码仓库中删除最常被依赖的文本之一。提示模型识别依赖于缺失文件的文件、生成缺失的代码。</p></li>
+</ul></li>
+<li>进行消融实验，确定采用短文本数据 + <font color="red">0.1%</font>
+合成的长文本数据。</li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 

@@ -15,8 +15,7 @@
     }
 
 
-
-论文：SpeechTeam T. FunAudioLL">
+论文：SpeechTeam T. F">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -400,52 +399,61 @@
     }
 </style>
 <ul>
-<li>
-<p>论文：SpeechTeam T. FunAudioLLM: Voice Understanding and Generation Foundation Models for Natural Interaction Between Humans and LLMs[J]. arXiv preprint arXiv:2407.04051, 2024.</p>
-<p>Du Z, Chen Q, Zhang S, et al. CosyVoice: A Scalable Multilingual Zero-shot Text-to-speech Synthesizer based on Supervised Semantic Tokens[J]. arXiv preprint arXiv:2407.05407, 2024.</p>
-</li>
-<li>
-<p>作者：阿里 通义语音组</p>
-</li>
-<li>
-<p>代码：<a target="_blank" rel="noopener" href="https://github.com/FunAudioLLM">https://github.com/FunAudioLLM</a></p>
-</li>
-<li>
-<p>Demo：<a target="_blank" rel="noopener" href="https://fun-audio-llm.github.io">https://fun-audio-llm.github.io</a></p>
-</li>
+<li><p>论文：SpeechTeam T. FunAudioLLM: Voice Understanding and
+Generation Foundation Models for Natural Interaction Between Humans and
+LLMs[J]. arXiv preprint arXiv:2407.04051, 2024.</p>
+<p>Du Z, Chen Q, Zhang S, et al. CosyVoice: A Scalable Multilingual
+Zero-shot Text-to-speech Synthesizer based on Supervised Semantic
+Tokens[J]. arXiv preprint arXiv:2407.05407, 2024.</p></li>
+<li><p>作者：阿里 通义语音组</p></li>
+<li><p>代码：<a target="_blank" rel="noopener" href="https://github.com/FunAudioLLM" class="uri">https://github.com/FunAudioLLM</a></p></li>
+<li><p>Demo：<a target="_blank" rel="noopener" href="https://fun-audio-llm.github.io" class="uri">https://fun-audio-llm.github.io</a></p></li>
 </ul>
-<h1 id="sensevoice">1.  SenseVoice</h1>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB0c0a94f4c962a334f2007ab364e5a550?method=download&shareKey=101e5efbd0b1ac52818f6b95f2b11456" width="579">
+<h1 id="sensevoice">1. SenseVoice</h1>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB0c0a94f4c962a334f2007ab364e5a550?method=download&shareKey=101e5efbd0b1ac52818f6b95f2b11456" width="579"></p>
 <ul>
-<li>能力：多语种语音识别、语种识别、情感识别、音频事件分类/检测、ITN 带标点。</li>
+<li>能力：多语种语音识别、语种识别、情感识别、音频事件分类/检测、ITN
+带标点。</li>
 </ul>
 <div class="red-text">
-+   label 制作
-    +   AED <https: github.com qiuqiangkong audioset_tagging_cnn tree master>
-    +   语音情感识别 <https: modelscope.cn models iic emotion2vec_plus_large>
-</https:></https:></div>
-<h2 id="sensevoice-small">1.1.  SenseVoice-Small</h2>
 <ul>
-<li>5个语种（中、英、粤语、日、韩）。支持音频事件分类（支持音乐、掌声、笑声、咳嗽、打喷嚏、喘息、哭），1句话内至多1个事件。训练集 30wh+。</li>
+<li>label 制作
+<ul>
+<li>AED <a target="_blank" rel="noopener" href="https://github.com/qiuqiangkong/audioset_tagging_cnn/tree/master" class="uri">https://github.com/qiuqiangkong/audioset_tagging_cnn/tree/master</a></li>
+<li>语音情感识别 <a target="_blank" rel="noopener" href="https://modelscope.cn/models/iic/emotion2vec_plus_large" class="uri">https://modelscope.cn/models/iic/emotion2vec_plus_large</a></li>
+</ul></li>
+</ul>
+</div>
+<h2 id="sensevoice-small">1.1. SenseVoice-Small</h2>
+<ul>
+<li>5个语种（中、英、粤语、日、韩）。支持音频事件分类（支持音乐、掌声、笑声、咳嗽、打喷嚏、喘息、哭），1句话内至多1个事件。训练集
+30wh+。</li>
 <li>模型结构
 <ul>
-<li>80 维 FBANK。<font color="green">堆叠连续帧，6 倍下采样。</font>语音特征前拼接可选的 4 个任务 embedding：⟨LID⟩、⟨SER⟩、⟨AEC⟩、⟨ITN⟩ / ⟨NoITN⟩。</li>
-<li><font color="green">encoder: memory-equipped self-attention network (SAN-M)。</font></li>
-</ul>
-</li>
+<li>80 维 FBANK。<font color="green">堆叠连续帧，6
+倍下采样。</font>语音特征前拼接可选的 4 个任务
+embedding：⟨LID⟩、⟨SER⟩、⟨AEC⟩、⟨ITN⟩ / ⟨NoITN⟩。</li>
+<li><font color="green">encoder: memory-equipped self-attention network
+(SAN-M)。</font></li>
+</ul></li>
 <li>训练
 <ul>
-<li>训练时，以 0.8 的概率随机将 ⟨LID⟩ 替换为真实语种 token。使得推理时，既支持语种预测，也支持提示语种。</li>
+<li>训练时，以 0.8 的概率随机将 ⟨LID⟩ 替换为真实语种
+token。使得推理时，既支持语种预测，也支持提示语种。</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h2 id="sensevoice-large">1.2.  SenseVoice-Large</h2>
+<h2 id="sensevoice-large">1.2. SenseVoice-Large</h2>
 <ul>
-<li>50+个语种。<font color="green">支持音频事件检测（含起止时间，仅支持音乐、掌声、笑声）。</font>训练集 40wh+。<br>
+<li>50+个语种。<font color="green">支持音频事件检测（含起止时间，仅支持音乐、掌声、笑声）。</font>训练集
+40wh+。
 <img src="https://note.youdao.com/yws/api/personal/file/WEB87ee4d75d1af1da8ff88a70ae8284e76?method=download&shareKey=783a8c52c6ec2ea5cfd36f320fe05cc8" width="565"></li>
 </ul>
-<h2 id="评价">1.3.  评价</h2>
+<h2 id="评价">1.3. 评价</h2>
 <table>
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
 <thead>
 <tr>
 <th>任务</th>
@@ -455,11 +463,15 @@
 <tbody>
 <tr>
 <td>参数量、支持语种、效率对比</td>
-<td><img src="https://note.youdao.com/yws/api/personal/file/WEB7a238373446c22d5ed320a4ea296d36c?method=download&shareKey=3dfb578e427d98886c3472235a3ce120" width="568"><br>10s Audio Latency: 转写10s音频的平均耗时；<br>A800, batch size=1, beam size=5</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEB7a238373446c22d5ed320a4ea296d36c?method=download&shareKey=3dfb578e427d98886c3472235a3ce120" width="568"><br>10s
+Audio Latency: 转写10s音频的平均耗时；<br>A800, batch size=1, beam
+size=5</td>
 </tr>
 <tr>
 <td>中英文识别</td>
-<td><img src="https://note.youdao.com/yws/api/personal/file/WEB605b17f2c877d5ab10043db6f4f63293?method=download&shareKey=9fae4ec78c692e0987900f50987791ba" width="565"><br>TN: Whisper TN + <a target="_blank" rel="noopener" href="https://github.com/speechio/chinese_text_normalization/blob/master/python/cn_tn.py">speechio TN</a></td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEB605b17f2c877d5ab10043db6f4f63293?method=download&shareKey=9fae4ec78c692e0987900f50987791ba" width="565"><br>TN:
+Whisper TN + <a target="_blank" rel="noopener" href="https://github.com/speechio/chinese_text_normalization/blob/master/python/cn_tn.py">speechio
+TN</a></td>
 </tr>
 <tr>
 <td>多语种识别</td>
@@ -471,7 +483,9 @@
 </tr>
 <tr>
 <td>声音事件分类</td>
-<td><img src="https://note.youdao.com/yws/api/personal/file/WEB5f26b2743fac9c0937a2b83f1a82069b?method=download&shareKey=2ec356b9c546e8705ad6eb02c77b8d46" width="913"><br>SOTA: BEATs、PANNs；<br>数据集：<a target="_blank" rel="noopener" href="https://github.com/giulbia/baby_cry_detection/tree/master">baby cry/laugh detection</a>、<a target="_blank" rel="noopener" href="https://github.com/iiscleap/Coswara-Data/tree/master">Coswara</a></td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEB5f26b2743fac9c0937a2b83f1a82069b?method=download&shareKey=2ec356b9c546e8705ad6eb02c77b8d46" width="913"><br>SOTA:
+BEATs、PANNs；<br>数据集：<a target="_blank" rel="noopener" href="https://github.com/giulbia/baby_cry_detection/tree/master">baby
+cry/laugh detection</a>、<a target="_blank" rel="noopener" href="https://github.com/iiscleap/Coswara-Data/tree/master">Coswara</a></td>
 </tr>
 </tbody>
 </table>
@@ -479,99 +493,114 @@
 <li>声音事件分类
 <ul>
 <li>SenseVoice、Qwen-audio：准确度显著地高于 recall，交互友好。</li>
-<li>SenseVoice 未采用专门的 AED 数据训练，而是采用 ASR 数据 + AED 伪标签训练。</li>
+<li>SenseVoice 未采用专门的 AED 数据训练，而是采用 ASR 数据 + AED
+伪标签训练。</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h1 id="cosyvoice">2.  CosyVoice</h1>
-<h2 id="功能">2.1.  功能</h2>
-<img src="https://note.youdao.com/yws/api/personal/file/WEBc51cd4370e74e696eb1ba0d00008b2f8?method=download&shareKey=3780b891dce3b80f1e29a1bc1253bdbb" width="612">
+<h1 id="cosyvoice">2. CosyVoice</h1>
+<h2 id="功能">2.1. 功能</h2>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBc51cd4370e74e696eb1ba0d00008b2f8?method=download&shareKey=3780b891dce3b80f1e29a1bc1253bdbb" width="612"></p>
 <ul>
-<li>
-<p>多语种语音合成：中、英、日、粤语、韩。</p>
-</li>
-<li>
-<p>CosyVoice-base-300M：支持 zero-shot in-context learning、跨语种音色克隆。<font color="red">提示语音 3s</font>，克隆音色、情感、风格、韵律等。</p>
-</li>
-<li>
-<p><font color="red">CosyVoice-instruct-300M：支持生成富有表现力的声音，采用文本指令进行细粒度控制，如说话人，说话风格（包含情感、性别、语速、音高等），副语言特征（如插入笑声、呼吸、笑着说话、强调某些单词）等。</font></p>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB789e536bc7a9227c9357aecd570d02ed?method=download&shareKey=8387eb16e28627caf0556c1825a231f5" width="570">
-</li>
-<li>
-<p>CosyVoice-sft-300M：在 7 个多语种说话人上进行了微调。</p>
-</li>
+<li><p>多语种语音合成：中、英、日、粤语、韩。</p></li>
+<li><p>CosyVoice-base-300M：支持 zero-shot in-context
+learning、跨语种音色克隆。<font color="red">提示语音
+3s</font>，克隆音色、情感、风格、韵律等。</p></li>
+<li><p><font color="red">CosyVoice-instruct-300M：支持生成富有表现力的声音，采用文本指令进行细粒度控制，如说话人，说话风格（包含情感、性别、语速、音高等），副语言特征（如插入笑声、呼吸、笑着说话、强调某些单词）等。</font></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB789e536bc7a9227c9357aecd570d02ed?method=download&shareKey=8387eb16e28627caf0556c1825a231f5" width="570"></p></li>
+<li><p>CosyVoice-sft-300M：在 7 个多语种说话人上进行了微调。</p></li>
 </ul>
-<h2 id="系统结构">2.2.  系统结构</h2>
+<h2 id="系统结构">2.2. 系统结构</h2>
 <p><img src="https://note.youdao.com/yws/api/personal/file/WEB9d38a3b2013078ba227731cff3fc58f1?method=download&shareKey=b7b04a2c88bd398ff43f6a53b6cb9a3d" width="561"><img src="https://note.youdao.com/yws/api/personal/file/WEBc99c2e322c6bf43a70a95ef359b0fac7?method=download&shareKey=2cb78920922c4779f145ce7d2b83854a" width="147"></p>
-<p>* <font color="green">CosyVoice 论文中，文本经过 BPE tokenizer 后、输入 LLM 前，会经过额外的 text encoder 模块，用于对齐语音、文本 token 的语义空间。在训练集文本上训练 word sentence-piece 模型，词典大小 4000。</font></p>
-<p>* LLM 建模语义内容和韵律。说话人 embedding：x-vector，从<a target="_blank" rel="noopener" href="https://github.com/alibaba-damo-academy/3D-Speaker/tree/main/egs/3dspeaker/sv-cam++">预训练的voice-print 模型</a>中提取。</p>
-<p>* <font color="green">flow matching: ordinary differential equation based (ODE-based) diffusion model。</font><font color="red">相较于传统 diffusion 模型，加速了训练、推理。</font></p>
+<p>* <font color="green">CosyVoice 论文中，文本经过 BPE tokenizer
+后、输入 LLM 前，会经过额外的 text encoder 模块，用于对齐语音、文本
+token 的语义空间。在训练集文本上训练 word sentence-piece 模型，词典大小
+4000。</font></p>
+<p>* LLM 建模语义内容和韵律。说话人 embedding：x-vector，从<a target="_blank" rel="noopener" href="https://github.com/alibaba-damo-academy/3D-Speaker/tree/main/egs/3dspeaker/sv-cam++">预训练的voice-print
+模型</a>中提取。</p>
+<p>* <font color="green">flow matching: ordinary differential equation
+based (ODE-based) diffusion model。</font><font color="red">相较于传统
+diffusion 模型，加速了训练、推理。</font></p>
 <p>* <font color="red">HiFTNet：支持流式生成。</font></p>
 <p>*虚线模块是可选的，只用于特定的应用。</p>
-<h2 id="离散-token">2.3.  离散 token</h2>
+<h2 id="离散-token">2.3. 离散 token</h2>
 <ul>
-<li><a href="https://nanyang2015.github.io/blog/llm/yin-pin-sheng-cheng/lun-wen/audiopalm">AudioPaLM</a> 表明在语音翻译、ASR 任务上，采用辅助的 ASR loss 量化得到的离散 token，相较于原始 k-means 聚类，性能更好。</li>
+<li><a href="https://nanyang2015.github.io/blog/llm/yin-pin-sheng-cheng/lun-wen/audiopalm">AudioPaLM</a>
+表明在语音翻译、ASR 任务上，采用辅助的 ASR loss 量化得到的离散
+token，相较于原始 k-means 聚类，性能更好。</li>
 </ul>
 <div class="green-text">
-+   初步实验表明，语音 tokenizer 的选择对系统性能，对数据数量、质量的要求至关重要。评价了 3 类：
-    +   基于残差量化，如 SoundStream、Encodec、FunCodec。
-    +   基于 multi-grouped 量化，如HifiCodec。
-    +   语义 token，如 HuBERT。
-<pre><code>均无监督或自监督训练，因而与语义关联较少，导致合成不稳定，容易受数据噪声影响，需要大量干净的训练数据。
-</code></pre>
 <ul>
-<li>本文提出 supervised semantic speech (<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>S</mi><mn>3</mn></msup></mrow><annotation encoding="application/x-tex">S^3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span></span></span></span>) tokenizer。采用预训练的 SenseVoice-Large，在 encoder 第6层后插入向量量化，单码本，大小 4096，1token / 20ms。提取的 token 和语音内容、副语言信息强相关。由于监督训练，增强了对数据噪声的鲁棒性、不依赖于干净的语音训练集。消除了文本转音素的需求。</li>
+<li><p>初步实验表明，语音 tokenizer
+的选择对系统性能，对数据数量、质量的要求至关重要。评价了 3 类：</p>
+<ul>
+<li>基于残差量化，如 SoundStream、Encodec、FunCodec。</li>
+<li>基于 multi-grouped 量化，如HifiCodec。</li>
+<li>语义 token，如 HuBERT。</li>
+</ul>
+<p>均无监督或自监督训练，因而与语义关联较少，导致合成不稳定，容易受数据噪声影响，需要大量干净的训练数据。</p></li>
+<li><p>本文提出 supervised semantic speech (<span class="math inline">\(S^3\)</span>) tokenizer。采用预训练的
+SenseVoice-Large，在 encoder 第6层后插入向量量化，单码本，大小
+4096，1token / 20ms。提取的 token
+和语音内容、副语言信息强相关。由于监督训练，增强了对数据噪声的鲁棒性、不依赖于干净的语音训练集。消除了文本转音素的需求。</p></li>
 </ul>
 </div>
 <ul>
-<li>量化 $$\mu_l=\operatorname{VQ}\left(\mathbf{h}_l, C\right)=\arg \min _{\mathbf{c}_n \in C}\left|\mathbf{h}_l-\mathbf{c}_n\right|_2$$ 其中，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="bold">h</mi><mi>l</mi></msub></mrow><annotation encoding="application/x-tex">\mathbf{h}_l</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord"><span class="mord mathbf">h</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.01968em;">l</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 为第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi></mrow><annotation encoding="application/x-tex">l</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span></span></span></span> 帧的隐层表示，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>C</mi></mrow><annotation encoding="application/x-tex">C</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span></span></span></span> 为 codebook。</li>
-<li>训练时，codebook embeddings 采用指数移动平均更新。$$\mathbf{c}<em>{\mu_l}:=\alpha \mathbf{c}</em>{\mu_l}+(1-\alpha) \mathbf{h}_l$$ 其中 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>α</mi></mrow><annotation encoding="application/x-tex">\alpha</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.0037em;">α</span></span></span></span> 为预定义的衰减系数。</li>
+<li>量化 <span class="math display">\[\mu_l=\operatorname{VQ}\left(\mathbf{h}_l,
+C\right)=\arg \min _{\mathbf{c}_n \in
+C}\left\|\mathbf{h}_l-\mathbf{c}_n\right\|_2\]</span> 其中，<span class="math inline">\(\mathbf{h}_l\)</span> 为第 <span class="math inline">\(l\)</span> 帧的隐层表示，<span class="math inline">\(C\)</span> 为 codebook。</li>
+<li>训练时，codebook embeddings 采用指数移动平均更新。<span class="math display">\[\mathbf{c}_{\mu_l}:=\alpha
+\mathbf{c}_{\mu_l}+(1-\alpha) \mathbf{h}_l\]</span> 其中 <span class="math inline">\(\alpha\)</span> 为预定义的衰减系数。</li>
 <li>之后加入额外的位置 embedding，增强时序信息。</li>
 </ul>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB29d94980872572a4daa401a86fa98ad8?method=download&shareKey=0e7868a9aaf19f0df6f97e2c193aa3e4" width="402">
-<h2 id="数据集">2.4.  数据集</h2>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB29d94980872572a4daa401a86fa98ad8?method=download&shareKey=0e7868a9aaf19f0df6f97e2c193aa3e4" width="402"></p>
+<h2 id="数据集">2.4. 数据集</h2>
 <ul>
-<li>
-<p>训练集 17wh+<br>
+<li><p>训练集 17wh+
 <img src="https://note.youdao.com/yws/api/personal/file/WEB5c124e6edc996fdd726086c26262f838?method=download&shareKey=fafd752bcadb81969d8b0c4a1ca4c5f2" width="370"></p>
-<img src="https://note.youdao.com/yws/api/personal/file/WEBbde7b8309d6f5b103713cb96fe101466?method=download&shareKey=38326ed5ba57a8fc01dc5e889959d2f0" width="358">
-</li>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBbde7b8309d6f5b103713cb96fe101466?method=download&shareKey=38326ed5ba57a8fc01dc5e889959d2f0" width="358"></p></li>
 </ul>
 <div class="red-text">
-+   数据集构建
-    +   语音检测，信噪比（SNR）估计，说话人 diarization、分离。
-    +   ASR：SenseVoice-Large、Paraformer。采用强制对齐进一步过滤、<font color="green">增强标点的准确性</font>。
-</div>
-<h2 id="训练">2.5.  训练</h2>
 <ul>
-<li>
-<p>text encoder + LLM</p>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB2f2ec813d13030de7b60025f15bea1f7?method=download&shareKey=3b11e7f4d2d9af2379d98ba3a9bb5533" width="277">
-</li>
-<li>
-<p>flow matching</p>
+<li>数据集构建
 <ul>
-<li>估计条件概率 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>P</mi><mrow><mo fence="true">(</mo><mi>S</mi><mo>∣</mo><mi>X</mi><mo separator="true">,</mo><mi>v</mi><mo separator="true">,</mo><msub><mi>S</mi><mrow><mi>r</mi><mi>e</mi><mi>f</mi></mrow></msub><mo fence="true">)</mo></mrow></mrow><annotation encoding="application/x-tex">P\left(S \mid X, v, S_{ref}\right)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.036108em;vertical-align:-0.286108em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;">(</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∣</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord mathdefault" style="margin-right:0.07847em;">X</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span><span class="mord mathdefault mtight">e</span><span class="mord mathdefault mtight" style="margin-right:0.10764em;">f</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;">)</span></span></span></span></span>，其中 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07847em;">X</span></span></span></span> 为语音 token（含提示语音 token + 生成语音 token），<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span> 为说话人 embedding，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>S</mi><mrow><mi>r</mi><mi>e</mi><mi>f</mi></mrow></msub></mrow><annotation encoding="application/x-tex">S_{ref}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span><span class="mord mathdefault mtight">e</span><span class="mord mathdefault mtight" style="margin-right:0.10764em;">f</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span> 为参考语音的 mel 谱，用于进一步增强音色、声学环境一致性，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi></mrow><annotation encoding="application/x-tex">S</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span></span></span></span> 为目标语音的 mel 谱。</li>
-<li>采用 classifier-free guidance、cosine scheduler、masked conditions。</li>
+<li>语音检测，信噪比（SNR）估计，说话人 diarization、分离。</li>
+<li>ASR：SenseVoice-Large、Paraformer。采用强制对齐进一步过滤、<font color="green">增强标点的准确性</font>。</li>
+</ul></li>
 </ul>
-</li>
-<li>
-<p>zero-shot in-context learning<br>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB5ec8723efcfbae568059bce352f32142?method=download&shareKey=e0d015b5257e32b749fb0db1433622b6" width="567"></p>
-<p>* 其中，灰色方块表示在文本 token 和语音 token 间插入的 “turn of speech” token。</p>
+</div>
+<h2 id="训练">2.5. 训练</h2>
 <ul>
-<li>若提示语音、输入文本同语种，拼接，作为 AR 模型输入，将提示语音 token 视为已经生成的。</li>
+<li><p>text encoder + LLM</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB2f2ec813d13030de7b60025f15bea1f7?method=download&shareKey=3b11e7f4d2d9af2379d98ba3a9bb5533" width="277"></p></li>
+<li><p>flow matching</p>
+<ul>
+<li>估计条件概率 <span class="math inline">\(P\left(S \mid X, v,
+S_{ref}\right)\)</span>，其中 <span class="math inline">\(X\)</span>
+为语音 token（含提示语音 token + 生成语音 token），<span class="math inline">\(v\)</span> 为说话人 embedding，<span class="math inline">\(S_{ref}\)</span> 为参考语音的 mel
+谱，用于进一步增强音色、声学环境一致性，<span class="math inline">\(S\)</span> 为目标语音的 mel 谱。</li>
+<li>采用 classifier-free guidance、cosine scheduler、masked
+conditions。</li>
+</ul></li>
+<li><p>zero-shot in-context learning
+<img src="https://note.youdao.com/yws/api/personal/file/WEB5ec8723efcfbae568059bce352f32142?method=download&shareKey=e0d015b5257e32b749fb0db1433622b6" width="567"></p>
+<p>* 其中，灰色方块表示在文本 token 和语音 token 间插入的 “turn of
+speech” token。</p>
+<ul>
+<li>若提示语音、输入文本同语种，拼接，作为 AR 模型输入，将提示语音 token
+视为已经生成的。</li>
 <li>若提示语音、输入文本语种不同，丢弃源语种的提示文本、音频，避免源语种的韵律影响目标语种。</li>
 <li>提示语音对应的文本可以人工标注或 ASR。</li>
+</ul></li>
+<li><p>CosyVoice-instruct</p>
+<p>采用指令数据微调 CosyVoice-base，不输入说话人 embedding。</p></li>
 </ul>
-</li>
-<li>
-<p>CosyVoice-instruct</p>
-<p>采用指令数据微调 CosyVoice-base，不输入说话人 embedding。</p>
-</li>
-</ul>
-<h2 id="评价-2">2.6.  评价</h2>
+<h2 id="评价-1">2.6. 评价</h2>
 <table>
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
 <thead>
 <tr>
 <th>维度</th>
@@ -581,41 +610,57 @@
 </thead>
 <tbody>
 <tr>
-<td>中英文合成质量<br>WER: 分别采用 Whisper-Large V3、 Paraformer；<br>SS: 说话人相似度，ERes2Net 提取的提示语音、生成语音的说话人 embedding 的余弦相似度；<br>AR 模型：随机采样解码，采用5个随机种子 0, 7, 42, 123, 1337 分别合成；<br><font color="green">ASR re-ranking</font></td>
+<td>中英文合成质量<br>WER: 分别采用 Whisper-Large V3、
+Paraformer；<br>SS: 说话人相似度，ERes2Net
+提取的提示语音、生成语音的说话人 embedding 的余弦相似度；<br>AR
+模型：随机采样解码，采用5个随机种子 0, 7, 42, 123, 1337
+分别合成；<br><font color="green">ASR re-ranking</font></td>
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEB740922900c4ff0366461bf1f8e1d9648?method=download&shareKey=568eb8302a5fc251021ec213612b9581" width="572"><br><img src="https://note.youdao.com/yws/api/personal/file/WEB03bb668c3431023b32db28361436fbcc?method=download&shareKey=13f0a9b0e8f2a6b7ecf4b4c8d1e7f4dc" width="568"></td>
-<td>CosyVoice 合成的语音达到了和人类水平相近的 WER /可比的 CER，说话人相似度更高；<br>ASR re-ranking 显著增强了内容一致性；<br><font color="green">ChatTTS 由于 speaker leaking，有更多的插入、删除错误。</font></td>
+<td>CosyVoice 合成的语音达到了和人类水平相近的 WER /可比的
+CER，说话人相似度更高；<br>ASR re-ranking
+显著增强了内容一致性；<br><font color="green">ChatTTS 由于 speaker
+leaking，有更多的插入、删除错误。</font></td>
 </tr>
 <tr>
-<td>情感控制<br>情感识别模型：<a target="_blank" rel="noopener" href="https://modelscope.cn/models/iic/emotion2vec_base_finetuned">emo2vec</a><br>合成文本与目标情感是匹配的。<br>CosyVoice-base 只输入文本。</td>
+<td>情感控制<br>情感识别模型：<a target="_blank" rel="noopener" href="https://modelscope.cn/models/iic/emotion2vec_base_finetuned">emo2vec</a><br>合成文本与目标情感是匹配的。<br>CosyVoice-base
+只输入文本。</td>
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEB5fcce28971440a9015c783612661d57d?method=download&shareKey=42396e691fdcf233e57bbb8cbd814707" width="570"></td>
 <td></td>
 </tr>
 <tr>
 <td>文本 token、语音 token、训练集+模型规模 的影响</td>
-<td><img src="https://note.youdao.com/yws/api/personal/file/WEB17c53b753ec1e5b2d80f485e3892c2eb?method=download&shareKey=37cdba0cc8415ba5e723278b3f45a029" width="572"><br>Exp-x-LibriTTS: CosyVoice 论文中在 LibriTTS 数据集上训练的小模型</td>
-<td>对比 Exp-1、Exp-2，<font color="red">相较于 HuBERT，采用 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>S</mi><mn>3</mn></msup></mrow><annotation encoding="application/x-tex">S^3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span></span></span></span> tokenizer，合成语音的内容一致性显著提升；</font><br>对比 Exp-1、Exp-2、Exp-3，<font color="red">文本、语音 tokenizer 对内容一致性都很重要</font>，但几乎不影响说话人相似度。</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEB17c53b753ec1e5b2d80f485e3892c2eb?method=download&shareKey=37cdba0cc8415ba5e723278b3f45a029" width="572"><br>Exp-x-LibriTTS:
+CosyVoice 论文中在 LibriTTS 数据集上训练的小模型</td>
+<td>对比 Exp-1、Exp-2，<font color="red">相较于 HuBERT，采用 <span class="math inline">\(S^3\)</span>
+tokenizer，合成语音的内容一致性显著提升；</font><br>对比
+Exp-1、Exp-2、Exp-3，<font color="red">文本、语音 tokenizer
+对内容一致性都很重要</font>，但几乎不影响说话人相似度。</td>
 </tr>
 <tr>
-<td><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>S</mi><mn>3</mn></msup></mrow><annotation encoding="application/x-tex">S^3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span></span></span></span> 语音 tokenizer 对识别率的影响</td>
+<td><span class="math inline">\(S^3\)</span> 语音 tokenizer
+对识别率的影响</td>
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEB71f087a2584e9133fd35a3caebbb47fd?method=download&shareKey=1326a50e3dbf594653fc9973422ed539" width="572"></td>
 <td><font color="red">采用离散化表示，语音识别性能损失较明显。</font></td>
 </tr>
 <tr>
 <td>用于生成数据</td>
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEBe59ae86c18b0722fa99a1fc14c566231?method=download&shareKey=8ed80287f6521063ffc63254546ff6da" width="576"></td>
-<td><font color="red">仅在合成数据上训练，可以达到原始 Librispeech 训练集可比的 ASR 性能；<br>结合两者，ASR 性能显著提高；<br>添加<font color="green"> MLS 训练集文本</font>的合成语音，显著提高了识别效果。可能表明对于 ASR，文本丰富度的重要性高于语音时长。</font></td>
+<td><font color="red">仅在合成数据上训练，可以达到原始 Librispeech
+训练集可比的 ASR 性能；<br>结合两者，ASR
+性能显著提高；<br>添加<font color="green"> MLS
+训练集文本</font>的合成语音，显著提高了识别效果。可能表明对于
+ASR，文本丰富度的重要性高于语音时长。</font></td>
 </tr>
 </tbody>
 </table>
-<h1 id="展望">3.  展望</h1>
+<h1 id="展望">3. 展望</h1>
 <ul>
 <li>语音合成
 <ul>
 <li>还不能从文本直接推断合适的情感、语音风格。</li>
 <li>歌声。</li>
 <li>有表现力的情感变化。</li>
-</ul>
-</li>
+</ul></li>
 <li>与 LLM 端到端训练。</li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
