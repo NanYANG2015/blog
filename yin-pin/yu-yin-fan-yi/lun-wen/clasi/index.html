@@ -6,8 +6,10 @@
     <meta charset="utf-8">
     <meta name="keywords" content="CLASI, AI, 语音, 算法">
     <meta name="description" content="
-论文：Towards Achieving Human Parity on End-to-end Simultaneous
-Speech Translation via LLM Agent
+
+论文：Towards Achieving Human Parity on End-to-end Simultaneous Speech Translation via LLM Agent
+
+
 https://byteresearchcl">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -383,111 +385,103 @@ https://byteresearchcl">
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <ul>
-<li><p>论文：Towards Achieving Human Parity on End-to-end Simultaneous
-Speech Translation via LLM Agent</p></li>
-<li><p><a target="_blank" rel="noopener" href="https://byteresearchcla.github.io/clasi/" class="uri">https://byteresearchcla.github.io/clasi/</a></p></li>
-<li><p>作者：来自字节 Cross Language Agent Team</p></li>
-<li><p>发表时间：2024.07.20</p></li>
-<li><p>贡献</p>
+<li>
+<p>论文：Towards Achieving Human Parity on End-to-end Simultaneous Speech Translation via LLM Agent</p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="https://byteresearchcla.github.io/clasi/">https://byteresearchcla.github.io/clasi/</a></p>
+</li>
+<li>
+<p>作者：来自字节 Cross Language Agent Team</p>
+</li>
+<li>
+<p>发表时间：2024.07.20</p>
+</li>
+<li>
+<p>贡献</p>
 <ul>
 <li>端到端同声传译（语音输入，文本输出），性能接近人类转译员。</li>
 <li><font color="red">提出了数据驱动的读-写策略，平衡翻译质量与延迟。</font>且输出是确定的，不会重写，可能用户体验更好。</li>
 <li><font color="red">多模态检索增强生成。</font></li>
-<li>提出了人工评价指标 valid information proportion
-(VIP)。发布了覆盖各类真实场景、长语音翻译、人工标注的<a target="_blank" rel="noopener" href="https://github.com/byteresearchcla/RealSI">测试集</a>，en-zh、zh-en
-各 10 条，每条约 5min。相较于现有的
-朗读/准备良好的说话人，正式、清晰、流利，且人工分句的语音翻译数据集，更能反映真实的同声传译场景。</li>
-</ul></li>
+<li>提出了人工评价指标 valid information proportion (VIP)。发布了覆盖各类真实场景、长语音翻译、人工标注的<a target="_blank" rel="noopener" href="https://github.com/byteresearchcla/RealSI">测试集</a>，en-zh、zh-en 各 10 条，每条约 5min。相较于现有的 朗读/准备良好的说话人，正式、清晰、流利，且人工分句的语音翻译数据集，更能反映真实的同声传译场景。</li>
 </ul>
-<h1 id="系统结构">1. 系统结构</h1>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEBb42bdd84ad1ea1afb88c78c0da213fb4?method=download&shareKey=c0371518c23180ca5053bec8ba69b8ca" width="645"></p>
-<p><font color="red"><span class="math display">\[\mathbf{y}_r ;
-t^r=\operatorname{TextDecoder}\left(\mathbf{x}_{t^{r-1}: T^r},
-\mathbf{k}_r, \mathbf{y}_{1: r-1}\right)\]</span></font> 其中，<span class="math inline">\(t^{r-1}\)</span>
-为系统预测的上一轮的截止时间，<span class="math inline">\(\mathbf{x}_{t^{r-1}: T^r}\)</span>
-为当前输入的音频，<span class="math inline">\(\mathbf{k}_r\)</span>
-为检索到的相关信息，<span class="math inline">\(\mathbf{y}_{1:
-r-1}\)</span> 为历史识别（可选）、翻译文本，<span class="math inline">\(\mathbf{y}_r\)</span>
-为当前预测结果，并用于更新记忆，<font color="red"><span class="math inline">\(t^r\)</span> 为预测的当前轮的截止时间</font>。</p>
+</li>
+</ul>
+<h1 id="系统结构">1.  系统结构</h1>
+<img src="https://note.youdao.com/yws/api/personal/file/WEBb42bdd84ad1ea1afb88c78c0da213fb4?method=download&shareKey=c0371518c23180ca5053bec8ba69b8ca" width="645">
+<p><font color="red">$$\mathbf{y}_r ; t<sup>r=\operatorname{TextDecoder}\left(\mathbf{x}_{t</sup>{r-1}: T^r}, \mathbf{k}<em>r, \mathbf{y}</em>{1: r-1}\right)$$</font> 其中，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>t</mi><mrow><mi>r</mi><mo>−</mo><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">t^{r-1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">t</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span></span></span></span> 为系统预测的上一轮的截止时间，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="bold">x</mi><mrow><msup><mi>t</mi><mrow><mi>r</mi><mo>−</mo><mn>1</mn></mrow></msup><mo>:</mo><msup><mi>T</mi><mi>r</mi></msup></mrow></msub></mrow><annotation encoding="application/x-tex">\mathbf{x}_{t^{r-1}: T^r}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6220600000000001em;vertical-align:-0.17762em;"></span><span class="mord"><span class="mord"><span class="mord mathbf">x</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.52238em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathdefault mtight">t</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7463142857142857em;"><span style="top:-2.786em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span><span class="mrel mtight">:</span><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.5935428571428571em;"><span style="top:-2.786em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span></span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.17762em;"><span></span></span></span></span></span></span></span></span></span> 为当前输入的音频，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="bold">k</mi><mi>r</mi></msub></mrow><annotation encoding="application/x-tex">\mathbf{k}_r</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord"><span class="mord mathbf">k</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 为检索到的相关信息，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="bold">y</mi><mrow><mn>1</mn><mo>:</mo><mi>r</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">\mathbf{y}_{1: r-1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.652771em;vertical-align:-0.208331em;"></span><span class="mord"><span class="mord"><span class="mord mathbf" style="margin-right:0.01597em;">y</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.301108em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mrel mtight">:</span><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span></span></span></span> 为历史识别（可选）、翻译文本，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="bold">y</mi><mi>r</mi></msub></mrow><annotation encoding="application/x-tex">\mathbf{y}_r</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.63888em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord"><span class="mord mathbf" style="margin-right:0.01597em;">y</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 为当前预测结果，并用于更新记忆，<font color="red"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>t</mi><mi>r</mi></msup></mrow><annotation encoding="application/x-tex">t^r</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.664392em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">t</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span></span></span></span></span></span></span></span></span></span></span> 为预测的当前轮的截止时间</font>。</p>
 <ul>
-<li>agent：5 个操作 &lt;INPUT&gt;, &lt;RETRIEVE&gt;[可选], <load_mem>,
-&lt;OUTPUT&gt;, <update_mem></update_mem></load_mem></li>
+<li>agent：5 个操作 &lt;INPUT&gt;, &lt;RETRIEVE&gt;[可选], &lt;LOAD_MEM&gt;, &lt;OUTPUT&gt;, &lt;UPDATE_MEM&gt;</li>
 <li>上文、语音、检索到的信息、指令，拼接，作为 LLM 的提示。
 <ul>
 <li>结合历史信息有助于一词多义的正确翻译，也可与输入语音一起确定已经翻译了的部分。</li>
-</ul></li>
 </ul>
-<h1 id="分段读-写策略">2. 分段/读-写策略</h1>
-<p><font color="red">采用 LLM /
-人工，将长语音翻译切分为多个完整的语义块</font>。考虑语义完整性、逻辑连贯性（如条件句、使役句、对偶句应在同一段内）、语法完整性、停顿（语音中的停顿、标点、连词等）、适当的信息密度（避免信息超载）。通常是1个完整的句子。</p>
+</li>
+</ul>
+<h1 id="分段读-写策略">2.  分段/读-写策略</h1>
+<p><font color="red">采用 LLM / 人工，将长语音翻译切分为多个完整的语义块</font>。考虑语义完整性、逻辑连贯性（如条件句、使役句、对偶句应在同一段内）、语法完整性、停顿（语音中的停顿、标点、连词等）、适当的信息密度（避免信息超载）。通常是1个完整的句子。</p>
 <blockquote>
 <p>虽然系统内不需要实现复杂的分段规则，但标注指南需要明确规则；且有标注成本。</p>
 </blockquote>
-<p>训练：<font color="red"><span class="math display">\[\min
-\mathbb{E}_{t \sim U[1, M]}-\log p_\theta\left(\mathbf{y}_{1:j} ; t^j
-\mid \mathbf{x}_{1: t}\right) \quad j=\max _j\left\{j \mid
-t^j&lt;t\right\}\]</span></font> 其中，<span class="math inline">\(U\)</span> 表示均匀分布，<span class="math inline">\(M\)</span> 为语音表示的帧数，<span class="math inline">\(\mathbf{y}_j\)</span> 为第 <span class="math inline">\(j\)</span> 个语义片段的翻译文本，<span class="math inline">\(t^j\)</span>
-为其对应的时刻。训练目标为给定随机截取的部分音频 <span class="math inline">\(\mathbf{x}_{1:
-t}\)</span>，输出所有完整语义片段的翻译文本，及对应的截止时间。</p>
-<h1 id="multi-modal-retrieval-augmented-generation-mm-rag">3. Multi-Modal
-Retrieval Augmented Generation (MM-RAG)</h1>
+<p>训练：<font color="red">$$\min \mathbb{E}<em>{t \sim U[1, M]}-\log p</em>\theta\left(\mathbf{y}<em>{1:j} ; t^j \mid \mathbf{x}</em>{1: t}\right) \quad j=\max _j\left{j \mid t^j&lt;t\right}$$</font> 其中，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>U</mi></mrow><annotation encoding="application/x-tex">U</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">U</span></span></span></span> 表示均匀分布，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>M</mi></mrow><annotation encoding="application/x-tex">M</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span></span></span></span> 为语音表示的帧数，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="bold">y</mi><mi>j</mi></msub></mrow><annotation encoding="application/x-tex">\mathbf{y}_j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.730548em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord"><span class="mord mathbf" style="margin-right:0.01597em;">y</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span> 为第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span></span></span></span> 个语义片段的翻译文本，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>t</mi><mi>j</mi></msup></mrow><annotation encoding="application/x-tex">t^j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.824664em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">t</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.824664em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span></span></span></span></span></span></span></span> 为其对应的时刻。训练目标为给定随机截取的部分音频 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="bold">x</mi><mrow><mn>1</mn><mo>:</mo><mi>t</mi></mrow></msub></mrow><annotation encoding="application/x-tex">\mathbf{x}_{1: t}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.59444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord"><span class="mord mathbf">x</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mrel mtight">:</span><span class="mord mathdefault mtight">t</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，输出所有完整语义片段的翻译文本，及对应的截止时间。</p>
+<h1 id="multi-modal-retrieval-augmented-generation-mm-rag">3.  Multi-Modal Retrieval Augmented Generation (MM-RAG)</h1>
 <ul>
-<li><p>key：文本，语音中可能出现的术语、人名、地名、缩略词等。</p></li>
-<li><p>value：文本，可以是自身、目标语种的翻译、或解释。</p></li>
-<li><p>embedding fusion 层</p>
-<p>采用 multi-head attention + pooling，分别得到语音片段、各 key
-的表示。</p></li>
-<li><p><font color="green">线性投影层，计算最终分，</font>表示语音片段包含
-key 的概率。</p></li>
+<li>
+<p>key：文本，语音中可能出现的术语、人名、地名、缩略词等。</p>
+</li>
+<li>
+<p>value：文本，可以是自身、目标语种的翻译、或解释。</p>
+</li>
+<li>
+<p>embedding fusion 层</p>
+<p>采用 multi-head attention + pooling，分别得到语音片段、各 key 的表示。</p>
+</li>
+<li>
+<p><font color="green">线性投影层，计算最终分，</font>表示语音片段包含 key 的概率。</p>
+</li>
 </ul>
-<h1 id="多阶段训练">4. 多阶段训练</h1>
+<h1 id="多阶段训练">4.  多阶段训练</h1>
 <ul>
 <li>音频 encoder、LLM 分别独立地预训练。
 <ul>
-<li>音频
-encoder：conformer。pretrain-finetune。在数百万小时语音数据上预训练。达到了与人类相当的
-ASR 性能。</li>
-<li>LLM：Doubao LLM。进行了纯文本预训练 +
-指令微调。在各种下游任务，特别是翻译任务上，性能很好。</li>
-</ul></li>
+<li>音频 encoder：conformer。pretrain-finetune。在数百万小时语音数据上预训练。达到了与人类相当的 ASR 性能。</li>
+<li>LLM：Doubao LLM。进行了纯文本预训练 + 指令微调。在各种下游任务，特别是翻译任务上，性能很好。</li>
+</ul>
+</li>
 <li>Multi-task Continual Training
 <ul>
 <li>adapter：下采样 + 线性投影。</li>
-<li><font color="red">任务：ASR、语音翻译、文本翻译。
+<li><font color="red">任务：ASR、语音翻译、文本翻译。<br>
 <img src="https://note.youdao.com/yws/api/personal/file/WEBb042b7f4238ed560099d0a1f72406539?method=download&shareKey=3533535fa07e1b17775ae5f75cfe9f18" width="756"></font></li>
 <li>ASR、文本翻译数据集较多，采用 LLM 构建语音翻译数据。
 <ul>
 <li>ASR 数据，LLM 翻译，被提示进行 ITN、filler word smoothing。</li>
-<li><font color="red">分段流式数据：提示 LLM 将 ASR
-转写分为多个独立的语义块，然后翻译。音频进行强制对齐。</font></li>
+<li><font color="red">分段流式数据：提示 LLM 将 ASR 转写分为多个独立的语义块，然后翻译。音频进行强制对齐。</font></li>
 <li>合成数据的 VIP 分达到了 81%，满足训练要求。</li>
-</ul></li>
-</ul></li>
+</ul>
+</li>
+</ul>
+</li>
 <li>Multi-task SFT
 <ul>
 <li>数据来源：真实场景，包含不流利、结巴、code-mixing、专业术语等各种语音现象。</li>
-<li><font color="red">人工标注，分段、翻译、标注术语</font>，如<a target="_blank" rel="noopener" href="https://github.com/byteresearchcla/RealSI/blob/main/data/en2zh/json/en2zh-01-tech.json">测试集</a>。覆盖表
-1 中的各语音翻译类型。</li>
+<li><font color="red">人工标注，分段、翻译、标注术语</font>，如<a target="_blank" rel="noopener" href="https://github.com/byteresearchcla/RealSI/blob/main/data/en2zh/json/en2zh-01-tech.json">测试集</a>。覆盖表 1 中的各语音翻译类型。</li>
 <li>有助于对齐专业的人工转译员的分段方法，增强模型现实场景中翻译的鲁棒性。</li>
-</ul></li>
+</ul>
+</li>
 <li><font color="red">多模态检索独立训练</font>
 <ul>
-<li>ASR
-数据。从转写中随机挑选词作为正例，从其它句子挑选的不在该句中的词作为负例。BCE
-loss。</li>
-</ul></li>
+<li>ASR 数据。从转写中随机挑选词作为正例，从其它句子挑选的不在该句中的词作为负例。BCE loss。</li>
+</ul>
+</li>
 <li><font color="red">利用少量的人工标注数据高效地学习，缓解了训练数据稀缺的问题。</font></li>
 </ul>
-<h1 id="vip">5. VIP</h1>
+<h1 id="vip">5.  VIP</h1>
 <ul>
 <li>正确、清晰流畅（如不包含复杂的句子结构、语法结构，平滑口语中的重复、结巴等）地翻译了的语义片段的占比。</li>
 </ul>
-<h1 id="评价">6. 评价</h1>
+<h1 id="评价">6.  评价</h1>
 <table>
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
 <thead>
 <tr>
 <th>任务</th>
@@ -497,17 +491,11 @@ loss。</li>
 <tbody>
 <tr>
 <td>翻译质量</td>
-<td><img src="https://note.youdao.com/yws/api/personal/file/WEB7de1a1bd330054e383366ae309fe6599?method=download&shareKey=c36232513e8272eb93a85f1f247a1733" width="643"><br>BLEU:
-SacreBLEU<br>专业人工转译员的 VIP 分约为 80%。</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEB7de1a1bd330054e383366ae309fe6599?method=download&shareKey=c36232513e8272eb93a85f1f247a1733" width="643"><br>BLEU: SacreBLEU<br>专业人工转译员的 VIP 分约为 80%。</td>
 </tr>
 <tr>
 <td>延迟</td>
-<td><img src="https://note.youdao.com/yws/api/personal/file/WEBf8fbf8a19673861d62b4193fa887e580?method=download&shareKey=8757609a85c043a02a808632818dd3fd" width="645"><br>AL:
-Average Lagging [45]<br>LAAL: Length Adaptive Average Lagging
-[52]<br>FLAL: First Letter Appearance
-Lagging，本文提出的，输出第一个<strong>确定的</strong>翻译的时间；<br>上述指标，对于会重写的系统，均采用输出<strong>确定的</strong>翻译的时间。<br>当预测结果显著长/短于参考翻译时，AL、LAAL
-可能不可靠。<br>专业人工转译员的 Ear-Voice-Span (EVS) 通常为
-3-6s。</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEBf8fbf8a19673861d62b4193fa887e580?method=download&shareKey=8757609a85c043a02a808632818dd3fd" width="645"><br>AL: Average Lagging [45]<br>LAAL: Length Adaptive Average Lagging [52]<br>FLAL: First Letter Appearance Lagging，本文提出的，输出第一个<strong>确定的</strong>翻译的时间；<br>上述指标，对于会重写的系统，均采用输出<strong>确定的</strong>翻译的时间。<br>当预测结果显著长/短于参考翻译时，AL、LAAL 可能不可靠。<br>专业人工转译员的 Ear-Voice-Span (EVS) 通常为 3-6s。</td>
 </tr>
 <tr>
 <td>开源测试集</td>
@@ -515,8 +503,7 @@ Lagging，本文提出的，输出第一个<strong>确定的</strong>翻译的�
 </tr>
 <tr>
 <td>多模态检索</td>
-<td><img src="https://note.youdao.com/yws/api/personal/file/WEB30f3c87c115bec42af3700935c2cd945?method=download&shareKey=ace13550a21bfd898c827c1108feb501" width="496"><br>audio-to-audio：采用
-TTS 合成术语。<br>top-k：采用Maximum Inner Product Search (MIPS)。</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEB30f3c87c115bec42af3700935c2cd945?method=download&shareKey=ace13550a21bfd898c827c1108feb501" width="496"><br>audio-to-audio：采用 TTS 合成术语。<br>top-k：采用Maximum Inner Product Search (MIPS)。</td>
 </tr>
 <tr>
 <td>MM-RAG</td>
@@ -524,9 +511,7 @@ TTS 合成术语。<br>top-k：采用Maximum Inner Product Search (MIPS)。</td>
 </tr>
 <tr>
 <td>VIP 与客观指标的相关性</td>
-<td><img src="https://note.youdao.com/yws/api/personal/file/WEB2055f6b02b00c9998621a3e0822cafb9?method=download&shareKey=892861c50f025c09b87086ea74bcb9e7" width="651"><br>Kendall’s
-Tau 相关系数<br>当 VIP 超过 40%
-后，客观评价指标无法较好地反映翻译质量的变化，可能由于虽然文本差异较小，但客观指标无法很好地评价关键词的准确性等。</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEB2055f6b02b00c9998621a3e0822cafb9?method=download&shareKey=892861c50f025c09b87086ea74bcb9e7" width="651"><br>Kendall’s Tau 相关系数<br>当 VIP 超过 40% 后，客观评价指标无法较好地反映翻译质量的变化，可能由于虽然文本差异较小，但客观指标无法很好地评价关键词的准确性等。</td>
 </tr>
 <tr>
 <td>case 分析</td>
@@ -534,20 +519,20 @@ Tau 相关系数<br>当 VIP 超过 40%
 </tr>
 </tbody>
 </table>
-<h1 id="其它">7. 其它</h1>
+<h1 id="其它">7.  其它</h1>
 <ul>
 <li>语音分段策略
 <ul>
-<li>固定长度分段、检测语音中的单词边界
-[46]、检测语音单元边界（自适应分段）[16]。本文输入语音是固定分段。</li>
-</ul></li>
+<li>固定长度分段、检测语音中的单词边界 [46]、检测语音单元边界（自适应分段）[16]。本文输入语音是固定分段。</li>
+</ul>
+</li>
 <li>由于不同语言语法结构不同，延迟是不可避免的。</li>
 <li>展望
 <ul>
-<li>MM-RAG
-对于简单的场景是可选的，训练模型决定是否跳过不必要的动作。</li>
+<li>MM-RAG 对于简单的场景是可选的，训练模型决定是否跳过不必要的动作。</li>
 <li>RLHF 奖励函数。</li>
-</ul></li>
+</ul>
+</li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 

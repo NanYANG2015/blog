@@ -6,8 +6,7 @@
     <meta charset="utf-8">
     <meta name="keywords" content="Seed-ASR, AI, 语音, 算法">
     <meta name="description" content="
-Bai Y, Chen J, Chen J, et al. Seed-ASR: Understanding Diverse Speech
-and Contexts with LLM-based Speech Recognition[J">
+Bai Y, Chen J, Chen J, et al. Seed-ASR: Understanding Diverse Speech and Contexts with LLM-based Speech Recognition[J].">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -382,118 +381,108 @@ and Contexts with LLM-based Speech Recognition[J">
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <ul>
-<li>Bai Y, Chen J, Chen J, et al. Seed-ASR: Understanding Diverse Speech
-and Contexts with LLM-based Speech Recognition[J]. arXiv preprint
-arXiv:2407.04675, 2024.</li>
-<li><a target="_blank" rel="noopener" href="https://bytedancespeech.github.io/seedasr_tech_report" class="uri">https://bytedancespeech.github.io/seedasr_tech_report</a></li>
+<li>Bai Y, Chen J, Chen J, et al. Seed-ASR: Understanding Diverse Speech and Contexts with LLM-based Speech Recognition[J]. arXiv preprint arXiv:2407.04675, 2024.</li>
+<li><a target="_blank" rel="noopener" href="https://bytedancespeech.github.io/seedasr_tech_report">https://bytedancespeech.github.io/seedasr_tech_report</a></li>
 <li>作者：字节 Seed 组</li>
 </ul>
-<h1 id="系统结构">1. 系统结构</h1>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB0910179246773a52e8532a313e8d3137?method=download&shareKey=1b0d686212b3ed937d88c71898ed91e2" width="685"></p>
-<h1 id="音频-encoder">2. 音频 encoder</h1>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB2d5d36eb69ef47bf1e16c22fbc20792a?method=download&shareKey=80db0a462fc3ad6aa92618cf8cf2cabe" width="432"></p>
+<h1 id="系统结构">1.  系统结构</h1>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB0910179246773a52e8532a313e8d3137?method=download&shareKey=1b0d686212b3ed937d88c71898ed91e2" width="685">
+<h1 id="音频-encoder">2.  音频 encoder</h1>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB2d5d36eb69ef47bf1e16c22fbc20792a?method=download&shareKey=80db0a462fc3ad6aa92618cf8cf2cabe" width="432">
 <ul>
-<li><p>取名 LUISE: Large-scale Unsupervised Iterative Speech
-Encoder。</p></li>
-<li><p>mel-filterbank 特征。</p></li>
-<li><p>基于 conformer。参数量：2B。</p></li>
-<li><p>离散 label</p>
-<p><font color="green">iterative fixed。第 1 次迭代：codebook
-随机初始化，采用随机投影层 [10]。之后：中间层表示 K-means
-聚类。</font></p>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEBeb0353db02163cc43172238fc99afc42?method=download&shareKey=5e08115fd1f510e9817a42ec619bf677" width="686"></p>
-<p>取第 25/32 层的表示。</p></li>
-<li><p>只计算 mask 帧的 CE loss。</p></li>
-<li><p>预训练后，取其<font color="red">中间层的连续表示</font>。</p></li>
+<li>
+<p>取名 LUISE: Large-scale Unsupervised Iterative Speech Encoder。</p>
+</li>
+<li>
+<p>mel-filterbank 特征。</p>
+</li>
+<li>
+<p>基于 conformer。参数量：2B。</p>
+</li>
+<li>
+<p>离散 label</p>
+<p><font color="green">iterative fixed。第 1 次迭代：codebook 随机初始化，采用随机投影层 [10]。之后：中间层表示 K-means 聚类。</font></p>
+<img src="https://note.youdao.com/yws/api/personal/file/WEBeb0353db02163cc43172238fc99afc42?method=download&shareKey=5e08115fd1f510e9817a42ec619bf677" width="686">
+<p>取第 25/32 层的表示。</p>
+</li>
+<li>
+<p>只计算 mask 帧的 CE loss。</p>
+</li>
+<li>
+<p>预训练后，取其<font color="red">中间层的连续表示</font>。</p>
+</li>
 </ul>
-<h1 id="converter">3. converter</h1>
-<p>LUISE 中间层表示帧率为
-40ms。<font color="red">拼接4个连续帧进行下采样，再输入线性投影层。</font>因而输入
-LLM 的帧率为 160ms。</p>
-<h1 id="训练">4. 训练</h1>
+<h1 id="converter">3.  converter</h1>
+<p>LUISE 中间层表示帧率为 40ms。<font color="red">拼接4个连续帧进行下采样，再输入线性投影层。</font>因而输入 LLM 的帧率为 160ms。</p>
+<h1 id="训练">4.  训练</h1>
 <ul>
 <li>音频 encoder 自监督学习</li>
 <li>LLM
 <ul>
 <li>Seed-ASR (CN)：采用超过 10B 的 MoE LLM 初始化。</li>
-</ul></li>
+</ul>
+</li>
 <li>SFT
 <ul>
 <li>learnable audio encoder + learnable converter + fixed LLM</li>
-</ul></li>
+</ul>
+</li>
 <li>上下文 SFT
 <ul>
-<li>数据：&lt;上下文 <span class="math inline">\(c\)</span>, 语音 <span class="math inline">\(x\)</span>, 文本 <span class="math inline">\(y\)</span>&gt; + 一定比例的通用 ASR 数据。
+<li>数据：&lt;上下文 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>c</mi></mrow><annotation encoding="application/x-tex">c</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">c</span></span></span></span>, 语音 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span>, 文本 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span>&gt; + 一定比例的通用 ASR 数据。
 <ul>
 <li>可以根据场景定制，如对话历史、视频字幕场景下的用户编辑历史、会议场景下的参会人名称。</li>
-<li><font color="red">上下文由内部 LLM
-根据转写文本生成，实验表明相较于采用长语音的历史转写，性能更好。</font></li>
-</ul></li>
-<li><strong><font color="red">解码策略优化</font></strong>。采用原生
-beam search 存在严重的幻觉问题。
+<li><font color="red">上下文由内部 LLM 根据转写文本生成，实验表明相较于采用长语音的历史转写，性能更好。</font></li>
+</ul>
+</li>
+<li><strong><font color="red">解码策略优化</font></strong>。采用原生 beam search 存在严重的幻觉问题。
 <ul>
-<li><p>剪枝：先采用 <span class="math inline">\(P(\boldsymbol{y} \mid
-\boldsymbol{x})\)</span> 过滤声学不合理的候选 token。</p>
+<li>
+<p>剪枝：先采用 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>P</mi><mo stretchy="false">(</mo><mi mathvariant="bold-italic">y</mi><mo>∣</mo><mi mathvariant="bold-italic">x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">P(\boldsymbol{y} \mid \boldsymbol{x})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord"><span class="mord"><span class="mord boldsymbol" style="margin-right:0.03704em;">y</span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∣</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord"><span class="mord boldsymbol">x</span></span></span><span class="mclose">)</span></span></span></span> 过滤声学不合理的候选 token。</p>
 <blockquote>
-<p>说明此处的幻觉问题是上下文引入的，<span class="math inline">\(P(\boldsymbol{y} \mid \boldsymbol{x})\)</span>
-只存在音准字不准的问题。</p>
-</blockquote></li>
-<li><p>Joint beam search：<span class="math display">\[P_{\text {joint
-}}(\boldsymbol{y} \mid \boldsymbol{x},
-\boldsymbol{c})=\frac{\alpha}{1+\alpha} * P(\boldsymbol{y} \mid
-\boldsymbol{x}, \boldsymbol{c})+\frac{1}{1+\alpha} * P(\boldsymbol{y}
-\mid \boldsymbol{x})\]</span></p></li>
-</ul></li>
-</ul></li>
+<p>说明此处的幻觉问题是上下文引入的，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>P</mi><mo stretchy="false">(</mo><mi mathvariant="bold-italic">y</mi><mo>∣</mo><mi mathvariant="bold-italic">x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">P(\boldsymbol{y} \mid \boldsymbol{x})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord"><span class="mord"><span class="mord boldsymbol" style="margin-right:0.03704em;">y</span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∣</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord"><span class="mord boldsymbol">x</span></span></span><span class="mclose">)</span></span></span></span> 只存在音准字不准的问题。</p>
+</blockquote>
+</li>
+<li>
+<p>Joint beam search：$$P_{\text {joint }}(\boldsymbol{y} \mid \boldsymbol{x}, \boldsymbol{c})=\frac{\alpha}{1+\alpha} * P(\boldsymbol{y} \mid \boldsymbol{x}, \boldsymbol{c})+\frac{1}{1+\alpha} * P(\boldsymbol{y} \mid \boldsymbol{x})$$</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 <li>强化学习
 <ul>
 <li>训练集：数千小时，部分数据含 context。</li>
-<li><font color="red">由于 SFT 采用的 CE 目标函数与 CER / WER
-不匹配，采用最小词错误率（minimum word error
-rate，MWER），同时对关键词进行加权。</font><span class="math display">\[\mathcal{L}_{\text {mwer }}^{\mathrm{N} \text
-{-best }}\left(\boldsymbol{x}, \boldsymbol{y}^*\right)=\frac{1}{N}
-\sum_{\left.\boldsymbol{y}_{\boldsymbol{i}} \in \text { N-best(x, N
-}\right)} \hat{P}\left(\boldsymbol{y}_{\boldsymbol{i}} \mid
-\boldsymbol{x}\right)\left(\mathcal{W}\left(\boldsymbol{y}_{\boldsymbol{i}},
-\boldsymbol{y}^*\right)-\bar{W}\right)+\lambda
-\mathcal{L}_{\mathrm{CE}}\]</span> <span class="math display">\[\hat{P}\left(\boldsymbol{y}_{\boldsymbol{i}} \mid
-\boldsymbol{x}\right)=\frac{P\left(\boldsymbol{y}_{\boldsymbol{i}} \mid
-\boldsymbol{x}\right)}{\sum_{\boldsymbol{y}_{\boldsymbol{i}} \in
-\mathrm{N}-\mathrm{best}(\mathrm{N}, \mathrm{N})}
-P\left(\boldsymbol{y}_{\boldsymbol{i}} \mid
-\boldsymbol{x}\right)}\]</span> 其中 <span class="math inline">\(\boldsymbol{y}^*\)</span> 为 ground truth，<span class="math inline">\(\mathcal{W}\left(\boldsymbol{y}_{\boldsymbol{i}},
-\boldsymbol{y}^*\right)\)</span> 为 （加权的）WER。</li>
-<li>为了提高 RL 训练效率，采用远程服务生成识别结果，同时在当前服务计算
-loss、更新模型。</li>
-</ul></li>
+<li><font color="red">由于 SFT 采用的 CE 目标函数与 CER / WER 不匹配，采用最小词错误率（minimum word error rate，MWER），同时对关键词进行加权。</font>$$\mathcal{L}<em>{\text {mwer }}^{\mathrm{N} \text {-best }}\left(\boldsymbol{x}, \boldsymbol{y}^*\right)=\frac{1}{N} \sum</em>{\left.\boldsymbol{y}<em>{\boldsymbol{i}} \in \text { N-best(x, N }\right)} \hat{P}\left(\boldsymbol{y}</em>{\boldsymbol{i}} \mid \boldsymbol{x}\right)\left(\mathcal{W}\left(\boldsymbol{y}<em>{\boldsymbol{i}}, \boldsymbol{y}^*\right)-\bar{W}\right)+\lambda \mathcal{L}</em>{\mathrm{CE}}$$ $$\hat{P}\left(\boldsymbol{y}<em>{\boldsymbol{i}} \mid \boldsymbol{x}\right)=\frac{P\left(\boldsymbol{y}</em>{\boldsymbol{i}} \mid \boldsymbol{x}\right)}{\sum_{\boldsymbol{y}<em>{\boldsymbol{i}} \in \mathrm{N}-\mathrm{best}(\mathrm{N}, \mathrm{N})} P\left(\boldsymbol{y}</em>{\boldsymbol{i}} \mid \boldsymbol{x}\right)}$$ 其中 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi mathvariant="bold-italic">y</mi><mo>∗</mo></msup></mrow><annotation encoding="application/x-tex">\boldsymbol{y}^*</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8831359999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord"><span class="mord"><span class="mord boldsymbol" style="margin-right:0.03704em;">y</span></span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.688696em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mbin mtight">∗</span></span></span></span></span></span></span></span></span></span></span> 为 ground truth，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="script">W</mi><mrow><mo fence="true">(</mo><msub><mi mathvariant="bold-italic">y</mi><mi mathvariant="bold-italic">i</mi></msub><mo separator="true">,</mo><msup><mi mathvariant="bold-italic">y</mi><mo>∗</mo></msup><mo fence="true">)</mo></mrow></mrow><annotation encoding="application/x-tex">\mathcal{W}\left(\boldsymbol{y}_{\boldsymbol{i}}, \boldsymbol{y}^*\right)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathcal" style="margin-right:0.08222em;">W</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;">(</span><span class="mord"><span class="mord"><span class="mord"><span class="mord boldsymbol" style="margin-right:0.03704em;">y</span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.24114199999999994em;"><span style="top:-2.4558600000000004em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord boldsymbol mtight">i</span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.24414em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord"><span class="mord"><span class="mord boldsymbol" style="margin-right:0.03704em;">y</span></span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.688696em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mbin mtight">∗</span></span></span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;">)</span></span></span></span></span> 为 （加权的）WER。</li>
+<li>为了提高 RL 训练效率，采用远程服务生成识别结果，同时在当前服务计算 loss、更新模型。</li>
 </ul>
-<h1 id="模型">5. 模型</h1>
+</li>
+</ul>
+<h1 id="模型">5.  模型</h1>
 <ul>
-<li><p>Seed-ASR (CN): 支持普通话 + 13 种方言。</p>
-<p>方言采用发音一致或相近的中文字人工标注。</p></li>
-<li><p>Seed-ASR (ML): 多语种。</p></li>
+<li>
+<p>Seed-ASR (CN): 支持普通话 + 13 种方言。</p>
+<p>方言采用发音一致或相近的中文字人工标注。</p>
+</li>
+<li>
+<p>Seed-ASR (ML): 多语种。</p>
+</li>
 </ul>
-<h1 id="训练集">6. 训练集</h1>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB21528af01689bd57f4696e263ebf1ecd?method=download&shareKey=1887613bba9befd9e32428f521992e20" width="685"></p>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB2acecd3709b395f47dd675259c49e4e5?method=download&shareKey=a44794eaebc698c05347e067b4c496a1" width="688"></p>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEBe5ee6e28a0d282ef7988c3767c26e715?method=download&shareKey=06d804ba84658192b392d44ef871a6b5" width="690"></p>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEBcd2af89299952fa7a60538527f0e0a27?method=download&shareKey=7bc5c62d614e77a39c4f0d8a467d0c75" width="693"></p>
-<h1 id="实验">7. 实验</h1>
+<h1 id="训练集">6.  训练集</h1>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB21528af01689bd57f4696e263ebf1ecd?method=download&shareKey=1887613bba9befd9e32428f521992e20" width="685">
+<img src="https://note.youdao.com/yws/api/personal/file/WEB2acecd3709b395f47dd675259c49e4e5?method=download&shareKey=a44794eaebc698c05347e067b4c496a1" width="688">
+<img src="https://note.youdao.com/yws/api/personal/file/WEBe5ee6e28a0d282ef7988c3767c26e715?method=download&shareKey=06d804ba84658192b392d44ef871a6b5" width="690">
+<img src="https://note.youdao.com/yws/api/personal/file/WEBcd2af89299952fa7a60538527f0e0a27?method=download&shareKey=7bc5c62d614e77a39c4f0d8a467d0c75" width="693">
+<h1 id="实验">7.  实验</h1>
 <ul>
 <li>中文 ASR 基线之一：transducer-based end-to-end model
 <ul>
 <li>MoE encoder，参数量超过 300M。</li>
-<li>在有对话上下文的场景下，采用 context FST biasing
-提高关键词召回率。</li>
-</ul></li>
+<li>在有对话上下文的场景下，采用 context FST biasing 提高关键词召回率。</li>
+</ul>
+</li>
 </ul>
 <table>
-<colgroup>
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-</colgroup>
 <thead>
 <tr>
 <th>模块/模型</th>
@@ -506,33 +495,26 @@ loss、更新模型。</li>
 <tr>
 <td>LUISE</td>
 <td>scaling law</td>
-<td><img src="https://note.youdao.com/yws/api/personal/file/WEB2191f23a88aec0bc2664fd48c1923711?method=download&shareKey=8d31ef5e848881c824d853b3497c9ef5" width="916"><br>
-随模型大小增大，增大 batch size、weight decay，减小学习率。</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEB2191f23a88aec0bc2664fd48c1923711?method=download&shareKey=8d31ef5e848881c824d853b3497c9ef5" width="916"><br> 随模型大小增大，增大 batch size、weight decay，减小学习率。</td>
 <td>取 2B 模型，性能和效率的权衡。</td>
 </tr>
 <tr>
 <td>长音频 SFT</td>
 <td></td>
-<td><img src="https://note.youdao.com/yws/api/personal/file/WEBe1231f6c8256fcdb0f36937d94758260?method=download&shareKey=661d800fa7e2dba9a73d80863dc39e99" width="570"><br>测试集中视频最大时长
-5min。<br>short-form SFT 采用 domain-adaptive VAD
-分段。<br><font color="green">with scheduler for significant length
-extension.</font></td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEBe1231f6c8256fcdb0f36937d94758260?method=download&shareKey=661d800fa7e2dba9a73d80863dc39e99" width="570"><br>测试集中视频最大时长 5min。<br>short-form SFT 采用 domain-adaptive VAD 分段。<br><font color="green">with scheduler for significant length extension.</font></td>
 <td></td>
 </tr>
 <tr>
 <td>RL</td>
 <td>reward、消融</td>
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEBdae99268abd29dabcf9d4301264ef2ad?method=download&shareKey=87670c0bbc39e7bf7b4bcee48efb8522" width="577"></td>
-<td>相较于 WER，<font color="red">采用加权 WER
-作为奖励函数</font>，在各个测试任务上有一致的性能提升。<br>训练集加入部分带
-context 的数据，保留上下文推理能力。</td>
+<td>相较于 WER，<font color="red">采用加权 WER 作为奖励函数</font>，在各个测试任务上有一致的性能提升。<br>训练集加入部分带 context 的数据，保留上下文推理能力。</td>
 </tr>
 <tr>
 <td>分阶段训练</td>
 <td>消融实验</td>
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEB3b109bc16d822973470b15571d989591?method=download&shareKey=7a65973b850e78482d1a7681417ebeb8" width="665"></td>
-<td>RL 在各个测试集上有一致的性能提升。<br>context SFT 显著提升了
-context-strict 测试集上的关键词召回率。</td>
+<td>RL 在各个测试集上有一致的性能提升。<br>context SFT 显著提升了 context-strict 测试集上的关键词召回率。</td>
 </tr>
 <tr>
 <td>Seed-ASR (CN)</td>
@@ -549,47 +531,37 @@ context-strict 测试集上的关键词召回率。</td>
 <tr>
 <td></td>
 <td>方言</td>
-<td><img src="https://note.youdao.com/yws/api/personal/file/WEB8c33882faec81ead6cd8033bf3499999?method=download&shareKey=5910380324819d219303bf0951ebac18" width="368"><br>Whisper
-Medium-v2 采用相同的方言训练集微调。</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEB8c33882faec81ead6cd8033bf3499999?method=download&shareKey=5910380324819d219303bf0951ebac18" width="368"><br>Whisper Medium-v2 采用相同的方言训练集微调。</td>
 <td></td>
 </tr>
 <tr>
 <td></td>
-<td>口音<br>安徽、福建、甘肃、广东、贵州、湖南、江西、辽宁、陕西
-Shaanxi、山西 Shanxi、云南</td>
+<td>口音<br>安徽、福建、甘肃、广东、贵州、湖南、江西、辽宁、陕西 Shaanxi、山西 Shanxi、云南</td>
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEBe29a84b060bbc7944bac338ee947dc93?method=download&shareKey=fa8679d0468e4e6c30f744b97f0f4268" width="380"></td>
 <td></td>
 </tr>
 <tr>
 <td></td>
 <td>对话上下文</td>
-<td><img src="https://note.youdao.com/yws/api/personal/file/WEBa589e5df7a3ba2141ed8313126ea25ca?method=download&shareKey=b93fd71f23deb5eba687e87cd299e7f8" width="577"><br>strict:
-强依赖
-context，如人名；<br>Loose：弱依赖，如专有名词。<br>评价指标：关键词召回率。</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEBa589e5df7a3ba2141ed8313126ea25ca?method=download&shareKey=b93fd71f23deb5eba687e87cd299e7f8" width="577"><br>strict: 强依赖 context，如人名；<br>Loose：弱依赖，如专有名词。<br>评价指标：关键词召回率。</td>
 <td></td>
 </tr>
 <tr>
 <td></td>
-<td>可懂度主观评价<br>考虑识别准确率、关键词错误、分句错误、ITN
-错误等。</td>
+<td>可懂度主观评价<br>考虑识别准确率、关键词错误、分句错误、ITN 错误等。</td>
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEBdaf5f834661135392ae7bf0d9d5d4591?method=download&shareKey=8c49c185b9677867b33baae9a3afeec6" width="581"></td>
 <td></td>
 </tr>
 <tr>
 <td>Seed-ASR (ML)</td>
 <td>开源测试集</td>
-<td><img src="https://note.youdao.com/yws/api/personal/file/WEBf4148a5e7d6b32c14e225f5b3a808092?method=download&shareKey=861964d1f0ad435937b391c6323ddda3" width="889"><br>MLS
-EN：本地测试 Whisper Large-v3，WER 5.29，见图1。<br>Fleurs: label 先
-ITN。</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEBf4148a5e7d6b32c14e225f5b3a808092?method=download&shareKey=861964d1f0ad435937b391c6323ddda3" width="889"><br>MLS EN：本地测试 Whisper Large-v3，WER 5.29，见图1。<br>Fleurs: label 先 ITN。</td>
 <td></td>
 </tr>
 <tr>
 <td></td>
 <td>多领域、多口音、hardcase、多语种 内部测试集</td>
-<td><img src="https://note.youdao.com/yws/api/personal/file/WEB3ece8a75dd701159f6685b8bf9db1514?method=download&shareKey=77281144d8c73eca3a710d461a1aa33c" width="694"><br><a target="_blank" rel="noopener" href="https://www.assemblyai.com/app/">Universal-1</a><br>英语口音：
-Great Britain, United States, Australia, Canada, China, India,
-Singapore, New Zealand and South
-Africa.<br>hardcase：医疗健康、餐饮、运动、科技、服饰、游戏、娱乐、美容领域。</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEB3ece8a75dd701159f6685b8bf9db1514?method=download&shareKey=77281144d8c73eca3a710d461a1aa33c" width="694"><br><a target="_blank" rel="noopener" href="https://www.assemblyai.com/app/">Universal-1</a><br>英语口音： Great Britain, United States, Australia, Canada, China, India, Singapore, New Zealand and South Africa.<br>hardcase：医疗健康、餐饮、运动、科技、服饰、游戏、娱乐、美容领域。</td>
 <td></td>
 </tr>
 <tr>

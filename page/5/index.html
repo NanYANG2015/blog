@@ -405,8 +405,7 @@
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                    论文：Liu H, Yuan Y, Liu X, et al. Audioldm 2: Learning holistic
-audio generation with self-supervised pretraining[J]. IEE
+                                    论文：Liu H, Yuan Y, Liu X, et al. Audioldm 2: Learning holistic audio generation with self-supervised pretraining[J]. IEEE
                                 
                             </div>
                             <div class="publish-info">
@@ -462,10 +461,9 @@ audio generation with self-supervised pretraining[J]. IEE
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                    1. 音频读取
+                                    1.  音频读取
 
-采用 torchaudio，支持后缀为 wav、mp3（如 common voice）、flac（如
-Librispeech）、raw、WAV（如 TIMIT）、mp4（如 MELD）、m4a（如 Voxceleb）
+采用 torchaudio，支持后缀为 wav、mp3（如 common voice）、flac（如 Librispeech）、raw、WAV（如 TIMIT）、mp4（如 MELD）、m4a（如 Voxceleb） 等
                                 
                             </div>
                             <div class="publish-info">
@@ -523,8 +521,7 @@ Librispeech）、raw、WAV（如 TIMIT）、mp4（如 MELD）、m4a（如 Voxcel
                             <div class="summary block-with-text">
                                 
                                     
-论文：Ho J, Jain A, Abbeel P. Denoising diffusion probabilistic
-models[J]. Advances in neural information processing sys
+论文：Ho J, Jain A, Abbeel P. Denoising diffusion probabilistic models[J]. Advances in neural information processing syste
                                 
                             </div>
                             <div class="publish-info">
@@ -576,9 +573,8 @@ models[J]. Advances in neural information processing sys
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                    论文：Kingma D P, Welling M. Auto-encoding variational bayes[J].
-arXiv preprint arXiv:1312.6114, 2013.
-核心思想：通过 Variationa
+                                    论文：Kingma D P, Welling M. Auto-encoding variational bayes[J]. arXiv preprint arXiv:1312.6114, 2013.
+核心思想：通过 Variational 
                                 
                             </div>
                             <div class="publish-info">
@@ -632,15 +628,13 @@ arXiv preprint arXiv:1312.6114, 2013.
                                 
                                     
 作者：腾讯
-MM-LLMs：利用预训练的
-LLM，添加多模态理解、生成能力，以节省训练成本。
+MM-LLMs：利用预训练的 LLM，添加多模态理解、生成能力，以节省训练成本。
 
-1. 模型架构
+1.  模型架构
 
 
-通常模态 encoder、LLM backbone、模态生成器
-参数冻结，重点优化输入、输出投影层。
-
+通常模态 encoder、LLM backbone、模态生成器 参数冻结，重点优化输入、输出投影层。
+1.1.  模态e
                                 
                             </div>
                             <div class="publish-info">
@@ -701,8 +695,7 @@ LLM，添加多模态理解、生成能力，以节省训练成本。
 功能：支持 文本、图像、视频、音频 理解、推理与生成。
 创新点
 
-在 vision-to-vision 生成任务中，由于将 visual encoder 表示投影到 LLM
-的表示空间, 而 LLM 更
+在 vision-to-vision 生成任务中，由于将 visual encoder 表示投影到 LLM 的表示空间, 而 LLM 更倾向于表征语
                                 
                             </div>
                             <div class="publish-info">
@@ -762,9 +755,8 @@ LLM，添加多模态理解、生成能力，以节省训练成本。
 作者：复旦大学等。
 贡献
 
-基于离散 token，实现了 any-to-any 多模态
-LLM，即支持理解、生成各种模态，包含语音、文本、图像、音乐。以文本为中心，通过将其它模态与文本对齐，实现所有模态之间的相互对齐。
-any
+基于离散 token，实现了 any-to-any 多模态 LLM，即支持理解、生成各种模态，包含语音、文本、图像、音乐。以文本为中心，通过将其它模态与文本对齐，实现所有模态之间的相互对齐。
+any-to-an
                                 
                             </div>
                             <div class="publish-info">
@@ -882,11 +874,10 @@ any
                             <div class="summary block-with-text">
                                 
                                     不能用于 beam search。
- 不支持
-batch size &gt; 1
-1. TextStreamer
-若输出 token 构成完整单词，立即打印到 stdout。 skip_prompt：若为
-True，则第一次调用 
+ 不支持 batch size &gt; 1
+1.  TextStreamer
+若输出 token 构成完整单词，立即打印到 stdout。
+skip_prompt：若为 True，则第一次调用 put(
                                 
                             </div>
                             <div class="publish-info">
@@ -943,14 +934,18 @@ True，则第一次调用
                             <div class="summary block-with-text">
                                 
                                     
+
 作者：Meta AI 等。
+
+
 功能：生成自然的口语对话音频（双通道）。
 示例：https://speechbot.github.io/dgslm/
+
+
 特点
 
-采用 cross attention
-结构，能同时听+说。
-能同时生
+采用 cross attention 结构，能同时听+说。
+能同时生成语音
                                 
                             </div>
                             <div class="publish-info">
@@ -1004,10 +999,7 @@ True，则第一次调用
                                 
                                     
 作者：OpenAI
-wav2vec 2.0
-等无监督预训练的语音编码器，需要有监督训练解码器。Whisper
-采用多语种、多任务训练，以及 68wh
-大规模低质量弱监督训练集，可以在广泛的语音环境中鲁棒地工作，不需要特定数据集的
+wav2vec 2.0 等无监督预训练的语音编码器，需要有监督训练解码器。Whisper 采用多语种、多任务训练，以及 68wh 大规模低质量弱监督训练集，可以在广泛的语音环境中鲁棒地工作，不需要特定数据集的微调、ze
                                 
                             </div>
                             <div class="publish-info">
@@ -1064,10 +1056,9 @@ wav2vec 2.0
                             <div class="summary block-with-text">
                                 
                                     视频地址 https://www.youtube.com/watch?v=CgQ3lUOpXgc&amp;ab_channel=Hung-yiLee
-1. audio tokenization
+1.  audio tokenization
 
-audio encoder +
-co
+audio encoder + codeb
                                 
                             </div>
                             <div class="publish-info">

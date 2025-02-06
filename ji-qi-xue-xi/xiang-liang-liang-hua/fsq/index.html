@@ -6,8 +6,8 @@
     <meta charset="utf-8">
     <meta name="keywords" content="FSQ, AI, 语音, 算法">
     <meta name="description" content="
-Mentzer F, Minnen D, Agustsson E, et al. Finite scalar
-quantization: Vq-vae made simple[J]. arXiv preprint arXiv:2309">
+
+Mentzer F, Minnen D, Agustsson E, et al. Finite scalar quantization: Vq-vae made simple[J]. arXiv preprint arXiv:2309.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -378,31 +378,30 @@ quantization: Vq-vae made simple[J]. arXiv preprint arXiv:2309">
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <ul>
-<li><p>Mentzer F, Minnen D, Agustsson E, et al. Finite scalar
-quantization: Vq-vae made simple[J]. arXiv preprint arXiv:2309.15505,
-2023.</p></li>
-<li><p>作者来自谷歌</p></li>
-<li><p><font color="red">创新点：有限标量量化（Finite Scalar
-Quantization,
-FSQ）通过将高维表示投影到低维空间，对低维表示的每一维应用有界函数并四舍五入取整，得到量化后的表示。在大多数模型中实现了接近
-100％ 的码本利用率，而 VQ 存在大型码本利用率低的问题。尽管 FSQ
-的设计更为简单，但其性能与 VQ
-相当，且不需要复杂的辅助损失和训练机制。</font></p>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEBb62614282a3711177d5be8a7568294db?method=download&shareKey=34c601e9d2c4078f842027de60a83d1c" width="447"></p></li>
-<li><p>超参数：通道数 <span class="math inline">\(d\)</span>、每个通道的级别数 <span class="math inline">\(L_i\)</span>，有界函数如 <span class="math inline">\(\lfloor L / 2\rfloor \tanh
-\left(z_i\right)\)</span>。码本大小为 <span class="math inline">\(|\mathcal{C}|=\prod_{i=1}^d L_i\)</span>。推荐采用
-<span class="math inline">\(L_i \geq 5 \forall
-i\)</span>。无需学习的参数。</p>
+<li>
+<p>Mentzer F, Minnen D, Agustsson E, et al. Finite scalar quantization: Vq-vae made simple[J]. arXiv preprint arXiv:2309.15505, 2023.</p>
+</li>
+<li>
+<p>作者来自谷歌</p>
+</li>
+<li>
+<p><font color="red">创新点：有限标量量化（Finite Scalar Quantization, FSQ）通过将高维表示投影到低维空间，对低维表示的每一维应用有界函数并四舍五入取整，得到量化后的表示。在大多数模型中实现了接近 100％ 的码本利用率，而 VQ 存在大型码本利用率低的问题。尽管 FSQ 的设计更为简单，但其性能与 VQ 相当，且不需要复杂的辅助损失和训练机制。</font></p>
+<img src="https://note.youdao.com/yws/api/personal/file/WEBb62614282a3711177d5be8a7568294db?method=download&shareKey=34c601e9d2c4078f842027de60a83d1c" width="447">
+</li>
+<li>
+<p>超参数：通道数 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi></mrow><annotation encoding="application/x-tex">d</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">d</span></span></span></span>、每个通道的级别数 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>L</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">L_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，有界函数如 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo stretchy="false">⌊</mo><mi>L</mi><mi mathvariant="normal">/</mi><mn>2</mn><mo stretchy="false">⌋</mo><mi>tanh</mi><mo>⁡</mo><mrow><mo fence="true">(</mo><msub><mi>z</mi><mi>i</mi></msub><mo fence="true">)</mo></mrow></mrow><annotation encoding="application/x-tex">\lfloor L / 2\rfloor \tanh \left(z_i\right)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">⌊</span><span class="mord mathdefault">L</span><span class="mord">/</span><span class="mord">2</span><span class="mclose">⌋</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop">tanh</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.04398em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;">)</span></span></span></span></span>。码本大小为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">∣</mi><mi mathvariant="script">C</mi><mi mathvariant="normal">∣</mi><mo>=</mo><msubsup><mo>∏</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>d</mi></msubsup><msub><mi>L</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">|\mathcal{C}|=\prod_{i=1}^d L_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">∣</span><span class="mord"><span class="mord mathcal" style="margin-right:0.05834em;">C</span></span><span class="mord">∣</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.2887179999999998em;vertical-align:-0.29971000000000003em;"></span><span class="mop"><span class="mop op-symbol small-op" style="position:relative;top:-0.0000050000000000050004em;">∏</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.9890079999999999em;"><span style="top:-2.40029em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.2029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">d</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.29971000000000003em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>。推荐采用 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>L</mi><mi>i</mi></msub><mo>≥</mo><mn>5</mn><mi mathvariant="normal">∀</mi><mi>i</mi></mrow><annotation encoding="application/x-tex">L_i \geq 5 \forall i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord">5</span><span class="mord">∀</span><span class="mord mathdefault">i</span></span></span></span>。无需学习的参数。</p>
 <p><font color="red">推荐配置</font></p>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB12915bcb0f92e98ab7d9f86bbbcfc52f?method=download&shareKey=34c601e9d2c4078f842027de60a83d1c" width="785"></p></li>
-<li><p>码本扩展带来的收益递减：采用
-FSQ，模型性能随码本大小扩展而改善，但有上限，会趋于饱和，随码本扩展建模难度增加。</p>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEBe759f4bae5e9cdb90b70762894a20512?method=download&shareKey=34c601e9d2c4078f842027de60a83d1c" width="542"></p></li>
-<li><p><font color="green">存疑：论文附录 A.3 码本可视化，单个 code
-不学习抽象的概念，生成内容由解码器决定？</font></p></li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/google-research/google-research/tree/master/fsq">JAX
-实现</a>、<a target="_blank" rel="noopener" href="https://github.com/lucidrains/vector-quantize-pytorch/blob/master/vector_quantize_pytorch/finite_scalar_quantization.py">PyTorch
-实现</a></p>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB12915bcb0f92e98ab7d9f86bbbcfc52f?method=download&shareKey=34c601e9d2c4078f842027de60a83d1c" width="785">
+</li>
+<li>
+<p>码本扩展带来的收益递减：采用 FSQ，模型性能随码本大小扩展而改善，但有上限，会趋于饱和，随码本扩展建模难度增加。</p>
+<img src="https://note.youdao.com/yws/api/personal/file/WEBe759f4bae5e9cdb90b70762894a20512?method=download&shareKey=34c601e9d2c4078f842027de60a83d1c" width="542">
+</li>
+<li>
+<p><font color="green">存疑：论文附录 A.3 码本可视化，单个 code 不学习抽象的概念，生成内容由解码器决定？</font></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="https://github.com/google-research/google-research/tree/master/fsq">JAX 实现</a>、<a target="_blank" rel="noopener" href="https://github.com/lucidrains/vector-quantize-pytorch/blob/master/vector_quantize_pytorch/finite_scalar_quantization.py">PyTorch 实现</a></p>
 <pre class="line-numbers language-Python" data-language="Python"><code class="language-Python">def bound(self, z, eps: float &#x3D; 1e-3):
     # 对于奇数 level，取整后取值范围为 [-(level - 1)&#x2F;2, (level - 1)&#x2F;2]，如[-2, -1, 0, 1, 2]
     # 对于偶数 level，取整后取值范围为 [-level&#x2F;2, level&#x2F;2 - 1]，如[-3, -2, -1, 0, 1, 2]
@@ -414,27 +413,29 @@ FSQ，模型性能随码本大小扩展而改善，但有上限，会趋于饱�
 def quantize(self, z):
     # case: _levels &#x3D; [5,6,6]
     half_width &#x3D; self._levels &#x2F;&#x2F; 2  # [2,3,3]
-    quantized &#x3D; round_ste(self.bound(z)) &#x2F; half_width  # 除以 half_width: 将量化表示各维的值重新归一化到 [-1,1]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-<li><p>梯度传播：采用 straight-through estimator (STE，直通估计器) stop
-gradient operation</p>
+    quantized &#x3D; round_ste(self.bound(z)) &#x2F; half_width  # 除以 half_width: 将量化表示各维的值重新归一化到 [-1,1]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li>
+<p>梯度传播：采用 straight-through estimator (STE，直通估计器) stop gradient operation</p>
 <pre class="line-numbers language-Python" data-language="Python"><code class="language-Python">def round_ste(z: Tensor) -&gt; Tensor:
     &quot;&quot;&quot;Round with straight through gradients.&quot;&quot;&quot;
     zhat &#x3D; z.round()
-    return z + (zhat - z).detach()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
-<li><p>其它</p>
+    return z + (zhat - z).detach()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li>
+<p>其它</p>
 <ul>
 <li>量化的作用：数据压缩和语义化</li>
 <li>VQ 训练通常采用的辅助机制
 <ul>
-<li>commitment losses:
-量化前后表示的距离，用于鼓励原始表示与量化表示接近。</li>
-<li>entropy loss:
-鼓励增加码本的熵、码本元素均匀分布，以提高利用率。</li>
+<li>commitment losses: 量化前后表示的距离，用于鼓励原始表示与量化表示接近。</li>
+<li>entropy loss: 鼓励增加码本的熵、码本元素均匀分布，以提高利用率。</li>
 <li>codebook reset: 将低频使用的码本元素替换为新的随机向量。</li>
-<li>codebook splitting:
-如训练中检测到低频使用的码字后，将最常用的码字加噪分裂为两个新的码字。</li>
-</ul></li>
-</ul></li>
+<li>codebook splitting: 如训练中检测到低频使用的码字后，将最常用的码字加噪分裂为两个新的码字。</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 

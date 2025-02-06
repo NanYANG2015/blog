@@ -6,12 +6,15 @@
     <meta charset="utf-8">
     <meta name="keywords" content="WenetSpeech, AI, 语音, 算法">
     <meta name="description" content="
+
 作者：西北工业大学、出门问问等，2022。
+
+
 ASR数据集，中文普通话，多领域，万小时级。
 
 
 音频格式：16kHz，16bit，单声道，比特率 32 kbps，Opus 压缩。
-S(100h), M(1000h) 训练子集置信">
+S(100h), M(1000h) 训练子集置信度为1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -386,18 +389,24 @@ S(100h), M(1000h) 训练子集置信">
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <ul>
-<li><p>作者：西北工业大学、出门问问等，2022。</p></li>
-<li><p>ASR数据集，中文普通话，多领域，万小时级。</p>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB09871d16b5b5fc110c09bbb1cc830075?method=download&shareKey=6e07304e68491daa326588c4417251af" width="230"></p>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEBe8c8b7652f5d4e1a3d2a16c5c3ec6b43?method=download&shareKey=55218c8ba22ad1233c81f461e6132ca7" width="348"></p>
+<li>
+<p>作者：西北工业大学、出门问问等，2022。</p>
+</li>
+<li>
+<p>ASR数据集，中文普通话，多领域，万小时级。</p>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB09871d16b5b5fc110c09bbb1cc830075?method=download&shareKey=6e07304e68491daa326588c4417251af" width="230">
+<img src="https://note.youdao.com/yws/api/personal/file/WEBe8c8b7652f5d4e1a3d2a16c5c3ec6b43?method=download&shareKey=55218c8ba22ad1233c81f461e6132ca7" width="348">
 <p>音频格式：16kHz，16bit，单声道，比特率 32 kbps，Opus 压缩。</p>
-<p>S(100h), M(1000h) 训练子集置信度为1.0。</p></li>
-<li><p>音频采集</p>
+<p>S(100h), M(1000h) 训练子集置信度为1.0。</p>
+</li>
+<li>
+<p>音频采集</p>
 <ul>
-<li>定义类别：audiobook, commentary, documentary, drama, interview,
-news, reading, talk, variety, others。</li>
-</ul></li>
-<li><p>label</p>
+<li>定义类别：audiobook, commentary, documentary, drama, interview, news, reading, talk, variety, others。</li>
+</ul>
+</li>
+<li>
+<p>label</p>
 <ul>
 <li>Youtube 视频：OCR 提取字幕
 <ul>
@@ -405,34 +414,41 @@ news, reading, talk, variety, others。</li>
 <li>逐帧计算<font color="red">字幕区域</font>的结构相似度（SSIM），确定字幕片段的起、止时间。</li>
 <li>采用基于 CRNN-CTC 的 OCR 识别字幕区域。</li>
 <li>合并连续的片段，直到音频超过8s，以减少音频-字幕异步问题。</li>
-</ul></li>
+</ul>
+</li>
 <li>Podcast：第三方商业ASR引擎转写（含VAD）</li>
 <li>Dev(20h)、Test_Net(23h，match，还涵盖游戏解说、电商直播等热门、难点领域)、Test_Meeting(15h，mismatch，远场)：人工转写</li>
-</ul></li>
-<li><p>过滤</p>
+</ul>
+</li>
+<li>
+<p>过滤</p>
 <ul>
-<li><p>强制对齐构图
+<li>
+<p>强制对齐构图<br>
 <img src="https://note.youdao.com/yws/api/personal/file/WEB21de03bb237f4254650d983fa0223f0e?method=download&shareKey=0fc562b98825ed627ff43a10db712144" width="467"></p>
 <ul>
 <li><font color="red">漏读惩罚 2.3（p=0.1）</font></li>
-<li>filler 状态，用于支持插入、替换，各 CTC 建模单元的自旋惩罚
-4.6（p=0.01）</li>
-<li><a target="_blank" rel="noopener" href="https:github.com/wenet-e2e/wenet/blob/main/runtime/core/bin/label_checker_main.cc" class="uri">https:github.com/wenet-e2e/wenet/blob/main/runtime/core/bin/label_checker_main.cc</a></li>
-<li><font color="red">存在的问题：filler_end
-与每个单词相连，易出现长距离漏读、跳跃</font></li>
-</ul></li>
-<li><p>置信度</p>
-<p><span class="math display">\[
-c=1-\frac{\operatorname{EditDistance}(\text { ref }, \text { hyp
-})}{\max (\operatorname{len}(\text { ref }), \operatorname{len}(hyp))}
-\]</span></p></li>
-</ul></li>
-<li><p>text normalization: <a target="_blank" rel="noopener" href="https://github.com/speechio/chinese_text_normalization" class="uri">https://github.com/speechio/chinese_text_normalization</a></p></li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/wenet-e2e/WenetSpeech" class="uri">https://github.com/wenet-e2e/WenetSpeech</a></p></li>
-<li><p>Zhang B, Lv H, Guo P, et al. Wenetspeech: A 10000+ hours
-multi-domain mandarin corpus for speech recognition[C]//ICASSP 2022-2022
-IEEE International Conference on Acoustics, Speech and Signal Processing
-(ICASSP). IEEE, 2022: 6182-6186.</p></li>
+<li>filler 状态，用于支持插入、替换，各 CTC 建模单元的自旋惩罚 4.6（p=0.01）</li>
+<li><a target="_blank" rel="noopener" href="https:github.com/wenet-e2e/wenet/blob/main/runtime/core/bin/label_checker_main.cc">https:github.com/wenet-e2e/wenet/blob/main/runtime/core/bin/label_checker_main.cc</a></li>
+<li><font color="red">存在的问题：filler_end 与每个单词相连，易出现长距离漏读、跳跃</font></li>
+</ul>
+</li>
+<li>
+<p>置信度</p>
+<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>c</mi><mo>=</mo><mn>1</mn><mo>−</mo><mfrac><mrow><mi mathvariant="normal">EditDistance</mi><mo>⁡</mo><mo stretchy="false">(</mo><mtext> ref </mtext><mo separator="true">,</mo><mtext> hyp </mtext><mo stretchy="false">)</mo></mrow><mrow><mi>max</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi mathvariant="normal">len</mi><mo>⁡</mo><mo stretchy="false">(</mo><mtext> ref </mtext><mo stretchy="false">)</mo><mo separator="true">,</mo><mi mathvariant="normal">len</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>h</mi><mi>y</mi><mi>p</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo></mrow></mfrac></mrow><annotation encoding="application/x-tex">c=1-\frac{\operatorname{EditDistance}(\text { ref }, \text { hyp })}{\max (\operatorname{len}(\text { ref }), \operatorname{len}(hyp))} 
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">c</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:2.363em;vertical-align:-0.936em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.427em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mop">max</span><span class="mopen">(</span><span class="mop"><span class="mord mathrm">l</span><span class="mord mathrm">e</span><span class="mord mathrm">n</span></span><span class="mopen">(</span><span class="mord text"><span class="mord"> ref </span></span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop"><span class="mord mathrm">l</span><span class="mord mathrm">e</span><span class="mord mathrm">n</span></span><span class="mopen">(</span><span class="mord mathdefault">h</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mord mathdefault">p</span><span class="mclose">)</span><span class="mclose">)</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mop"><span class="mord mathrm">E</span><span class="mord mathrm">d</span><span class="mord mathrm">i</span><span class="mord mathrm">t</span><span class="mord mathrm">D</span><span class="mord mathrm">i</span><span class="mord mathrm">s</span><span class="mord mathrm">t</span><span class="mord mathrm">a</span><span class="mord mathrm">n</span><span class="mord mathrm">c</span><span class="mord mathrm">e</span></span><span class="mopen">(</span><span class="mord text"><span class="mord"> ref </span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord text"><span class="mord"> hyp </span></span><span class="mclose">)</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.936em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+</li>
+</ul>
+</li>
+<li>
+<p>text normalization: <a target="_blank" rel="noopener" href="https://github.com/speechio/chinese_text_normalization">https://github.com/speechio/chinese_text_normalization</a></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="https://github.com/wenet-e2e/WenetSpeech">https://github.com/wenet-e2e/WenetSpeech</a></p>
+</li>
+<li>
+<p>Zhang B, Lv H, Guo P, et al. Wenetspeech: A 10000+ hours multi-domain mandarin corpus for speech recognition[C]//ICASSP 2022-2022 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP). IEEE, 2022: 6182-6186.</p>
+</li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 

@@ -456,11 +456,10 @@
                             <div class="summary block-with-text">
                                 
                                     不能用于 beam search。
- 不支持
-batch size &gt; 1
-1. TextStreamer
-若输出 token 构成完整单词，立即打印到 stdout。 skip_prompt：若为
-True，则第一次调用 
+ 不支持 batch size &gt; 1
+1.  TextStreamer
+若输出 token 构成完整单词，立即打印到 stdout。
+skip_prompt：若为 True，则第一次调用 put(
                                 
                             </div>
                             <div class="publish-info">
@@ -515,14 +514,18 @@ True，则第一次调用
                             <div class="summary block-with-text">
                                 
                                     
+
 作者：Meta AI 等。
+
+
 功能：生成自然的口语对话音频（双通道）。
 示例：https://speechbot.github.io/dgslm/
+
+
 特点
 
-采用 cross attention
-结构，能同时听+说。
-能同时生
+采用 cross attention 结构，能同时听+说。
+能同时生成语音
                                 
                             </div>
                             <div class="publish-info">
@@ -574,10 +577,7 @@ True，则第一次调用
                                 
                                     
 作者：OpenAI
-wav2vec 2.0
-等无监督预训练的语音编码器，需要有监督训练解码器。Whisper
-采用多语种、多任务训练，以及 68wh
-大规模低质量弱监督训练集，可以在广泛的语音环境中鲁棒地工作，不需要特定数据集的
+wav2vec 2.0 等无监督预训练的语音编码器，需要有监督训练解码器。Whisper 采用多语种、多任务训练，以及 68wh 大规模低质量弱监督训练集，可以在广泛的语音环境中鲁棒地工作，不需要特定数据集的微调、ze
                                 
                             </div>
                             <div class="publish-info">
@@ -632,10 +632,9 @@ wav2vec 2.0
                             <div class="summary block-with-text">
                                 
                                     视频地址 https://www.youtube.com/watch?v=CgQ3lUOpXgc&amp;ab_channel=Hung-yiLee
-1. audio tokenization
+1.  audio tokenization
 
-audio encoder +
-co
+audio encoder + codeb
                                 
                             </div>
                             <div class="publish-info">
@@ -691,12 +690,10 @@ co
                                 
                                     
 作者：Google, 2022.09。
-功能：输入 prompt
-音频（3s），生成延续，在语法、语义上连贯，同时保持说话人的音色、韵律、录音环境。还能扩展到钢琴音乐延续。
+功能：输入 prompt 音频（3s），生成延续，在语法、语义上连贯，同时保持说话人的音色、韵律、录音环境。还能扩展到钢琴音乐延续。
 创新点
 
-音频表示同时采用语义 token、声学
-
+音频表示同时采用语义 token、声学 token，兼
                                 
                             </div>
                             <div class="publish-info">
@@ -752,13 +749,12 @@ co
                                 
                                     
 作者：Google，2023.06。
-功能：speech-to-speech translation、speech-to-text
-translation、ASR、MT、TTS，多语种。
+功能：speech-to-speech translation、speech-to-text translation、ASR、MT、TTS，多语种。
 
-1. 系统结构
+1.  系统结构
 
 
-输入：在输入
+输入：在输入前加任务 ta
                                 
                             </div>
                             <div class="publish-info">

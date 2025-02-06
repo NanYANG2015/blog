@@ -408,13 +408,18 @@
                                     
 优化
 
+
 对话能力，支持输入音频或文本，输出文本。指令微调 + DPO。
 
 SFT 数据的质量、复杂度严重影响模型性能。
 
+
+
 扩大训练数据量。
 
-预训练阶段，复杂的结构化的任务描述 special tokens -&gt;
+
+
+预训练阶段，复杂的结构化的任务描述 special tokens -&gt; 自然语言
                                 
                             </div>
                             <div class="publish-info">
@@ -474,15 +479,14 @@ SFT 数据的质量、复杂度严重影响模型性能。
 作者：微软
 发表时间：2023.09
 创新点：更大的训练集、更新 encoder。
-性能：在 26
-个下游任务上的广泛评估显示了模型较好的泛化性，且在其中几个任务上建立了新的
-SOTA。
+性能：在 26 个下游任务上的广泛评估显示了模型较好的泛化性，且在其中几个任务上建立了新的 SOTA。
 
 
-1. 训练
+1.  训练
+
 
 训练集
-
+4.6M 音频-文本
                                 
                             </div>
                             <div class="publish-info">
@@ -553,7 +557,11 @@ SOTA。
 
 
 作者：微软
-发表时间：2022.0
+发表时间：2022.06
+
+
+
+CLAP：C
                                 
                             </div>
                             <div class="publish-info">
@@ -614,13 +622,16 @@ SOTA。
                             <div class="summary block-with-text">
                                 
                                     
+
 作者：Meta AI
+
+
 发表时间：2023.05
+
+
 核心思想
 
-仅采用与图像自然配对的无监督数据（除图文数据外）、对比
-loss，训练6种模态：视觉、文本、音频、深度、thermal、Inertial Measurement
-U
+仅采用与图像自然配对的无监督数据（除图文数据外）、对比 loss，训练6种模态：视觉、文本、音频、深度、thermal、Inertial Measurement Uni
                                 
                             </div>
                             <div class="publish-info">
@@ -691,7 +702,8 @@ U
 
 
 作者：字节
-发表时间：2024.0
+发表时间：2024.06
+支持英语、中文普通
                                 
                             </div>
                             <div class="publish-info">
@@ -748,8 +760,8 @@ U
                             <div class="summary block-with-text">
                                 
                                     
-论文：Shen X, Zhang R, Zhao X, et al. PMG: Personalized
-Multimodal Generation with Large Language Models[C]//Proceedings
+
+论文：Shen X, Zhang R, Zhao X, et al. PMG: Personalized Multimodal Generation with Large Language Models[C]//Proceedings 
                                 
                             </div>
                             <div class="publish-info">
@@ -810,12 +822,15 @@ Multimodal Generation with Large Language Models[C]//Proceedings
                             <div class="summary block-with-text">
                                 
                                     
+
 作者：西北工业大学、出门问问等，2022。
+
+
 ASR数据集，中文普通话，多领域，万小时级。
 
 
 音频格式：16kHz，16bit，单声道，比特率 32 kbps，Opus 压缩。
-S(100h), M(1000h) 训练子集置信
+S(100h), M(1000h) 训练子集置信度为1
                                 
                             </div>
                             <div class="publish-info">
@@ -871,13 +886,15 @@ S(100h), M(1000h) 训练子集置信
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                    1. 特点
+                                    1.  特点
 
 英文，1wh 高质量标注数据，总共 4wh 音频
 可扩展，记录的元数据使其还可用于其它任务，如说话人识别
 包含原始转录与Normalized转录（包含标点符号，大小写、日期、时间normalization等）
 
 
+
+数据集中
                                 
                             </div>
                             <div class="publish-info">
@@ -934,10 +951,10 @@ S(100h), M(1000h) 训练子集置信
                             <div class="summary block-with-text">
                                 
                                     
-作者：陈果果、Daniel Povey 等，The Johns Hopkins
-University，2015。
-1000h，英语（口音接近美音），朗读，原始数据来自 LibriVox
-项目的audiobooks。音频：16kHz
+作者：陈果果、Daniel Povey 等，The Johns Hopkins University，2015。
+1000h，英语（口音接近美音），朗读，原始数据来自 LibriVox 项目的audiobooks。音频：16kHz。
+
+t
                                 
                             </div>
                             <div class="publish-info">
@@ -994,14 +1011,17 @@ University，2015。
                             <div class="summary block-with-text">
                                 
                                     
+
 开发者：Fish Audio Fish Speech
-系统结构
-V1
+
+
+系统结构 V1
+
+
 
 VQGAN + LLAMA。30wh 数据训练。在高质量数据集上 SFT。
 
-存疑：更新日志中，V1.1 引入了 VITS Decoder 来降低
-W
+存疑：更新日志中，V1.1 引入了 VITS Decoder 来降低 WER、
                                 
                             </div>
                             <div class="publish-info">
@@ -1058,10 +1078,14 @@ W
                             <div class="summary block-with-text">
                                 
                                     
+
 开发者：2noise
+
+
 推出时间：2024.05
-TN (homophone 替换) + 文本口语化
-(stream_batch，text2text) + GPT + GroupedResidualVQ + VAE (mel) + 
+
+
+TN (homophone 替换) + 文本口语化 (stream_batch，text2text) + GPT + GroupedResidualVQ + VAE (mel) +
                                 
                             </div>
                             <div class="publish-info">
@@ -1127,8 +1151,7 @@ TN (homophone 替换) + 文本口语化
     }
 
 
-
-相较于原始图像/波形/频谱，au
++   相较于原始图像/波形/频谱，autoencode
                                 
                             </div>
                             <div class="publish-info">

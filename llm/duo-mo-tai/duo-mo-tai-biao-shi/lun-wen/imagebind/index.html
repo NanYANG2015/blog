@@ -6,13 +6,16 @@
     <meta charset="utf-8">
     <meta name="keywords" content="IMAGEBIND, AI, 语音, 算法">
     <meta name="description" content="
+
 作者：Meta AI
+
+
 发表时间：2023.05
+
+
 核心思想
 
-仅采用与图像自然配对的无监督数据（除图文数据外）、对比
-loss，训练6种模态：视觉、文本、音频、深度、thermal、Inertial Measurement
-U">
+仅采用与图像自然配对的无监督数据（除图文数据外）、对比 loss，训练6种模态：视觉、文本、音频、深度、thermal、Inertial Measurement Uni">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -391,21 +394,23 @@ U">
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <ul>
-<li>作者：Meta AI</li>
-<li>发表时间：2023.05</li>
-<li>核心思想
+<li>
+<p>作者：Meta AI</p>
+</li>
+<li>
+<p>发表时间：2023.05</p>
+</li>
+<li>
+<p>核心思想</p>
 <ul>
-<li><font color="red">仅采用与图像自然配对的无监督数据（除图文数据外）、对比
-loss，训练6种模态：视觉、文本、音频、深度、thermal、Inertial Measurement
-Unit (IMU) 的联合 embedding
-空间。不需要所有模态对齐的数据，实现所有模态的 embedding
-对齐。</font></li>
+<li><font color="red">仅采用与图像自然配对的无监督数据（除图文数据外）、对比 loss，训练6种模态：视觉、文本、音频、深度、thermal、Inertial Measurement Unit (IMU) 的联合 embedding 空间。不需要所有模态对齐的数据，实现所有模态的 embedding 对齐。</font></li>
 <li>可用于跨模态检索、embedding 空间的运算、跨模态生成。</li>
 </ul>
-<img src="https://note.youdao.com/yws/api/personal/file/WEB0e90234c1223db0db92f3052da4e0d36?method=download&shareKey=72fc89f3f35bbdfa2244e9cecbef890d" width="864"></li>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB0e90234c1223db0db92f3052da4e0d36?method=download&shareKey=72fc89f3f35bbdfa2244e9cecbef890d" width="864">
+</li>
 </ul>
-<h1 id="数据">1. 数据</h1>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB0f815d7fdffa6f6717be693fe7943d5c?method=download&shareKey=4e67cc58729c354526a802e70802618b" width="854"></p>
+<h1 id="数据">1.  数据</h1>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB0f815d7fdffa6f6717be693fe7943d5c?method=download&shareKey=4e67cc58729c354526a802e70802618b" width="854">
 <table>
 <thead>
 <tr>
@@ -438,61 +443,42 @@ Unit (IMU) 的联合 embedding
 </table>
 <p>*由于 SUN RGB-D、LLVIP 数据集较小，复制 50 倍。</p>
 <p>*IMU 数据：egocentric cameras video with IMU。</p>
-<h1 id="训练">2. 训练</h1>
-<h2 id="对比学习-loss">2.1. 对比学习 loss</h2>
-<p>InfoNCE[54] loss <span class="math display">\[L_{\mathcal{I},
-\mathcal{M}}=-\log \frac{\exp \left(\mathbf{q}_i^{\top} \mathbf{k}_i /
-\tau\right)}{\exp \left(\mathbf{q}_i^{\top} \mathbf{k}_i /
-\tau\right)+\sum_{j \neq i} \exp \left(\mathbf{q}_i^{\top} \mathbf{k}_j
-/ \tau\right)}\]</span></p>
-<p>其中，<span class="math inline">\(\mathbf{q}_i\)</span>, <span class="math inline">\(\mathbf{k}_i\)</span> 为成对的 image-x 对经过
-encoders 得到的 embedding 表示，<span class="math inline">\(\tau\)</span> 为温度标量，将 mini-batch 内所有
-<span class="math inline">\({j \neq i}\)</span>
-的样本视为负样本。实际使用对称 loss <span class="math inline">\(L_{\mathcal{I}, \mathcal{M}}+L_{\mathcal{M},
-\mathcal{I}}\)</span>。采用上述 loss 优化 encoders。</p>
-<p><font color="red">由于图像 encoder 冻结，对比仅采用 L2 loss、L2+对比
-loss、仅采用对比 loss，仅采用对比 loss 性能最好。</font></p>
-<h2 id="encoder">2.2. encoder</h2>
+<h1 id="训练">2.  训练</h1>
+<h2 id="对比学习-loss">2.1.  对比学习 loss</h2>
+<p>InfoNCE[54] loss $$L_{\mathcal{I}, \mathcal{M}}=-\log \frac{\exp \left(\mathbf{q}_i^{\top} \mathbf{k}_i / \tau\right)}{\exp \left(\mathbf{q}_i^{\top} \mathbf{k}<em>i / \tau\right)+\sum</em>{j \neq i} \exp \left(\mathbf{q}_i^{\top} \mathbf{k}_j / \tau\right)}$$</p>
+<p>其中，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="bold">q</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">\mathbf{q}_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.63888em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord"><span class="mord mathbf">q</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>, <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="bold">k</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">\mathbf{k}_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord"><span class="mord mathbf">k</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 为成对的 image-x 对经过 encoders 得到的 embedding 表示，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>τ</mi></mrow><annotation encoding="application/x-tex">\tau</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.1132em;">τ</span></span></span></span> 为温度标量，将 mini-batch 内所有 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>j</mi><mi mathvariant="normal">≠</mi><mi>i</mi></mrow><annotation encoding="application/x-tex">{j \neq i}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel"><span class="mrel"><span class="mord"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.69444em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="rlap"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="inner"><span class="mrel"></span></span><span class="fix"></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.19444em;"><span></span></span></span></span></span></span><span class="mrel">=</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord mathdefault">i</span></span></span></span></span> 的样本视为负样本。实际使用对称 loss <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>L</mi><mrow><mi mathvariant="script">I</mi><mo separator="true">,</mo><mi mathvariant="script">M</mi></mrow></msub><mo>+</mo><msub><mi>L</mi><mrow><mi mathvariant="script">M</mi><mo separator="true">,</mo><mi mathvariant="script">I</mi></mrow></msub></mrow><annotation encoding="application/x-tex">L_{\mathcal{I}, \mathcal{M}}+L_{\mathcal{M}, \mathcal{I}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.328331em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathcal mtight" style="margin-right:0.07382em;">I</span></span><span class="mpunct mtight">,</span><span class="mord mtight"><span class="mord mathcal mtight">M</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.328331em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathcal mtight">M</span></span><span class="mpunct mtight">,</span><span class="mord mtight"><span class="mord mathcal mtight" style="margin-right:0.07382em;">I</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>。采用上述 loss 优化 encoders。</p>
+<p><font color="red">由于图像 encoder 冻结，对比仅采用 L2 loss、L2+对比 loss、仅采用对比 loss，仅采用对比 loss 性能最好。</font></p>
+<h2 id="encoder">2.2.  encoder</h2>
 <ul>
 <li>所有模态 encoder 均采用 Transformer 结构。可用预训练模型初始化。
 <ul>
 <li>图像：ViT [13]。</li>
-<li>视频：与图像采用同一 encoder [20]，<font color="green">temporally
-膨胀[7] ViT 的 patch 投影层，采样 2帧/2s。</font></li>
+<li>视频：与图像采用同一 encoder [20]，<font color="green">temporally 膨胀[7] ViT 的 patch 投影层，采样 2帧/2s。</font></li>
 <li>音频：参照 [22]，mel 谱，ViT-B，patch size=16, stride=10。</li>
-<li>thermal、深度：视为单通道图像，ViT-S。<font color="green">遵循 [21]
-将深度图转为 disparity maps 以实现尺度不变性。</font></li>
-<li>IMU：加速度计、陀螺仪在 X、Y、Z 轴上的测量值，2000/5s，1D 卷积 +
-Transformer。</li>
+<li>thermal、深度：视为单通道图像，ViT-S。<font color="green">遵循 [21] 将深度图转为 disparity maps 以实现尺度不变性。</font></li>
+<li>IMU：加速度计、陀螺仪在 X、Y、Z 轴上的测量值，2000/5s，1D 卷积 + Transformer。</li>
 <li>文本：CLIP [60]。</li>
-</ul></li>
-<li>各模态特定的 encoder（除视频外） + 线性层，以获得相同维度的
-embedding。<font color="green">归一化。</font></li>
-<li>采用 OpenCLIP 预训练的视觉、文本 encoders (ViT-H 630M params、302M
-params)，在 billions 图文对上训练。</li>
-<li>视觉、文本 encoder 冻结，音频、thermal、深度、IMU encoder
-更新。</li>
 </ul>
-<h2 id="超参数">2.3. 超参数</h2>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEBdea9f29d26f052d20f47743703b4ff20?method=download&shareKey=c3741ca4e2558f71fdab65f132bed27f" width="399"></p>
+</li>
+<li>各模态特定的 encoder（除视频外） + 线性层，以获得相同维度的 embedding。<font color="green">归一化。</font></li>
+<li>采用 OpenCLIP 预训练的视觉、文本 encoders (ViT-H 630M params、302M params)，在 billions 图文对上训练。</li>
+<li>视觉、文本 encoder 冻结，音频、thermal、深度、IMU encoder 更新。</li>
+</ul>
+<h2 id="超参数">2.3.  超参数</h2>
+<img src="https://note.youdao.com/yws/api/personal/file/WEBdea9f29d26f052d20f47743703b4ff20?method=download&shareKey=c3741ca4e2558f71fdab65f132bed27f" width="399">
 <ul>
-<li>batch size：每个 minibatch 采样一对模态。通常对比 loss 需要更大的
-batch size，但不会随模态数增加而增加。</li>
+<li>batch size：每个 minibatch 采样一对模态。通常对比 loss 需要更大的 batch size，但不会随模态数增加而增加。</li>
 </ul>
-<h1 id="评价">3. 评价</h1>
+<h1 id="评价">3.  评价</h1>
 <p><a target="_blank" rel="noopener" href="https://github.com/openai/CLIP/blob/main/notebooks/Prompt_Engineering_for_ImageNet.ipynb">prompt</a></p>
-<h2 id="测试集">3.1. 测试集</h2>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB2aa36cc811dec36c64bc49f184f917ee?method=download&shareKey=6a3db6e37dc52f1d3b090463094da18e" width="409"></p>
+<h2 id="测试集">3.1.  测试集</h2>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB2aa36cc811dec36c64bc49f184f917ee?method=download&shareKey=6a3db6e37dc52f1d3b090463094da18e" width="409">
 <ul>
 <li>图像：ImageNet (IN1K)、Places-365 (P365)</li>
 <li>视频：Kinetics400 (K400)、MSR-VTT 1k-A (MSR-VTT)</li>
 </ul>
-<h2 id="结果">3.2. 结果</h2>
+<h2 id="结果">3.2.  结果</h2>
 <table>
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
 <thead>
 <tr>
 <th>实验</th>
@@ -509,13 +495,11 @@ batch size，但不会随模态数增加而增加。</li>
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEB6ff724a98907131daede9d9b1eba70f2?method=download&shareKey=a5dee7cebe9020031be19bc1fde93608" width="409"></td>
 </tr>
 <tr>
-<td>text-to-audio+video 检索、分类<br>A+V: 0.95 video + 0.05 audio
-embedding</td>
+<td>text-to-audio+video 检索、分类<br>A+V: 0.95 video + 0.05 audio embedding</td>
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEB4f0a8da2b6fb1c43404cd5740b2b314a?method=download&shareKey=295122a6facf1c9e8ce3e1063986c659" width="410"></td>
 </tr>
 <tr>
-<td>few-shot 分类<br>各类分别采样 k 个样本，冻结
-encoder，训练线性分类器</td>
+<td>few-shot 分类<br>各类分别采样 k 个样本，冻结 encoder，训练线性分类器</td>
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEBc25b667a5f6c4610e7d0e241cfc41fbd?method=download&shareKey=780cb00b27a490c90e52ef6500b67fd9" width="409"></td>
 </tr>
 <tr>
@@ -523,87 +507,105 @@ encoder，训练线性分类器</td>
 <td><img src="https://note.youdao.com/yws/api/personal/file/WEBc7ef5a75175d858ec8c3d0f63129e98d?method=download&shareKey=ab8faaaec4257f85e1f2e33edc7afd9a" width="413"></td>
 </tr>
 <tr>
-<td>不重训，将基于文本 CLIP embedding 的模型升级为采用 IMAGEBIND audio
-embedding</td>
-<td><img src="https://note.youdao.com/yws/api/personal/file/WEB7d01cec0ee25d2dcf3231405dd0ade68?method=download&shareKey=4eaaf897209caf473d79fa82665db9b5" width="411"><br>基于文本的检测模型
-Detic<br><br>见图1<br>基于文本的 diffusion 模型 DALLE-2</td>
+<td>不重训，将基于文本 CLIP embedding 的模型升级为采用 IMAGEBIND audio embedding</td>
+<td><img src="https://note.youdao.com/yws/api/personal/file/WEB7d01cec0ee25d2dcf3231405dd0ade68?method=download&shareKey=4eaaf897209caf473d79fa82665db9b5" width="411"><br>基于文本的检测模型 Detic<br><br>见图1<br>基于文本的 diffusion 模型 DALLE-2</td>
 </tr>
 </tbody>
 </table>
-<h2 id="消融实验">3.3. 消融实验</h2>
+<h2 id="消融实验">3.3.  消融实验</h2>
 <p>encoder 具体配置详见 Sec.5。</p>
 <ul>
-<li><p>缩放图像 encoder 的大小</p>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEBd1e9d979925bc4b34aaa99d5845d839b?method=download&shareKey=35a41b9bcca611f8ed2ac79ea4d013b0" width="410"></p>
+<li>
+<p>缩放图像 encoder 的大小</p>
+<img src="https://note.youdao.com/yws/api/personal/file/WEBd1e9d979925bc4b34aaa99d5845d839b?method=download&shareKey=35a41b9bcca611f8ed2ac79ea4d013b0" width="410">
 <ul>
-<li>随着视觉 encoder 性能提升，其它非视觉模态的 emergent zero-shot
-分类性能提升。</li>
-</ul></li>
-<li><p>研究不同的训练设计对深度图（视觉+空间）、音频（非视觉+时序）
-zero-shot 分类性能的影响，以验证方案的鲁棒性、可迁移性。</p>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB194ab5bdcf9329eb20524b3a3515b29b?method=download&shareKey=84089f66b832c7778bb9f931925f7acb" width="865"></p>
+<li>随着视觉 encoder 性能提升，其它非视觉模态的 emergent zero-shot 分类性能提升。</li>
+</ul>
+</li>
+<li>
+<p>研究不同的训练设计对深度图（视觉+空间）、音频（非视觉+时序） zero-shot 分类性能的影响，以验证方案的鲁棒性、可迁移性。</p>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB194ab5bdcf9329eb20524b3a3515b29b?method=download&shareKey=84089f66b832c7778bb9f931925f7acb" width="865">
 <ul>
-<li><p>(a) 对比 loss 温度（参照 [60]）</p>
+<li>
+<p>(a) 对比 loss 温度（参照 [60]）</p>
 <ul>
 <li>相较于可学习的温度（初始值 0.07），固定温度更好；</li>
 <li>对于深度、thermal、IMU，较大的温度值较好；对于音频，较小的温度值较好。</li>
-</ul></li>
-<li><p>(b) encoder 投影层</p>
+</ul>
+</li>
+<li>
+<p>(b) encoder 投影层</p>
 <ul>
-<li><p>相较于 MLP，线性层更好。</p>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB4ad0c74d4b7386783b4da9a0505cca02?method=download&shareKey=bff30ce4dfe5c9c4ea5e2dbcfcb946d6" width="786"></p></li>
-</ul></li>
-<li><p>(c) 训练 epoch</p>
+<li>
+<p>相较于 MLP，线性层更好。</p>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB4ad0c74d4b7386783b4da9a0505cca02?method=download&shareKey=bff30ce4dfe5c9c4ea5e2dbcfcb946d6" width="786">
+</li>
+</ul>
+</li>
+<li>
+<p>(c) 训练 epoch</p>
 <ul>
 <li>随 epoch 增加性能持续提升。</li>
-</ul></li>
-<li><p>(d) 图像数据增强</p>
+</ul>
+</li>
+<li>
+<p>(d) 图像数据增强</p>
 <ul>
 <li>basic：裁剪、颜色抖动；strong：+ RandAugment、RandErase。</li>
-<li>对于数据集较小的深度数据，强增强有助于性能提升；<br>对于音频，basic
-增强有助于性能提升，强增强性能下降。</li>
-</ul></li>
-<li><p>(e)
-对于图像-深度对，相较于使用空间对齐的随机裁剪，使用非对齐的随机裁剪显著降低了性能。</p></li>
-<li><p>(f) 对于图像-深度对，RandomErase 数据增强提升了性能。</p></li>
-<li><p>(g) 对于视频-音频对，使用时间对齐的样本性能更好。</p></li>
-<li><p>(h) 对音频进行频率 mask 数据增强，有少量的性能提升。</p></li>
-<li><p>音频、深度 encoder 容量大小</p>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB4a98f8e9538e033f33e12f7e986dfdbc?method=download&shareKey=851bd36cf1743a9c4b1f3d6a6d2236f6" width="410"></p>
+<li>对于数据集较小的深度数据，强增强有助于性能提升；<br>对于音频，basic 增强有助于性能提升，强增强性能下降。</li>
+</ul>
+</li>
+<li>
+<p>(e) 对于图像-深度对，相较于使用空间对齐的随机裁剪，使用非对齐的随机裁剪显著降低了性能。</p>
+</li>
+<li>
+<p>(f) 对于图像-深度对，RandomErase 数据增强提升了性能。</p>
+</li>
+<li>
+<p>(g) 对于视频-音频对，使用时间对齐的样本性能更好。</p>
+</li>
+<li>
+<p>(h) 对音频进行频率 mask 数据增强，有少量的性能提升。</p>
+</li>
+<li>
+<p>音频、深度 encoder 容量大小</p>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB4a98f8e9538e033f33e12f7e986dfdbc?method=download&shareKey=851bd36cf1743a9c4b1f3d6a6d2236f6" width="410">
 <ul>
 <li>大音频 encoder + 大图像 encoder。</li>
 <li>小深度 encoder + 大图像 encoder，由于深度数据集较小。</li>
-</ul></li>
-<li><p>batch size</p>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEBb83454ff98253ada754494175b28ab7b?method=download&shareKey=a2269e04239e4fe72db9a5a8ada620ca" width="409"></p>
-<ul>
-<li><font color="red">根据数据集大小、复杂度，不同模态的最优 batch size
-不同。</font></li>
-</ul></li>
-</ul></li>
-<li><p>采用 IMAGEBIND 评价预训练视觉模型用于多模态任务的性能。</p>
-<ul>
-<li><p>采用不同的预训练视觉 encoder，冻结，使用图像配对数据训练，测试
-zero-shot 分类性能。</p>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB5e9f276d172e6b92d97504aefd308956?method=download&shareKey=bbfb9c7d4dd5a59b6811329ebc40c887" width="419"></p></li>
-<li><p>有监督模型 DeiT 在图像分类任务上更好，自监督模型 DINO
-在深度、音频分类任务上更好。</p></li>
-</ul></li>
 </ul>
-<h1 id="其它">4. 其它</h1>
+</li>
+<li>
+<p>batch size</p>
+<img src="https://note.youdao.com/yws/api/personal/file/WEBb83454ff98253ada754494175b28ab7b?method=download&shareKey=a2269e04239e4fe72db9a5a8ada620ca" width="409">
 <ul>
-<li>Girdhar R, El-Nouby A, Liu Z, et al. Imagebind: One embedding space
-to bind them all[C]//Proceedings of the IEEE/CVF Conference on Computer
-Vision and Pattern Recognition. 2023: 15180-15190.</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/facebookresearch/ImageBind">PyTorch
-实现、checkpoint</a></li>
+<li><font color="red">根据数据集大小、复杂度，不同模态的最优 batch size 不同。</font></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>采用 IMAGEBIND 评价预训练视觉模型用于多模态任务的性能。</p>
+<ul>
+<li>
+<p>采用不同的预训练视觉 encoder，冻结，使用图像配对数据训练，测试 zero-shot 分类性能。</p>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB5e9f276d172e6b92d97504aefd308956?method=download&shareKey=bbfb9c7d4dd5a59b6811329ebc40c887" width="419">
+</li>
+<li>
+<p>有监督模型 DeiT 在图像分类任务上更好，自监督模型 DINO 在深度、音频分类任务上更好。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="其它">4.  其它</h1>
+<ul>
+<li>Girdhar R, El-Nouby A, Liu Z, et al. Imagebind: One embedding space to bind them all[C]//Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition. 2023: 15180-15190.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/facebookresearch/ImageBind">PyTorch 实现、checkpoint</a></li>
 <li><a target="_blank" rel="noopener" href="https://imagebind.metademolab.com/">Demo</a></li>
 <li>展望：使用其它模态对齐数据。</li>
-<li>局限性：学习到的联合 embedding 仅限于数据集中存在的概念，如
-thermal、深度数据集分别局限于室外街道、室内场景。</li>
+<li>局限性：学习到的联合 embedding 仅限于数据集中存在的概念，如 thermal、深度数据集分别局限于室外街道、室内场景。</li>
 <li>伦理：学习到的 embedding 可能产生 unintentional 的语义关联。</li>
-<li>实际应用：如文本查询 IMU 数据（如手机、AR/VR 耳机、health trackers
-等中）检索 healthcare/活动，如图7。</li>
+<li>实际应用：如文本查询 IMU 数据（如手机、AR/VR 耳机、health trackers 等中）检索 healthcare/活动，如图7。</li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 

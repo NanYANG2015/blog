@@ -8,10 +8,11 @@
     <meta name="description" content="
 子词：若采用所有单词、符号作为词表，太大；若采用字符，难以表达语义。
 
-1. 子词分割算法
-1.1. BPE
+1.  子词分割算法
+1.1.  BPE
 
-Sennrich R. Neural machine translation of rare words with">
+
+Sennrich R. Neural machine translation of rare words with su">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -380,93 +381,90 @@ Sennrich R. Neural machine translation of rare words with">
                 <ul>
 <li>子词：若采用所有单词、符号作为词表，太大；若采用字符，难以表达语义。</li>
 </ul>
-<h1 id="子词分割算法">1. 子词分割算法</h1>
-<h2 id="bpe">1.1. BPE</h2>
+<h1 id="子词分割算法">1.  子词分割算法</h1>
+<h2 id="bpe">1.1.  BPE</h2>
 <ul>
-<li>Sennrich R. Neural machine translation of rare words with subword
-units[J]. arXiv preprint arXiv:1508.07909, 2015.</li>
-<li>目的：解决罕见词和 OOV 词的翻译问题，支持开放词汇。</li>
-<li>BPE (Byte Pair Encoding) 算法
+<li>
+<p>Sennrich R. Neural machine translation of rare words with subword units[J]. arXiv preprint arXiv:1508.07909, 2015.</p>
+</li>
+<li>
+<p>目的：解决罕见词和 OOV 词的翻译问题，支持开放词汇。</p>
+</li>
+<li>
+<p>BPE (Byte Pair Encoding) 算法</p>
 <ul>
 <li>初始化词表为所有字符。每个词表示为字符序列加特殊的结束符（表示词边界）。为了提高效率，不考虑跨词边界的字节对。<font color="red">（需要先分词）</font></li>
-<li>迭代计算所有<font color="red">连续符号对 (<span class="math inline">\(s_i\)</span>, <span class="math inline">\(s_{i+1}\)</span>)
-的频率、合并频率最高的符号对</font>。</li>
+<li>迭代计算所有<font color="red">连续符号对 (<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>s</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">s_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>, <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>s</mi><mrow><mi>i</mi><mo>+</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">s_{i+1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.638891em;vertical-align:-0.208331em;"></span><span class="mord"><span class="mord mathdefault">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span></span></span></span>) 的频率、合并频率最高的符号对</font>。</li>
 </ul>
-<img src="https://note.youdao.com/yws/api/personal/file/WEBe240fe1144ef451fecc569e3340b6a84?method=download&shareKey=e2407061ecc1197145159e1e08c816aa" width="439"></li>
-<li>指定词表大小=初始词表大小+合并次数。</li>
-<li>推理：对句子应用相同的合并操作。</li>
-<li>效果：翻译质量更高。且提高了罕见词、OOV 词的 unigram-F1。</li>
+<img src="https://note.youdao.com/yws/api/personal/file/WEBe240fe1144ef451fecc569e3340b6a84?method=download&shareKey=e2407061ecc1197145159e1e08c816aa" width="439">
+</li>
+<li>
+<p>指定词表大小=初始词表大小+合并次数。</p>
+</li>
+<li>
+<p>推理：对句子应用相同的合并操作。</p>
+</li>
+<li>
+<p>效果：翻译质量更高。且提高了罕见词、OOV 词的 unigram-F1。</p>
+</li>
 </ul>
-<h2 id="wordpiece">1.2. WordPiece</h2>
+<h2 id="wordpiece">1.2.  WordPiece</h2>
 <ul>
-<li>Schuster M, Nakajima K. Japanese and korean voice search[C]//2012
-IEEE international conference on acoustics, speech and signal processing
-(ICASSP). IEEE, 2012: 5149-5152.</li>
+<li>Schuster M, Nakajima K. Japanese and korean voice search[C]//2012 IEEE international conference on acoustics, speech and signal processing (ICASSP). IEEE, 2012: 5149-5152.</li>
 </ul>
-<ol type="1">
+<ol>
 <li>初始化词表为基本 Unicode 字符。</li>
 <li>采用上述词表在训练集上训语言模型。</li>
-<li>组合词表中的两个单元，<font color="red">选择添加到词表后训练数据似然度增量最大的一个</font>（$P(bc|a)
-P(d|bc) - P(b|a) P(c|b) P(d|c) $）。</li>
+<li>组合词表中的两个单元，<font color="red">选择添加到词表后训练数据似然度增量最大的一个</font>（$P(bc|a) \cdot P(d|bc) - P(b|a) \cdot P(c|b) \cdot P(d|c) $）。</li>
 <li>重复2-3，直到达到预定义的词表大小或似然性增量低于某个阈值。</li>
 </ol>
-<h2 id="unigram-lm">1.3. Unigram LM</h2>
+<h2 id="unigram-lm">1.3.  Unigram LM</h2>
 <ul>
-<li>Kudo T. Subword regularization: Improving neural network translation
-models with multiple subword candidates[J]. arXiv preprint
-arXiv:1804.10959, 2018.</li>
+<li>Kudo T. Subword regularization: Improving neural network translation models with multiple subword candidates[J]. arXiv preprint arXiv:1804.10959, 2018.</li>
 <li>采用 unigram LM，假设子词序列的概率为其中各子词出现概率的乘积。</li>
 <li>从训练语料库启发式地创建一个合理大的词表。重复以下步骤直到达到指定的词表大小。
 <ul>
-<li><font color="green">采用期望最大化算法估计子词概率，最大化训练语料库的边际似然。</font>
-<span class="math display">\[\mathcal{L}=\sum_{s=1}^{|D|} \log
-\left(P\left(X^{(s)}\right)\right)=\sum_{s=1}^{|D|} \log
-\left(\sum_{\mathbf{x} \in \mathcal{S}\left(X^{(s)}\right)}
-P(\mathbf{x})\right)\]</span> 其中，<span class="math inline">\(|D|\)</span> 为语料库中句子的总数，<span class="math inline">\(X\)</span> 为句子，<span class="math inline">\(\mathcal{S}\left(X\right)\)</span>
-为所有可能的子词分割方案。</li>
+<li><font color="green">采用期望最大化算法估计子词概率，最大化训练语料库的边际似然。</font><p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="script">L</mi><mo>=</mo><munderover><mo>∑</mo><mrow><mi>s</mi><mo>=</mo><mn>1</mn></mrow><mrow><mi mathvariant="normal">∣</mi><mi>D</mi><mi mathvariant="normal">∣</mi></mrow></munderover><mi>log</mi><mo>⁡</mo><mrow><mo fence="true">(</mo><mi>P</mi><mrow><mo fence="true">(</mo><msup><mi>X</mi><mrow><mo stretchy="false">(</mo><mi>s</mi><mo stretchy="false">)</mo></mrow></msup><mo fence="true">)</mo></mrow><mo fence="true">)</mo></mrow><mo>=</mo><munderover><mo>∑</mo><mrow><mi>s</mi><mo>=</mo><mn>1</mn></mrow><mrow><mi mathvariant="normal">∣</mi><mi>D</mi><mi mathvariant="normal">∣</mi></mrow></munderover><mi>log</mi><mo>⁡</mo><mrow><mo fence="true">(</mo><munder><mo>∑</mo><mrow><mi mathvariant="bold">x</mi><mo>∈</mo><mi mathvariant="script">S</mi><mrow><mo fence="true">(</mo><msup><mi>X</mi><mrow><mo stretchy="false">(</mo><mi>s</mi><mo stretchy="false">)</mo></mrow></msup><mo fence="true">)</mo></mrow></mrow></munder><mi>P</mi><mo stretchy="false">(</mo><mi mathvariant="bold">x</mi><mo stretchy="false">)</mo><mo fence="true">)</mo></mrow></mrow><annotation encoding="application/x-tex">\mathcal{L}=\sum_{s=1}^{|D|} \log \left(P\left(X^{(s)}\right)\right)=\sum_{s=1}^{|D|} \log \left(\sum_{\mathbf{x} \in \mathcal{S}\left(X^{(s)}\right)} P(\mathbf{x})\right)
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord"><span class="mord mathcal">L</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:3.2281180000000003em;vertical-align:-1.267113em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.9610050000000003em;"><span style="top:-1.882887em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">s</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.050005em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.386005em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">∣</span><span class="mord mathdefault mtight" style="margin-right:0.02778em;">D</span><span class="mord mtight">∣</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.267113em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size2">(</span></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size2">(</span></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.938em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mopen mtight">(</span><span class="mord mathdefault mtight">s</span><span class="mclose mtight">)</span></span></span></span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size2">)</span></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size2">)</span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:4.200049999999999em;vertical-align:-1.850025em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.9610050000000003em;"><span style="top:-1.882887em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">s</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.050005em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.386005em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">∣</span><span class="mord mathdefault mtight" style="margin-right:0.02778em;">D</span><span class="mord mtight">∣</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.267113em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen"><span class="delimsizing mult"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.3500249999999996em;"><span style="top:-1.9499950000000004em;"><span class="pstrut" style="height:3.1550000000000002em;"></span><span class="delimsizinginner delim-size4"><span>⎝</span></span></span><span style="top:-3.1050050000000002em;"><span class="pstrut" style="height:3.1550000000000002em;"></span><span class="delimsizinginner delim-size4"><span>⎜</span></span></span><span style="top:-4.350025em;"><span class="pstrut" style="height:3.1550000000000002em;"></span><span class="delimsizinginner delim-size4"><span>⎛</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.850025em;"><span></span></span></span></span></span></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.050005em;"><span style="top:-1.6364949999999998em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathbf mtight">x</span></span><span class="mrel mtight">∈</span><span class="mord mtight"><span class="mord mathcal mtight" style="margin-right:0.075em;">S</span></span><span class="minner mtight"><span class="mopen sizing reset-size3 size6 mtight delimcenter" style="top:0.07500000000000001em;"><span class="mtight">(</span></span><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8220357142857143em;"><span style="top:-2.8220357142857138em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5357142857142856em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mopen mtight">(</span><span class="mord mathdefault mtight">s</span><span class="mclose mtight">)</span></span></span></span></span></span></span></span></span><span class="mclose sizing reset-size3 size6 mtight delimcenter" style="top:0.07500000000000001em;"><span class="mtight">)</span></span></span></span></span></span><span style="top:-3.0500049999999996em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.816005em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord"><span class="mord mathbf">x</span></span><span class="mclose">)</span><span class="mclose"><span class="delimsizing mult"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.3500249999999996em;"><span style="top:-1.9499950000000004em;"><span class="pstrut" style="height:3.1550000000000002em;"></span><span class="delimsizinginner delim-size4"><span>⎠</span></span></span><span style="top:-3.1050050000000002em;"><span class="pstrut" style="height:3.1550000000000002em;"></span><span class="delimsizinginner delim-size4"><span>⎟</span></span></span><span style="top:-4.350025em;"><span class="pstrut" style="height:3.1550000000000002em;"></span><span class="delimsizinginner delim-size4"><span>⎞</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.850025em;"><span></span></span></span></span></span></span></span></span></span></span></span></p>
+其中，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">∣</mi><mi>D</mi><mi mathvariant="normal">∣</mi></mrow><annotation encoding="application/x-tex">|D|</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">∣</span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="mord">∣</span></span></span></span> 为语料库中句子的总数，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07847em;">X</span></span></span></span> 为句子，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="script">S</mi><mrow><mo fence="true">(</mo><mi>X</mi><mo fence="true">)</mo></mrow></mrow><annotation encoding="application/x-tex">\mathcal{S}\left(X\right)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathcal" style="margin-right:0.075em;">S</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;">(</span><span class="mord mathdefault" style="margin-right:0.07847em;">X</span><span class="mclose delimcenter" style="top:0em;">)</span></span></span></span></span> 为所有可能的子词分割方案。</li>
 <li>对每个子词，计算从当前词表移除该子词后，似然减小的量。</li>
-<li>按似然减小量排序，保留 <span class="math inline">\(\eta \%\)</span>
-的子词（比如 80%）。</li>
-</ul></li>
+<li>按似然减小量排序，保留 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>η</mi><mi mathvariant="normal">%</mi></mrow><annotation encoding="application/x-tex">\eta \%</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.94444em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">η</span><span class="mord">%</span></span></span></span> 的子词（比如 80%）。</li>
+</ul>
+</li>
 <li>子词正则化：由于同一句子可以有多种子词分割方式，训练中随机采样多个子词分割来提高模型的鲁棒性。</li>
 </ul>
-<h1 id="bpe-训练分词工具">2. BPE 训练、分词工具</h1>
-<h2 id="sentencepiece">2.1. SentencePiece</h2>
+<h1 id="bpe-训练-分词工具">2.  BPE 训练、分词工具</h1>
+<h2 id="sentencepiece">2.1.  SentencePiece</h2>
 <ul>
-<li>Kudo T. Sentencepiece: A simple and language independent subword
-tokenizer and detokenizer for neural text processing[J]. arXiv preprint
-arXiv:1808.06226, 2018.</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/google/sentencepiece" class="uri">https://github.com/google/sentencepiece</a></li>
+<li>Kudo T. Sentencepiece: A simple and language independent subword tokenizer and detokenizer for neural text processing[J]. arXiv preprint arXiv:1808.06226, 2018.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/google/sentencepiece">https://github.com/google/sentencepiece</a></li>
 <li>特点
 <ul>
 <li>支持两种子词分割算法：BPE、unigram LM。</li>
-<li>无损：将文本视为 Unicode 字符序列，将空白视为普通符号（转义为
-“▁”（U+2581））。</li>
-<li>语言无关、无需预分词、纯数据驱动：现有的子词分割工具通常假设输入已经预分词，依赖于语言特定的预处理和后处理，而
-SentencePiece 可以直接从原始句子训练。</li>
+<li>无损：将文本视为 Unicode 字符序列，将空白视为普通符号（转义为 “▁”（U+2581））。</li>
+<li>语言无关、无需预分词、纯数据驱动：现有的子词分割工具通常假设输入已经预分词，依赖于语言特定的预处理和后处理，而 SentencePiece 可以直接从原始句子训练。</li>
 <li>指定词表大小。</li>
 <li>实现了高效的分词和训练，且轻量。</li>
 <li>自包含：只要使用相同的模型文件，就可以得到相同的标记化/去标记化。</li>
-</ul></li>
 </ul>
-<h2 id="tiktoken">2.2. tiktoken</h2>
+</li>
+</ul>
+<h2 id="tiktoken">2.2.  tiktoken</h2>
 <ul>
-<li><a target="_blank" rel="noopener" href="https://github.com/openai/tiktoken" class="uri">https://github.com/openai/tiktoken</a> OpenAI</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/openai/tiktoken">https://github.com/openai/tiktoken</a>  OpenAI</li>
 <li>相较于 transformers TokenizerFast 更快。</li>
 <li>应用：如 Llama 3、<a target="_blank" rel="noopener" href="https://github.com/QwenLM/Qwen/blob/main/tokenization_note.md">Qwen</a>、GLM-4-9b。</li>
 </ul>
-<h1 id="优化点">3. 优化点</h1>
+<h1 id="优化点">3.  优化点</h1>
 <ul>
 <li>最优词表大小</li>
 <li>压缩比（char/token）</li>
 <li>多语言支持</li>
 </ul>
-<h1 id="其它">4. 其它</h1>
+<h1 id="其它">4.  其它</h1>
 <ul>
-<li>Byte-level BPE：将所有 unicode 字符作为基础词表很大（<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Unicode#Versions">超过15万个</a>）。将字节作为基础字符仅
-256 个且能保证无 OOV。</li>
-<li><a target="_blank" rel="noopener" href="https://huggingface.co/docs/transformers/tokenizer_summary">transformers
-综述文档</a></li>
+<li>Byte-level BPE：将所有 unicode 字符作为基础词表很大（<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Unicode#Versions">超过15万个</a>）。将字节作为基础字符仅 256 个且能保证无 OOV。</li>
+<li><a target="_blank" rel="noopener" href="https://huggingface.co/docs/transformers/tokenizer_summary">transformers 综述文档</a></li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 

@@ -380,31 +380,40 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <ul>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/Standard-Intelligence/hertz-dev" class="uri">https://github.com/Standard-Intelligence/hertz-dev</a></p></li>
-<li><p><a target="_blank" rel="noopener" href="https://si.inc/hertz-dev/" class="uri">https://si.inc/hertz-dev/</a></p></li>
-<li><p>hertz-codec</p>
+<li>
+<p><a target="_blank" rel="noopener" href="https://github.com/Standard-Intelligence/hertz-dev">https://github.com/Standard-Intelligence/hertz-dev</a></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="https://si.inc/hertz-dev/">https://si.inc/hertz-dev/</a></p>
+</li>
+<li>
+<p>hertz-codec</p>
 <ul>
-<li>VAE，采用因果卷积，<font color="green">6s 感受野，</font>输出 8Hz
-32维 latent。</li>
+<li>VAE，采用因果卷积，<font color="green">6s 感受野，</font>输出 8Hz 32维 latent。</li>
 <li>采用重建、对抗、KL 正则损失训练。</li>
 <li>参数量：encoder 5M、decoder 95M。</li>
-</ul></li>
-<li><p>hertz-codec quantizer：MLP + FSQ。将 latent 投影为语音学相关的
-15-bit 量化表示。</p></li>
-<li><p>hertz-ar：8.4B，40层 decoder-only transformer。</p>
+</ul>
+</li>
+<li>
+<p>hertz-codec quantizer：MLP + FSQ。将 latent 投影为语音学相关的 15-bit 量化表示。</p>
+</li>
+<li>
+<p>hertz-ar：8.4B，40层 decoder-only transformer。</p>
 <ul>
-<li>前 32 层输入历史 latent 预测 next 15-bit 量化 latent。随机初始化或从
-LM 初始化。</li>
+<li>前 32 层输入历史 latent 预测 next 15-bit 量化 latent。随机初始化或从 LM 初始化。</li>
 <li>后8层基于历史 latent 和 15-bit 量化 latent 预测 next latent。</li>
 <li>上下文长度为 2048，约 4.5min。</li>
-</ul></li>
-<li><p>训练</p>
+</ul>
+</li>
+<li>
+<p>训练</p>
 <ul>
 <li>duplex post-training。</li>
-</ul></li>
-<li><p>延迟：理论 80ms，实际 RTX 4090 120ms = 62.5ms
-(给定任意句子到得到1个 token 的平均时间) + forward +
-往返网络延迟。</p></li>
+</ul>
+</li>
+<li>
+<p>延迟：理论 80ms，实际 RTX 4090 120ms = 62.5ms (给定任意句子到得到1个 token 的平均时间) + forward + 往返网络延迟。</p>
+</li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 

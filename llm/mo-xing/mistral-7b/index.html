@@ -6,8 +6,10 @@
     <meta charset="utf-8">
     <meta name="keywords" content="Mistral 7B, AI, 语音, 算法">
     <meta name="description" content="
-Jiang A Q, Sablayrolles A, Mensch A, et al. Mistral 7B[J]. arXiv
-preprint arXiv:2310.06825, 2023.
+
+Jiang A Q, Sablayrolles A, Mensch A, et al. Mistral 7B[J]. arXiv preprint arXiv:2310.06825, 2023.
+
+
 出发点：保持高性能的同时提高推理效率">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -379,31 +381,37 @@ preprint arXiv:2310.06825, 2023.
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <ul>
-<li><p>Jiang A Q, Sablayrolles A, Mensch A, et al. Mistral 7B[J]. arXiv
-preprint arXiv:2310.06825, 2023.</p></li>
-<li><p><font color="red">出发点：保持高性能的同时提高推理效率</font>。</p></li>
-<li><p>优化点</p>
+<li>
+<p>Jiang A Q, Sablayrolles A, Mensch A, et al. Mistral 7B[J]. arXiv preprint arXiv:2310.06825, 2023.</p>
+</li>
+<li>
+<p><font color="red">出发点：保持高性能的同时提高推理效率</font>。</p>
+</li>
+<li>
+<p>优化点</p>
 <ul>
-<li><p><font color="red">grouped-query attention</font>：减少了
-attention 的计算量和内存占用，允许更高的 batch size 和吞吐量。</p></li>
-<li><p><font color="red">sliding window
-attention</font>：支持任意长度的序列，减少计算成本、KV cache
-内存占用。</p>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEBb9d7a9c49938b7fdf6e518f97f401771?method=download&shareKey=4eace57d6f3576091e9ddb3ad4087a51" width="798"></p>
-<p><span class="math inline">\(W=4096\)</span>，n_layers=32，理论
-attention 跨度约为 131K tokens。</p></li>
-<li><p><font color="red">Rolling Buffer Cache</font>：缓存大小固定为
-<span class="math inline">\(W\)</span>，时间步 <span class="math inline">\(i\)</span> 的 KV 存储在 <span class="math inline">\(i \bmod W\)</span>。<span class="math inline">\(i&gt;W\)</span>时，过去的值被覆盖。</p>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEBea3562ede5fb0a5881f87cd293e7dee4?method=download&shareKey=4eace57d6f3576091e9ddb3ad4087a51" width="799"></p></li>
-<li><p>推理：对于非常长的提示，在预填充阶段，对序列分块以限制内存使用。</p></li>
-</ul></li>
-<li><p>其它：安全性，通过设计系统提示</p>
+<li>
+<p><font color="red">grouped-query attention</font>：减少了 attention 的计算量和内存占用，允许更高的 batch size 和吞吐量。</p>
+</li>
+<li>
+<p><font color="red">sliding window attention</font>：支持任意长度的序列，减少计算成本、KV cache 内存占用。</p>
+<img src="https://note.youdao.com/yws/api/personal/file/WEBb9d7a9c49938b7fdf6e518f97f401771?method=download&shareKey=4eace57d6f3576091e9ddb3ad4087a51" width="798">
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>W</mi><mo>=</mo><mn>4096</mn></mrow><annotation encoding="application/x-tex">W=4096</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">W</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">4</span><span class="mord">0</span><span class="mord">9</span><span class="mord">6</span></span></span></span>，n_layers=32，理论 attention 跨度约为 131K tokens。</p>
+</li>
+<li>
+<p><font color="red">Rolling Buffer Cache</font>：缓存大小固定为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>W</mi></mrow><annotation encoding="application/x-tex">W</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">W</span></span></span></span>，时间步 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 的 KV 存储在 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mtext> </mtext><mrow><mi mathvariant="normal">m</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">d</mi></mrow><mtext> </mtext><mi>W</mi></mrow><annotation encoding="application/x-tex">i \bmod W</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mspace" style="margin-right:0.05555555555555555em;"></span><span class="mbin"><span class="mord"><span class="mord mathrm">m</span><span class="mord mathrm">o</span><span class="mord mathrm">d</span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mspace" style="margin-right:0.05555555555555555em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">W</span></span></span></span>。<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mo>&gt;</mo><mi>W</mi></mrow><annotation encoding="application/x-tex">i&gt;W</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69862em;vertical-align:-0.0391em;"></span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">W</span></span></span></span>时，过去的值被覆盖。</p>
+<img src="https://note.youdao.com/yws/api/personal/file/WEBea3562ede5fb0a5881f87cd293e7dee4?method=download&shareKey=4eace57d6f3576091e9ddb3ad4087a51" width="799">
+</li>
+<li>
+<p>推理：对于非常长的提示，在预填充阶段，对序列分块以限制内存使用。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>其它：安全性，通过设计系统提示</p>
 <p><code>Always assist with care, respect, and truth. Respond with utmost utility yet securely. Avoid harmful, unethical, prejudiced, or negative content. Ensure replies promote fairness and positivity.</code></p>
-<p>self-reflection prompt：可以通过提示让模型将用户 prompt
-或生成的答案分类为可接受或 Illegal activities such as terrorism, child
-abuse or fraud; Hateful, harassing or violent content such as
-discrimination, self-harm or bullying; Unqualified advice for instance
-in legal, medical or financial domains.</p></li>
+<p>self-reflection prompt：可以通过提示让模型将用户 prompt 或生成的答案分类为可接受或 Illegal activities such as terrorism, child abuse or fraud; Hateful, harassing or violent content such as discrimination, self-harm or bullying; Unqualified advice for instance in legal, medical or financial domains.</p>
+</li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 

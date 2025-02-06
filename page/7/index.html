@@ -406,15 +406,18 @@
                             <div class="summary block-with-text">
                                 
                                     
-出发点：显式地建模通道间的相关性，根据输入的全局特征，自适应地对各个通道的feature
-map 重新加权。
+
+出发点：显式地建模通道间的相关性，根据输入的全局特征，自适应地对各个通道的feature map 重新加权。
+
+
 模块结构
+
 
 
 
 Squeeze
 global average pooling：分别计算每个通道的激活均值。
-\
+zc=Fsq
                                 
                             </div>
                             <div class="publish-info">
@@ -467,11 +470,12 @@ global average pooling：分别计算每个通道的激活均值。
                             <div class="summary block-with-text">
                                 
                                     
+
 出发点：表示多尺度的特征、增大感受野。
 
-\[\mathbf{y}_i= \begin{cases}
+yi={xii=1Ki(xi)i=2Ki(xi+yi−1)2&lt;i⩽s\mathbf{y}_i= \begin{cases}
 \mathbf{x}_i &amp; i = 1 \\
-\mathbf{K}_i\left(\mathbf{x}_i\righ
+\mat
                                 
                             </div>
                             <div class="publish-info">
@@ -535,7 +539,7 @@ global average pooling：分别计算每个通道的激活均值。
 
 朗读、复述：100ms
 自发语音：200-300ms
-句间：400m
+句间：400ms （取论文中
                                 
                             </div>
                             <div class="publish-info">
@@ -591,11 +595,9 @@ global average pooling：分别计算每个通道的激活均值。
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                    1. Automated speaking
-assessment
+                                    1.  Automated speaking assessment
 
-Automated speaking assessment: Using language technologies to score
-spontaneous sp
+Automated speaking assessment: Using language technologies to score spontaneous speec
                                 
                             </div>
                             <div class="publish-info">
@@ -658,19 +660,22 @@ spontaneous sp
                             <div class="summary block-with-text">
                                 
                                     
+
 n-ŋ
 
-sin sing
-thin thing
-ran rang
+sin     sing
+thin    thing
+ran     rang
+
+
 
 eɪ-iː
 
-fate feat
-way we
-say see
+fate    feat
+way     we
+say     see
 
-区分eɪ和iː https://www.ximalaya.com/sound
+区分eɪ和iː https://www.ximala
                                 
                             </div>
                             <div class="publish-info">
@@ -727,11 +732,10 @@ say see
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                    1. 送气 -&gt; 不送气（浊化）
-重读音节中，/s/+清辅音/t/ /p/ /k/
-/tr/+元音，清辅音发音为对应的浊辅音/d/ /b/ /g/
-/dr/，如student、speak、sky、strict  讲解及示例
-2
+                                    1.  送气 -&gt; 不送气（浊化）
+重读音节中，/s/+清辅音/t/ /p/ /k/ /tr/+元音，清辅音发音为对应的浊辅音/d/ /b/ /g/ /dr/，如student、speak、sky、strict 
+讲解及示例
+2.  
                                 
                             </div>
                             <div class="publish-info">
@@ -788,7 +792,7 @@ say see
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                    1. 数据预处理
+                                    1.  数据预处理
 
 compute_cmvn_stats：生成global_cmvn
 
@@ -797,7 +801,8 @@ var_stat：训练集上各维特征的平方和
 frame_num：训练集总帧数
 
 
-2. I
+
+2.  Iterabl
                                 
                             </div>
                             <div class="publish-info">
@@ -858,10 +863,10 @@ frame_num：训练集总帧数
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                    1. 2022 Cambridge PhD Thesis
+                                    1.  2022 Cambridge PhD Thesis
 
 发表信息：剑桥大学博士论文
-创新点：由于大量、可靠的多维度人工评分较难获取，采用总分标注数据，通过限定输入特征进行端到端多维度评分。相较于特征提取-评分两阶段模型，端到端模型
+创新点：由于大量、可靠的多维度人工评分较难获取，采用总分标注数据，通过限定输入特征进行端到端多维度评分。相较于特征提取-评分两阶段模型，端到端模型能更
                                 
                             </div>
                             <div class="publish-info">
@@ -917,14 +922,11 @@ frame_num：训练集总帧数
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                    1. 2018 ETS acoustics +
-transcription
+                                    1.  2018 ETS acoustics + transcription
 
 作者：ETS
 发表信息：ICASSP 2018
-创新点：提示无关的神经网络评分模型（BD-LSTM +
-attention），输入识别文本word
-
+创新点：提示无关的神经网络评分模型（BD-LSTM + attention），输入识别文本word embedd
                                 
                             </div>
                             <div class="publish-info">
@@ -980,20 +982,17 @@ attention），输入识别文本word
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                    1. 2022 Self-Supervised
+                                    1.  2022 Self-Supervised
 
 作者：AI Lab, Kakao Enterprise（韩国公司）
 创新点：采用自监督学习模型提取深层声学表示
 
-1.1. 系统结构
+1.1.  系统结构
 
 
 
-系统结构
 
-
-
-*GAP
+*GAP：global average po
                                 
                             </div>
                             <div class="publish-info">
@@ -1055,7 +1054,6 @@ attention），输入识别文本word
                             <div class="summary block-with-text">
                                 
                                     
-
                                 
                             </div>
                             <div class="publish-info">
@@ -1119,7 +1117,6 @@ attention），输入识别文本word
                                     
 
   
-
 
 
                                 

@@ -7,13 +7,12 @@
     <meta name="keywords" content="SALMONN, AI, 语音, 算法">
     <meta name="description" content="
 作者：清华、字节
-SALMONN（speech audio language music open neural
-network），通用音频理解 LLM，支持开放式任务。
+SALMONN（speech audio language music open neural network），通用音频理解 LLM，支持开放式任务。
 
-1. 模型结构
+1.  模型结构
 
 
-BEATs: 迭代自监督训练">
+BEATs: 迭代自监督训练，提取非语音的">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -389,43 +388,30 @@ BEATs: 迭代自监督训练">
             <div id="articleContent">
                 <ul>
 <li>作者：清华、字节</li>
-<li>SALMONN（speech audio language music open neural
-network），通用音频理解 LLM，支持开放式任务。</li>
+<li>SALMONN（speech audio language music open neural network），通用音频理解 LLM，支持开放式任务。</li>
 </ul>
-<h1 id="模型结构">1. 模型结构</h1>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEBf6075a53c97667aa0b28cdda5ea6916a?method=download&shareKey=e655798e9ffe9b7c0249c679bfdb065a" width="615"></p>
+<h1 id="模型结构">1.  模型结构</h1>
+<img src="https://note.youdao.com/yws/api/personal/file/WEBf6075a53c97667aa0b28cdda5ea6916a?method=download&shareKey=e655798e9ffe9b7c0249c679bfdb065a" width="615">
 <ul>
 <li>BEATs: 迭代自监督训练，提取非语音的音频语义信息。</li>
-<li>Whisper-Large-v2、Fine-tuned BEATs iter3+ (AS2M) (cpt2): 输出均为
-50Hz 帧率。帧级 concat。</li>
-<li><font color="red">Window-level Q-Former：将 encoder 输出每 L=17
-帧转为长为 N=1 的 token（30s 音频 88
-tokens）。保留了变长表示、时序性。</font></li>
+<li>Whisper-Large-v2、Fine-tuned BEATs iter3+ (AS2M) (cpt2): 输出均为 50Hz 帧率。帧级 concat。</li>
+<li><font color="red">Window-level Q-Former：将 encoder 输出每 L=17 帧转为长为 N=1 的 token（30s 音频 88 tokens）。保留了变长表示、时序性。</font></li>
 <li>vicuna-13b-v1.1：指令跟随微调的 LLaMA。</li>
-<li>LoRA：用于 Vicuna 中 self-attention 模块的 Q、V
-权重矩阵。rank=8，缩放系数=4.0。</li>
+<li>LoRA：用于 Vicuna 中 self-attention 模块的 Q、V 权重矩阵。rank=8，缩放系数=4.0。</li>
 </ul>
-<h1 id="训练">2. 训练</h1>
+<h1 id="训练">2.  训练</h1>
 <ul>
-<li><p>3 阶段训练</p>
+<li>
+<p>3 阶段训练</p>
 <ul>
-<li>跨模态预训练：语音识别 +
-音频字幕（captioning）任务。分别包含语音、非语音信息，且不需要复杂的推理，用于学习音频、文本信息对齐。</li>
+<li>跨模态预训练：语音识别 + 音频字幕（captioning）任务。分别包含语音、非语音信息，且不需要复杂的推理，用于学习音频、文本信息对齐。</li>
 <li>指令微调。任务选择：任务的重要性、具有该能力的必要性。</li>
-<li><font color="red">few-shot 自监督 activation
-tuning：修复（过拟合导致的缺失）指令跟随、涌现能力。采用 SALMONN（减小
-了 LoRA 的缩放系数）生成的 12 个音频故事，训练 12 步，每一步采用 1
-个故事样本。</font></li>
-</ul></li>
-<li><p>数据集</p>
+<li><font color="red">few-shot 自监督 activation tuning：修复（过拟合导致的缺失）指令跟随、涌现能力。采用 SALMONN（减小 了 LoRA 的缩放系数）生成的 12 个音频故事，训练 12 步，每一步采用 1 个故事样本。</font></li>
+</ul>
+</li>
+<li>
+<p>数据集</p>
 <table>
-<colgroup>
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
-</colgroup>
 <thead>
 <tr>
 <th>阶段</th>
@@ -550,65 +536,58 @@ tuning：修复（过拟合导致的缺失）指令跟随、涌现能力。采�
 </tr>
 </tbody>
 </table>
-<p>其中，语音问答、音频问答、音乐问答数据集中的问题、答案由 GPT-3.5
-根据音频对应的文本 label 生成。音素识别采用 CMU
-音素集，有重音标记、无位置标记，含 sil （待确认：论文示例中 sil
-仅出现在音频首尾）。</p></li>
-<li><p>任务示例
-<img src="https://note.youdao.com/yws/api/personal/file/WEBe9b0891635beaa55785f18c01540943a?method=download&shareKey=1fac350781cf998b49e191c86699a853" width="608">
-<img src="https://note.youdao.com/yws/api/personal/file/WEB35b007c2b891a12cb7ebf334cd324da9?method=download&shareKey=0bb3af88456422190ec71845fa151712" width="614"></p></li>
+<p>其中，语音问答、音频问答、音乐问答数据集中的问题、答案由 GPT-3.5 根据音频对应的文本 label 生成。音素识别采用 CMU 音素集，有重音标记、无位置标记，含 sil （待确认：论文示例中 sil 仅出现在音频首尾）。</p>
+</li>
+<li>
+<p>任务示例<br>
+<img src="https://note.youdao.com/yws/api/personal/file/WEBe9b0891635beaa55785f18c01540943a?method=download&shareKey=1fac350781cf998b49e191c86699a853" width="608"><br>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB35b007c2b891a12cb7ebf334cd324da9?method=download&shareKey=0bb3af88456422190ec71845fa151712" width="614"></p>
+</li>
 </ul>
-<h1 id="评价">3. 评价</h1>
+<h1 id="评价">3.  评价</h1>
 <ul>
 <li>3 个 level 的测试任务
 <ul>
 <li>level 1：指令调优训练中的任务。</li>
-<li>level 2 基于语音的 NLP
-任务：语音翻译（未训练过的语种对）、关键字提取（keyword
-extracting，KE）、spoken-query-based QA（SQQA）、基于语音的填空（slot
-filling，SF，通常是命名实体）。</li>
-<li>level 3：根据音频讲故事（Story）、语音-音频协同推理（speech audio
-co-reasoning，SAC，理解音频信息，回答语音问题）。不仅需要理解语音，还需要理解非语音听觉信息。</li>
-</ul></li>
+<li>level 2 基于语音的 NLP 任务：语音翻译（未训练过的语种对）、关键字提取（keyword extracting，KE）、spoken-query-based QA（SQQA）、基于语音的填空（slot filling，SF，通常是命名实体）。</li>
+<li>level 3：根据音频讲故事（Story）、语音-音频协同推理（speech audio co-reasoning，SAC，理解音频信息，回答语音问题）。不仅需要理解语音，还需要理解非语音听觉信息。</li>
+</ul>
+</li>
 <li>评价指标
 <ul>
 <li>Following rate (FR)：遵循了指令的占比。
 <ul>
 <li>SQQA、SF：若 response 与语音 WER &lt; 30%，则认为未遵循指令。</li>
-<li>Story：设置输出 token 的最大长度为 200。若 response &lt; 50
-词，则认为未遵循指令。</li>
-</ul></li>
+<li>Story：设置输出 token 的最大长度为 200。若 response &lt; 50 词，则认为未遵循指令。</li>
+</ul>
+</li>
 <li>ACC
 <ul>
 <li>根据音频讲故事：只评价了 unique 单词的数量，而没有评价正确性。</li>
 <li>SQQA：采用 GPT-3.5 判断准确性。</li>
-<li>SAC：采用 GPT-3.5
-判断是否遵循指令，输入背景音频字幕、问题来判断回答是否正确。</li>
-</ul></li>
-</ul></li>
+<li>SAC：采用 GPT-3.5 判断是否遵循指令，输入背景音频字幕、问题来判断回答是否正确。</li>
 </ul>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB56b8141722ab7f918c5aa38d181eda80?method=download&shareKey=3e625bfdbb102db169b4949240255791" width="618"></p>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEBffd3a29225cf12b998490d8426253b05?method=download&shareKey=230db00446336a0021a7ac2b07e62afc" width="615"></p>
-<ul>
-<li>有/无 activation tuning，level 1 的任务性能差异较小。而没有
-activation tuning 时，level 2、3 的任务性能很差。</li>
+</li>
 </ul>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB7d4db89b4c5658bfd92e661fc81c8ac7?method=download&shareKey=d39468c63479cb514c27f2ee2b6c3150" width="613"></p>
-<ul>
-<li>测试时直接减小 LoRA 的缩放系数：当降到 2
-时，模型恢复了指令跟随、涌现能力，但 ASR 性能显著下降。</li>
+</li>
 </ul>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEBc3a769675a3e23ca4f216c9a00d7ff58?method=download&shareKey=0573ee2163719831057407fe49f9a5d8" width="615"></p>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB56b8141722ab7f918c5aa38d181eda80?method=download&shareKey=3e625bfdbb102db169b4949240255791" width="618">
+<img src="https://note.youdao.com/yws/api/personal/file/WEBffd3a29225cf12b998490d8426253b05?method=download&shareKey=230db00446336a0021a7ac2b07e62afc" width="615">
 <ul>
-<li>activation tuning 中的任务：采用 response
-更长、更丰富的任务微调。</li>
+<li>有/无 activation tuning，level 1 的任务性能差异较小。而没有 activation tuning 时，level 2、3 的任务性能很差。</li>
 </ul>
-<h1 id="其它">4. 其它</h1>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB7d4db89b4c5658bfd92e661fc81c8ac7?method=download&shareKey=d39468c63479cb514c27f2ee2b6c3150" width="613">
 <ul>
-<li>Tang C, Yu W, Sun G, et al. SALMONN: Towards Generic Hearing
-Abilities for Large Language Models[J]. arXiv preprint arXiv:2310.13289,
-2023.</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/bytedance/SALMONN" class="uri">https://github.com/bytedance/SALMONN</a></li>
+<li>测试时直接减小 LoRA 的缩放系数：当降到 2 时，模型恢复了指令跟随、涌现能力，但 ASR 性能显著下降。</li>
+</ul>
+<img src="https://note.youdao.com/yws/api/personal/file/WEBc3a769675a3e23ca4f216c9a00d7ff58?method=download&shareKey=0573ee2163719831057407fe49f9a5d8" width="615">
+<ul>
+<li>activation tuning 中的任务：采用 response 更长、更丰富的任务微调。</li>
+</ul>
+<h1 id="其它">4.  其它</h1>
+<ul>
+<li>Tang C, Yu W, Sun G, et al. SALMONN: Towards Generic Hearing Abilities for Large Language Models[J]. arXiv preprint arXiv:2310.13289, 2023.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/bytedance/SALMONN">https://github.com/bytedance/SALMONN</a></li>
 <li>音频事件输入：不需建模时间相关性，通常视为固定大小的语谱图。</li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">

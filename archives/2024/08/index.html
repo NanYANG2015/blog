@@ -401,13 +401,11 @@
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                    1. 系统结构
+                                    1.  系统结构
 
-*
-系统提示：采用系统提示启用不同的语音理解模式，没有系统提示时为通用的口语对话模型。
-* 相较于视觉模块采用 cross attention，语音表示作为 LLM
-输入，可以直接利用 LLM 的所有能力。
-能
+* 系统提示：采用系统提示启用不同的语音理解模式，没有系统提示时为通用的口语对话模型。
+* 相较于视觉模块采用 cross attention，语音表示作为 LLM 输入，可以直接利用 LLM 的所有能力。
+能力：ASR
                                 
                             </div>
                             <div class="publish-info">
@@ -463,11 +461,13 @@
 从预训练数据中挑选数学相关的，转换为问答格式。
 创建数学能力分类，检测模型性能较差的能力，人工标注提示。
 
+
 扩充逐步推理过程
 
 CoT，提高推理能力。
 Llama 3 生成逐步解答。
-用正确答案、Llama 3
+用正确答案、Llama 3 自我验证过滤。
+
                                 
                             </div>
                             <div class="publish-info">
@@ -517,16 +517,18 @@ Llama 3 生成逐步解答。
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                    1. 能力
+                                    1.  能力
+
 
 搜索引擎
-采用 Brave Search
-回答关于超出其知识截止日期的近期事件、需要从网络检索特定信息的问题。
+采用 Brave Search 回答关于超出其知识截止日期的近期事件、需要从网络检索特定信息的问题。
+
+
 Python 解释器
 
 支持生成、执行代码，进行复杂计算。如读取用户上传的文件进行分析。
 
-文件
+文件类型：.t
                                 
                             </div>
                             <div class="publish-info">
@@ -577,13 +579,13 @@ Python 解释器
                             <div class="summary block-with-text">
                                 
                                     德、法、意大利、葡萄牙、印地、西班牙、泰
-1. 专家训练
+1.  专家训练
 
 用于检索、生成高质量的指令微调数据。
-基于预训练模型，在主要为多语种 token 的数据上 continue
-pre-training、post 训练。
+基于预训练模型，在主要为多语种 token 的数据上 continue pre-training、post 训练。
 
-2. SF
+2.  SFT 数据
+
                                 
                             </div>
                             <div class="publish-info">
@@ -634,11 +636,10 @@ pre-training、post 训练。
                             <div class="summary block-with-text">
                                 
                                     
-高优语言：Python, Java, Javascript, C/C++, Typescript, Rust, PHP,
-HTML/CSS, SQL, bash/shell。
+高优语言：Python, Java, Javascript, C/C++, Typescript, Rust, PHP, HTML/CSS, SQL, bash/shell。
 能力：代码生成、文档编写、调试、review。
 
-1
+1.  专家
                                 
                             </div>
                             <div class="publish-info">
@@ -692,9 +693,10 @@ HTML/CSS, SQL, bash/shell。
 仅采用短文本 SFT，长文本能力显著退化。
 主要的长文本用例：（多轮）问答、长文本摘要、代码库推理
 
+
 问答
-将预训练数据中的长文本分为 8K token 的块，采用早期版本基于文本块生成
-QA 对。SFT 训练时将整个文档作为
+将预训练数据中的长文本分为 8K token 的块，采用早期版本基于文本块生成 QA 对。SFT 训练时将整个文档作为上下文。
+
                                 
                             </div>
                             <div class="publish-info">

@@ -380,33 +380,21 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <ul>
-<li>Zhang Q, Cheng L, Deng C, et al. OmniFlatten: An End-to-end GPT
-Model for Seamless Voice Conversation[J]. arXiv preprint
-arXiv:2410.17799, 2024.</li>
-<li><a target="_blank" rel="noopener" href="https://omniflatten.github.io/" class="uri">https://omniflatten.github.io/</a></li>
+<li>Zhang Q, Cheng L, Deng C, et al. OmniFlatten: An End-to-end GPT Model for Seamless Voice Conversation[J]. arXiv preprint arXiv:2410.17799, 2024.</li>
+<li><a target="_blank" rel="noopener" href="https://omniflatten.github.io/">https://omniflatten.github.io/</a></li>
 <li>作者：来自阿里通义实验室</li>
-<li><font color="red">创新点：不进行计算密集型的预训练，而是通过 10wh
-ASR、TTS 任务进行模态对齐。</font>相较于 SyncLLM，不对音频离散 token
-去重，避免重建时引入的误差导致退化。</li>
+<li><font color="red">创新点：不进行计算密集型的预训练，而是通过 10wh ASR、TTS 任务进行模态对齐。</font>相较于 SyncLLM，不对音频离散 token 去重，避免重建时引入的误差导致退化。</li>
 </ul>
-<h1 id="系统结构">1. 系统结构</h1>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEBfd17db7ed1e694c16cfad004cf9e5018?method=download&shareKey=a02ef1318c7f19e3d18fb9f2ca7e3c22" width="698"></p>
+<h1 id="系统结构">1.  系统结构</h1>
+<img src="https://note.youdao.com/yws/api/personal/file/WEBfd17db7ed1e694c16cfad004cf9e5018?method=download&shareKey=a02ef1318c7f19e3d18fb9f2ca7e3c22" width="698">
 <ul>
 <li>离散语音 tokenizer: 同 CosyVoice，单码本 4096，25Hz。</li>
 <li>Qwen2-0.5B。</li>
-<li>采用固定大小的文本 token chunk size = 2、音频 token chunk size =
-10。文本结束后填充 <span class="math inline">\(\text
-{silent_text_token}\)</span>，音频流填充 <span class="math inline">\(\text {silent_speech_token}\)</span>。</li>
+<li>采用固定大小的文本 token chunk size = 2、音频 token chunk size = 10。文本结束后填充 <span class="katex-error" title="ParseError: KaTeX parse error: Expected &#039;}&#039;, got &#039;_&#039; at position 14: \text {silent_̲text_token}">\text {silent_text_token}</span>，音频流填充 <span class="katex-error" title="ParseError: KaTeX parse error: Expected &#039;}&#039;, got &#039;_&#039; at position 14: \text {silent_̲speech_token}">\text {silent_speech_token}</span>。</li>
 </ul>
-<h1 id="训练">2. 训练</h1>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB13b06bb475f1846d6a29e6b723c294fc?method=download&shareKey=fd70b43e04e492fec9f775a7266019c4" width="578"></p>
+<h1 id="训练">2.  训练</h1>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB13b06bb475f1846d6a29e6b723c294fc?method=download&shareKey=fd70b43e04e492fec9f775a7266019c4" width="578">
 <table>
-<colgroup>
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-</colgroup>
 <thead>
 <tr>
 <th>多阶段后训练</th>
@@ -418,19 +406,15 @@ ASR、TTS 任务进行模态对齐。</font>相较于 SyncLLM，不对音频离�
 <tbody>
 <tr>
 <td>ASR + TTS</td>
-<td><span class="math inline">\([ASR][SOS] \mathrm{S} _ \text
-{seq}[EOS][SOT] \mathrm{T} _\mathrm{seq}[EOT] \\ [TTS][SOT] \mathrm{T}
-_\mathrm{seq}[EOT][SOS] \mathrm{S} _ \text {seq}[EOS]\)</span></td>
-<td>10wh 中英，Aishell-3 + LibriTTS + TED-LIUM + VoxPopuli + Librispeech
-+ MLS + 自有数据集</td>
+<td><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo stretchy="false">[</mo><mi>A</mi><mi>S</mi><mi>R</mi><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mi>S</mi><mi>O</mi><mi>S</mi><mo stretchy="false">]</mo><msub><mi mathvariant="normal">S</mi><mtext>seq</mtext></msub><mo stretchy="false">[</mo><mi>E</mi><mi>O</mi><mi>S</mi><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mi>S</mi><mi>O</mi><mi>T</mi><mo stretchy="false">]</mo><msub><mi mathvariant="normal">T</mi><mrow><mi mathvariant="normal">s</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">q</mi></mrow></msub><mo stretchy="false">[</mo><mi>E</mi><mi>O</mi><mi>T</mi><mo stretchy="false">]</mo><mspace linebreak="newline"></mspace><mo stretchy="false">[</mo><mi>T</mi><mi>T</mi><mi>S</mi><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mi>S</mi><mi>O</mi><mi>T</mi><mo stretchy="false">]</mo><msub><mi mathvariant="normal">T</mi><mrow><mi mathvariant="normal">s</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">q</mi></mrow></msub><mo stretchy="false">[</mo><mi>E</mi><mi>O</mi><mi>T</mi><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mi>S</mi><mi>O</mi><mi>S</mi><mo stretchy="false">]</mo><msub><mi mathvariant="normal">S</mi><mtext>seq</mtext></msub><mo stretchy="false">[</mo><mi>E</mi><mi>O</mi><mi>S</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[ASR][SOS] \mathrm{S} _ \text {seq}[EOS][SOT] \mathrm{T} _\mathrm{seq}[EOT] \\ [TTS][SOT] \mathrm{T} _\mathrm{seq}[EOT][SOS] \mathrm{S} _ \text {seq}[EOS]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.036108em;vertical-align:-0.286108em;"></span><span class="mopen">[</span><span class="mord mathdefault">A</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mclose">]</span><span class="mord"><span class="mord"><span class="mord mathrm">S</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord text mtight"><span class="mord mtight">seq</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mclose">]</span><span class="mord"><span class="mord"><span class="mord mathrm">T</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathrm mtight">s</span><span class="mord mathrm mtight">e</span><span class="mord mathrm mtight">q</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mclose">]</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:1.036108em;vertical-align:-0.286108em;"></span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mclose">]</span><span class="mord"><span class="mord"><span class="mord mathrm">T</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathrm mtight">s</span><span class="mord mathrm mtight">e</span><span class="mord mathrm mtight">q</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mclose">]</span><span class="mord"><span class="mord"><span class="mord mathrm">S</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord text mtight"><span class="mord mtight">seq</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mclose">]</span></span></span></span></td>
+<td>10wh 中英，Aishell-3 + LibriTTS + TED-LIUM + VoxPopuli + Librispeech + MLS + 自有数据集</td>
 <td>最大序列长度 1024。</td>
 </tr>
 <tr>
 <td>flatten 4 流</td>
 <td>用户+系统 文本+音频</td>
 <td>36w turn-based 多轮对话，2kh，文本对话数据集 TTS。</td>
-<td>最大序列长度 8192。<br>mask 用户通道 loss
-训练更稳定，可能由于用户通道进行了加噪。</td>
+<td>最大序列长度 8192。<br>mask 用户通道 loss 训练更稳定，可能由于用户通道进行了加噪。</td>
 </tr>
 <tr>
 <td>flatten 3 流</td>
@@ -453,30 +437,28 @@ _\mathrm{seq}[EOT][SOS] \mathrm{S} _ \text {seq}[EOS]\)</span></td>
 <ul>
 <li>Alpaca、Moss、BelleCN、ultraChat
 <ul>
-<li>过滤：含大量非文本元素（如代码、数学表达式）、中英文超过 200
-个单词、包含不常见的符号等。</li>
-</ul></li>
+<li>过滤：含大量非文本元素（如代码、数学表达式）、中英文超过 200 个单词、包含不常见的符号等。</li>
+</ul>
+</li>
 <li>CosyVoice TTS
 <ul>
-<li>用户说话人 embedding 从 Librispeech、3DSpeaker
-中采样。用户通道加噪，MUSAN，SNR [15, 25]dB。</li>
-</ul></li>
-<li>用户语音结束后助手立即回复，助手语音结束后、用户开始说话前采样停顿时长。</li>
-</ul></li>
+<li>用户说话人 embedding 从 Librispeech、3DSpeaker 中采样。用户通道加噪，MUSAN，SNR [15, 25]dB。</li>
 </ul>
-<h1 id="评价">3. 评价</h1>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEBcb0e6762b605fa1f180ec3839885d1fd?method=download&shareKey=8b25eaa03696952671f9e646b74f2e48" width="572"></p>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEBa260cc2a26dbc448db8760136daeef32?method=download&shareKey=70e936e1f4329ece4a6ed144996b01c5" width="574"></p>
+</li>
+<li>用户语音结束后助手立即回复，助手语音结束后、用户开始说话前采样停顿时长。</li>
+</ul>
+</li>
+</ul>
+<h1 id="评价">3.  评价</h1>
+<img src="https://note.youdao.com/yws/api/personal/file/WEBcb0e6762b605fa1f180ec3839885d1fd?method=download&shareKey=8b25eaa03696952671f9e646b74f2e48" width="572">
+<img src="https://note.youdao.com/yws/api/personal/file/WEBa260cc2a26dbc448db8760136daeef32?method=download&shareKey=70e936e1f4329ece4a6ed144996b01c5" width="574">
 <p>* <a target="_blank" rel="noopener" href="https://help.aliyun.com/zh/model-studio/developer-reference/use-qwen-by-calling-api">QWen-max</a></p>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB2d37acf019e0623d345e802f5b6b4f9c?method=download&shareKey=8bac17fdc78a3aa2f54520cc59769a96" width="282"></p>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB58c32ed1ac62ba092fc83f095d4f1e6f?method=download&shareKey=96a4be923da7344deb2a32bb059e7d5d" width="691"></p>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB2d37acf019e0623d345e802f5b6b4f9c?method=download&shareKey=8bac17fdc78a3aa2f54520cc59769a96" width="282">
+<img src="https://note.youdao.com/yws/api/personal/file/WEB58c32ed1ac62ba092fc83f095d4f1e6f?method=download&shareKey=96a4be923da7344deb2a32bb059e7d5d" width="691">
 <ul>
-<li>Assistant Turn-taking Acc@k: 用户有语义的语音 token 结束后第 k 个
-token 助手正确预测为非 silent token。</li>
-<li>User Turn-taking Acc@k: 助手说话时用户输入有语义的语音 token，第 k
-个 token 后助手正确预测为 silent token。</li>
-<li><font color="red">taking turn 平均响应时间：系统 160ms，用户
-805ms。</font>训练集未覆盖用户打断助手语音的数据。</li>
+<li>Assistant Turn-taking Acc@k: 用户有语义的语音 token 结束后第 k 个 token 助手正确预测为非 silent token。</li>
+<li>User Turn-taking Acc@k: 助手说话时用户输入有语义的语音 token，第 k 个 token 后助手正确预测为 silent token。</li>
+<li><font color="red">taking turn 平均响应时间：系统 160ms，用户 805ms。</font>训练集未覆盖用户打断助手语音的数据。</li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 

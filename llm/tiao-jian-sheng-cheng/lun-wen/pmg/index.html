@@ -6,8 +6,8 @@
     <meta charset="utf-8">
     <meta name="keywords" content="PMG, AI, 语音, 算法">
     <meta name="description" content="
-论文：Shen X, Zhang R, Zhao X, et al. PMG: Personalized
-Multimodal Generation with Large Language Models[C]//Proceedings">
+
+论文：Shen X, Zhang R, Zhao X, et al. PMG: Personalized Multimodal Generation with Large Language Models[C]//Proceedings ">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -386,56 +386,51 @@ Multimodal Generation with Large Language Models[C]//Proceedings">
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <ul>
-<li><p>论文：Shen X, Zhang R, Zhao X, et al. PMG: Personalized
-Multimodal Generation with Large Language Models[C]//Proceedings of the
-ACM on Web Conference 2024. 2024: 3833-3843.</p></li>
-<li><p>作者：Huawei Noah's Ark Lab 等。</p></li>
-<li><p>核心思想</p>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEBe6e00603cdbba119101bfb29a81e6318?method=download&shareKey=a66e5012eb353b0a2aecbb495b5c8dce" width="655">
-<img src="https://note.youdao.com/yws/api/personal/file/WEB08b907e759dbc4b43534ead8dd272e4a?method=download&shareKey=8a0eb577140cc1f04f5623d225f8db34" width="254"></p>
+<li>
+<p>论文：Shen X, Zhang R, Zhao X, et al. PMG: Personalized Multimodal Generation with Large Language Models[C]//Proceedings of the ACM on Web Conference 2024. 2024: 3833-3843.</p>
+</li>
+<li>
+<p>作者：Huawei Noah’s Ark Lab 等。</p>
+</li>
+<li>
+<p>核心思想</p>
+<img src="https://note.youdao.com/yws/api/personal/file/WEBe6e00603cdbba119101bfb29a81e6318?method=download&shareKey=a66e5012eb353b0a2aecbb495b5c8dce" width="655">
+<img src="https://note.youdao.com/yws/api/personal/file/WEB08b907e759dbc4b43534ead8dd272e4a?method=download&shareKey=8a0eb577140cc1f04f5623d225f8db34" width="254">
++   预处理用户历史行为
+<pre><code>$$ x_i=\left[LLM_g\left(t_&#123;h_i&#125;\right), LLM_g\left(v_&#123;h_i&#125;\right), \cdots\right] $$ $$ y_i=\left[LLM_g\left(t_&#123;c_i&#125;\right), LLM_g\left(v_&#123;c_i&#125;\right), \cdots\right] $$ $H=\left\&#123;h_1, h_2, \cdots\right\&#125;$ 表示用户历史点击的 items，$C=\left\&#123;c_1, c_2, \cdots\right\&#125;$ 表示历史对话， $t$、$v$ …… 分别表示文本、视觉等多模态数据，LLM 为字幕模型或多模态模型，$x$、$y$ 为对应的文本 summary。
+</code></pre>
 <ul>
-<li><p>预处理用户历史行为</p>
-<p><span class="math display">\[ x_i=\left[LLM_g\left(t_{h_i}\right),
-LLM_g\left(v_{h_i}\right), \cdots\right] \]</span> <span class="math display">\[ y_i=\left[LLM_g\left(t_{c_i}\right),
-LLM_g\left(v_{c_i}\right), \cdots\right] \]</span> <span class="math inline">\(H=\left\{h_1, h_2, \cdots\right\}\)</span>
-表示用户历史点击的 items，<span class="math inline">\(C=\left\{c_1, c_2,
-\cdots\right\}\)</span> 表示历史对话， <span class="math inline">\(t\)</span>、<span class="math inline">\(v\)</span>
-…… 分别表示文本、视觉等多模态数据，LLM 为字幕模型或多模态模型，<span class="math inline">\(x\)</span>、<span class="math inline">\(y\)</span>
-为对应的文本 summary。</p></li>
-<li><p>生成用户偏好的文本关键词</p>
+<li>
+<p>生成用户偏好的文本关键词</p>
 <p>为每个场景人工设计</p>
 <ul>
-<li>指令 <span class="math inline">\(p\)</span>: user preference
-extraction。</li>
-<li>属性 <span class="math inline">\(a_i\)</span>：如衣服的颜色、材质、形状；电影的类型、导演、起源等。</li>
-<li>示例 <span class="math inline">\(e\)</span>：指定输出格式和示例关键词（如可爱、卡通等）。</li>
+<li>指令 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span>: user preference extraction。</li>
+<li>属性 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">a_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>：如衣服的颜色、材质、形状；电影的类型、导演、起源等。</li>
+<li>示例 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>e</mi></mrow><annotation encoding="application/x-tex">e</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">e</span></span></span></span>：指定输出格式和示例关键词（如可爱、卡通等）。</li>
 </ul>
-<p>采用冻结的 LLM 回答关于每个属性的用户偏好。类似的，生成目标 item
-关键词。</p>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB0305f1b526cbbe8b027226b52cc0aee8?method=download&shareKey=74b6d021cb0a92a21128c36c0885a398" width="602"></p></li>
-<li><p>生成 Soft Preference Embeddings</p>
+<p>采用冻结的 LLM 回答关于每个属性的用户偏好。类似的，生成目标 item 关键词。</p>
+<img src="https://note.youdao.com/yws/api/personal/file/WEB0305f1b526cbbe8b027226b52cc0aee8?method=download&shareKey=74b6d021cb0a92a21128c36c0885a398" width="602">
+</li>
+<li>
+<p>生成 Soft Preference Embeddings</p>
 <ul>
-<li><font color="green">添加多模态 token，采用线性层对齐 LLM embedding
-和 generator 的文本编码器 embedding（参考[18]）。</font></li>
-<li>采用 <font color="green">P-Tuning V2[20]</font> 微调 LLM，添加 <span class="math inline">\(S\)</span> 个可训练的前缀 embedding <span class="math inline">\(\mathbf{t}=\left\{t_1, \cdots,
-t_S\right\}\)</span>。<font color="green">训练方式见 Sec.
-3.3.2</font>。</li>
-<li>将 <span class="math inline">\(p\)</span>、<span class="math inline">\(x\)</span>、<span class="math inline">\(y\)</span>、多模态 tokens <span class="math inline">\(\mathbf{m}\)</span> 输入 LLM 得到 embedding <span class="math inline">\(\mathbf{E}_m\)</span>。 <span class="math display">\[ \text {prompt}=(p, \mathbf{x},
-\mathbf{y})\]</span> <span class="math display">\[\left[\mathbf{E}_{\text {prompt}},
-\mathbf{E}_m\right]=LLM_f(\mathbf{t}, \text {prompt}, \mathbf{m})
-\]</span></li>
+<li><font color="green">添加多模态 token，采用线性层对齐 LLM embedding 和 generator 的文本编码器 embedding（参考[18]）。</font></li>
+<li>采用 <font color="green">P-Tuning V2[20]</font> 微调 LLM，添加 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi></mrow><annotation encoding="application/x-tex">S</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span></span></span></span> 个可训练的前缀 embedding <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="bold">t</mi><mo>=</mo><mrow><mo fence="true">{</mo><msub><mi>t</mi><mn>1</mn></msub><mo separator="true">,</mo><mo>⋯</mo><mtext> </mtext><mo separator="true">,</mo><msub><mi>t</mi><mi>S</mi></msub><mo fence="true">}</mo></mrow></mrow><annotation encoding="application/x-tex">\mathbf{t}=\left\{t_1, \cdots, t_S\right\}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.63492em;vertical-align:0em;"></span><span class="mord"><span class="mord mathbf">t</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;">{</span><span class="mord"><span class="mord mathdefault">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner">⋯</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.05764em;">S</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;">}</span></span></span></span></span>。<font color="green">训练方式见 Sec. 3.3.2</font>。</li>
+<li>将 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span>、<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span>、<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span>、多模态 tokens <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="bold">m</mi></mrow><annotation encoding="application/x-tex">\mathbf{m}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.44444em;vertical-align:0em;"></span><span class="mord"><span class="mord mathbf">m</span></span></span></span></span> 输入 LLM 得到 embedding <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="bold">E</mi><mi>m</mi></msub></mrow><annotation encoding="application/x-tex">\mathbf{E}_m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83611em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord"><span class="mord mathbf">E</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">m</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>。 $$ \text {prompt}=(p, \mathbf{x}, \mathbf{y})$$ $$\left[\mathbf{E}_{\text {prompt}}, \mathbf{E}_m\right]=LLM_f(\mathbf{t}, \text {prompt}, \mathbf{m}) $$</li>
 <li>用于 multimodal bias correction。</li>
-</ul></li>
-<li><p>权衡目标准确度、偏好</p>
-<p><span class="math display">\[M=\operatorname{Generator}\left(w_p
-\cdot \mathbf{E}^p, w_t \cdot \mathbf{E}^t\right)\]</span> <span class="math display">\[ d_p =\frac{e_M \cdot
-e_p}{\left\|e_M\right\|_2\left\|e_p\right\|_2} \]</span> <span class="math display">\[ d_t =\frac{e_M \cdot
-e_t}{\left\|e_M\right\|_2\left\|e_t\right\|_2} \]</span> <span class="math display">\[z=\alpha \cdot \log d_p+(1-\alpha) \cdot \log d_t
-\]</span></p>
-<p>通常 <span class="math inline">\(\alpha\)</span> 取
-0.5。采用多个预定义的 <span class="math inline">\(w_p\)</span>、<span class="math inline">\(w_t\)</span> 生成，选取使得分 <span class="math inline">\(z\)</span> 最高的。</p></li>
-</ul></li>
-<li><p>实验：根据用户的历史点击产品生成衣服图像，根据用户观看过的电影生成个性化海报，根据用户历史使用的表情图、历史对话和当前对话生成表情图。</p></li>
+</ul>
+</li>
+<li>
+<p>权衡目标准确度、偏好</p>
+<p class="katex-block katex-error" title="ParseError: KaTeX parse error: Can&#039;t use function &#039;$&#039; in math mode at position 86: …hbf{E}^t\right)$̲$ $$ d_p =\frac…">M=\operatorname{Generator}\left(w_p \cdot \mathbf{E}^p, w_t \cdot \mathbf{E}^t\right)$$ $$ d_p =\frac{e_M \cdot e_p}{\left\|e_M\right\|_2\left\|e_p\right\|_2} $$ $$ d_t =\frac{e_M \cdot e_t}{\left\|e_M\right\|_2\left\|e_t\right\|_2} $$ $$z=\alpha \cdot \log d_p+(1-\alpha) \cdot \log d_t 
+</p>
+<p>通常 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>α</mi></mrow><annotation encoding="application/x-tex">\alpha</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.0037em;">α</span></span></span></span> 取 0.5。采用多个预定义的 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>w</mi><mi>p</mi></msub></mrow><annotation encoding="application/x-tex">w_p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">p</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>、<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>w</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">w_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 生成，选取使得分 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.04398em;">z</span></span></span></span> 最高的。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>实验：根据用户的历史点击产品生成衣服图像，根据用户观看过的电影生成个性化海报，根据用户历史使用的表情图、历史对话和当前对话生成表情图。</p>
+</li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 

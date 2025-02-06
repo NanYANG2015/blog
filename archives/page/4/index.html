@@ -405,9 +405,8 @@
 作者：复旦大学等。
 贡献
 
-基于离散 token，实现了 any-to-any 多模态
-LLM，即支持理解、生成各种模态，包含语音、文本、图像、音乐。以文本为中心，通过将其它模态与文本对齐，实现所有模态之间的相互对齐。
-any
+基于离散 token，实现了 any-to-any 多模态 LLM，即支持理解、生成各种模态，包含语音、文本、图像、音乐。以文本为中心，通过将其它模态与文本对齐，实现所有模态之间的相互对齐。
+any-to-an
                                 
                             </div>
                             <div class="publish-info">
@@ -521,11 +520,10 @@ any
                             <div class="summary block-with-text">
                                 
                                     不能用于 beam search。
- 不支持
-batch size &gt; 1
-1. TextStreamer
-若输出 token 构成完整单词，立即打印到 stdout。 skip_prompt：若为
-True，则第一次调用 
+ 不支持 batch size &gt; 1
+1.  TextStreamer
+若输出 token 构成完整单词，立即打印到 stdout。
+skip_prompt：若为 True，则第一次调用 put(
                                 
                             </div>
                             <div class="publish-info">
@@ -580,14 +578,18 @@ True，则第一次调用
                             <div class="summary block-with-text">
                                 
                                     
+
 作者：Meta AI 等。
+
+
 功能：生成自然的口语对话音频（双通道）。
 示例：https://speechbot.github.io/dgslm/
+
+
 特点
 
-采用 cross attention
-结构，能同时听+说。
-能同时生
+采用 cross attention 结构，能同时听+说。
+能同时生成语音
                                 
                             </div>
                             <div class="publish-info">
@@ -639,10 +641,7 @@ True，则第一次调用
                                 
                                     
 作者：OpenAI
-wav2vec 2.0
-等无监督预训练的语音编码器，需要有监督训练解码器。Whisper
-采用多语种、多任务训练，以及 68wh
-大规模低质量弱监督训练集，可以在广泛的语音环境中鲁棒地工作，不需要特定数据集的
+wav2vec 2.0 等无监督预训练的语音编码器，需要有监督训练解码器。Whisper 采用多语种、多任务训练，以及 68wh 大规模低质量弱监督训练集，可以在广泛的语音环境中鲁棒地工作，不需要特定数据集的微调、ze
                                 
                             </div>
                             <div class="publish-info">
@@ -697,10 +696,9 @@ wav2vec 2.0
                             <div class="summary block-with-text">
                                 
                                     视频地址 https://www.youtube.com/watch?v=CgQ3lUOpXgc&amp;ab_channel=Hung-yiLee
-1. audio tokenization
+1.  audio tokenization
 
-audio encoder +
-co
+audio encoder + codeb
                                 
                             </div>
                             <div class="publish-info">
@@ -756,12 +754,10 @@ co
                                 
                                     
 作者：Google, 2022.09。
-功能：输入 prompt
-音频（3s），生成延续，在语法、语义上连贯，同时保持说话人的音色、韵律、录音环境。还能扩展到钢琴音乐延续。
+功能：输入 prompt 音频（3s），生成延续，在语法、语义上连贯，同时保持说话人的音色、韵律、录音环境。还能扩展到钢琴音乐延续。
 创新点
 
-音频表示同时采用语义 token、声学
-
+音频表示同时采用语义 token、声学 token，兼
                                 
                             </div>
                             <div class="publish-info">
@@ -817,13 +813,12 @@ co
                                 
                                     
 作者：Google，2023.06。
-功能：speech-to-speech translation、speech-to-text
-translation、ASR、MT、TTS，多语种。
+功能：speech-to-speech translation、speech-to-text translation、ASR、MT、TTS，多语种。
 
-1. 系统结构
+1.  系统结构
 
 
-输入：在输入
+输入：在输入前加任务 ta
                                 
                             </div>
                             <div class="publish-info">
@@ -891,7 +886,7 @@ translation、ASR、MT、TTS，多语种。
 
 
 
-0.1. 挑战及相关研究
+0.1.  挑战及相关研究
 
 数据
 
@@ -901,7 +896,7 @@ translation、ASR、MT、TTS，多语种。
 
 Task2Vec 多样性系数
 
-Beyond scale: the diversity coefficient 
+Beyond scale: the diversity coefficient as a data qua
                                 
                             </div>
                             <div class="publish-info">
@@ -956,9 +951,11 @@ Beyond scale: the diversity coefficient
                             <div class="summary block-with-text">
                                 
                                     
+
 作者：微软
-LoRA (Low-Rank
-Adaptation)：过参数化（over-parametrized）模型实际上是低秩的。假设：微调时，模型权重的变化量也是低秩的。通过学习权重变化的低秩分解矩阵，间接地微调权重参数，同时可
+
+
+LoRA (Low-Rank Adaptation)：过参数化（over-parametrized）模型实际上是低秩的。假设：微调时，模型权重的变化量也是低秩的。通过学习权重变化的低秩分解矩阵，间接地微调权重参数，同时可
                                 
                             </div>
                             <div class="publish-info">
@@ -1010,13 +1007,12 @@ Adaptation)：过参数化（over-parametrized）模型实际上是低秩的。�
                                 
                                     
 作者：清华、字节
-SALMONN（speech audio language music open neural
-network），通用音频理解 LLM，支持开放式任务。
+SALMONN（speech audio language music open neural network），通用音频理解 LLM，支持开放式任务。
 
-1. 模型结构
+1.  模型结构
 
 
-BEATs: 迭代自监督训练
+BEATs: 迭代自监督训练，提取非语音的
                                 
                             </div>
                             <div class="publish-info">
@@ -1074,10 +1070,10 @@ BEATs: 迭代自监督训练
 作者：微软、CMU
 创新点：将所有音频任务构建为文本生成任务：输入音频、文本，输出文本。支持封闭式和开放式音频任务。
 
-1. 模型结构
+1.  模型结构
 
 
-学习 HTSAT (hierarchical token-semantic audi
+学习 HTSAT (hierarchical token-semantic audio tran
                                 
                             </div>
                             <div class="publish-info">
@@ -1133,8 +1129,7 @@ BEATs: 迭代自监督训练
                                 
                                     
 作者：阿里
-创新点：Qwen-Audio
-训练集涵盖30多个任务、各种音频类型（如语音、自然声音、音乐、歌曲）、8个语种，以提高通用音频理解能力。设计了多任务训练框架，通过共享、特定的标签分别实现知识共享、避免任务间的干扰。进一步采
+创新点：Qwen-Audio 训练集涵盖30多个任务、各种音频类型（如语音、自然声音、音乐、歌曲）、8个语种，以提高通用音频理解能力。设计了多任务训练框架，通过共享、特定的标签分别实现知识共享、避免任务间的干扰。进一步采用有监
                                 
                             </div>
                             <div class="publish-info">
@@ -1197,9 +1192,8 @@ BEATs: 迭代自监督训练
 作者：中科院、阿里达摩院
 创新点
 
-采用冻结语音 encoder (Whisper-small)、指令跟随 LLM
-(Llama-2-7B)，学习轻量级的 modality adapter 的方式，使 LLM
-具有处理语音输入
+采用冻结语音 encoder (Whisper-small)、指令跟随 LLM (Llama-2-7B)，学习轻量级的 modality adapter 的方式，使 LLM 具有处理语音输入的能力。
+由
                                 
                             </div>
                             <div class="publish-info">
@@ -1253,11 +1247,12 @@ BEATs: 迭代自监督训练
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                    1. VCTK
-2. LJSpeech
-3. LibriTTS
-585h，2456 说话人，24kHz。音频和文本来自 Librispeech。 + Zen H, Dang
-V, Clark R, et al. LibriTTS: 
+                                    1.  VCTK
+2.  LJSpeech
+3.  LibriTTS
+585h，2456 说话人，24kHz。音频和文本来自 Librispeech。
+
+Zen H, Dang V, Clark R, et al. LibriTTS: A 
                                 
                             </div>
                             <div class="publish-info">
@@ -1312,12 +1307,11 @@ V, Clark R, et al. LibriTTS:
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                    HuBERT: Hidden-Unit BERT，自监督语音表示学习，预测 masked
-帧的声音单元，学习声学模型、语言模型的联合信息。
+                                    HuBERT: Hidden-Unit BERT，自监督语音表示学习，预测 masked 帧的声音单元，学习声学模型、语言模型的联合信息。
 创新点：
 
 输入原始波形。
-离线 k-means 聚类生成预训练帧级对齐 label、聚类
+离线 k-means 聚类生成预训练帧级对齐 label、聚类集成（Cl
                                 
                             </div>
                             <div class="publish-info">
@@ -1371,11 +1365,11 @@ V, Clark R, et al. LibriTTS:
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                    BERT: Bidirectional Encoder Representations from
-Transformers。无监督预训练的语言表示模型。
+                                    BERT: Bidirectional Encoder Representations from Transformers。无监督预训练的语言表示模型。
 创新点：
 
-双向性：采用 Transformer 的 Encoder 结构、m
+
+双向性：采用 Transformer 的 Encoder 结构、mask
                                 
                             </div>
                             <div class="publish-info">
@@ -1430,16 +1424,14 @@ Transformers。无监督预训练的语言表示模型。
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                    1. 结构特点
-集成了计算机视觉领域最新的增强模块：Res2Net、SE
-block，聚合多层的特征，并采用 channel-dependent
-帧注意力改进了统计池化模块。
-2. 系统结构
+                                    1.  结构特点
+集成了计算机视觉领域最新的增强模块：Res2Net、SE block，聚合多层的特征，并采用 channel-dependent 帧注意力改进了统计池化模块。
+2.  系统结构
 
 
-3. 特征提取
+3.  特征提取
 
-数据增强
+数据增强：为每句话生
                                 
                             </div>
                             <div class="publish-info">
