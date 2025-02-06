@@ -4,10 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="SyncLLM, AI, 语音, 算法">
-    <meta name="description" content="
-Veluri B, Peloquin B N, Yu B, et al. Beyond Turn-Based Interfaces:
-Synchronous LLMs as Full-Duplex Dialogue Agents[J]">
+    <meta name="keywords" content="语音对话, 全双工">
+    <meta name="description" content="用户、回复音频 token chunk 交替，支持全双工语音对话。考虑网络延迟，多预测一个用户 chunk、回复 chunk。">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -359,7 +357,7 @@ Synchronous LLMs as Full-Duplex Dialogue Agents[J]">
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-11-06
+                    2025-02-07
                 </div>
                 
 
@@ -522,13 +520,13 @@ size 为 160/200ms 时性能相当，240ms 时性能下降。</font></p>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            支持多模态输入。LLM 响应 VAD 片段，先判断是否为提问，若否，停止生成。双工部署：同时部署两个 VITA 模型，一个为当前查询生成响应；另一个持续检测输入音频，若有新查询，打断当前生成，聚合历史 context，为新查询生成响应；两个模型交换身份。
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
                             <i class="far fa-clock fa-fw icon-date"></i>2024-11-07
-                            <i class="far fa-edit fa-fw icon-date"></i>2024-11-07
+                            <i class="far fa-edit fa-fw icon-date"></i>2025-02-07
                         </span>
                         <span class="publish-author">
                             
@@ -568,13 +566,13 @@ size 为 160/200ms 时性能相当，240ms 时性能下降。</font></p>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            用户音频 token chunk、回复文本 token chunk、回复音频 token chunk 交替，支持全双工语音对话。
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
                                 <i class="far fa-clock fa-fw icon-date"></i>2024-11-06
-                                <i class="far fa-edit fa-fw icon-date"></i>2024-11-06
+                                <i class="far fa-edit fa-fw icon-date"></i>2025-02-07
                             </span>
                         <span class="publish-author">
                             
@@ -754,12 +752,12 @@ size 为 160/200ms 时性能相当，240ms 时性能下降。</font></p>
 </main>
 
 
-<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<!-- <script>
     MathJax.Hub.Config({
         tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
     });
-</script>
+</script> -->
 
 
 

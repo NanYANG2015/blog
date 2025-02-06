@@ -1,0 +1,1269 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="位置编码, AI, 语音, 算法">
+    <meta name="description" content="1. 正弦位置编码
+
+提出：Vaswani A. Attention is all you need[J]. Advances in Neural
+Information Processing Systems, 2017.
+
+\[">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>位置编码 | 梦园</title>
+    <link rel="icon" type="image/png" href="/blog/favicon.png">
+    
+
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/blog/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/blog/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/blog/css/my.css">
+<link rel="stylesheet" type="text/css" href="/blog/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/blog/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/blog/css/post.css">
+
+
+
+
+    
+
+
+
+    <script src="/blog/libs/jquery/jquery-3.6.0.min.js"></script>
+
+    <!-- Google Site Verification -->
+    
+        <meta name="google-site-verification" content="wJ93QtauTaHcAdSnPmDKlVioh-uZJAIGPiJ5sKqbkYA">
+    
+
+    <!-- Bing Site Verification -->
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">梦园</div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/blog/" class="waves-effect waves-light">
+      
+      <i class="fas fa-list" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/blog/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/blog/about">
+          
+          <i class="fas fa-user-circle" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>我</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/blog/words">
+          
+          <i class="fas fa-pen" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>文字</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/blog/books">
+          
+          <i class="fas fa-book" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>书</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/blog/videos">
+          
+          <i class="fas fa-film" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>视频</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/blog/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">梦园</div>
+        <div class="logo-desc">
+            
+            欢迎来到梦园，这里主要记录、分享 语音、AI 相关论文、算法与思考，欢迎关注与交流！
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/blog/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-list"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/blog/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  style="background:  ;" >
+              
+                <li>
+
+                  <a href="/blog/about " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-user-circle" style="position: absolute;left:50px" ></i>
+			      
+		          <span>我</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/blog/words " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-pen" style="position: absolute;left:50px" ></i>
+			      
+		          <span>文字</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/blog/books " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-book" style="position: absolute;left:50px" ></i>
+			      
+		          <span>书</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/blog/videos " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-film" style="position: absolute;left:50px" ></i>
+			      
+		          <span>视频</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+<script src="/blog/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/blog/';
+            }
+        }
+    })();
+</script>
+
+
+<div class="bg-cover pd-header about-cover">
+    <div class="container">
+    <div class="row">
+    <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l1">
+        <div class="brand">
+            <div class="title">
+                
+                愿，彼此相伴，走过流年
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <style>
+    /* 随视窗调整大小、滚动 */
+    #toc-content {
+        height: calc(100vh - 200px);
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="pd-header post-cover">
+                <div class="container" style="right: 0px;left: 0px;">
+                    <div class="row">
+                        <div class="col s12 m12 l12">
+                            <div class="brand">
+                                <h1 class="description center-align post-title">位置编码</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tag-cate">
+                <div class="right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                机器学习
+                            </a>
+                        
+                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/Transformer/" class="post-category">
+                                Transformer
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2025-01-18
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2025-02-07
+                </div>
+                
+
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/blog/libs/prism/prism.min.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="正弦位置编码">1. 正弦位置编码</h1>
+<ul>
+<li>提出：Vaswani A. Attention is all you need[J]. Advances in Neural
+Information Processing Systems, 2017.</li>
+</ul>
+<p><span class="math display">\[ \begin{aligned}
+P E_{(pos, 2 i)} &amp; =\sin \left(pos / 10000^{2 i / d_{\text
+{model}}}\right) \\
+P E_{(pos, 2 i+1)} &amp; =\cos \left(pos / 10000^{2 i / d_{\text
+{model}}}\right)
+\end{aligned} \]</span> 每一维的位置编码为正/余弦函数。周期为 <span class="math inline">\(2 \pi \cdot 10000^{2 i / d_{\text
+{model}}}\)</span>，从 <span class="math inline">\(2 \pi\)</span> 增长到
+<span class="math inline">\(2 \pi \cdot 10000\)</span>。</p>
+<p>示例: <span class="math inline">\(d_{\text {model}}=512\)</span>
+<span class="math display">\[
+\overrightarrow{\mathrm{PE}}_{\mathrm{pos}}=\left[\begin{array}{c}
+\sin \left(\operatorname{pos} / 10000^{2 \times \frac{0}{d_{\text
+{model}}}}\right) \\
+\cos \left(\operatorname{pos} / 10000^{2 \times \frac{0}{d_{\text
+{model}}}}\right) \\
+\vdots \\
+\sin \left(\operatorname{pos} / 10000^{2 \times \frac{d_{\text
+{model}}/2-1}{d_{\text {model}}}}\right) \\
+\cos \left(\operatorname{pos} / 10000^{2 \times \frac{d_{\text
+{model}}/2-1}{d_{\text {model}}}}\right)
+\end{array}\right]_{\mathrm{d}_{\text {model }} \times 1}
+\approx\left[\begin{array}{c}
+\sin (\mathrm{pos}) \\
+\cos (\mathrm{pos}) \\
+\sin (0.964662 \cdot \operatorname{pos}) \\
+\cos (0.964662 \cdot \operatorname{pos}) \\
+\vdots \\
+\sin (0.000104 \cdot \operatorname{pos}) \\
+\cos (0.000104 \cdot \operatorname{pos})
+\end{array}\right]_{\mathrm{d}_{\text {model }} \times 1}
+\]</span> &gt; 注意：每一维的周期约为 [<span class="math inline">\(2
+\pi\)</span>, <span class="math inline">\(2 \pi \cdot 1.037\)</span>,
+<span class="math inline">\(2 \pi \cdot 1.075\)</span>, ...]，不为 <span class="math inline">\(2 \pi\)</span>
+的整数倍，所以正弦位置编码的有效范围不是 <span class="math inline">\(2
+\pi \cdot 10000\)</span>，约为 62.8k。</p>
+<ul>
+<li><p>相对位置信息：<font color="green"><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1706.03762">we hypothesized it would allow
+the model to easily learn to attend by relative positions, since for any
+fixed offset <span class="math inline">\(k\)</span>, <span class="math inline">\(PE_{pos+k}\)</span> can be represented as a linear
+function of <span class="math inline">\(PE_{pos}\)</span>.</a></font></p>
+<blockquote>
+<p><font color="green">如何在 attention score
+中体现相对位置的影响？</font></p>
+</blockquote></li>
+<li><p>长度外推：<font color="green"><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1706.03762">We chose the sinusoidal version
+because it may allow the model to extrapolate to sequence lengths longer
+than the ones encountered during training.</a></font></p>
+<blockquote>
+<p><font color="green">由于正/余弦函数的周期性、平滑性，使得模型能够适应与推断？是否有更直接的解释？</font></p>
+</blockquote></li>
+<li><p>实验对比了可学习的位置编码，模型性能几乎相同。</p></li>
+</ul>
+<h1 id="相对位置-aware-self-attention">2. 相对位置 aware
+self-attention</h1>
+<ul>
+<li><p>提出：Shaw P, Uszkoreit J, Vaswani A. Self-attention with
+relative position representations[J]. arXiv preprint arXiv:1803.02155,
+2018.</p></li>
+<li><p>原理</p>
+<p><font color="red">通过在 K、V 表示上加可学习的相对位置表示，在
+attention
+计算中引入相对位置信息，提高模型性能。</font>并将相对位置限制为 [-k,
+k]，假设超过一定距离后，精确的相对位置信息是无用的；还使模型能够泛化到训练期间未见过的序列长度。通过跨头、跨序列共享相对位置表示，降低增加的空间复杂度。</p>
+<p><span class="math display">\[ \begin{aligned}
+e_{i j}=\frac{\left(x_i W^Q\right)\left(x_j W^K\right)^T}{\sqrt{d_z}}
+&amp;=&gt; e_{i j}=\frac{x_i W^Q\left(x_j W^K+a_{i
+j}^K\right)^T}{\sqrt{d_z}} \\
+\alpha_{i j}&amp;=\frac{\exp e_{i j}}{\sum_{k=1}^n \exp e_{i k}} \\
+z_i=\sum_{j=1}^n \alpha_{i j}\left(x_j W^V\right) &amp;=&gt;
+z_i=\sum_{j=1}^n \alpha_{i j}\left(x_j W^V+a_{i j}^V\right) \\
+a_{i j}^K &amp; =w_{\operatorname{clip}(j-i, k)}^K \\
+a_{i j}^V &amp; =w_{\operatorname{clip}(j-i, k)}^V \\
+\operatorname{clip}(x, k) &amp; =\max (-k, \min (k, x))
+\end{aligned}\]</span></p></li>
+</ul>
+<h1 id="rope">3. RoPE</h1>
+<ul>
+<li><p>提出：Su J, Ahmed M, Lu Y, et al. Roformer: Enhanced transformer
+with rotary position embedding[J]. 2021.</p></li>
+<li><p>作者苏剑林的博客 <a target="_blank" rel="noopener" href="https://kexue.fm/archives/8265" class="uri">https://kexue.fm/archives/8265</a></p></li>
+<li><p>原理：找到一个关于向量 <span class="math inline">\(q\)</span>
+及其位置 <span class="math inline">\(m\)</span> 的位置编码函数 <span class="math inline">\(f(\mathbf{q}, m)\)</span>，使得 <span class="math inline">\(f(\mathbf{q}, m)\)</span> 与 <span class="math inline">\(f(\mathbf{k}, n)\)</span> 的内积仅与 <span class="math inline">\(\mathbf{q}\)</span>、<span class="math inline">\(\mathbf{k}\)</span>、<span class="math inline">\(m-n\)</span> 有关。 <span class="math display">\[\boldsymbol{f}(\boldsymbol{q}, m)=\boldsymbol{q}
+e^{\mathrm{i} m \theta}\]</span></p>
+<details>
+<summary>
+<p>推导</p>
+</summary>
+<p><font color="red">初始化 <span class="math inline">\(\boldsymbol{f}(\boldsymbol{q},
+0)=\boldsymbol{q}\)</span></font></p>
+<p>借助复数形式来求解，将函数表示为 <span class="math inline">\(\boldsymbol{f}(\boldsymbol{q},
+m)=R_f(\boldsymbol{q}, m) e^{\mathrm{i} \Theta_f(\boldsymbol{q},
+m)}\)</span></p>
+<p>根据复数内积公式 <span class="math inline">\(\left\langle z_1,
+z_2\right\rangle=r_1 r_2
+e^{i\left(\theta_1-\theta_2\right)}\)</span></p>
+<p>令 <span class="math inline">\(n=m\)</span>，则</p>
+<p><span class="math inline">\(R_f(\boldsymbol{q}, m)
+R_f(\boldsymbol{k}, m)=R_f(\boldsymbol{q}, 0) R_f(\boldsymbol{k},
+0)=\|\boldsymbol{q}\|\|\boldsymbol{k}\|\)</span>。<font color="red">令
+<span class="math inline">\(R_f(\boldsymbol{q},
+m)=\|\boldsymbol{q}\|\)</span>。</font></p>
+<p><span class="math inline">\(\Theta_f(\boldsymbol{q},
+m)-\Theta_f(\boldsymbol{k}, m)=\Theta_f(\boldsymbol{q},
+0)-\Theta_f(\boldsymbol{k},
+0)=\Theta(\boldsymbol{q})-\Theta(\boldsymbol{k})\)</span>。则 <span class="math inline">\(\Theta_f(\boldsymbol{q},
+m)-\Theta(\boldsymbol{q})=\Theta_f(\boldsymbol{k},
+m)-\Theta(\boldsymbol{k})\)</span>。所以 <span class="math inline">\(\Theta_f(\boldsymbol{q},
+m)-\Theta(\boldsymbol{q})\)</span> 应该是一个只与 <span class="math inline">\(m\)</span> 相关、与 <span class="math inline">\(\boldsymbol{q}\)</span> 无关的函数，记为 <span class="math inline">\(\varphi(m)\)</span>。</p>
+<p><span class="math inline">\(\varphi(m) - \varphi(m-1) =
+\Theta_f(\boldsymbol{q}, m) - \Theta_f(\boldsymbol{k}, m-1) -
+\Theta(\boldsymbol{q}) +
+\Theta(\boldsymbol{k})\)</span>。根据期望的特性，前两项的结果仅与 <span class="math inline">\(\boldsymbol{q}\)</span>、<span class="math inline">\(\boldsymbol{k}\)</span>、1
+相关，后两项为常量，因此 <span class="math inline">\(\{\varphi(m)\}\)</span>
+为等差数列。<font color="red">令 <span class="math inline">\(\varphi(m)
+= m \theta\)</span>。</font></p>
+<p><span class="math display">\[\boldsymbol{f}(\boldsymbol{q}, m)=\|q\|
+e^{\mathrm{i}(\Theta(\boldsymbol{q})+m \theta)}=\boldsymbol{q}
+e^{\mathrm{i} m \theta}\]</span></p>
+</details>
+<p><span class="math display">\[ \left(\begin{array}{c}
+q_0 \\
+q_1 \\
+q_2 \\
+q_3 \\
+\vdots \\
+q_{d-2} \\
+q_{d-1}
+\end{array}\right) \otimes\left(\begin{array}{c}
+\cos m \theta_0 \\
+\cos m \theta_0 \\
+\cos m \theta_1 \\
+\cos m \theta_1 \\
+\vdots \\
+\cos m \theta_{d / 2-1} \\
+\cos m \theta_{d / 2-1}
+\end{array}\right)+\left(\begin{array}{c}
+-q_1 \\
+q_0 \\
+-q_3 \\
+q_2 \\
+\vdots \\
+-q_{d-1} \\
+q_{d-2}
+\end{array}\right) \otimes\left(\begin{array}{c}
+\sin m \theta_0 \\
+\sin m \theta_0 \\
+\sin m \theta_1 \\
+\sin m \theta_1 \\
+\vdots \\
+\sin m \theta_{d / 2-1} \\
+\sin m \theta_{d / 2-1}
+\end{array}\right) \]</span></p>
+<p><span class="math display">\[\theta_i =10000^{-2 i / d}, i \in[0,1,
+\ldots, d / 2-1]\]</span></p>
+<details>
+<summary>
+<p>rotate_half</p>
+</summary>
+<p><span class="math display">\[ \left(\begin{array}{c}
+q_0 \\
+q_2 \\
+\vdots \\
+q_{d-2} \\
+q_1 \\
+q_3 \\
+\vdots \\
+q_{d-1}
+\end{array}\right) \otimes\left(\begin{array}{c}
+\cos m \theta_0 \\
+\cos m \theta_1 \\
+\vdots \\
+\cos m \theta_{d / 2-1} \\
+\cos m \theta_0 \\
+\cos m \theta_1 \\
+\vdots \\
+\cos m \theta_{d / 2-1}
+\end{array}\right)+\left(\begin{array}{c}
+-q_1 \\
+-q_3 \\
+\vdots \\
+-q_{d-1} \\
+q_0 \\
+q_2 \\
+\vdots \\
+q_{d-2}
+\end{array}\right) \otimes\left(\begin{array}{c}
+\sin m \theta_0 \\
+\sin m \theta_1 \\
+\vdots \\
+\sin m \theta_{d / 2-1} \\
+\sin m \theta_0 \\
+\sin m \theta_1 \\
+\vdots \\
+\sin m \theta_{d / 2-1}
+\end{array}\right) \]</span></p>
+</details>
+<h2 id="远程衰减">3.1. 远程衰减</h2>
+<p>随着相对距离增加，<span class="math inline">\(\mathbf{q}\)</span>、<span class="math inline">\(\mathbf{k}\)</span> 的内积震荡衰减。</p></li>
+</ul>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB6f4d4847e72369309380937443c06ebe?method=download&shareKey=084284ff0628e98fe5754563476382e7" width="320"></p>
+<details>
+<summary>
+python 代码
+</summary>
+<pre class="line-numbers language-Python" data-language="Python"><code class="language-Python">import numpy as np
+import matplotlib.pyplot as plt
+
+
+def rotate(v, theta):
+    &quot;&quot;&quot;
+    Rotate vector v by theta radians.
+    &quot;&quot;&quot;
+    rotation_matrix &#x3D; np.array([[np.cos(theta), -np.sin(theta)], [np.sin(theta), np.cos(theta)]])
+    return np.dot(rotation_matrix, v)
+
+
+def calculate_similarity(q, k, position_q, position_k):
+    &quot;&quot;&quot;
+    Calculate the similarity of RoPE-encoded vectors.
+    &quot;&quot;&quot;
+    theta_q &#x3D; np.array([10000**(-2 * i &#x2F; dim) * position_q for i in range(len(q))])
+    theta_k &#x3D; np.array([10000**(-2 * i &#x2F; dim) * position_k for i in range(len(k))])
+    q_rope &#x3D; [rotate(q[i], theta_q[i]) for i in range(len(q))]
+    k_rope &#x3D; [rotate(k[i], theta_k[i]) for i in range(len(k))]
+    q_rope &#x3D; np.concatenate(q_rope, axis&#x3D;0)
+    k_rope &#x3D; np.concatenate(k_rope, axis&#x3D;0)
+
+    return np.dot(q_rope, k_rope.T)
+
+
+dim &#x3D; 128
+q &#x3D; np.random.rand(int(dim &#x2F; 2), 2)  # dim-dimension vector divided into dim &#x2F; 2 2D sub-vectors
+k &#x3D; np.random.rand(int(dim &#x2F; 2), 2)
+
+# Calculate similarity for different positions
+position_q &#x3D; 128
+positions_k &#x3D; range(256)
+similarities &#x3D; [calculate_similarity(q, k, position_q, position_k) for position_k in positions_k]
+
+plt.plot([x - position_q for x in positions_k], similarities)
+plt.xlabel(&#39;position_k - position_q&#39;)
+plt.ylabel(&#39;attention score&#39;)
+plt.title(&#39;Similarity decay for RoPE&#39;)
+plt.show()
+plt.savefig(&#39;rope.png&#39;)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</details>
+<h1 id="alibi">4. ALiBi</h1>
+<ul>
+<li><p>提出：Press O, Smith N A, Lewis M. Train short, test long:
+Attention with linear biases enables input length extrapolation[J].
+arXiv preprint arXiv:2108.12409, 2021.</p></li>
+<li><p>目标：<font color="red">长度外推</font>。训练时采用短序列，推理时对更长的序列进行有效推断。</p></li>
+<li><p>原理：不向 word embedding 加 position embedding，而是在 QK
+attention score 上加一个与距离成比例的线性惩罚来实现外推。 <span class="math display">\[\operatorname{softmax}\left(q_i K^{\top}+m
+\cdot[-(i-1), \ldots,-2,-1,0]\right)\]</span> 其中，<span class="math inline">\(m\)</span> 为头特定的斜率超参数。</p></li>
+<li><p>斜率选择：对于 <span class="math inline">\(n\)</span>
+个头的模型，斜率值以 <span class="math inline">\(2^{\frac{-8}{n}}\)</span>
+为起始值、ratio。如8个头的模型，采用 <span class="math inline">\(\frac{1}{2^1}, \frac{1}{2^2}, \ldots,
+\frac{1}{2^8}\)</span>；16个头的模型，采用 <span class="math inline">\(\frac{1}{2^{0.5}}, \frac{1}{2^1},
+\frac{1}{2^{1.5}}, \ldots, \frac{1}{2^8}\)</span>。</p></li>
+<li><p>相关工作：<font color="red">正弦位置 embedding、RoPE
+长度外推能力有限；相对位置编码计算复杂度高、需要额外的内存</font>。效果对比详见论文表
+2-4。且 ALiBi 无额外的运行时开销。</p></li>
+<li><p>效果：可以实现与直接在长序列上训练、采用正弦位置编码的模型相当的困惑度，训练速度更快，内存需求更小。长度外推性能在训练序列长度两倍左右达到峰值，详见论文图
+6。不进行长度外推时，可实现更低或相似的困惑度。</p></li>
+<li><p>采用滑动窗口测试，外推到更长的序列时性能保持平稳或下降（区别于非重叠窗口测试），表明
+ALiBi 并不能利用更长的上下文进行更准确的预测。</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB2986d813a7847865bfc3874eca2abedb?method=download&shareKey=14d81391df804606315fe7ac557f1f23" width="536"></p></li>
+</ul>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <i class="fas fa-exclamation-circle"></i>
+            <span>
+                本文不允许转载。
+            </span>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/blog/ji-qi-xue-xi/transformer/attention/">
+                    <div class="card-content">
+                        <span class="card-title">Attention</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2025-01-18
+                            <i class="far fa-edit fa-fw icon-date"></i>2025-02-07
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            nanyang
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/blog/llm/yu-yin-dui-hua/lun-wen/minicpm-o-2.6/">
+                    <div class="card-content">
+                        <span class="card-title">MiniCPM-o 2.6</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-01-16
+                                <i class="far fa-edit fa-fw icon-date"></i>2025-02-07
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/blog/categories/LLM/" class="post-category">
+                                    LLM
+                                </a>
+                            
+                            <a href="/blog/categories/LLM/%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/" class="post-category">
+                                    语音对话
+                                </a>
+                            
+                            <a href="/blog/categories/LLM/%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/%E8%AE%BA%E6%96%87/" class="post-category">
+                                    论文
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('50')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE' || selection.getRangeAt(0).commonAncestorContainer.nodeName === 'CODE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: 梦园<br />'
+            + '文章作者: nanyang<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/blog/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/blog/libs/prism/prism.min.js"></script>
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/blog/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/blog/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/blog/libs/codeBlock/codeShrink.js"></script>
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/blog/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('6'),
+            headingSelector: 'h1, h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<!-- <script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    });
+</script> -->
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/blog/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="5001011615"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/blog/libs/aplayer/APlayer.min.js"></script>
+<script src="/blog/libs/aplayer/Meting.min.js"></script>
+
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2019-2025</span>
+            
+            <a href="/blog/about" target="_blank">nanyang</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+            <br>
+            
+            
+            
+            
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link ">
+    <a href="https://github.com/NanYANG2015" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:2271348390@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=2271348390" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 2271348390" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/blog/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/blog/libs/materialize/materialize.min.js"></script>
+    <script src="/blog/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/blog/libs/aos/aos.js"></script>
+    <script src="/blog/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/blog/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/blog/js/matery.js"></script>
+
+    
+        <!-- <script src='https://unpkg.com/mermaid@latest/dist/mermaid.min.js'></script> -->
+        <script src='/blog/libs/mermaid/mermaid.min.js'></script>
+        <script>
+          if (window.mermaid) {
+            mermaid.initialize({theme: 'neutral'});
+          }
+        </script>
+    
+
+    
+
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/blog/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

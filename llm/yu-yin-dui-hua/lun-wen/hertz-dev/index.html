@@ -462,36 +462,32 @@ LM 初始化。</li>
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/blog/yin-pin/yu-yin-he-cheng/lun-wen-chan-pin/cosyvoice-2/">
+                <a href="/blog/llm/yu-yin-dui-hua/ping-jie/">
                     <div class="card-content">
-                        <span class="card-title">CosyVoice 2</span>
+                        <span class="card-title">语音对话评价方案</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            TTS 模型 CosyVoice 2.0 版本。1. 同时支持流式、非流式，且两者性能相当。LLM 采用文本、语音 token 交错的数据格式，flow matching 采用 chunk-aware causal attention，首包延迟约 150ms。2. FSQ 替换 VQ，码本利用率 23% -> 100%，发音准确度显著提升。3. 采用预训练的 LLM Qwen2.5-0.5B。4. 增加 DPO 训练，进一步提升发音准确度。
+                            
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2024-12-21
-                            <i class="far fa-edit fa-fw icon-date"></i>2024-12-23
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-11-10
+                            <i class="far fa-edit fa-fw icon-date"></i>2025-02-07
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/blog/categories/%E9%9F%B3%E9%A2%91/" class="post-category">
-                                    音频
+                            <a href="/blog/categories/LLM/" class="post-category">
+                                    LLM
                                 </a>
                             
-                            <a href="/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%AD%E9%9F%B3%E5%90%88%E6%88%90/" class="post-category">
-                                    语音合成
-                                </a>
-                            
-                            <a href="/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%AD%E9%9F%B3%E5%90%88%E6%88%90/%E8%AE%BA%E6%96%87-%E4%BA%A7%E5%93%81/" class="post-category">
-                                    论文&产品
+                            <a href="/blog/categories/LLM/%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/" class="post-category">
+                                    语音对话
                                 </a>
                             
                             
@@ -516,13 +512,13 @@ LM 初始化。</li>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            支持多模态输入。LLM 响应 VAD 片段，先判断是否为提问，若否，停止生成。双工部署：同时部署两个 VITA 模型，一个为当前查询生成响应；另一个持续检测输入音频，若有新查询，打断当前生成，聚合历史 context，为新查询生成响应；两个模型交换身份。
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
                                 <i class="far fa-clock fa-fw icon-date"></i>2024-11-07
-                                <i class="far fa-edit fa-fw icon-date"></i>2024-11-07
+                                <i class="far fa-edit fa-fw icon-date"></i>2025-02-07
                             </span>
                         <span class="publish-author">
                             
@@ -702,12 +698,12 @@ LM 初始化。</li>
 </main>
 
 
-<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<!-- <script>
     MathJax.Hub.Config({
         tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
     });
-</script>
+</script> -->
 
 
 

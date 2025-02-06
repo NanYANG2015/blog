@@ -4,10 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="VITA, AI, 语音, 算法">
-    <meta name="description" content="
-Fu C, Lin H, Long Z, et al. Vita: Towards open-source interactive
-omni multimodal llm[J]. arXiv preprint arXiv:2408.0">
+    <meta name="keywords" content="语音对话, 全双工, 多模态">
+    <meta name="description" content="支持多模态输入。LLM 响应 VAD 片段，先判断是否为提问，若否，停止生成。双工部署：同时部署两个 VITA 模型，一个为当前查询生成响应；另一个持续检测输入音频，若有新查询，打断当前生成，聚合历史 context，为新查询生成响应；两个模型交换身份。">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -359,7 +357,7 @@ omni multimodal llm[J]. arXiv preprint arXiv:2408.0">
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-11-07
+                    2025-02-07
                 </div>
                 
 
@@ -394,9 +392,8 @@ omni multimodal llm[J]. arXiv preprint arXiv:2408.05211, 2024.</li>
 判断输入音频是否包含语音；若为语音，模型响应中第一个 token 为 state
 token，判断输入语音是否为提问，若非查询则停止生成。</font></li>
 <li><font color="red">双工部署：同时部署两个 VITA
-模型。一个为当前查询生成响应；另一个持续检测输入音频，若有新查询，打断当前生成，<font color="green">聚合历史
-context（共用重合的 kv
-cache？）</font>，为新查询生成响应；两个模型交换身份。</font></li>
+模型。一个为当前查询生成响应；另一个持续检测输入音频，若有新查询，打断当前生成，聚合历史
+context，为新查询生成响应；两个模型交换身份。</font></li>
 </ul></li>
 </ul>
 <h1 id="系统结构">1. 系统结构</h1>
@@ -555,13 +552,13 @@ cache？）</font>，为新查询生成响应；两个模型交换身份。</fon
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            用户、回复音频 token chunk 交替，支持全双工语音对话。考虑网络延迟，多预测一个用户 chunk、回复 chunk。
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
                                 <i class="far fa-clock fa-fw icon-date"></i>2024-11-06
-                                <i class="far fa-edit fa-fw icon-date"></i>2024-11-06
+                                <i class="far fa-edit fa-fw icon-date"></i>2025-02-07
                             </span>
                         <span class="publish-author">
                             
@@ -741,12 +738,12 @@ cache？）</font>，为新查询生成响应；两个模型交换身份。</fon
 </main>
 
 
-<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<!-- <script>
     MathJax.Hub.Config({
         tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
     });
-</script>
+</script> -->
 
 
 

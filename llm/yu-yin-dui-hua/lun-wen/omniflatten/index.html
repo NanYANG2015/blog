@@ -4,10 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="OmniFlatten, AI, 语音, 算法">
-    <meta name="description" content="
-Zhang Q, Cheng L, Deng C, et al. OmniFlatten: An End-to-end GPT
-Model for Seamless Voice Conversation[J]. arXiv prepr">
+    <meta name="keywords" content="语音对话, 全双工">
+    <meta name="description" content="用户音频 token chunk、回复文本 token chunk、回复音频 token chunk 交替，支持全双工语音对话。">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -359,7 +357,7 @@ Model for Seamless Voice Conversation[J]. arXiv prepr">
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-11-06
+                    2025-02-07
                 </div>
                 
 
@@ -420,9 +418,9 @@ ASR、TTS 任务进行模态对齐。</font>相较于 SyncLLM，不对音频离�
 <tbody>
 <tr>
 <td>ASR + TTS</td>
-<td><span class="math inline">\([ASR][SOS] \mathrm{S} \_ \text
-{seq}[EOS][SOT] \mathrm{T} \_\mathrm{seq}[EOT] \\ [TTS][SOT] \mathrm{T}
-\_\mathrm{seq}[EOT][SOS] \mathrm{S} \_ \text {seq}[EOS]\)</span></td>
+<td><span class="math inline">\([ASR][SOS] \mathrm{S} _ \text
+{seq}[EOS][SOT] \mathrm{T} _\mathrm{seq}[EOT] \\ [TTS][SOT] \mathrm{T}
+_\mathrm{seq}[EOT][SOS] \mathrm{S} _ \text {seq}[EOS]\)</span></td>
 <td>10wh 中英，Aishell-3 + LibriTTS + TED-LIUM + VoxPopuli + Librispeech
 + MLS + 自有数据集</td>
 <td>最大序列长度 1024。</td>
@@ -544,13 +542,13 @@ token 助手正确预测为非 silent token。</li>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            用户、回复音频 token chunk 交替，支持全双工语音对话。考虑网络延迟，多预测一个用户 chunk、回复 chunk。
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
                             <i class="far fa-clock fa-fw icon-date"></i>2024-11-06
-                            <i class="far fa-edit fa-fw icon-date"></i>2024-11-06
+                            <i class="far fa-edit fa-fw icon-date"></i>2025-02-07
                         </span>
                         <span class="publish-author">
                             
@@ -596,7 +594,7 @@ token 助手正确预测为非 silent token。</li>
                     <div class="publish-info">
                             <span class="publish-date">
                                 <i class="far fa-clock fa-fw icon-date"></i>2024-11-04
-                                <i class="far fa-edit fa-fw icon-date"></i>2024-11-06
+                                <i class="far fa-edit fa-fw icon-date"></i>2025-02-07
                             </span>
                         <span class="publish-author">
                             
@@ -776,12 +774,12 @@ token 助手正确预测为非 silent token。</li>
 </main>
 
 
-<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<!-- <script>
     MathJax.Hub.Config({
         tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
     });
-</script>
+</script> -->
 
 
 
