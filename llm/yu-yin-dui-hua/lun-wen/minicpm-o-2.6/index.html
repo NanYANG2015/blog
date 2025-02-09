@@ -4,18 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="MiniCPM-o 2.6, AI, 语音, 算法">
-    <meta name="description" content="
-https://github.com/OpenBMB/MiniCPM-o
-官方技术
-blog
-作者来自：清华、面壁智能
-
-
-
-功能：图像理解、语音理解与生成。接收连续的视频和音频流，支持配置
-VAD
-阈值、是否允许用户">
+    <meta name="keywords" content="LLM, 多模态, 实时语音交互">
+    <meta name="description" content="面壁智能推出的实时多模态语音交互系统，支持图像（视频）理解、语音理解与生成。">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -367,7 +357,7 @@ VAD
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2025-02-07
+                    2025-02-09
                 </div>
                 
 
@@ -419,14 +409,16 @@ Qwen2.5-7B</font>, 共 8B 参数。通过优化视觉 token
 <li>流式推理存在轻微的性能下降，因为音频编码并非全局的。</li>
 <li>重复响应。当遇到连续相似的用户请求时，模型往往会重复相同的回答。</li>
 </ul></li>
-<li>存疑
+<li><font color="green">存疑</font>
 <ul>
-<li>基于 VAD 丢弃用户静音片段、实现用户打断。强依赖 VAD 划分语音
-turn。嘈杂环境 VAD 是否能及时发送语音段？</li>
-<li>user query audio 是啥？用户视频、语音均在视频流中了？</li>
-<li>speech embedding: 将 LLM 隐藏状态作为 chatTTS 生成的
-condition。</li>
+<li><font color="green">基于 VAD 丢弃用户静音片段、实现用户打断。强依赖
+VAD 划分语音 turn。嘈杂环境 VAD 是否能及时发送语音段？</font></li>
+<li><font color="green">user query audio
+是啥？用户视频、语音均在视频流中了？</font></li>
+<li><font color="green">speech embedding: 将 LLM 隐藏状态作为 chatTTS
+生成的 condition。</font></li>
 </ul></li>
+<li><font color="green">TODO: 官方技术 blog</font></li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
@@ -484,21 +476,21 @@ condition。</li>
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/blog/ji-qi-xue-xi/transformer/wei-zhi-bian-ma/">
+                <a href="/blog/ji-qi-xue-xi/transformer/attention/">
                     <div class="card-content">
-                        <span class="card-title">位置编码</span>
+                        <span class="card-title">Attention</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            全面介绍了 Attention 算法，包括 Scaled Dot-Product Attention、Multi-Head Attention，以及多种计算效率优化技术，包括访存高效的 Flash Attention、Linear Attention、局部或稀疏注意力、KV cache 优化、多主机并行计算等。
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2025-01-18
-                            <i class="far fa-edit fa-fw icon-date"></i>2025-02-07
+                            <i class="far fa-clock fa-fw icon-date"></i>2025-01-16
+                            <i class="far fa-edit fa-fw icon-date"></i>2025-02-10
                         </span>
                         <span class="publish-author">
                             
@@ -526,28 +518,32 @@ condition。</li>
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/blog/nlp/tokenizer/">
+                <a href="/blog/llm/mo-xing/mistral-7b/">
                     <div class="card-content">
-                        <span class="card-title">tokenizer</span>
+                        <span class="card-title">Mistral 7B</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            简要介绍了 Mistral 7B 的核心优化：通过 grouped-query attention 和 sliding window attention，减少了 attention 的计算量和内存占用。
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2025-01-16
-                                <i class="far fa-edit fa-fw icon-date"></i>2025-02-07
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-01-11
+                                <i class="far fa-edit fa-fw icon-date"></i>2025-02-09
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/blog/categories/NLP/" class="post-category">
-                                    NLP
+                            <a href="/blog/categories/LLM/" class="post-category">
+                                    LLM
+                                </a>
+                            
+                            <a href="/blog/categories/LLM/%E6%A8%A1%E5%9E%8B/" class="post-category">
+                                    模型
                                 </a>
                             
                             

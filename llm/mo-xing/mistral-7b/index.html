@@ -4,11 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Mistral 7B, AI, 语音, 算法">
-    <meta name="description" content="
-Jiang A Q, Sablayrolles A, Mensch A, et al. Mistral 7B[J]. arXiv
-preprint arXiv:2310.06825, 2023.
-出发点：保持高性能的同时提高推理效率">
+    <meta name="keywords" content="LLM, Mistral 7B">
+    <meta name="description" content="简要介绍了 Mistral 7B 的核心优化：通过 grouped-query attention 和 sliding window attention，减少了 attention 的计算量和内存占用。">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -356,7 +353,7 @@ preprint arXiv:2310.06825, 2023.
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2025-02-07
+                    2025-02-09
                 </div>
                 
 
@@ -461,28 +458,36 @@ in legal, medical or financial domains.</p></li>
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/blog/nlp/tokenizer/">
+                <a href="/blog/llm/yu-yin-dui-hua/lun-wen/minicpm-o-2.6/">
                     <div class="card-content">
-                        <span class="card-title">tokenizer</span>
+                        <span class="card-title">MiniCPM-o 2.6</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            面壁智能推出的实时多模态语音交互系统，支持图像（视频）理解、语音理解与生成。
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
                             <i class="far fa-clock fa-fw icon-date"></i>2025-01-16
-                            <i class="far fa-edit fa-fw icon-date"></i>2025-02-07
+                            <i class="far fa-edit fa-fw icon-date"></i>2025-02-09
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/blog/categories/NLP/" class="post-category">
-                                    NLP
+                            <a href="/blog/categories/LLM/" class="post-category">
+                                    LLM
+                                </a>
+                            
+                            <a href="/blog/categories/LLM/%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/" class="post-category">
+                                    语音对话
+                                </a>
+                            
+                            <a href="/blog/categories/LLM/%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/%E8%AE%BA%E6%96%87/" class="post-category">
+                                    论文
                                 </a>
                             
                             
@@ -499,21 +504,21 @@ in legal, medical or financial domains.</p></li>
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/blog/llm/yu-yin-dui-hua/lun-wen/wavchat/">
+                <a href="/blog/llm/agent/building-effective-agents/">
                     <div class="card-content">
-                        <span class="card-title">WavChat</span>
+                        <span class="card-title">building effective agents</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            本文综述了语音对话系统的相关研究，包含系统功能、架构、训练策略、数据集、评价与 benchmark，以及语音表示、全双工对话的实现，诚意之作。
+                            Anthropic 关于构建有效的 agent 系统的介绍。首先区分 agents 和 workflows、判断何时使用 agent。详细介绍了 agent 系统的常见模式，包括增强型 LLM、工作流（如提示链、路由、并行、评价-优化等）、agent，及对应的示例。最后总结了构建 agent 的核心原则：保持简单、透明、精心设计工具。
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2025-01-04
-                                <i class="far fa-edit fa-fw icon-date"></i>2025-01-04
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-01-05
+                                <i class="far fa-edit fa-fw icon-date"></i>2025-02-09
                             </span>
                         <span class="publish-author">
                             
@@ -523,12 +528,8 @@ in legal, medical or financial domains.</p></li>
                                     LLM
                                 </a>
                             
-                            <a href="/blog/categories/LLM/%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/" class="post-category">
-                                    语音对话
-                                </a>
-                            
-                            <a href="/blog/categories/LLM/%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/%E8%AE%BA%E6%96%87/" class="post-category">
-                                    论文
+                            <a href="/blog/categories/LLM/Agent/" class="post-category">
+                                    Agent
                                 </a>
                             
                             

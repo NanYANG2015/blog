@@ -4,13 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Attention, AI, 语音, 算法">
-    <meta name="description" content="学习序列中不同位置的依赖关系，从而更好地表征语义。
-1. attention 算法
-
-1.1. Scaled Dot-Product Attention
-\[\operatorname{Attention}(Q, K,
-V)=\o">
+    <meta name="keywords" content="Transformer, Attention">
+    <meta name="description" content="全面介绍了 Attention 算法，包括 Scaled Dot-Product Attention、Multi-Head Attention，以及多种计算效率优化技术，包括访存高效的 Flash Attention、Linear Attention、局部或稀疏注意力、KV cache 优化、多主机并行计算等。">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -331,6 +326,19 @@ V)=\o">
             <div class="tag-cate">
                 <div class="right-align">
                     
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                机器学习
+                            </a>
+                        
+                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/Transformer/" class="post-category">
+                                Transformer
+                            </a>
+                        
+                    </div>
+                    
                 </div>
             </div>
 
@@ -338,14 +346,14 @@ V)=\o">
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2025-01-18
+                    2025-01-16
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2025-02-07
+                    2025-02-10
                 </div>
                 
 
@@ -430,7 +438,7 @@ TPU）中，可以更高效地利用寄存器和 L1/L2 缓存。</li>
 <li><font color="green">Linear Attention</font>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2401.04658">Lightning
-Attention-2</a></li>
+Attention-2</a>，如 <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2501.08313">MiniMax-01</a></li>
 </ul></li>
 <li>部分注意力
 <ul>
@@ -624,6 +632,10 @@ A_{\text {global }}=\sum_{h=1}^H \frac{s_h}{s_{\text {global }}} A_h
 attention</a>: pytorch attention 计算接口，支持多种 attention
 变体。</li>
 </ul>
+<h1 id="todo">4. TODO:</h1>
+<ul>
+<li>Linear Attention</li>
+</ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
             </div>
@@ -680,21 +692,21 @@ attention</a>: pytorch attention 计算接口，支持多种 attention
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/blog/ji-qi-xue-xi/mo-xing-xun-lian/deepspeed/">
+                <a href="/blog/ji-qi-xue-xi/transformer/wei-zhi-bian-ma/">
                     <div class="card-content">
-                        <span class="card-title">Deepspeed</span>
+                        <span class="card-title">位置编码</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            系统地介绍了 Transformer 中的位置编码技术，包括正弦位置编码、相对位置 aware self-attention、RoPE（只与相对距离有关）、ALiBi（长度外推）。
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2025-02-06
-                            <i class="far fa-edit fa-fw icon-date"></i>2025-02-07
+                            <i class="far fa-clock fa-fw icon-date"></i>2025-01-18
+                            <i class="far fa-edit fa-fw icon-date"></i>2025-02-09
                         </span>
                         <span class="publish-author">
                             
@@ -704,8 +716,8 @@ attention</a>: pytorch attention 计算接口，支持多种 attention
                                     机器学习
                                 </a>
                             
-                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83/" class="post-category">
-                                    模型训练
+                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/Transformer/" class="post-category">
+                                    Transformer
                                 </a>
                             
                             
@@ -722,32 +734,36 @@ attention</a>: pytorch attention 计算接口，支持多种 attention
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/blog/ji-qi-xue-xi/transformer/wei-zhi-bian-ma/">
+                <a href="/blog/llm/yu-yin-dui-hua/lun-wen/minicpm-o-2.6/">
                     <div class="card-content">
-                        <span class="card-title">位置编码</span>
+                        <span class="card-title">MiniCPM-o 2.6</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            面壁智能推出的实时多模态语音交互系统，支持图像（视频）理解、语音理解与生成。
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2025-01-18
-                                <i class="far fa-edit fa-fw icon-date"></i>2025-02-07
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-01-16
+                                <i class="far fa-edit fa-fw icon-date"></i>2025-02-09
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                    机器学习
+                            <a href="/blog/categories/LLM/" class="post-category">
+                                    LLM
                                 </a>
                             
-                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/Transformer/" class="post-category">
-                                    Transformer
+                            <a href="/blog/categories/LLM/%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/" class="post-category">
+                                    语音对话
+                                </a>
+                            
+                            <a href="/blog/categories/LLM/%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/%E8%AE%BA%E6%96%87/" class="post-category">
+                                    论文
                                 </a>
                             
                             

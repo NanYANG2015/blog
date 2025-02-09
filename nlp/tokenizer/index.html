@@ -4,14 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="tokenizer, AI, 语音, 算法">
-    <meta name="description" content="
-子词：若采用所有单词、符号作为词表，太大；若采用字符，难以表达语义。
-
-1. 子词分割算法
-1.1. BPE
-
-Sennrich R. Neural machine translation of rare words with">
+    <meta name="keywords" content="NLP, tokenizer">
+    <meta name="description" content="梳理了当前主流的子词分割算法：BPE、WordPiece、Unigram LM；主流 BPE 训练和分词工具：SentencePiece、tiktoken；实际开发中需要关注的优化点。">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -348,14 +342,14 @@ Sennrich R. Neural machine translation of rare words with">
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2025-01-16
+                    2024-07-01
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2025-02-07
+                    2025-02-09
                 </div>
                 
 
@@ -524,9 +518,9 @@ SentencePiece 可以直接从原始句子训练。</li>
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/blog/llm/yu-yin-dui-hua/lun-wen/minicpm-o-2.6/">
+                <a href="/blog/llm/yin-pin-sheng-cheng/lun-wen/audioldm2/">
                     <div class="card-content">
-                        <span class="card-title">MiniCPM-o 2.6</span>
+                        <span class="card-title">AudioLDM 2</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -537,8 +531,8 @@ SentencePiece 可以直接从原始句子训练。</li>
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2025-01-16
-                            <i class="far fa-edit fa-fw icon-date"></i>2025-02-07
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-07-03
+                            <i class="far fa-edit fa-fw icon-date"></i>2024-07-25
                         </span>
                         <span class="publish-author">
                             
@@ -548,11 +542,11 @@ SentencePiece 可以直接从原始句子训练。</li>
                                     LLM
                                 </a>
                             
-                            <a href="/blog/categories/LLM/%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/" class="post-category">
-                                    语音对话
+                            <a href="/blog/categories/LLM/%E9%9F%B3%E9%A2%91%E7%94%9F%E6%88%90/" class="post-category">
+                                    音频生成
                                 </a>
                             
-                            <a href="/blog/categories/LLM/%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/%E8%AE%BA%E6%96%87/" class="post-category">
+                            <a href="/blog/categories/LLM/%E9%9F%B3%E9%A2%91%E7%94%9F%E6%88%90/%E8%AE%BA%E6%96%87/" class="post-category">
                                     论文
                                 </a>
                             
@@ -570,9 +564,9 @@ SentencePiece 可以直接从原始句子训练。</li>
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/blog/llm/mo-xing/mistral-7b/">
+                <a href="/blog/ji-qi-xue-xi/mo-xing-xun-lian/dataset-dataloader/">
                     <div class="card-content">
-                        <span class="card-title">Mistral 7B</span>
+                        <span class="card-title">Dataset &amp; DataLoader</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -583,19 +577,19 @@ SentencePiece 可以直接从原始句子训练。</li>
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2025-01-11
-                                <i class="far fa-edit fa-fw icon-date"></i>2025-02-07
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-07-01
+                                <i class="far fa-edit fa-fw icon-date"></i>2024-07-11
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/blog/categories/LLM/" class="post-category">
-                                    LLM
+                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    机器学习
                                 </a>
                             
-                            <a href="/blog/categories/LLM/%E6%A8%A1%E5%9E%8B/" class="post-category">
-                                    模型
+                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83/" class="post-category">
+                                    模型训练
                                 </a>
                             
                             

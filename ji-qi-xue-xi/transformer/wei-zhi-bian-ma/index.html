@@ -4,13 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="位置编码, AI, 语音, 算法">
-    <meta name="description" content="1. 正弦位置编码
-
-提出：Vaswani A. Attention is all you need[J]. Advances in Neural
-Information Processing Systems, 2017.
-
-\[">
+    <meta name="keywords" content="Transformer, 位置编码">
+    <meta name="description" content="系统地介绍了 Transformer 中的位置编码技术，包括正弦位置编码、相对位置 aware self-attention、RoPE（只与相对距离有关）、ALiBi（长度外推）。">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -358,7 +353,7 @@ Information Processing Systems, 2017.
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2025-02-07
+                    2025-02-09
                 </div>
                 
 
@@ -710,26 +705,34 @@ ALiBi 并不能利用更长的上下文进行更准确的预测。</p>
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/blog/ji-qi-xue-xi/transformer/attention/">
+                <a href="/blog/ji-qi-xue-xi/xiang-liang-liang-hua/fsq/">
                     <div class="card-content">
-                        <span class="card-title">Attention</span>
+                        <span class="card-title">FSQ</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            相较于 VQ，实现更简单，解决了 VQ 大型码本利用率低的问题，实现了接近 100％ 的码本利用率。
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2025-01-18
-                            <i class="far fa-edit fa-fw icon-date"></i>2025-02-07
+                            <i class="far fa-clock fa-fw icon-date"></i>2025-02-07
+                            <i class="far fa-edit fa-fw icon-date"></i>2025-02-09
                         </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            nanyang
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    机器学习
+                                </a>
+                            
+                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%90%91%E9%87%8F%E9%87%8F%E5%8C%96/" class="post-category">
+                                    向量量化
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -744,36 +747,32 @@ ALiBi 并不能利用更长的上下文进行更准确的预测。</p>
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/blog/llm/yu-yin-dui-hua/lun-wen/minicpm-o-2.6/">
+                <a href="/blog/ji-qi-xue-xi/transformer/attention/">
                     <div class="card-content">
-                        <span class="card-title">MiniCPM-o 2.6</span>
+                        <span class="card-title">Attention</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            全面介绍了 Attention 算法，包括 Scaled Dot-Product Attention、Multi-Head Attention，以及多种计算效率优化技术，包括访存高效的 Flash Attention、Linear Attention、局部或稀疏注意力、KV cache 优化、多主机并行计算等。
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
                                 <i class="far fa-clock fa-fw icon-date"></i>2025-01-16
-                                <i class="far fa-edit fa-fw icon-date"></i>2025-02-07
+                                <i class="far fa-edit fa-fw icon-date"></i>2025-02-10
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/blog/categories/LLM/" class="post-category">
-                                    LLM
+                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    机器学习
                                 </a>
                             
-                            <a href="/blog/categories/LLM/%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/" class="post-category">
-                                    语音对话
-                                </a>
-                            
-                            <a href="/blog/categories/LLM/%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/%E8%AE%BA%E6%96%87/" class="post-category">
-                                    论文
+                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/Transformer/" class="post-category">
+                                    Transformer
                                 </a>
                             
                             

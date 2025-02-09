@@ -4,10 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="FSQ, AI, 语音, 算法">
-    <meta name="description" content="
-Mentzer F, Minnen D, Agustsson E, et al. Finite scalar
-quantization: Vq-vae made simple[J]. arXiv preprint arXiv:2309">
+    <meta name="keywords" content="向量量化, FSQ">
+    <meta name="description" content="相较于 VQ，实现更简单，解决了 VQ 大型码本利用率低的问题，实现了接近 100％ 的码本利用率。">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -355,7 +353,7 @@ quantization: Vq-vae made simple[J]. arXiv preprint arXiv:2309">
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2025-02-07
+                    2025-02-09
                 </div>
                 
 
@@ -488,44 +486,46 @@ gradient operation</p>
     <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/blog/ji-qi-xue-xi/xiang-liang-liang-hua/fsq/">
+                <a href="/blog/llm/yu-yin-dui-hua/lun-wen/spectron/">
                     <div class="card-content">
-                        <span class="card-title">FSQ</span>
+                        <span class="card-title">Spectron</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            Google 提出的 speech encoder + projector + LLM + projector（输出频谱） + vocoder 的端到端 spoken language model，直接输入、输出声谱图。采用给定 3s 的频谱前缀，生成文本转写、文本延续、频谱延续的数据格式，在单次生成中实现跨模态的思维链。
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2025-02-07
-                                <i class="far fa-edit fa-fw icon-date"></i>2025-02-07
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2025-02-07
+                            <i class="far fa-edit fa-fw icon-date"></i>2025-02-09
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                    机器学习
+                            <a href="/blog/categories/LLM/" class="post-category">
+                                    LLM
                                 </a>
                             
-                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%90%91%E9%87%8F%E9%87%8F%E5%8C%96/" class="post-category">
-                                    向量量化
+                            <a href="/blog/categories/LLM/%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/" class="post-category">
+                                    语音对话
+                                </a>
+                            
+                            <a href="/blog/categories/LLM/%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/%E8%AE%BA%E6%96%87/" class="post-category">
+                                    论文
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>
@@ -536,21 +536,21 @@ gradient operation</p>
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/blog/ji-qi-xue-xi/mo-xing-xun-lian/deepspeed/">
+                <a href="/blog/ji-qi-xue-xi/transformer/wei-zhi-bian-ma/">
                     <div class="card-content">
-                        <span class="card-title">Deepspeed</span>
+                        <span class="card-title">位置编码</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            系统地介绍了 Transformer 中的位置编码技术，包括正弦位置编码、相对位置 aware self-attention、RoPE（只与相对距离有关）、ALiBi（长度外推）。
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2025-02-06
-                                <i class="far fa-edit fa-fw icon-date"></i>2025-02-07
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-01-18
+                                <i class="far fa-edit fa-fw icon-date"></i>2025-02-09
                             </span>
                         <span class="publish-author">
                             
@@ -560,8 +560,8 @@ gradient operation</p>
                                     机器学习
                                 </a>
                             
-                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83/" class="post-category">
-                                    模型训练
+                            <a href="/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/Transformer/" class="post-category">
+                                    Transformer
                                 </a>
                             
                             
