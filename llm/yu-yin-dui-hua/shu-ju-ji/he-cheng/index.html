@@ -357,7 +357,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2025-02-09
+                    2025-02-19
                 </div>
                 
 
@@ -388,9 +388,10 @@ URL、数学表达式、代码、不常见符号的。删除括号中的注释�
 <p><img src="https://note.youdao.com/yws/api/personal/file/WEBa861c66cb68aab97da1984263f7083f6?method=download&shareKey=a315f86f5d5eb182c9c91846f006138e" width="607"></p></li>
 <li><p>TTS。</p></li>
 <li><p>ASR：保留 TTS 发音准确度较高的。</p></li>
-<li><p><font color="green">组织为双声道音频：<a href="https://nanyang2015.github.io/blog/llm/yu-yin-dui-hua/lun-wen/omniflatten/">对话由用户开始，随后交替用户与助手的对话。用户语音结束后，助手立即响应；助手语音结束后，采样暂停时长，以模拟自然的对话节奏。</a><a href="https://nanyang2015.github.io/blog/llm/yu-yin-dui-hua/lun-wen/moshi/">对用户音频流进行数据增强，如随机增益调整、加噪、回声（将助手音频流缩放后加到用户流上，缩放系数
-[0, 0.2]，延迟 [100, 500] ms、用户流 reverb-like
-echo）。</a></font></p></li>
+<li><p>组织为双声道音频：<a href="https://nanyang2015.github.io/blog/llm/yu-yin-dui-hua/lun-wen/omniflatten/">对话由用户开始，随后交替用户与助手的对话。用户语音结束后，助手立即响应；助手语音结束后，采样暂停时长</a>
+<a href="https://nanyang2015.github.io/blog/llm/yu-yin-dui-hua/lun-wen/minmo/"><span class="math inline">\(T \sim
+\mathcal{N}\left(0.6,0.4^2\right)\)</span></a>，以模拟自然的对话节奏。<a href="https://nanyang2015.github.io/blog/llm/yu-yin-dui-hua/lun-wen/moshi/">对用户音频流进行数据增强，如随机增益调整、加噪、回声（将助手音频流缩放后加到用户流上，缩放系数
+[0, 0.2]，延迟 [100, 500] ms、用户流 reverb-like echo）。</a></p></li>
 </ul>
 <blockquote>
 <ul>
