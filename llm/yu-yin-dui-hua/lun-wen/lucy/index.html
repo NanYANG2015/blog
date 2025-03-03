@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="语音对话, 全双工, 多模态 LLM">
-    <meta name="description" content="全双工语音对话系统实现方案，持续整理中……">
+    <meta name="keywords" content="LLM, 多模态, 语音交互">
+    <meta name="description" content="腾讯优图等提出的语音对话模型，通过合成数据、函数调用微调来增强语音对话模型响应的情感控制、自然度、资讯性。">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +17,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>全双工语音对话系统 | 梦园</title>
+    <title>LUCY | 梦园</title>
     <link rel="icon" type="image/png" href="/blog/favicon.png">
     
 
@@ -316,7 +316,7 @@
                     <div class="row">
                         <div class="col s12 m12 l12">
                             <div class="brand">
-                                <h1 class="description center-align post-title">全双工语音对话系统</h1>
+                                <h1 class="description center-align post-title">LUCY</h1>
                             </div>
                         </div>
                     </div>
@@ -337,6 +337,10 @@
                                 语音对话
                             </a>
                         
+                            <a href="/blog/categories/LLM/%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/%E8%AE%BA%E6%96%87/" class="post-category">
+                                论文
+                            </a>
+                        
                     </div>
                     
                 </div>
@@ -346,14 +350,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2024-11-05
+                    2025-03-02
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2025-02-09
+                    2025-03-02
                 </div>
                 
 
@@ -375,96 +379,49 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="系统结构">1. 系统结构</h1>
-<table>
-<colgroup>
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
-</colgroup>
-<thead>
-<tr>
-<th>提出时间</th>
-<th>系统</th>
-<th>作者所属机构</th>
-<th>方案</th>
-<th>备注</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>2022.3</td>
-<td><a href="https://nanyang2015.github.io/blog/yin-pin/yu-yin-dui-hua/dgslm/">dGSLM</a></td>
-<td>Meta AI 等</td>
-<td>参数共享的两个 Transformer，分别自回归生成对话中一方的音频，通过
-cross attention 交互。预测音频 token 和 delayed
-持续时间。支持重叠语音，系统打断用户、用户打断系统。</td>
-<td><font color="green">语音助手类应用中不需要预测用户语音。后续研究中不再使用
-cross attention 结构是由于双 LLM
-显存占用加倍吗？个人感觉扩充更多模态（如视频）较方便。</font></td>
-</tr>
-<tr>
-<td>2024.8.9</td>
-<td><a href="https://nanyang2015.github.io/blog/llm/yu-yin-dui-hua/lun-wen/vita/">VITA</a></td>
-<td>腾讯优图等</td>
-<td>VAD +
-模型监测VAD片段是否为提问；<br>同时部署两个模型，一个生成响应，另一个监测用户语音输入。</td>
-<td>部署成本较高。<br>级联 TTS。</td>
-</tr>
-<tr>
-<td>2024.9.17</td>
-<td><a href="https://nanyang2015.github.io/blog/llm/yu-yin-dui-hua/lun-wen/moshi/">Moshi</a></td>
-<td>Kyutai</td>
-<td>输入为用户音频、系统音频、系统文本 embedding
-相加，生成系统回复文本、音频。支持重叠语音，系统打断用户、用户打断系统。</td>
-<td></td>
-</tr>
-<tr>
-<td>2024.9.23</td>
-<td><a href="https://nanyang2015.github.io/blog/llm/yu-yin-dui-hua/lun-wen/syncllm/">SyncLLM</a></td>
-<td>Meta AI、华盛顿大学</td>
-<td>用户、系统音频 token chunk 交替。<br>考虑网络延迟，多预测1个用户
-chunk、回复 chunk。</td>
-<td></td>
-</tr>
-<tr>
-<td>2024.10.15</td>
-<td><a href="https://nanyang2015.github.io/blog/llm/yu-yin-dui-hua/lun-wen/mini-omni/">Mini-Omni2</a></td>
-<td>Inspirai、清华</td>
-<td>总体上 turn-based，双头并行预测文本、音频
-token。仅支持生成中倾听用户音频，同步预测帧级状态
-token（是否被用户打断），停止生成。</td>
-<td>应用中用户仍需要发起录音、结束录音请求回答，也可通过应用中的停止操作打断生成。</td>
-</tr>
-<tr>
-<td>2024.10.23</td>
-<td><a href="https://nanyang2015.github.io/blog/llm/yu-yin-dui-hua/lun-wen/omniflatten/">OmniFlatten</a></td>
-<td>阿里通义实验室</td>
-<td>用户音频 token chunk、系统文本 token chunk、系统音频 token chunk
-交替。</td>
-<td></td>
-</tr>
-<tr>
-<td>2024.10.25</td>
-<td><a href="https://nanyang2015.github.io/blog/llm/yu-yin-dui-hua/lun-wen/glm-4-voice/">GLM-4-Voice</a></td>
-<td>智谱</td>
-<td>输入用户音频，系统回复文本 token chunk 与音频 token chunk
-交替。</td>
-<td><font color="green">宣传稿声称支持实时打断，从 demo 看是
-turn-based。</font></td>
-</tr>
-<tr>
-<td>2024.11.1</td>
-<td><a href="https://nanyang2015.github.io/blog/llm/yu-yin-dui-hua/lun-wen/freeze-omni/">Freeze-Omni</a></td>
-<td>腾讯优图、西工大、南大</td>
-<td>VAD + speech encoder + LLM + TTS，采用 VAD
-检测用户语音输入，流式输入用户音频，LLM 预测状态：沉默或开始生成。</td>
-<td>原则上也可以利用 VAD 打断模型生成。</td>
-</tr>
-</tbody>
-</table>
+                <ul>
+<li><p>Gao H, Shao H, Wang X, et al. LUCY: Linguistic Understanding and
+Control Yielding Early Stage of Her[J]. arXiv preprint arXiv:2501.16327,
+2025.</p></li>
+<li><p>作者来自腾讯优图等</p></li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/VITA-MLLM/LUCY" class="uri">https://github.com/VITA-MLLM/LUCY</a></p></li>
+<li><p><font color="red">创新点：通过合成数据、函数调用微调来增强语音对话模型响应的情感控制、自然度、资讯性。响应最开始先生成响应情感
+token。</font></p>
+<ul>
+<li><p>Qwen2.5-72B 生成 100w 通用对话、10w 情感对话、6w 自然对话、2.6w
+函数调用对话，TTS。</p></li>
+<li><p>显式情感控制：对回复语音进行情感分类，利用 Qwen2.5-72B
+重新生成控制响应情感的指令。</p></li>
+<li><p>隐式情感控制：根据 query
+的语义生成响应的情感标签，改写响应使更匹配情感标签。</p></li>
+<li><p>声学情感控制：不同于语义，从声学推断。<font color="green">从情感列表中随机选择一个，若与语义情感不一致，加权。</font></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB0f5c701b583fa720f0f874d3bafb3b90?method=download&shareKey=a1114ebda16ca026cc2c11c75a52a5b9" width="484"></p></li>
+<li><p>合成用户语音时，以 ASR 数据集中相同情感的音频作为提示。</p></li>
+<li><p>自然对话：过滤、改写使更口语化、质量评估。</p></li>
+<li><p><font color="red">基于函数调用数据集（如
+WebPCM、DevOpsEval），保留约40个适合语音交互的，如谷歌搜索、天气搜索、新闻搜索等。Qwen2.5-72B
+改写回复，在开始添加简洁的确认，以补偿函数调用延迟。</font></p></li>
+</ul></li>
+<li><p>系统架构：同 Mini-Omni。</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBbb5b97c4df62399af5d6c8bd817d93b4?method=download&shareKey=a1114ebda16ca026cc2c11c75a52a5b9" width="481"></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB48c08f5cf0abaf650301bbe6975639f3?method=download&shareKey=a1114ebda16ca026cc2c11c75a52a5b9" width="481"></p>
+<ul>
+<li><p>Speaker embedding：LUCY 支持一男一女两个音色，用于选择。</p></li>
+<li><p>支持 Joy, Sadness, Fear, Anger, Surprise, Disgust, Neutral, Sorry
+8类情感。</p></li>
+<li><p>对话历史仅保留文本响应。</p></li>
+<li><p>函数调用响应并行解码：一个仅生成文本响应和函数调用文本，另一个生成文本响应和音频响应，用前者的文本响应替换后者的。</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB64c937dd21bcb6da39b8c2c1c6bd17c6?method=download&shareKey=a1114ebda16ca026cc2c11c75a52a5b9" width="490"></p></li>
+</ul></li>
+<li><p>评价</p>
+<ul>
+<li><p>语音知识问答效果较差。</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBe986d28e9a81dc1bc79ad72d793f5ae6?method=download&shareKey=a1114ebda16ca026cc2c11c75a52a5b9" width="680"></p></li>
+<li><p>全双工准确性：陈述句、环境声音，不需要响应。</p></li>
+<li><p>半双工音频首包延迟。</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB568b92e457e0b986116f891f86b329fa?method=download&shareKey=a1114ebda16ca026cc2c11c75a52a5b9" width="306"></p></li>
+</ul></li>
+</ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
             </div>
@@ -521,21 +478,21 @@ turn-based。</font></td>
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/blog/llm/yu-yin-dui-hua/lun-wen/omniflatten/">
+                <a href="/blog/llm/yu-yin-dui-hua/lun-wen/ola/">
                     <div class="card-content">
-                        <span class="card-title">OmniFlatten</span>
+                        <span class="card-title">Ola</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            用户音频 token chunk、回复文本 token chunk、回复音频 token chunk 交替，支持全双工语音对话。
+                            清华、腾讯混元等提出的全模态模型，提出渐进式模态对齐有助于学习更好的全模态模型。
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2024-11-06
-                            <i class="far fa-edit fa-fw icon-date"></i>2025-02-07
+                            <i class="far fa-clock fa-fw icon-date"></i>2025-03-02
+                            <i class="far fa-edit fa-fw icon-date"></i>2025-03-02
                         </span>
                         <span class="publish-author">
                             
@@ -567,21 +524,21 @@ turn-based。</font></td>
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/blog/llm/yu-yin-dui-hua/lun-wen/freeze-omni/">
+                <a href="/blog/llm/yu-yin-dui-hua/lun-wen/step-audio/">
                     <div class="card-content">
-                        <span class="card-title">Freeze-Omni</span>
+                        <span class="card-title">Step-Audio</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            阶跃星辰开源的 130B speech2text + 3B TTS 模型。
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-11-04
-                                <i class="far fa-edit fa-fw icon-date"></i>2025-02-07
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-02-27
+                                <i class="far fa-edit fa-fw icon-date"></i>2025-02-27
                             </span>
                         <span class="publish-author">
                             

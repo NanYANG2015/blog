@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="LLM, 多模态, 实时语音交互">
-    <meta name="description" content="面壁智能推出的实时多模态语音交互系统，支持图像（视频）理解、语音理解与生成。">
+    <meta name="keywords" content="LLM, 全模态, 语音交互">
+    <meta name="description" content="面壁智能推出的端侧多模态语音交互系统，支持图像（视频）理解、语音理解与生成。">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -357,7 +357,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2025-02-27
+                    2025-03-02
                 </div>
                 
 
@@ -385,40 +385,42 @@
 blog</a></li>
 <li>作者来自：清华、面壁智能</li>
 </ul>
-<p><img src="https://github.com/OpenBMB/MiniCPM-o/raw/main/assets/minicpm-o-26-framework.png" width="524"></p>
+<p><img src="https://github.com/OpenBMB/MiniCPM-o/raw/main/assets/minicpm-o-26-framework.png" width="700"></p>
 <ul>
-<li>功能：图像理解、语音理解与生成。接收连续的视频和音频流，支持配置
-<font color="red">VAD</font>
-阈值、是否允许用户打断，进行实时语音交互。</li>
+<li>特点
+<ul>
+<li>支持文本、图像、视频、音频输入（时分复用：交错，chunk=1s），文本、语音输出。</li>
 <li>基于
-SigLip-400M、<font color="red">Whisper-medium-300M、ChatTTS-200M 和
-Qwen2.5-7B</font>, 共 8B 参数。通过优化视觉 token
-密度，优化模型的推理速度、首 token 延迟、内存占用和功耗。</li>
-<li>时分复用：多模态数据交错。</li>
-<li>语音理解任务
-<ul>
-<li>中英文语音识别、翻译</li>
-<li>情感识别，说话人性别、年龄范围、健康状态</li>
-<li>音频字幕</li>
-<li>声学场景标记</li>
+<font color="red">VAD</font>，支持中英双语实时语音对话；<font color="red">LLM
+预测 speech
+embedding，进行语速、情感、风格等控制；支持系统提示中加入音频进行语音克隆、角色扮演</font>。</li>
+<li>通过优化视觉 token 密度，优化模型的推理速度、首 token
+延迟、内存占用和功耗；<font color="red">基于
+llama.cpp、ollama，int4、gguf 格式模型，支持 iPad
+等端侧部署</font>，iPad 上可以实现 16~18 token/s 的推理（测试环境：iPad
+Pro + M4）。</li>
 </ul></li>
-<li>benchmark: StreamingBench</li>
+<li>基于
+SigLip-400M、<font color="red">Whisper-medium-300M、Qwen2.5-7B、ChatTTS-200M</font>,
+共 8B 参数。
+<ul>
+<li>流式 audio encoder，chunk=1s，25Hz。</li>
+<li><font color="red">流式 speech decoder</font>：预留 bos(1) + speech
+embedding(1) + 文本 共 300 个 token 位置，每10个文本 token
+生成最多50个音频 token，直到 <code>&lt;Audio EOS&gt;</code>。</li>
+<li>speech
+embedding：端到端训练更新整个模型参数，以支持更高的能力上限。</li>
+</ul></li>
+<li><font color="red">DPO</font>：基于 <a target="_blank" rel="noopener" href="https://github.com/RLHF-V/RLAIF-V/">RLAIF-V</a>、<a target="_blank" rel="noopener" href="https://github.com/OpenBMB/VisCPM">VisCPM</a>。</li>
+<li>benchmark: StreamingBench、<a target="_blank" rel="noopener" href="https://github.com/OpenBMB/UltraEval-Audio/blob/main/assets/leaderboard.md">UltraEval-Audio</a></li>
 <li>存在的问题
 <ul>
 <li>不稳定的语音输出。语音生成可能会受到背景噪音和无意义声音的影响，表现不稳定。</li>
 <li>流式推理存在轻微的性能下降，因为音频编码并非全局的。</li>
 <li>重复响应。当遇到连续相似的用户请求时，模型往往会重复相同的回答。</li>
+<li><font color="green">原生支持最长 45
+秒的单次语音生成，通过滑动窗口技术来支持生成更长的语音。模型训练与滑动窗口推理之间的差距可能导致长语音生成过程中的不稳定现象。</font></li>
 </ul></li>
-<li><font color="green">存疑</font>
-<ul>
-<li><font color="green">基于 VAD 丢弃用户静音片段、实现用户打断。强依赖
-VAD 划分语音 turn。嘈杂环境 VAD 是否能及时发送语音段？</font></li>
-<li><font color="green">user query audio
-是啥？用户视频、语音均在视频流中了？</font></li>
-<li><font color="green">speech embedding: 将 LLM 隐藏状态作为 chatTTS
-生成的 condition。</font></li>
-</ul></li>
-<li><font color="green">TODO: 官方技术 blog</font></li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
