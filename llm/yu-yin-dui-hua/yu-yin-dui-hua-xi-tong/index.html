@@ -353,7 +353,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2025-03-03
+                    2025-03-04
                 </div>
                 
 
@@ -404,67 +404,110 @@ VITA，一个模型生成响应，另一个判断是否打断。<br>2.
 VAD。<br>3. VAD 区分短暂停顿、语音结束导致的延迟。<br>优化方案：如
 Step-Audio，若用户短暂暂停，生成推测性响应，若用户继续说话，则丢弃推测性响应，约
 40% 的推测性响应被执行，响应延迟减少了约
-500ms，用多余的计算降低延迟。</td>
+500ms，用多余的计算降低延迟。<br>4.
+需要处理系统回声。<br>优化方案：AEC，如 webrtc；数据增强。</td>
 <td>Step-Audio、MiniCPM-o 2.6</td>
 </tr>
 <tr>
 <td></td>
 <td>turn taking 预测</td>
 <td></td>
-<td></td>
+<td>MinMo、VITA</td>
 </tr>
 <tr>
 <td></td>
 <td>大模型内生控制</td>
 <td></td>
-<td></td>
+<td>Moshi</td>
 </tr>
 <tr>
 <td>audio 表示</td>
-<td>离散表示<br></td>
+<td>离散表示</td>
 <td></td>
-<td></td>
+<td>1. CosyVoice、GLM-4-Voice ASR encoder 中间层量化；Step-Audio 采用
+Paraformer、SenseVoice-Large encoder 双码本；<br><br>2.
+Baichuan-Audio: 8层 RVQ，频谱重建、音频理解多任务训练。<br><br>3.
+Moshi 采用 split RVQ，将自监督音频模型的语义表示蒸馏至
+codec，对抗损失训练。</td>
 </tr>
 <tr>
 <td></td>
 <td>audio 输入采用连续表示，输出采用离散表示</td>
 <td></td>
-<td>MiniCPM-o 2.6、SLAM-Omni、LUCY</td>
+<td>Minmo、MiniCPM-o 2.6 等<br><br>Ola 将 Whisper、BEATS（音乐
+encoder）表示在 channel 维拼接。</td>
 </tr>
 <tr>
 <td></td>
 <td>连续表示</td>
 <td></td>
-<td>Ola 将 Whisper、BEATS（音乐 encoder）表示在 channel 维拼接。</td>
+<td></td>
 </tr>
 <tr>
-<td>audio decoder 细粒度控制</td>
-<td>LLM 直接预测 audio token</td>
+<td>audio 生成</td>
+<td>LLM 预测文本 + TTS 模型</td>
 <td></td>
-<td>1. LUCY 最先生成响应情感 token。</td>
+<td>1. Step-Audio 生成文本包含指定格式的
+tag，支持语种、方言、语速、情感控制，正常语音、RAP、哼唱区分；说话人利用提示音频作为
+TTS LM 对话历史、flow matching prompt。</td>
 </tr>
 <tr>
 <td></td>
 <td>利用 LLM 表示 + TTS</td>
+<td>优点：音频生成由另外的模块完成，降低了主 LLM 建模难度、推理延迟（小
+LM 生成长音频序列更快），但利用 LLM
+的表示实现指令跟随的、富有表现力的音频生成。</td>
+<td>1. MinMo TTS 模块的输入为用户输入、响应文本，表示，及对应的 LLM
+最后一层隐藏状态，在特征维拼接。<br><br>2. Moshi: Depth Transformer
+输入为
+<code>text/audio embedding + Linear(last_hidden_state)</code>，自回归预测
+audio token。<br><br>3. Baichuan-Audio: LLM 预测音频隐层表示 + Depth
+Transformer + 8个分类头；<br><br>4. MiniCPM-o 2.6 LLM 先预测1个 speech
+embedding，系统 prompt 中支持加入音频进行音色克隆；</td>
+</tr>
+<tr>
 <td></td>
-<td>1. MiniCPM-o 2.6 LLM 先预测1个 speech embedding，系统 prompt
-中支持加入音频进行音色克隆；</td>
+<td>LLM 直接预测 audio token</td>
+<td></td>
+<td>1. LUCY 采用 SNAC codec，7码本，one-step 延迟，最先生成响应情感
+token。</td>
 </tr>
 <tr>
 <td>audio decoder 声音事件、唱歌等支持</td>
 <td></td>
 <td></td>
-<td></td>
+<td>Step-Audio 采用多个 TTS 模型，通过响应文本中的特殊 tag
+确定调用哪一个模型。</td>
 </tr>
 </tbody>
 </table>
 <h1 id="效果优化">2. 效果优化</h1>
 <ul>
+<li>对话自然度：LLM
+改写文本对话数据集回复，使符合口语对话的长度、风格。</li>
 <li>情感对话
 <ul>
 <li><a href="https://nanyang2015.github.io/blog/llm/yu-yin-dui-hua/lun-wen/lucy/">LUCY
 通过合成数据微调来增强响应的情感控制、自然度，并最先生成响应情感
 token。</a></li>
+</ul></li>
+<li>生成语音的细粒度控制
+<ul>
+<li><a href="https://nanyang2015.github.io/blog/llm/yu-yin-dui-hua/lun-wen/step-audio/">Step-Audio
+提出了高质量 TTS 训练数据合成 pipeline：通过收集各语种、方言 native
+speaker 数据，利用中间 checkpoint 快速扩展 native speaker、目标说话人
+多语种、方言数据；SFT 训练得到 Audio-Edit
+模型将音频情感、风格化。</a></li>
+<li>OpenOmni 进行了情感语音生成 DPO 训练，采用 CosyVoice
+分别生成无条件语音、情感条件语音作为正负样本对。</li>
+</ul></li>
+<li>指令跟随、对话自然度、安全性等
+<ul>
+<li>RL
+<ul>
+<li>Step-Audio 特别地将音频清晰、回复包含 “I didn’t hear clearly” 等存在
+deaf hacking 现象的样本作为负样本。</li>
+</ul></li>
 </ul></li>
 <li>工具调用
 <ul>
@@ -480,6 +523,37 @@ LLM 改写回复。并在开始添加简洁的确认，以补偿函数调用延�
 Step-Audio、SLAM-Omni、LUCY（用户语音未转写，回复仅保留文本）。但
 SLAM-Omni
 指出“在某些情况下，历史上下文保留非语言信息对于保持对话的连贯性和深度至关重要”。</li>
+</ul></li>
+<li>延迟
+<ul>
+<li>流式音频 token 提取：通常需要向后看一段时间，</li>
+</ul>
+<blockquote>
+<p>自然对话平均延迟约为 230ms。Moshi 理论延迟 160ms，实际延迟 200ms。
+MinMo 理论延迟 600ms，实际约为 800ms。
+<img src="https://note.youdao.com/yws/api/personal/file/WEB60c605b140f503171922babc8c4cf6cf?method=download&shareKey=37e22a6d661f51256d880e1aef1a7c2e" width="365"></p>
+</blockquote></li>
+<li>其它经验
+<ul>
+<li>预训练：模态交错数据有助于知识迁移。可采用 text-to-audiotoken
+模型扩充。</li>
+<li>SFT 数据：
+<ul>
+<li>声音指令：支持生成语音的自然语言细粒度控制，如方言、情感、角色扮演、RAP、唱歌等。</li>
+<li>能力扩展：安全性、工具调用、闲聊。</li>
+<li>特定 case，增强鲁棒性。
+<ul>
+<li>用户指令语义不明或音质较差，模型要求用户重说，如 Sorry, I'm not sure
+what you're referring to.。</li>
+<li>用户提问包含事实性错误，模型回答 "No" 并纠正。</li>
+<li>自我认知。</li>
+</ul></li>
+</ul></li>
+<li>模型输出
+<ul>
+<li>有文本引导时语音生成质量更好。但相较于 speech2text，speech2speech
+生成目前普遍存在 10% 左右的绝对准确率下降。</li>
+</ul></li>
 </ul></li>
 <li>注意点
 <ul>
@@ -564,8 +638,7 @@ token（是否被用户打断），停止生成。</td>
 <td>智谱</td>
 <td>输入用户音频，系统回复文本 token chunk 与音频 token chunk
 交替。</td>
-<td><font color="green">宣传稿声称支持实时打断，从 demo 看是
-turn-based。</font></td>
+<td>turn based</td>
 </tr>
 <tr>
 <td>2024.11.1</td>

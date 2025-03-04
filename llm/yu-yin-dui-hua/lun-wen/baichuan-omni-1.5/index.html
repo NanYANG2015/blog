@@ -357,7 +357,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2025-03-03
+                    2025-03-04
                 </div>
                 
 
@@ -427,8 +427,11 @@ dropout、码本重置、<font color="green">Gumbel-Softmax、码本向量 L2
 </ul></li>
 <li><p>Audio Head：参考 Moshi，<font color="red">3层 depth transformer +
 8个分类头</font>。</p></li>
-<li><p>flow matching + CosyVoice 2.0
-HiFi-GAN，进一步提升音频质量。</p></li>
+<li><p>flow matching + CosyVoice 2.0 HiFi-GAN，进一步提升音频质量。</p>
+<ul>
+<li>音频 token 编码了音色信息，因此没有采用说话人 embedding。</li>
+<li>约 27wh 训练。</li>
+</ul></li>
 <li><p>LLM: <a target="_blank" rel="noopener" href="https://github.com/baichuan-inc/Baichuan-Omni-1.5/blob/main/README_zh.md">Qwen2.5-7B</a></p></li>
 </ul>
 <h1 id="多阶段训练">2. 多阶段训练</h1>
@@ -461,7 +464,8 @@ loss，否则会导致性能下降，且推理时无需 text-to-audio 续写。<
 <p><img src="https://note.youdao.com/yws/api/personal/file/WEB514027dd3270c0aaca08b14acb2ff3af?method=download&shareKey=233637f986e185c198905a22472701aa" width="717"></p>
 <p><img src="https://note.youdao.com/yws/api/personal/file/WEB9cf8e5bd2bd85fef725d470d58685fca?method=download&shareKey=233637f986e185c198905a22472701aa" width="717"></p>
 <p>* AlpacaEval 挑选了 199 条，Web Questions、TriviaQA 挑选了 1000
-条，TTS。 *
+条，TTS。</p>
+<p>*
 <font color="green">S-&gt;S：输出交错的文本-音频，评价文本。S-&gt;T：输出仅文本。</font></p>
 <ul>
 <li>开源了 <a target="_blank" rel="noopener" href="https://huggingface.co/datasets/baichuan-inc/OpenAudioBench">OpenAudio-Bench</a>，包含
@@ -540,7 +544,7 @@ Questions、TriviaQA、AlpacaEval，采用 GPT-4o 评价。</li>
                     <div class="publish-info">
                             <span class="publish-date">
                                 <i class="far fa-clock fa-fw icon-date"></i>2025-03-03
-                                <i class="far fa-edit fa-fw icon-date"></i>2025-03-03
+                                <i class="far fa-edit fa-fw icon-date"></i>2025-03-04
                             </span>
                         <span class="publish-author">
                             
