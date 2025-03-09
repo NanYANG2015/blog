@@ -1121,7 +1121,7 @@
   </url>
   
   <url>
-    <loc>https://nanyang2015.github.io/blog/categories/%E6%96%87%E5%AD%97/</loc>
+    <loc>https://nanyang2015.github.io/blog/categories/NLP/%E6%A8%A1%E5%9E%8B/</loc>
     <lastmod>2025-03-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1135,42 +1135,7 @@
   </url>
   
   <url>
-    <loc>https://nanyang2015.github.io/blog/categories/NLP/%E6%A8%A1%E5%9E%8B/</loc>
-    <lastmod>2025-03-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://nanyang2015.github.io/blog/categories/%E6%96%87%E5%AD%97/%E8%AF%97%E8%AF%8D/</loc>
-    <lastmod>2025-03-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://nanyang2015.github.io/blog/categories/LLM/%E6%A8%A1%E5%9E%8B/</loc>
-    <lastmod>2025-03-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://nanyang2015.github.io/blog/categories/LLM/Agent/</loc>
-    <lastmod>2025-03-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://nanyang2015.github.io/blog/categories/%E9%9F%B3%E9%A2%91/</loc>
-    <lastmod>2025-03-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://nanyang2015.github.io/blog/categories/LLM/%E5%BE%AE%E8%B0%83/</loc>
+    <loc>https://nanyang2015.github.io/blog/categories/%E6%96%87%E5%AD%97/</loc>
     <lastmod>2025-03-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1184,7 +1149,21 @@
   </url>
   
   <url>
-    <loc>https://nanyang2015.github.io/blog/categories/LLM/%E9%9F%B3%E9%A2%91%E7%90%86%E8%A7%A3/</loc>
+    <loc>https://nanyang2015.github.io/blog/categories/LLM/Agent/</loc>
+    <lastmod>2025-03-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://nanyang2015.github.io/blog/categories/LLM/%E6%A8%A1%E5%9E%8B/</loc>
+    <lastmod>2025-03-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://nanyang2015.github.io/blog/categories/%E6%96%87%E5%AD%97/%E8%AF%97%E8%AF%8D/</loc>
     <lastmod>2025-03-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1198,14 +1177,21 @@
   </url>
   
   <url>
-    <loc>https://nanyang2015.github.io/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/Transformer/</loc>
+    <loc>https://nanyang2015.github.io/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/loss/</loc>
     <lastmod>2025-03-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://nanyang2015.github.io/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/loss/</loc>
+    <loc>https://nanyang2015.github.io/blog/categories/LLM/%E9%9F%B3%E9%A2%91%E7%90%86%E8%A7%A3/</loc>
+    <lastmod>2025-03-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://nanyang2015.github.io/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/Transformer/</loc>
     <lastmod>2025-03-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1219,21 +1205,7 @@
   </url>
   
   <url>
-    <loc>https://nanyang2015.github.io/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A1%86%E6%9E%B6/</loc>
-    <lastmod>2025-03-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://nanyang2015.github.io/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83/</loc>
-    <lastmod>2025-03-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://nanyang2015.github.io/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%AD%E9%9F%B3%E5%90%88%E6%88%90/</loc>
     <lastmod>2025-03-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1247,6 +1219,27 @@
   </url>
   
   <url>
+    <loc>https://nanyang2015.github.io/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A1%86%E6%9E%B6/</loc>
+    <lastmod>2025-03-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://nanyang2015.github.io/blog/categories/LLM/%E5%BE%AE%E8%B0%83/</loc>
+    <lastmod>2025-03-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://nanyang2015.github.io/blog/categories/%E9%9F%B3%E9%A2%91/</loc>
+    <lastmod>2025-03-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://nanyang2015.github.io/blog/categories/LLM/%E6%9D%A1%E4%BB%B6%E7%94%9F%E6%88%90/</loc>
     <lastmod>2025-03-09</lastmod>
     <changefreq>weekly</changefreq>
@@ -1254,70 +1247,7 @@
   </url>
   
   <url>
-    <loc>https://nanyang2015.github.io/blog/categories/LLM/%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/%E8%AE%BA%E6%96%87/</loc>
-    <lastmod>2025-03-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://nanyang2015.github.io/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%AD%E9%9F%B3%E5%AD%A6/</loc>
-    <lastmod>2025-03-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://nanyang2015.github.io/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/</loc>
-    <lastmod>2025-03-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://nanyang2015.github.io/blog/categories/%E9%9F%B3%E9%A2%91/%E6%95%B0%E6%8D%AE%E9%9B%86/</loc>
-    <lastmod>2025-03-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://nanyang2015.github.io/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%AD%E9%9F%B3%E8%AF%84%E6%B5%8B/</loc>
-    <lastmod>2025-03-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://nanyang2015.github.io/blog/categories/LLM/%E9%9F%B3%E9%A2%91%E7%94%9F%E6%88%90/</loc>
-    <lastmod>2025-03-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://nanyang2015.github.io/blog/categories/LLM/%E9%9F%B3%E9%A2%91%E7%90%86%E8%A7%A3/%E8%AE%BA%E6%96%87/</loc>
-    <lastmod>2025-03-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://nanyang2015.github.io/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/</loc>
-    <lastmod>2025-03-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://nanyang2015.github.io/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%AF%86%E5%88%AB/</loc>
-    <lastmod>2025-03-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://nanyang2015.github.io/blog/categories/LLM/%E6%9D%A1%E4%BB%B6%E7%94%9F%E6%88%90/%E8%AE%BA%E6%96%87/</loc>
+    <loc>https://nanyang2015.github.io/blog/categories/LLM/%E5%A4%9A%E6%A8%A1%E6%80%81/</loc>
     <lastmod>2025-03-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1338,70 +1268,28 @@
   </url>
   
   <url>
-    <loc>https://nanyang2015.github.io/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%AD%E9%9F%B3%E8%AF%84%E6%B5%8B/%E7%AE%97%E6%B3%95/</loc>
+    <loc>https://nanyang2015.github.io/blog/categories/LLM/%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/%E8%AE%BA%E6%96%87/</loc>
     <lastmod>2025-03-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://nanyang2015.github.io/blog/categories/LLM/%E9%9F%B3%E9%A2%91%E7%94%9F%E6%88%90/%E8%AE%BA%E6%96%87/</loc>
+    <loc>https://nanyang2015.github.io/blog/categories/LLM/%E9%9F%B3%E9%A2%91%E7%94%9F%E6%88%90/</loc>
     <lastmod>2025-03-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://nanyang2015.github.io/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%AD%E9%9F%B3%E8%AF%84%E6%B5%8B/%E4%BA%A7%E5%93%81/</loc>
+    <loc>https://nanyang2015.github.io/blog/categories/LLM/%E9%9F%B3%E9%A2%91%E7%90%86%E8%A7%A3/%E8%AE%BA%E6%96%87/</loc>
     <lastmod>2025-03-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://nanyang2015.github.io/blog/categories/LLM/%E6%9D%A1%E4%BB%B6%E7%94%9F%E6%88%90/%E8%AE%BA%E6%96%87/%E6%B3%9B%E8%AF%BB/</loc>
-    <lastmod>2025-03-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://nanyang2015.github.io/blog/categories/%E9%9F%B3%E9%A2%91/codec/</loc>
-    <lastmod>2025-03-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://nanyang2015.github.io/blog/categories/LLM/%E5%A4%9A%E6%A8%A1%E6%80%81/</loc>
-    <lastmod>2025-03-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://nanyang2015.github.io/blog/categories/%E9%9F%B3%E9%A2%91/codec/%E8%AE%BA%E6%96%87/</loc>
-    <lastmod>2025-03-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://nanyang2015.github.io/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%AD%E9%9F%B3%E5%90%88%E6%88%90/%E8%AE%BA%E6%96%87-%E4%BA%A7%E5%93%81/</loc>
-    <lastmod>2025-03-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://nanyang2015.github.io/blog/categories/LLM/%E5%A4%9A%E6%A8%A1%E6%80%81/%E8%AE%BA%E6%96%87/</loc>
-    <lastmod>2025-03-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://nanyang2015.github.io/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%AD%E9%9F%B3%E7%BF%BB%E8%AF%91/</loc>
+    <loc>https://nanyang2015.github.io/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%B7%A5%E5%85%B7%E5%8C%85/</loc>
     <lastmod>2025-03-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1415,7 +1303,126 @@
   </url>
   
   <url>
-    <loc>https://nanyang2015.github.io/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/%E6%95%B0%E6%8D%AE%E9%9B%86/</loc>
+    <loc>https://nanyang2015.github.io/blog/categories/%E9%9F%B3%E9%A2%91/%E6%95%B0%E6%8D%AE%E9%9B%86/</loc>
+    <lastmod>2025-03-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://nanyang2015.github.io/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%AD%E9%9F%B3%E5%90%88%E6%88%90/</loc>
+    <lastmod>2025-03-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://nanyang2015.github.io/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%AD%E9%9F%B3%E5%AD%A6/</loc>
+    <lastmod>2025-03-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://nanyang2015.github.io/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%AD%E9%9F%B3%E7%BF%BB%E8%AF%91/</loc>
+    <lastmod>2025-03-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://nanyang2015.github.io/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%AD%E9%9F%B3%E8%AF%84%E6%B5%8B/</loc>
+    <lastmod>2025-03-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://nanyang2015.github.io/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/</loc>
+    <lastmod>2025-03-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://nanyang2015.github.io/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/</loc>
+    <lastmod>2025-03-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://nanyang2015.github.io/blog/categories/%E9%9F%B3%E9%A2%91/%E9%9F%B3%E9%A2%91%E4%BA%8B%E4%BB%B6/</loc>
+    <lastmod>2025-03-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://nanyang2015.github.io/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%AF%86%E5%88%AB/</loc>
+    <lastmod>2025-03-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://nanyang2015.github.io/blog/categories/LLM/%E6%9D%A1%E4%BB%B6%E7%94%9F%E6%88%90/%E8%AE%BA%E6%96%87/</loc>
+    <lastmod>2025-03-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://nanyang2015.github.io/blog/categories/LLM/%E5%A4%9A%E6%A8%A1%E6%80%81/%E8%AE%BA%E6%96%87/</loc>
+    <lastmod>2025-03-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://nanyang2015.github.io/blog/categories/LLM/%E9%9F%B3%E9%A2%91%E7%94%9F%E6%88%90/%E8%AE%BA%E6%96%87/</loc>
+    <lastmod>2025-03-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://nanyang2015.github.io/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%B7%A5%E5%85%B7%E5%8C%85/transformers/</loc>
+    <lastmod>2025-03-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://nanyang2015.github.io/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%B7%A5%E5%85%B7%E5%8C%85/DeepSpeed/</loc>
+    <lastmod>2025-03-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://nanyang2015.github.io/blog/categories/%E9%9F%B3%E9%A2%91/codec/</loc>
+    <lastmod>2025-03-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://nanyang2015.github.io/blog/categories/%E9%9F%B3%E9%A2%91/%E5%B7%A5%E5%85%B7%E5%8C%85/WeNet/</loc>
+    <lastmod>2025-03-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://nanyang2015.github.io/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%AD%E9%9F%B3%E5%90%88%E6%88%90/%E8%AE%BA%E6%96%87-%E4%BA%A7%E5%93%81/</loc>
+    <lastmod>2025-03-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://nanyang2015.github.io/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%AD%E9%9F%B3%E7%BF%BB%E8%AF%91/%E8%AE%BA%E6%96%87/</loc>
     <lastmod>2025-03-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1429,14 +1436,7 @@
   </url>
   
   <url>
-    <loc>https://nanyang2015.github.io/blog/categories/%E9%9F%B3%E9%A2%91/%E9%9F%B3%E9%A2%91%E8%A1%A8%E7%A4%BA/</loc>
-    <lastmod>2025-03-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://nanyang2015.github.io/blog/categories/%E9%9F%B3%E9%A2%91/%E9%9F%B3%E9%A2%91%E4%BA%8B%E4%BB%B6/</loc>
+    <loc>https://nanyang2015.github.io/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/%E6%95%B0%E6%8D%AE%E9%9B%86/</loc>
     <lastmod>2025-03-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1457,42 +1457,7 @@
   </url>
   
   <url>
-    <loc>https://nanyang2015.github.io/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%B7%A5%E5%85%B7%E5%8C%85/</loc>
-    <lastmod>2025-03-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://nanyang2015.github.io/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%AD%E9%9F%B3%E7%BF%BB%E8%AF%91/%E8%AE%BA%E6%96%87/</loc>
-    <lastmod>2025-03-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://nanyang2015.github.io/blog/categories/%E9%9F%B3%E9%A2%91/%E5%B7%A5%E5%85%B7%E5%8C%85/WeNet/</loc>
-    <lastmod>2025-03-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://nanyang2015.github.io/blog/categories/LLM/%E5%A4%9A%E6%A8%A1%E6%80%81/%E5%A4%9A%E6%A8%A1%E6%80%81%E8%A1%A8%E7%A4%BA/</loc>
-    <lastmod>2025-03-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://nanyang2015.github.io/blog/categories/%E9%9F%B3%E9%A2%91/%E5%B7%A5%E5%85%B7%E5%8C%85/Kaldi/</loc>
-    <lastmod>2025-03-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://nanyang2015.github.io/blog/categories/%E9%9F%B3%E9%A2%91/%E9%9F%B3%E9%A2%91%E8%A1%A8%E7%A4%BA/%E8%AE%BA%E6%96%87/</loc>
+    <loc>https://nanyang2015.github.io/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%AD%E9%9F%B3%E8%AF%84%E6%B5%8B/%E7%AE%97%E6%B3%95/</loc>
     <lastmod>2025-03-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1506,14 +1471,49 @@
   </url>
   
   <url>
-    <loc>https://nanyang2015.github.io/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%B7%A5%E5%85%B7%E5%8C%85/DeepSpeed/</loc>
+    <loc>https://nanyang2015.github.io/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%AD%E9%9F%B3%E8%AF%84%E6%B5%8B/%E4%BA%A7%E5%93%81/</loc>
     <lastmod>2025-03-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://nanyang2015.github.io/blog/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%B7%A5%E5%85%B7%E5%8C%85/transformers/</loc>
+    <loc>https://nanyang2015.github.io/blog/categories/LLM/%E6%9D%A1%E4%BB%B6%E7%94%9F%E6%88%90/%E8%AE%BA%E6%96%87/%E6%B3%9B%E8%AF%BB/</loc>
+    <lastmod>2025-03-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://nanyang2015.github.io/blog/categories/%E9%9F%B3%E9%A2%91/codec/%E8%AE%BA%E6%96%87/</loc>
+    <lastmod>2025-03-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://nanyang2015.github.io/blog/categories/%E9%9F%B3%E9%A2%91/%E5%B7%A5%E5%85%B7%E5%8C%85/Kaldi/</loc>
+    <lastmod>2025-03-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://nanyang2015.github.io/blog/categories/%E9%9F%B3%E9%A2%91/%E9%9F%B3%E9%A2%91%E8%A1%A8%E7%A4%BA/</loc>
+    <lastmod>2025-03-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://nanyang2015.github.io/blog/categories/%E9%9F%B3%E9%A2%91/%E9%9F%B3%E9%A2%91%E8%A1%A8%E7%A4%BA/%E8%AE%BA%E6%96%87/</loc>
+    <lastmod>2025-03-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://nanyang2015.github.io/blog/categories/LLM/%E5%A4%9A%E6%A8%A1%E6%80%81/%E5%A4%9A%E6%A8%A1%E6%80%81%E8%A1%A8%E7%A4%BA/</loc>
     <lastmod>2025-03-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
