@@ -353,7 +353,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2025-03-04
+                    2025-03-09
                 </div>
                 
 
@@ -375,123 +375,160 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="系统结构">1. 系统结构</h1>
-<table>
-<colgroup>
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-</colgroup>
-<thead>
-<tr>
-<th>模块</th>
-<th>实现方式</th>
-<th>优缺点</th>
-<th>示例模型</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>全双工控制</td>
-<td>VAD</td>
-<td>优点：<br>1. 用户静音时段不需要不必要的大模型推理；<br>2.
-不论是类似 moshi 的 embedding 相加输入，还是类似 OmniFlatten
-的交错输入，均由于固定的用户输入节奏可能无法充分发挥推理性能。<br><br>缺点：<br>1.
-还需要结合语义处理背景人声、back-channel 等；<br>优化方案：类似
-VITA，一个模型生成响应，另一个判断是否打断。<br>2.
-家居等场景可能还需要支持哭闹等声音事件的主动情感支持、纯音乐输入。<br>优化方案：定向优化
-VAD。<br>3. VAD 区分短暂停顿、语音结束导致的延迟。<br>优化方案：如
+                <h1 id="产品应用">1. 产品应用</h1>
+<p>语音只是交互方式，带来的挑战是<font color="red">语音的理解、回复语音的自然生动、低延迟</font>可打断；核心仍然是基于
+llm
+的<font color="red">领域内知识的专业度</font>、内容生产、情感价值，优化回复自然度、应用诉求的生成能力。</p>
+<p>具体应用场景下，级联系统、端到端系统的选择 ……</p>
+<h1 id="系统结构">2. 系统结构</h1>
+<h2 id="turn-take-判断">2.1. turn take 判断</h2>
+<ul>
+<li>必要性：从语音人机交互体验，需解放双手，不论级联系统、turn based
+模型、全双工模型。</li>
+</ul>
+<h3 id="方案-1vad-turn-take-判断模型">2.1.1. 方案 1：VAD +
+turn take 判断模型</h3>
+<ul>
+<li>缺点
+<ul>
+<li>数据集构建：结合<font color="red">语义</font>区分 query
+结束、打断、back-channel、背景人声等；准入的非语音段。
+<ul>
+<li><font color="red">实现方案</font>：类似 Freeze-Omni，LLM head
+添加分类层，prefill，同时区分继续接收语音、打断、开始回复、语音结束不需要打断（丢弃该语音片段？重新
+prefill）。</li>
+<li>注意：处理系统回声，含打断时的重叠人声。如：前端
+AEC（webrtc）、数据增强。</li>
+</ul></li>
+<li>错误累积。
+<ul>
+<li><font color="red">优化方案</font>：保召回，LLM
+数据增强，非查询可不回复。</li>
+</ul></li>
+<li>能力扩展：支持纯音乐输入，哭声、咳嗽等声音事件的情感支持。</li>
+<li>VAD 区分短暂停顿、语音结束导致的延迟。&lt;= 问题 1 的优化方案可缓解
+<ul>
+<li>优化方案：如
 Step-Audio，若用户短暂暂停，生成推测性响应，若用户继续说话，则丢弃推测性响应，约
 40% 的推测性响应被执行，响应延迟减少了约
-500ms，用多余的计算降低延迟。<br>4.
-需要处理系统回声。<br>优化方案：AEC，如 webrtc；数据增强。</td>
-<td>Step-Audio、MiniCPM-o 2.6</td>
-</tr>
-<tr>
-<td></td>
-<td>turn taking 预测</td>
-<td></td>
-<td>MinMo、VITA</td>
-</tr>
-<tr>
-<td></td>
-<td>大模型内生控制</td>
-<td></td>
-<td>Moshi</td>
-</tr>
-<tr>
-<td>audio 表示</td>
-<td>离散表示</td>
-<td></td>
-<td>1. CosyVoice、GLM-4-Voice ASR encoder 中间层量化；Step-Audio 采用
-Paraformer、SenseVoice-Large encoder 双码本；<br><br>2.
-Baichuan-Audio: 8层 RVQ，频谱重建、音频理解多任务训练。<br><br>3.
-Moshi 采用 split RVQ，将自监督音频模型的语义表示蒸馏至
-codec，对抗损失训练。</td>
-</tr>
-<tr>
-<td></td>
-<td>audio 输入采用连续表示，输出采用离散表示</td>
-<td></td>
-<td>Minmo、MiniCPM-o 2.6 等<br><br>Ola 将 Whisper、BEATS（音乐
-encoder）表示在 channel 维拼接。</td>
-</tr>
-<tr>
-<td></td>
-<td>连续表示</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>audio 生成</td>
-<td>LLM 预测文本 + TTS 模型</td>
-<td></td>
-<td>1. Step-Audio 生成文本包含指定格式的
-tag，支持语种、方言、语速、情感控制，正常语音、RAP、哼唱区分；说话人利用提示音频作为
-TTS LM 对话历史、flow matching prompt。</td>
-</tr>
-<tr>
-<td></td>
-<td>利用 LLM 表示 + TTS</td>
-<td>优点：音频生成由另外的模块完成，降低了主 LLM 建模难度、推理延迟（小
-LM 生成长音频序列更快），但利用 LLM
-的表示实现指令跟随的、富有表现力的音频生成。</td>
-<td>1. MinMo TTS 模块的输入为用户输入、响应文本，表示，及对应的 LLM
-最后一层隐藏状态，在特征维拼接。<br><br>2. Moshi: Depth Transformer
-输入为
-<code>text/audio embedding + Linear(last_hidden_state)</code>，自回归预测
-audio token。<br><br>3. Baichuan-Audio: LLM 预测音频隐层表示 + Depth
-Transformer + 8个分类头；<br><br>4. MiniCPM-o 2.6 LLM 先预测1个 speech
-embedding，系统 prompt 中支持加入音频进行音色克隆；</td>
-</tr>
-<tr>
-<td></td>
-<td>LLM 直接预测 audio token</td>
-<td></td>
-<td>1. LUCY 采用 SNAC codec，7码本，one-step 延迟，最先生成响应情感
-token。</td>
-</tr>
-<tr>
-<td>audio decoder 声音事件、唱歌等支持</td>
-<td></td>
-<td></td>
-<td>Step-Audio 采用多个 TTS 模型，通过响应文本中的特殊 tag
-确定调用哪一个模型。</td>
-</tr>
-</tbody>
-</table>
-<h1 id="效果优化">2. 效果优化</h1>
-<ul>
-<li>对话自然度：LLM
-改写文本对话数据集回复，使符合口语对话的长度、风格。</li>
-<li>情感对话
-<ul>
-<li><a href="https://nanyang2015.github.io/blog/llm/yu-yin-dui-hua/lun-wen/lucy/">LUCY
-通过合成数据微调来增强响应的情感控制、自然度，并最先生成响应情感
-token。</a></li>
+500ms，用多余的计算降低延迟。</li>
 </ul></li>
-<li>生成语音的细粒度控制
+</ul></li>
+<li>注意：流式，依赖的未来帧数，影响延迟。</li>
+<li>示例：MinMo、VITA、Freeze-Omni、mini-omni (“StopOmni”)</li>
+</ul>
+<h3 id="方案2llm-始终接收用户输入">2.1.2. 方案2：LLM 始终接收用户输入</h3>
+<ul>
+<li>缺点
+<ul>
+<li>计算量：用户静音时段不必要的大模型推理。</li>
+<li>首包延迟：（非编解码）音频合成通常需要一段时间的文本/音频 token
+来保障连贯性，音频 chunk 交错格式下引入额外的 (audio_chunk)/2、moshi
+格式下引入 audio_chunk 的首包延迟。</li>
+</ul></li>
+<li>示例：Moshi、OmniFlatten</li>
+</ul>
+<h2 id="音频表示">2.2. 音频表示</h2>
+<h3 id="方案1离散表示">2.2.1. 方案1：离散表示</h3>
+<ul>
+<li><p>缺点：相较于连续表示，用于 ASR
+等音频理解任务性能有损，特别是噪声、口音数据。</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBf3f089f6c883c9cda03b0100b804e4db?method=download&shareKey=8e3dc61f945179b74be626f4f8ce8be5" width="820"></p></li>
+<li><p>示例</p>
+<ul>
+<li>CosyVoice、GLM-4-Voice ASR encoder 中间层量化；Step-Audio 采用
+Paraformer、SenseVoice-Large encoder 双码本；</li>
+<li>Baichuan-Audio: 8层 RVQ，频谱重建、音频理解多任务训练；Moshi 采用
+split RVQ，将自监督音频模型的语义表示蒸馏至 codec，对抗损失训练。</li>
+</ul></li>
+</ul>
+<h3 id="方案2audio-输入采用连续表示输出采用离散表示">2.2.2. 方案2：audio
+输入采用连续表示，输出采用离散表示</h3>
+<ul>
+<li>输入、输出均可非流式计算。</li>
+<li>示例：Minmo、MiniCPM-o 2.6 等。Ola 将 Whisper、BEATS（音乐
+encoder）表示在 channel 维拼接。</li>
+</ul>
+<h3 id="方案3连续表示">2.2.3. 方案3：连续表示</h3>
+<ul>
+<li>音频生成：如字节 DiTAR</li>
+</ul>
+<h2 id="离散表示">2.3. 离散表示</h2>
+<h3 id="方案1semantic-token">2.3.1. 方案1：semantic token</h3>
+<ul>
+<li>缺点：音乐、背景声音事件生成</li>
+</ul>
+<h3 id="方案2semantic-token-acoustic-tokensplit-rvq">2.3.2. 方案2：semantic
+token + acoustic token，split RVQ</h3>
+<ul>
+<li>缺点：多音色支持</li>
+</ul>
+<h2 id="音频生成">2.4. 音频生成</h2>
+<h3 id="方案1llm-预测文本-tts-模型">2.4.1. 方案1：LLM 预测文本 + TTS 模型</h3>
+<ul>
+<li>缺点：LLM 预测文本中需要包含语种、方言、情感、声音事件等
+tag，训练数据需要细致的标注，难以泛化到未见 tag。</li>
+<li>示例：Step-Audio 生成文本包含指定格式的
+tag，支持语种、方言、语速、情感控制，正常语音、RAP、哼唱区分；说话人利用提示音频作为
+TTS LM 对话历史、flow matching prompt。</li>
+</ul>
+<h3 id="方案2利用-llm-表示-tts">2.4.2. 方案2：利用 LLM 表示 +
+TTS</h3>
+<ul>
+<li>优点：音频生成由另外的模块完成，降低了主 LLM 建模难度、推理延迟（小
+LM 生成长音频序列更快），但利用 LLM
+的表示实现指令跟随的、富有表现力的音频生成。</li>
+<li>示例
+<ul>
+<li><p>MinMo TTS 模块的输入为用户输入、响应文本，音频/文本
+表示，及对应的 LLM
+最后一层隐藏状态，在特征维拼接。通过多阶段对齐训练，文本 LLM
+原始能力几乎无损。</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB6b8b84cf3264c5843bfa027349a528b9?method=download&shareKey=37e22a6d661f51256d880e1aef1a7c2e" width="404"></p></li>
+<li><p>Moshi: Depth Transformer 输入为
+<code>text/audio embedding + Linear(last_hidden_state)</code>，自回归预测
+audio token。</p></li>
+<li><p>Baichuan-Audio: LLM 预测音频隐层表示 + Depth Transformer +
+8个分类头。</p></li>
+<li><p>MiniCPM-o 2.6 LLM 先预测1个 speech embedding，系统 prompt
+中支持加入音频进行音色克隆。</p></li>
+</ul></li>
+</ul>
+<h3 id="方案3llm-直接预测-audio-token">2.4.3. 方案3：LLM 直接预测 audio
+token</h3>
+<ul>
+<li><p>缺点：相较于仅预测文本，同时预测文本、音频，性能下降。故
+mini-omni 提出并行解码策略。</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB9cf8e5bd2bd85fef725d470d58685fca?method=download&shareKey=233637f986e185c198905a22472701aa" width="717"></p>
+<p>*
+S-&gt;S：输出交错的文本-音频，评价文本。S-&gt;T：输出仅文本。</p></li>
+</ul>
+<h1 id="效果优化">3. 效果优化</h1>
+<h2 id="智商">3.1. 智商</h2>
+<ul>
+<li><p>MinMo 利用大规模训练数据、多阶段对齐训练，与 ASR + 文本 LLM
+性能相当。</p></li>
+<li><p>相较于 S -&gt; T，S-&gt; S 在知识问答任务上存在约 10
+个点的准确率下降。从 MinMo 的结果看，由于答案中的专业词汇对 TTS
+有挑战、ASR 性能影响评价。</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBf38283d62fc1b02ea4ab5a6aa7660e9d?method=download&shareKey=37e22a6d661f51256d880e1aef1a7c2e" width="404"></p></li>
+</ul>
+<h2 id="延迟">3.2. 延迟</h2>
+<ul>
+<li><p>流式音频 token 提取：通常需要向后看一段时间。</p></li>
+<li><p>自然对话平均延迟约为 230ms。Moshi 理论延迟 160ms，实际延迟
+200ms。</p></li>
+<li><p>MinMo 基于 cosyvoice 2，理论延迟 600ms，实际约为 800ms。</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB60c605b140f503171922babc8c4cf6cf?method=download&shareKey=37e22a6d661f51256d880e1aef1a7c2e" width="365"></p></li>
+<li><p>LLM、flow matching 推理加速。</p></li>
+</ul>
+<h2 id="对话自然度">3.3. 对话自然度</h2>
+<p>LLM 改写文本对话数据集回复，使符合口语对话的长度、风格。</p>
+<h2 id="情感对话">3.4. 情感对话</h2>
+<p><a href="https://nanyang2015.github.io/blog/llm/yu-yin-dui-hua/lun-wen/lucy/">LUCY
+通过合成数据微调来增强响应的情感控制、自然度，并最先生成响应情感
+token。</a></p>
+<h2 id="生成语音的细粒度控制">3.5. 生成语音的细粒度控制</h2>
 <ul>
 <li><a href="https://nanyang2015.github.io/blog/llm/yu-yin-dui-hua/lun-wen/step-audio/">Step-Audio
 提出了高质量 TTS 训练数据合成 pipeline：通过收集各语种、方言 native
@@ -500,47 +537,41 @@ speaker 数据，利用中间 checkpoint 快速扩展 native speaker、目标说
 模型将音频情感、风格化。</a></li>
 <li>OpenOmni 进行了情感语音生成 DPO 训练，采用 CosyVoice
 分别生成无条件语音、情感条件语音作为正负样本对。</li>
-</ul></li>
-<li>指令跟随、对话自然度、安全性等
+</ul>
+<h2 id="指令跟随对话自然度安全性等">3.6. 指令跟随、对话自然度、安全性等</h2>
 <ul>
-<li>RL
-<ul>
-<li>Step-Audio 特别地将音频清晰、回复包含 “I didn’t hear clearly” 等存在
-deaf hacking 现象的样本作为负样本。</li>
-</ul></li>
-</ul></li>
-<li>工具调用
+<li>RL：Step-Audio 特别地将音频清晰、回复包含 “I didn’t hear clearly”
+等存在 deaf hacking 现象的样本作为负样本。</li>
+</ul>
+<h2 id="工具调用">3.7. 工具调用</h2>
 <ul>
 <li>LUCY 基于函数调用数据集（如
 WebPCM、DevOpsEval），保留适合语音交互的，如谷歌搜索、天气搜索、新闻搜索等，采用
 LLM 改写回复。并在开始添加简洁的确认，以补偿函数调用延迟。</li>
-</ul></li>
-<li>长序列多轮对话支持
+</ul>
+<h2 id="多轮对话长上下文">3.8. 多轮对话长上下文</h2>
 <ul>
-<li>SLAM-Omni 将输入的连续音频表示 5 帧拼接、每一步预测 1个文本 token +
-3个音频 token，显著减小了序列长度。</li>
 <li>多轮对话历史仅采用文本，转写用户语音，回复文本采用生成文本，如
 Step-Audio、SLAM-Omni、LUCY（用户语音未转写，回复仅保留文本）。但
 SLAM-Omni
 指出“在某些情况下，历史上下文保留非语言信息对于保持对话的连贯性和深度至关重要”。</li>
-</ul></li>
-<li>延迟
-<ul>
-<li>流式音频 token 提取：通常需要向后看一段时间，</li>
+<li>SLAM-Omni 将输入的连续音频表示 5 帧拼接、每一步预测 1个文本 token +
+3个音频 token，显著减小了序列长度。</li>
+<li>SpeechGPT 2.0-preview 将输入的音频表示多帧拼接、每一步预测 1个文本
+token + 多解码头的自回归语言模型生成多帧 RVQ token。</li>
 </ul>
-<blockquote>
-<p>自然对话平均延迟约为 230ms。Moshi 理论延迟 160ms，实际延迟 200ms。
-MinMo 理论延迟 600ms，实际约为 800ms。
-<img src="https://note.youdao.com/yws/api/personal/file/WEB60c605b140f503171922babc8c4cf6cf?method=download&shareKey=37e22a6d661f51256d880e1aef1a7c2e" width="365"></p>
-</blockquote></li>
-<li>其它经验
+<h2 id="歌声生成">3.9. 歌声生成</h2>
+<ul>
+<li>Step-Audio 采用多个 TTS 模型，通过响应文本中的特殊 tag
+确定调用哪一个模型。</li>
+</ul>
+<h2 id="其它经验">3.10. 其它经验</h2>
 <ul>
 <li>预训练：模态交错数据有助于知识迁移。可采用 text-to-audiotoken
 模型扩充。</li>
 <li>SFT 数据：
 <ul>
 <li>声音指令：支持生成语音的自然语言细粒度控制，如方言、情感、角色扮演、RAP、唱歌等。</li>
-<li>能力扩展：安全性、工具调用、闲聊。</li>
 <li>特定 case，增强鲁棒性。
 <ul>
 <li>用户指令语义不明或音质较差，模型要求用户重说，如 Sorry, I'm not sure
@@ -551,17 +582,17 @@ what you're referring to.。</li>
 </ul></li>
 <li>模型输出
 <ul>
-<li>有文本引导时语音生成质量更好。但相较于 speech2text，speech2speech
-生成目前普遍存在 10% 左右的绝对准确率下降。</li>
-</ul></li>
-</ul></li>
-<li>注意点
-<ul>
-<li>噪声、有口音场景下的语音理解能力下降。</li>
-<li>无意义查询的合理回复，避免幻觉。</li>
+<li>有文本引导时语音生成质量更好。</li>
 </ul></li>
 </ul>
-<h1 id="相关工作">3. 相关工作</h1>
+<h2 id="注意点">3.11. 注意点</h2>
+<ul>
+<li>无意义查询的合理回复，避免幻觉。</li>
+</ul>
+<h1 id="相关工作">4. 相关工作</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/MatthewCYM/VoiceBench?tab=readme-ov-file#awesome-voice-assistants" class="uri">https://github.com/MatthewCYM/VoiceBench?tab=readme-ov-file#awesome-voice-assistants</a></li>
+</ul>
 <table>
 <colgroup>
 <col style="width: 20%">
@@ -647,6 +678,48 @@ token（是否被用户打断），停止生成。</td>
 <td>VAD + speech encoder + LLM + TTS，采用 VAD
 检测用户语音输入，流式输入用户音频，LLM 预测状态：沉默或开始生成。</td>
 <td>原则上也可以利用 VAD 打断模型生成。</td>
+</tr>
+</tbody>
+</table>
+<p>其它</p>
+<table>
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr>
+<th>提出时间</th>
+<th>系统</th>
+<th>作者所属机构</th>
+<th>方案</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2025.1.26</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/OpenMOSS/SpeechGPT-2.0-preview">SpeechGPT-2.0-preview</a>、<br><a target="_blank" rel="noopener" href="https://0nutation.github.io/SpeechGPT2.github.io/">SpeechGPT2</a></td>
+<td>复旦</td>
+<td>语音 Codec：参考
+SpeechTokenizer，语义-声学联合建模，RVQ-3，25Hz，流式输入输出 24khz
+音频。<br>将输入的音频表示多帧拼接、每一步预测 1个文本 token +
+多解码头的自回归语言模型生成多帧 RVQ token。</td>
+<td>开源了模型，无详细文档，无测试结果</td>
+</tr>
+<tr>
+<td>2025.2.27</td>
+<td><a target="_blank" rel="noopener" href="https://www.sesame.com/research/crossing_the_uncanny_valley_of_voice">sesame</a></td>
+<td>Sesame</td>
+<td>用户语音、转写文本 token 交错，LLM 预测语义 token，depth transformer
+多个分类头预测声学 token，32 码本，12.5Hz，8B + 300M。<br>100wh
+公开音频训练，主要为英语，语义 token 全部数据训练，声学 token 1/16
+音频帧训练。<br>评价：WER、说话人相似度已接近人类水平，客观评价多音字发音、<font color="green">context
+utilization</font>、韵律、延迟，主观评价 CMOS。</td>
+<td>从流程描述看 turn based。优点：对话内容、语音生成的自然度。</td>
 </tr>
 </tbody>
 </table>
@@ -766,7 +839,7 @@ token（是否被用户打断），停止生成。</td>
                     <div class="publish-info">
                             <span class="publish-date">
                                 <i class="far fa-clock fa-fw icon-date"></i>2024-11-04
-                                <i class="far fa-edit fa-fw icon-date"></i>2025-02-07
+                                <i class="far fa-edit fa-fw icon-date"></i>2025-03-09
                             </span>
                         <span class="publish-author">
                             

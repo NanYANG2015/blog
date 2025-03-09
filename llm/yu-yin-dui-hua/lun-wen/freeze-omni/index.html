@@ -360,7 +360,7 @@ https://arxiv.org/pdf/2411.0077">
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2025-02-07
+                    2025-03-09
                 </div>
                 
 
@@ -391,10 +391,10 @@ with Frozen LLM</li>
 <li><font color="red">创新点：【VAD + speech encoder + LLM + TTS】冻结
 LLM 避免灾难遗忘。采用 <a target="_blank" rel="noopener" href="https://github.com/snakers4/silero-vad">VAD</a>
 检测“用户开始语音输入”。采用语音 encoder + adapter 接收 chunk-wise
-流式语音输入，LLM 预测状态：0 继续接收语音，1
-语音结束开始生成，<font color="green">2 语音结束不需要打断</font>。基于
-LLM 文本输出 + 隐藏状态，采用 NAR+AR 生成语音 token，采用流式 codec
-生成音频。系统平均延迟约
+流式语音输入，LLM 预测状态：0 继续接收语音，1 语音结束开始生成，2
+语音结束不需要打断<font color="green">（可以丢弃该语音片段？重新
+prefill）</font>。基于 LLM 文本输出 + 隐藏状态，采用 NAR+AR 生成语音
+token，采用流式 codec 生成音频。系统平均延迟约
 1.2s。</font><font color="green">存疑：也可以利用 VAD
 打断模型生成？</font></li>
 </ul>
@@ -570,7 +570,7 @@ QA</a>。Web Questions 和 Trivia QA 采用 <a target="_blank" rel="noopener" hr
                     <div class="publish-info">
                         <span class="publish-date">
                             <i class="far fa-clock fa-fw icon-date"></i>2024-11-05
-                            <i class="far fa-edit fa-fw icon-date"></i>2025-03-04
+                            <i class="far fa-edit fa-fw icon-date"></i>2025-03-09
                         </span>
                         <span class="publish-author">
                             
