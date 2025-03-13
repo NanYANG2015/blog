@@ -435,17 +435,20 @@ sessions）。固定的记忆粒度可能导致记忆表示碎片化（如缺少
 </ul></li>
 <li><p>reranker: 带残差连接的 MLP，重排 Top-K 得到 Top-M。</p>
 <p><span class="math display">\[
+\begin{gathered}
 \mathbf{q}^{\prime}=\mathbf{q}+\mathbf{W}_q \mathbf{q}, \quad
 \mathbf{m}_i^{\prime}=\mathbf{m}_i+\mathbf{W}_m \mathbf{m}_i \\
-s_i=\mathbf{q}^{\prime \top} \mathbf{m}_i^{\prime} \\
+s_i=\mathbf{q}^{\top} \mathbf{m}_i^{\prime} \\
 \tilde{s}_i=s_i+g_i, \quad g_i=-\log \left(-\log \left(u_i\right)\right)
 \\
-p_i=\frac{\exp \left(\bar{s}_i / \tau\right)}{\sum_{j=1}^K \exp
+p_i=\frac{\exp \left(\tilde{s}_i / \tau\right)}{\sum_{j=1}^K \exp
 \left(\tilde{s}_j / \tau\right)}
-\]</span> 其中，<span class="math inline">\(\mathbf{q}\)</span> 表示
-query embedding，<span class="math inline">\(\mathbf{m}_i\)</span> 表示
-memory embedding，训练时添加 Gumbel 噪声 <span class="math inline">\(u_i
-\sim \operatorname{Uniform}(0,1)\)</span>。</p>
+\end{gathered}
+\]</span></p>
+<p>其中，<span class="math inline">\(\mathbf{q}\)</span> 表示 query
+embedding，<span class="math inline">\(\mathbf{m}_i\)</span> 表示 memory
+embedding，训练时添加 Gumbel 噪声 <span class="math inline">\(u_i \sim
+\operatorname{Uniform}(0,1)\)</span>。</p>
 <p>RL：REIN-FORCE 算法。 <span class="math display">\[
 \Delta \phi=\eta \cdot(R-b) \cdot \nabla_\phi \log P\left(\mathcal{M}_M
 \mid q, \mathcal{M}_K ; \phi\right)
