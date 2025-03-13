@@ -4,9 +4,11 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="WeNet论文, AI, 语音, 算法">
-    <meta name="description" content="
-">
+    <meta name="keywords" content="对话记忆管理, AI, 语音, 算法">
+    <meta name="description" content="1. 相关工作
+
+LLM 长上下文：优化注意力机制（Ring Attention、Sparse Poly-Attention for
+content Recommendation (SPAR)）、KV cache（SCBENCH、Ch">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -18,7 +20,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>WeNet论文 | 梦园</title>
+    <title>对话记忆管理 | 梦园</title>
     <link rel="icon" type="image/png" href="/blog/favicon.png">
     
 
@@ -317,7 +319,7 @@
                     <div class="row">
                         <div class="col s12 m12 l12">
                             <div class="brand">
-                                <h1 class="description center-align post-title">WeNet论文</h1>
+                                <h1 class="description center-align post-title">对话记忆管理</h1>
                             </div>
                         </div>
                     </div>
@@ -330,16 +332,12 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/blog/categories/%E9%9F%B3%E9%A2%91/" class="post-category">
-                                音频
+                            <a href="/blog/categories/LLM/" class="post-category">
+                                LLM
                             </a>
                         
-                            <a href="/blog/categories/%E9%9F%B3%E9%A2%91/%E5%B7%A5%E5%85%B7%E5%8C%85/" class="post-category">
-                                工具包
-                            </a>
-                        
-                            <a href="/blog/categories/%E9%9F%B3%E9%A2%91/%E5%B7%A5%E5%85%B7%E5%8C%85/WeNet/" class="post-category">
-                                WeNet
+                            <a href="/blog/categories/LLM/Agent/" class="post-category">
+                                Agent
                             </a>
                         
                     </div>
@@ -351,14 +349,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-06-12
+                    2025-03-14
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-10-29
+                    2025-03-14
                 </div>
                 
 
@@ -380,7 +378,99 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                
+                <h1 id="相关工作">1. 相关工作</h1>
+<ul>
+<li>LLM 长上下文：优化注意力机制（Ring Attention、<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2402.10555">Sparse Poly-Attention for
+content Recommendation (SPAR)</a>）、KV cache（<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2412.10319">SCBENCH</a>、<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2502.00299">ChunkKV</a>）、位置编码（<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2312.17044">Length Extrapolation Positional
+Encoding survey</a>、<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2405.14722">Data-Adaptive Positional
+Encoding</a>）等；</li>
+<li>记忆管理：summarization-retrieval，如
+<ul>
+<li>LD-Agent：long-, short-term memory bank</li>
+<li>MemoryBank：Ebbinghaus Forgetting Curve</li>
+<li>Theanine：timeline-based retrieval</li>
+</ul></li>
+</ul>
+<h1 id="benchmark">2. benchmark</h1>
+<ul>
+<li>MSC、LongMemEval、LoCoMo</li>
+<li>评价指标
+<ul>
+<li>记忆检索 Recall@K</li>
+<li>回复准确度：回复与 GT 的词汇相似度 METEOR、语义相似度 BERTScore、LLM
+评分。</li>
+</ul></li>
+</ul>
+<h1 id="挑战">3. 挑战</h1>
+<ul>
+<li>long-range temporal and causal understanding</li>
+</ul>
+<h1 id="reflective-memory-management">4. Reflective Memory Management</h1>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2503.08026">In Prospect and
+Retrospect: Reflective Memory Management for Long-term Personalized
+Dialogue Agents</a></p></li>
+<li><p>作者来自谷歌等</p></li>
+<li><p>创新点</p>
+<ul>
+<li>基于话题组织记忆，跨粒度（utterances, turns, and
+sessions）。固定的记忆粒度可能导致记忆表示碎片化（如缺少跨会话聚合）、不完整（粗粒度摘要，如时间间隔粒度）。</li>
+<li>LLM 生成回复时，同时生成使用了的记忆的索引，作为 RL 的奖励，online
+优化 reranker，且 without the need for costly labeled data。</li>
+</ul></li>
+<li><p>系统结构</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBddbea31640c9878b86bf78343d1d84c7?method=download&shareKey=006cada9e7ef4b128f0e2593a9e4d482" width="414"></p>
+<ul>
+<li><p>memory bank: (topic summary, raw dialogue)</p>
+<ul>
+<li>记忆提取：用户经历、偏好、背景等，LLM prompt 详见论文附录 F.1.1</li>
+<li>记忆更新：检索语义相似度最高的 Top-K 个记忆，LLM
+判断添加新话题或合并、更新 summary，prompt 详见论文附录 F.1.2</li>
+</ul></li>
+<li><p>retriever</p>
+<ul>
+<li>facebook/contriever</li>
+<li>dunzhang/stella_en_1.5B_v5</li>
+<li>Alibaba-NLP/gte-Qwen2-7B-instruct</li>
+</ul></li>
+<li><p>reranker: 带残差连接的 MLP，重排 Top-K 得到 Top-M。</p>
+<p><span class="math display">\[
+\mathbf{q}^{\prime}=\mathbf{q}+\mathbf{W}_q \mathbf{q}, \quad
+\mathbf{m}_i^{\prime}=\mathbf{m}_i+\mathbf{W}_m \mathbf{m}_i \\
+s_i=\mathbf{q}^{\prime \top} \mathbf{m}_i^{\prime} \\
+\tilde{s}_i=s_i+g_i, \quad g_i=-\log \left(-\log \left(u_i\right)\right)
+\\
+p_i=\frac{\exp \left(\bar{s}_i / \tau\right)}{\sum_{j=1}^K \exp
+\left(\tilde{s}_j / \tau\right)}
+\]</span> 其中，<span class="math inline">\(\mathbf{q}\)</span> 表示
+query embedding，<span class="math inline">\(\mathbf{m}_i\)</span> 表示
+memory embedding，训练时添加 Gumbel 噪声 <span class="math inline">\(u_i
+\sim \operatorname{Uniform}(0,1)\)</span>。</p>
+<p>RL：REIN-FORCE 算法。 <span class="math display">\[
+\Delta \phi=\eta \cdot(R-b) \cdot \nabla_\phi \log P\left(\mathcal{M}_M
+\mid q, \mathcal{M}_K ; \phi\right)
+\]</span> 其中，<span class="math inline">\(R\)</span>
+表示奖励（是否被回复引用：+1、-1），<span class="math inline">\(b\)</span> 为超参数（0.5），<span class="math inline">\(\phi\)</span> 为 reranker 权重。</p></li>
+<li><p>LLM：生成回复及引用的记忆 index，prompt 详见论文附录
+F.2。</p></li>
+</ul></li>
+<li><p>实验结果</p>
+<ul>
+<li>Long context is not enough，含噪声上下文。</li>
+<li>RAG models outperform Long-Context LLMs。</li>
+<li>retriever-dependent。</li>
+<li>增加检索、重排的记忆数量，可提高性能。</li>
+<li>更强大的 LLM 可能更避免回答涉及个人信息的查询。</li>
+</ul></li>
+<li><p>展望：RL 计算成本、多模态数据、长期记忆更新机制。</p></li>
+</ul>
+<h1 id="其它">5. 其它</h1>
+<ul>
+<li>Z. Zhang, R. A. Rossi, B. Kveton, Y. Shao, D. Yang, H. Zamani, F.
+Dernoncourt, J. Barrow, T. Yu, S. Kim, et al. Personalization of large
+language models: A survey. ArXiv preprint, abs/2411.00027, 2024c. URL
+https://arxiv.org/abs/2411.00027.</li>
+</ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
             </div>
@@ -429,9 +519,9 @@
 
 <script type="text/javascript">
     disqus_config = function () {
-        this.page.url = 'https://nanyang2015.github.io/blog/yin-pin/gong-ju-bao/wenet/lun-wen/';
-        this.page.identifier = '/blog/yin-pin/gong-ju-bao/wenet/lun-wen/';
-        this.page.title = 'WeNet论文';
+        this.page.url = 'https://nanyang2015.github.io/blog/llm/agent/dui-hua-ji-yi-guan-li/';
+        this.page.identifier = '/blog/llm/agent/dui-hua-ji-yi-guan-li/';
+        this.page.title = '对话记忆管理';
     };
     let disqus_shortname = 'https-nanyang2015-github-io-blog';
 
@@ -459,59 +549,14 @@
     <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
-            <div class="card">
-                <a href="/blog/yin-pin/yu-yin-ping-ce/ping-fen/duan-dao-duan/">
-                    <div class="card-content">
-                        <span class="card-title">端到端语音评分</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-07-23
-                            <i class="far fa-edit fa-fw icon-date"></i>2024-10-29
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/blog/categories/%E9%9F%B3%E9%A2%91/" class="post-category">
-                                    音频
-                                </a>
-                            
-                            <a href="/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%AD%E9%9F%B3%E8%AF%84%E6%B5%8B/" class="post-category">
-                                    语音评测
-                                </a>
-                            
-                            <a href="/blog/categories/%E9%9F%B3%E9%A2%91/%E8%AF%AD%E9%9F%B3%E8%AF%84%E6%B5%8B/%E8%AF%84%E5%88%86/" class="post-category">
-                                    评分
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
             </div>
             <div class="card">
-                <a href="/blog/yin-pin/gong-ju-bao/kaldi/cleanup-segmentation.mm/">
+                <a href="/blog/llm/agent/dui-hua-ji-yi-guan-li/">
                     <div class="card-content">
-                        <span class="card-title">cleanup_segmentation</span>
+                        <span class="card-title">对话记忆管理</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -522,23 +567,66 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-05-21
-                                <i class="far fa-edit fa-fw icon-date"></i>2024-10-29
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-03-14
+                                <i class="far fa-edit fa-fw icon-date"></i>2025-03-14
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/blog/categories/%E9%9F%B3%E9%A2%91/" class="post-category">
-                                    音频
+                            <a href="/blog/categories/LLM/" class="post-category">
+                                    LLM
                                 </a>
                             
-                            <a href="/blog/categories/%E9%9F%B3%E9%A2%91/%E5%B7%A5%E5%85%B7%E5%8C%85/" class="post-category">
-                                    工具包
+                            <a href="/blog/categories/LLM/Agent/" class="post-category">
+                                    Agent
                                 </a>
                             
-                            <a href="/blog/categories/%E9%9F%B3%E9%A2%91/%E5%B7%A5%E5%85%B7%E5%8C%85/Kaldi/" class="post-category">
-                                    Kaldi
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/blog/llm/yu-yin-dui-hua/lun-wen/baichuan-omni-1.5/">
+                    <div class="card-content">
+                        <span class="card-title">Baichuan-Omni-1.5</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            百川智能提出的全模态模型，支持流式语音生成。音频 token 采用8层 RVQ，频谱重建、音频理解多任务训练。将 LLM 预测的音频隐层表示输入 Depth Transformer，采用8个分类头预测音频 token。
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-03-03
+                                <i class="far fa-edit fa-fw icon-date"></i>2025-03-04
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/blog/categories/LLM/" class="post-category">
+                                    LLM
+                                </a>
+                            
+                            <a href="/blog/categories/LLM/%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/" class="post-category">
+                                    语音对话
+                                </a>
+                            
+                            <a href="/blog/categories/LLM/%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/%E8%AE%BA%E6%96%87/" class="post-category">
+                                    论文
                                 </a>
                             
                             
@@ -702,6 +790,13 @@
 
 </main>
 
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<!-- <script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    });
+</script> -->
 
 
 

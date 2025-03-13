@@ -353,7 +353,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2025-02-09
+                    2025-03-14
                 </div>
                 
 
@@ -410,11 +410,13 @@ P E_{(pos, 2 i+1)} &amp; =\cos \left(pos / 10000^{2 i / d_{\text
 \sin (0.000104 \cdot \operatorname{pos}) \\
 \cos (0.000104 \cdot \operatorname{pos})
 \end{array}\right]_{\mathrm{d}_{\text {model }} \times 1}
-\]</span> &gt; 注意：每一维的周期约为 [<span class="math inline">\(2
-\pi\)</span>, <span class="math inline">\(2 \pi \cdot 1.037\)</span>,
-<span class="math inline">\(2 \pi \cdot 1.075\)</span>, ...]，不为 <span class="math inline">\(2 \pi\)</span>
+\]</span></p>
+<blockquote>
+<p>注意：每一维的周期约为 [<span class="math inline">\(2 \pi\)</span>,
+<span class="math inline">\(2 \pi \cdot 1.037\)</span>, <span class="math inline">\(2 \pi \cdot 1.075\)</span>, ...]，不为 <span class="math inline">\(2 \pi\)</span>
 的整数倍，所以正弦位置编码的有效范围不是 <span class="math inline">\(2
 \pi \cdot 10000\)</span>，约为 62.8k。</p>
+</blockquote>
 <ul>
 <li><p>相对位置信息：<font color="green"><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1706.03762">we hypothesized it would allow
 the model to easily learn to attend by relative positions, since for any
@@ -432,7 +434,55 @@ than the ones encountered during training.</a></font></p>
 </blockquote></li>
 <li><p>实验对比了可学习的位置编码，模型性能几乎相同。</p></li>
 </ul>
-<h1 id="相对位置-aware-self-attention">2. 相对位置 aware
+<h1 id="相对位置编码">2. 相对位置编码</h1>
+<ul>
+<li><p>提出：Dai Z, Yang Z, Yang Y, et al. Transformer-xl: Attentive
+language models beyond a fixed-length context[J]. arXiv preprint
+arXiv:1901.02860, 2019.</p></li>
+<li><p>原理</p>
+<p><span class="math display">\[
+\begin{aligned}
+\mathbf{A}_{i, j}^{\mathrm{abs}} &amp; =
+(\mathbf{E}_{x_i}^{\top}+\mathbf{U}_i^{\top}) \mathbf{W}_q^{\top}
+\mathbf{W}_k (\mathbf{E}_{x_j} + \mathbf{U}_j) \\
+&amp; =\underbrace{\mathbf{E}_{x_i}^{\top} \mathbf{W}_q^{\top}
+\mathbf{W}_k \mathbf{E}_{x_j}}_{(a)}+\underbrace{\mathbf{E}_{x_i}^{\top}
+\mathbf{W}_q^{\top} \mathbf{W}_k
+\mathbf{U}_j}_{(b)}+\underbrace{\mathbf{U}_i^{\top} \mathbf{W}_q^{\top}
+\mathbf{W}_k \mathbf{E}_{x_j}}_{(c)}+\underbrace{\mathbf{U}_i^{\top}
+\mathbf{W}_q^{\top} \mathbf{W}_k \mathbf{U}_j}_{(d)}
+\end{aligned}
+\]</span></p>
+<p>其中，<span class="math inline">\(E_{x_i}\)</span> 表示 word
+embedding 序列，<span class="math inline">\(\mathbf{U}_i\)</span>
+表示绝对位置 embedding。</p>
+<p><span class="math display">\[
+\begin{aligned}
+\mathbf{A}_{i, j}^{\mathrm{rel}} &amp;=
+(\mathbf{E}_{x_i}^{\top}\mathbf{W}_q^{\top}+u^{\top})\mathbf{W}_{k, E}
+\mathbf{E}_{x_j} +
+(\mathbf{E}_{x_i}^{\top}\mathbf{W}_q^{\top}+v^{\top})\mathbf{W}_{k, R}
+\mathbf{R}_{i-j} \\
+&amp; =\underbrace{\mathbf{E}_{x_i}^{\top} \mathbf{W}_q^{\top}
+\mathbf{W}_{k, E}
+\mathbf{E}_{x_j}}_{(a)}+\underbrace{\mathbf{E}_{x_i}^{\top}
+\mathbf{W}_q^{\top} \mathbf{W}_{k, R}
+\mathbf{R}_{i-j}}_{(b)}+\underbrace{u^{\top} \mathbf{W}_{k, E}
+\mathbf{E}_{x_j}}_{(c)}+\underbrace{v^{\top} \mathbf{W}_{k, R}
+\mathbf{R}_{i-j}}_{(d)}
+\end{aligned}
+\]</span></p>
+<p>其中，<span class="math inline">\(\mathbf{W}_{k, E}\)</span> 和 <span class="math inline">\(\mathbf{W}_{k, R}\)</span>
+分别表示针对内容和相对位置的权重矩阵，<span class="math inline">\(u\)</span>、<span class="math inline">\(v\)</span>
+是可学习的参数，<span class="math inline">\(\mathbf{R}\)</span>
+表示相对位置编码矩阵。其中，<span class="math inline">\(u\)</span> 对
+<span class="math inline">\(x_k\)</span> 在所有 query 位置的 attention
+score
+施加了一个统一的偏置，动态调整对内容的偏好，如模型可能倾向于关注某些特定词性的词（如动词或名词）；<span class="math inline">\(v\)</span>
+为相对位置关系引入了一个全局偏置；可学习的 <span class="math inline">\(u\)</span>、<span class="math inline">\(v\)</span>
+使得不同任务的模型可以自适应地调整内容、相对位置的影响。</p></li>
+</ul>
+<h1 id="相对位置-aware-self-attention">3. 相对位置 aware
 self-attention</h1>
 <ul>
 <li><p>提出：Shaw P, Uszkoreit J, Vaswani A. Self-attention with
@@ -455,7 +505,7 @@ a_{i j}^V &amp; =w_{\operatorname{clip}(j-i, k)}^V \\
 \operatorname{clip}(x, k) &amp; =\max (-k, \min (k, x))
 \end{aligned}\]</span></p></li>
 </ul>
-<h1 id="rope">3. RoPE</h1>
+<h1 id="rope">4. RoPE</h1>
 <ul>
 <li><p>提出：Su J, Ahmed M, Lu Y, et al. Roformer: Enhanced transformer
 with rotary position embedding[J]. 2021.</p></li>
@@ -576,7 +626,7 @@ q_{d-2}
 \sin m \theta_{d / 2-1}
 \end{array}\right) \]</span></p>
 </details>
-<h2 id="远程衰减">3.1. 远程衰减</h2>
+<h2 id="远程衰减">4.1. 远程衰减</h2>
 <p>随着相对距离增加，<span class="math inline">\(\mathbf{q}\)</span>、<span class="math inline">\(\mathbf{k}\)</span> 的内积震荡衰减。</p></li>
 </ul>
 <p><img src="https://note.youdao.com/yws/api/personal/file/WEB6f4d4847e72369309380937443c06ebe?method=download&shareKey=084284ff0628e98fe5754563476382e7" width="320"></p>
@@ -626,7 +676,7 @@ plt.title(&#39;Similarity decay for RoPE&#39;)
 plt.show()
 plt.savefig(&#39;rope.png&#39;)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </details>
-<h1 id="alibi">4. ALiBi</h1>
+<h1 id="alibi">5. ALiBi</h1>
 <ul>
 <li><p>提出：Press O, Smith N A, Lewis M. Train short, test long:
 Attention with linear biases enables input length extrapolation[J].
@@ -787,7 +837,7 @@ ALiBi 并不能利用更长的上下文进行更准确的预测。</p>
                     <div class="publish-info">
                             <span class="publish-date">
                                 <i class="far fa-clock fa-fw icon-date"></i>2025-01-16
-                                <i class="far fa-edit fa-fw icon-date"></i>2025-02-10
+                                <i class="far fa-edit fa-fw icon-date"></i>2025-03-14
                             </span>
                         <span class="publish-author">
                             

@@ -349,7 +349,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2025-02-09
+                    2025-03-14
                 </div>
                 
 
@@ -375,6 +375,7 @@
 <li>子词：若采用所有单词、符号作为词表，太大；若采用字符，难以表达语义。</li>
 </ul>
 <h1 id="子词分割算法">1. 子词分割算法</h1>
+<p>Byte-level BPE 因其普适性，是当前的主流选择。</p>
 <h2 id="bpe">1.1. BPE</h2>
 <ul>
 <li>Sennrich R. Neural machine translation of rare words with subword
@@ -447,8 +448,13 @@ SentencePiece 可以直接从原始句子训练。</li>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://github.com/openai/tiktoken" class="uri">https://github.com/openai/tiktoken</a> OpenAI</li>
 <li>相较于 transformers TokenizerFast 更快。</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/openai/tiktoken/blob/main/tiktoken/_educational.py#L208">训练示例
+<code>tiktoken._educational.train_simple_encoding</code></a></li>
 <li>应用：如 Llama 3、<a target="_blank" rel="noopener" href="https://github.com/QwenLM/Qwen/blob/main/tokenization_note.md">Qwen</a>、GLM-4-9b。</li>
 </ul>
+<h2 id="hugging-face-tokenizers-库">2.3. Hugging Face Tokenizers 库</h2>
+<p><a target="_blank" rel="noopener" href="https://huggingface.co/docs/tokenizers/components">提供目前最常用的
+tokenizers 的快速实现。</a></p>
 <h1 id="优化点">3. 优化点</h1>
 <ul>
 <li>最优词表大小</li>
