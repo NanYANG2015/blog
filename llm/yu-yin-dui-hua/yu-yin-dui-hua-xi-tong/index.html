@@ -353,7 +353,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2025-03-14
+                    2025-03-16
                 </div>
                 
 
@@ -550,17 +550,22 @@ speaker 数据，利用中间 checkpoint 快速扩展 native speaker、目标说
 <li>LUCY 基于函数调用数据集（如
 WebPCM、DevOpsEval），保留适合语音交互的，如谷歌搜索、天气搜索、新闻搜索等，采用
 LLM 改写回复。并在开始添加简洁的确认，以补偿函数调用延迟。</li>
+<li><a href="https://nanyang2015.github.io/blog/llm/agent/yin-pin-rag/">RAG</a></li>
 </ul>
 <h2 id="多轮对话长上下文">3.8. 多轮对话长上下文</h2>
 <ul>
+<li><a href="https://nanyang2015.github.io/blog/llm/agent/dui-hua-ji-yi-guan-li/">对话记忆管理</a></li>
 <li>多轮对话历史仅采用文本，转写用户语音，回复文本采用生成文本，如
 Step-Audio、SLAM-Omni、LUCY（用户语音未转写，回复仅保留文本）。但
 SLAM-Omni
 指出“在某些情况下，历史上下文保留非语言信息对于保持对话的连贯性和深度至关重要”。</li>
+<li>减小序列长度
+<ul>
 <li>SLAM-Omni 将输入的连续音频表示 5 帧拼接、每一步预测 1个文本 token +
 3个音频 token，显著减小了序列长度。</li>
 <li>SpeechGPT 2.0-preview 将输入的音频表示多帧拼接、每一步预测 1个文本
 token + 多解码头的自回归语言模型生成多帧 RVQ token。</li>
+</ul></li>
 </ul>
 <h2 id="歌声生成">3.9. 歌声生成</h2>
 <ul>

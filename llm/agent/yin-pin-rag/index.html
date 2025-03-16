@@ -4,8 +4,17 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="语音对话, 全双工">
-    <meta name="description" content="用户音频 token chunk、回复文本 token chunk、回复音频 token chunk 交替，支持全双工语音对话。">
+    <meta name="keywords" content="音频 RAG, AI, 语音, 算法">
+    <meta name="description" content="1. 应用
+
+ASR：方言、专有名词等。
+音频问答、音乐检索。
+相较于 ASR-文本 RAG，避免了 ASR
+的转写错误、计算开销；保留了音频中的非人声信息。
+
+2. 检索器
+
+WavRAG：基于 Qwen2-Audio，">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +26,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>OmniFlatten | 梦园</title>
+    <title>音频 RAG | 梦园</title>
     <link rel="icon" type="image/png" href="/blog/favicon.png">
     
 
@@ -316,7 +325,7 @@
                     <div class="row">
                         <div class="col s12 m12 l12">
                             <div class="brand">
-                                <h1 class="description center-align post-title">OmniFlatten</h1>
+                                <h1 class="description center-align post-title">音频 RAG</h1>
                             </div>
                         </div>
                     </div>
@@ -333,12 +342,8 @@
                                 LLM
                             </a>
                         
-                            <a href="/blog/categories/LLM/%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/" class="post-category">
-                                语音对话
-                            </a>
-                        
-                            <a href="/blog/categories/LLM/%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/%E8%AE%BA%E6%96%87/" class="post-category">
-                                论文
+                            <a href="/blog/categories/LLM/Agent/" class="post-category">
+                                Agent
                             </a>
                         
                     </div>
@@ -350,14 +355,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2024-11-06
+                    2025-02-28
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2025-02-07
+                    2025-03-16
                 </div>
                 
 
@@ -379,104 +384,139 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <ul>
-<li>Zhang Q, Cheng L, Deng C, et al. OmniFlatten: An End-to-end GPT
-Model for Seamless Voice Conversation[J]. arXiv preprint
-arXiv:2410.17799, 2024.</li>
-<li><a target="_blank" rel="noopener" href="https://omniflatten.github.io/" class="uri">https://omniflatten.github.io/</a></li>
-<li>作者：来自阿里通义实验室</li>
-<li><font color="red">创新点：不进行计算密集型的预训练，而是通过 10wh
-ASR、TTS 任务进行模态对齐。</font>相较于 SyncLLM，不对音频离散 token
-去重，避免重建时引入的误差导致退化。</li>
-</ul>
-<h1 id="系统结构">1. 系统结构</h1>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEBfd17db7ed1e694c16cfad004cf9e5018?method=download&shareKey=a02ef1318c7f19e3d18fb9f2ca7e3c22" width="698"></p>
+                <h1 id="应用">1. 应用</h1>
 <ul>
-<li>离散语音 tokenizer: 同 CosyVoice，单码本 4096，25Hz。</li>
-<li>Qwen2-0.5B。</li>
-<li>采用固定大小的文本 token chunk size = 2、音频 token chunk size =
-10。文本结束后填充 <span class="math inline">\(\text
-{silent_text_token}\)</span>，音频流填充 <span class="math inline">\(\text {silent_speech_token}\)</span>。</li>
+<li>ASR：方言、专有名词等。</li>
+<li>音频问答、音乐检索。</li>
+<li>相较于 ASR-文本 RAG，避免了 ASR
+的转写错误、计算开销；保留了音频中的非人声信息。</li>
 </ul>
-<h1 id="训练">2. 训练</h1>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB13b06bb475f1846d6a29e6b723c294fc?method=download&shareKey=fd70b43e04e492fec9f775a7266019c4" width="578"></p>
+<h1 id="检索器">2. 检索器</h1>
+<ul>
+<li>WavRAG：基于 Qwen2-Audio，对比学习，冻结音频 encoder，训练
+projector、LLM，取最后一个 token 的隐层表示，InfoNCE loss。</li>
+</ul>
+<h1 id="生成">3. 生成</h1>
+<p>简单拼接所有检索到的文档可能性能不佳。</p>
+<h2 id="cot">3.1. COT</h2>
+<ul>
+<li>Zero-Shot-CoT <span class="math display">\[C_{\text {answer
+}}=G_{\text {reasoning }}\left(q_{\text {uni }}, P_{\text {prompt
+}}+P^{\prime}, \mathcal{K}_k\right)\]</span> 其中 <span class="math inline">\(P_{\text {prompt}}\)</span> 为引导性提示，<span class="math inline">\(P^{\prime}\)</span> 为“魔法提示”，如 "Let’s think
+step-by-step"，<span class="math inline">\(\mathcal{K}_k\)</span>
+为检索到的知识。</li>
+</ul>
+<h2 id="universal-self-consistency">3.2. Universal Self-Consistency</h2>
+<p>从 LLM
+采样多条推理路径，不是简单地对生成的答案进行多数投票（对于自由形式的答案可能有问题），而是将所有采样的推理路径和答案拼接起来，提示
+LLM 选择最一致的回应。</p>
+<h1 id="数据集">4. 数据集</h1>
 <table>
-<colgroup>
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-</colgroup>
 <thead>
 <tr>
-<th>多阶段后训练</th>
-<th>数据</th>
-<th>数据集</th>
-<th>训练策略</th>
+<th>Task</th>
+<th>Dataset</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>ASR + TTS</td>
-<td><span class="math inline">\([ASR][SOS] \mathrm{S} _ \text
-{seq}[EOS][SOT] \mathrm{T} _\mathrm{seq}[EOT] \\ [TTS][SOT] \mathrm{T}
-_\mathrm{seq}[EOT][SOS] \mathrm{S} _ \text {seq}[EOS]\)</span></td>
-<td>10wh 中英，Aishell-3 + LibriTTS + TED-LIUM + VoxPopuli + Librispeech
-+ MLS + 自有数据集</td>
-<td>最大序列长度 1024。</td>
+<td>Speech-to-Text</td>
+<td>Quora, HotpotQA</td>
 </tr>
 <tr>
-<td>flatten 4 流</td>
-<td>用户+系统 文本+音频</td>
-<td>36w turn-based 多轮对话，2kh，文本对话数据集 TTS。</td>
-<td>最大序列长度 8192。<br>mask 用户通道 loss
-训练更稳定，可能由于用户通道进行了加噪。</td>
+<td>Text-to-Text</td>
+<td>ELI5, TrivialQA, SQuAD, MS MARCO</td>
 </tr>
 <tr>
-<td>flatten 3 流</td>
-<td>上述去除用户文本</td>
-<td></td>
-<td></td>
+<td>Speech-to-Speech</td>
+<td>SLUE-SQA-5</td>
 </tr>
 <tr>
-<td>flatten 2 流</td>
-<td>仅音频</td>
-<td></td>
-<td></td>
+<td>Text-to-Speech</td>
+<td>SpokenSQuAD</td>
 </tr>
 </tbody>
 </table>
-<p>* batch size: 1亿 token。</p>
 <ul>
-<li>训练框架：<a target="_blank" rel="noopener" href="https://github.com/karpathy/nanoGPT/tree/master">NanoGPT</a></li>
-<li>语音对话数据集构建：高质量文本对话数据集 TTS
+<li><p>WavRAG 训练集</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB38700a1745d6b6e018271c80022aeb78?method=download&shareKey=ce762341474012a7ea686e9956b3d5bd" width="442"></p></li>
+</ul>
+<h2 id="合成数据-pipeline">4.1. 合成数据 pipeline</h2>
+<h3 id="audiotext-to-audiotext-retrieval">4.1.1. Audio+Text-to-Audio+Text
+Retrieval</h3>
 <ul>
-<li>Alpaca、Moss、BelleCN、ultraChat
+<li><p>CLAP，计算音频相似度，选出互相相似度最高的音频对。</p></li>
+<li><p>Gemini1.5
+Pro，输入上述音频对、文本描述，生成扩展知识、问题、答案</p>
+<details>
+<summary>
+<p>提示</p>
+</summary>
+<pre class="line-numbers language-none"><code class="language-none">I need to build a scenario like this:
+The user inputs an audio B and asks a question about its information (such as paralinguistic information such as style, emotion or characteristics, or the knowledge it represents). To assist in the analysis, the system finds a similar audio A and its text description in the knowledge base through audio similarity retrieval to assist in answering.
+
+I will give you two audio clips and their captions, You need to complete the following tasks:
+
+Knowledge Expansion
+Based on the caption of Audio A, expand on professional and detailed background information about the audio itself as well as its broader context. The expansion should be factual and detailed — information that a typical LLM may not readily have or answer with certainty — and Knowledge must directly help answer the generated questions. Write this expanded knowledge in a style similar to Wikipedia, ensuring logical consistency. Integrate mentions of Audio B question&#39;s answer naturally rather than inserting them forcefully. But it should not explicitly mention the existence of audio B. Don’t add too much irrelevant information.
+
+Question Generation
+Generate a question about audio B, reflecting the need for audio analysis. Cannot mention any information in Audio B in the question and the questions should ensure that the LLM cannot accurately answer them based on its own knowledge. The generated questions must be answerable according to the knowledge of audio A above. Audio B and the question should form a retrieval pair that uniquely retrieves audio A and its knowledge. You need to ensure that the question reflects the advantages of audio plus text dual-modal retrieval. Text alone cannot accurately retrieve.
+
+Answer Generation
+It must be an answer that can be answered based on the knowledge provided by audio A and the knowledge that a typical large model may have. Do not disclose the existence of Audio A to the user. When forming an answer, use knowledge from Audio A in conjunction with the features of Audio B. Ensure the final answer aligns with facts and audio B&#39;s caption but should not explicitly mention the existence of audio B&#39;s caption.
+
+You only need to output content in the following format:
+Rewrite knowledge:
+Question generation:
+Answer generation:<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</details></li>
+<li><p>Google API 扩充知识，如物种描述、名人传记。</p></li>
+</ul>
+<h1 id="评价指标">5. 评价指标</h1>
+<h2 id="检索">5.1. 检索</h2>
 <ul>
-<li>过滤：含大量非文本元素（如代码、数学表达式）、中英文超过 200
-个单词、包含不常见的符号等。</li>
+<li><p>召回率@k：前k个检索结果中相关项的比例。</p></li>
+<li><p>NDCG@10 (Normalized Discounted Cumulative
+Gain)：评价排名质量的指标，相关项排名越高分数越高。</p></li>
+<li><p>平均推理时间</p></li>
+<li><p>成对音频-文本 embedding PCA 可视化</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB45f3ae01cd82fd846b05ea52920ee059?method=download&shareKey=ce762341474012a7ea686e9956b3d5bd" width="910"></p></li>
+</ul>
+<h2 id="生成-1">5.2. 生成</h2>
+<ul>
+<li>事实得分：采用 LLM，评价生成文本中的事实声明被检索证据支持的比例。 *
+Oracle: 仅提供 ground truth 文档。</li>
+</ul>
+<h1 id="相关论文">6. 相关论文</h1>
+<h2 id="wavrag">6.1. WavRAG</h2>
+<ul>
+<li>Chen Y, Ji S, Wang H, et al. WavRAG: Audio-Integrated Retrieval
+Augmented Generation for Spoken Dialogue Models[J]. arXiv preprint
+arXiv:2502.14727, 2025.</li>
+<li>作者来自浙大等</li>
+</ul>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB56745827a8c96c2800b45b591503a452?method=download&shareKey=ce762341474012a7ea686e9956b3d5bd" width="925"></p>
+<ul>
+<li><p>检索器基线</p>
+<ul>
+<li>BGE：ASR + BGE embedding</li>
+<li>CLSR：SOTA 语音-文本检索</li>
+<li>CLAP</li>
 </ul></li>
-<li>CosyVoice TTS
+<li><p>评价</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBe8c988cb4274947d590aa7d687c99450?method=download&shareKey=ce762341474012a7ea686e9956b3d5bd" width="928"></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBd6e790c6c1802c2e50617ea78050946d?method=download&shareKey=ce762341474012a7ea686e9956b3d5bd" width="443"></p>
 <ul>
-<li>用户说话人 embedding 从 Librispeech、3DSpeaker
-中采样。用户通道加噪，MUSAN，SNR [15, 25]dB。</li>
-</ul></li>
-<li>用户语音结束后助手立即回复，助手语音结束后、用户开始说话前采样停顿时长。</li>
+<li>相较于 Qwen2-Audio，对比学习后检索性能显著提升。</li>
+<li>相较于 whisper + BGE，加速 5-14 倍，检索准确性相当或更好。</li>
 </ul></li>
 </ul>
-<h1 id="评价">3. 评价</h1>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEBcb0e6762b605fa1f180ec3839885d1fd?method=download&shareKey=8b25eaa03696952671f9e646b74f2e48" width="572"></p>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEBa260cc2a26dbc448db8760136daeef32?method=download&shareKey=70e936e1f4329ece4a6ed144996b01c5" width="574"></p>
-<p>* <a target="_blank" rel="noopener" href="https://help.aliyun.com/zh/model-studio/developer-reference/use-qwen-by-calling-api">QWen-max</a></p>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB2d37acf019e0623d345e802f5b6b4f9c?method=download&shareKey=8bac17fdc78a3aa2f54520cc59769a96" width="282"></p>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB58c32ed1ac62ba092fc83f095d4f1e6f?method=download&shareKey=96a4be923da7344deb2a32bb059e7d5d" width="691"></p>
+<h2 id="todo">6.2. TODO</h2>
 <ul>
-<li>Assistant Turn-taking Acc@k: 用户有语义的语音 token 结束后第 k 个
-token 助手正确预测为非 silent token。</li>
-<li>User Turn-taking Acc@k: 助手说话时用户输入有语义的语音 token，第 k
-个 token 后助手正确预测为 silent token。</li>
-<li><font color="red">taking turn 平均响应时间：系统 160ms，用户
-805ms。</font>训练集未覆盖用户打断助手语音的数据。</li>
+<li><a target="_blank" rel="noopener" href="https://openreview.net/forum?id=Iw5O9ttpAF">CLSR:
+End-to-end Contrastive Language-Speech Retriever For Better Speech
+Retrieval Augmented Generation</a></li>
 </ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">
                 
@@ -526,9 +566,9 @@ token 助手正确预测为非 silent token。</li>
 
 <script type="text/javascript">
     disqus_config = function () {
-        this.page.url = 'https://nanyang2015.github.io/blog/llm/yu-yin-dui-hua/lun-wen/omniflatten/';
-        this.page.identifier = '/blog/llm/yu-yin-dui-hua/lun-wen/omniflatten/';
-        this.page.title = 'OmniFlatten';
+        this.page.url = 'https://nanyang2015.github.io/blog/llm/agent/yin-pin-rag/';
+        this.page.identifier = '/blog/llm/agent/yin-pin-rag/';
+        this.page.title = '音频 RAG';
     };
     let disqus_shortname = 'https-nanyang2015-github-io-blog';
 
@@ -560,21 +600,21 @@ token 助手正确预测为非 silent token。</li>
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/blog/llm/yu-yin-dui-hua/lun-wen/syncllm/">
+                <a href="/blog/llm/yu-yin-dui-hua/lun-wen/lucy/">
                     <div class="card-content">
-                        <span class="card-title">SyncLLM</span>
+                        <span class="card-title">LUCY</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            用户、回复音频 token chunk 交替，支持全双工语音对话。考虑网络延迟，多预测一个用户 chunk、回复 chunk。
+                            腾讯优图等提出的语音对话模型，通过合成数据、函数调用微调来增强语音对话模型响应的情感控制、自然度、资讯性。
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2024-11-06
-                            <i class="far fa-edit fa-fw icon-date"></i>2025-02-07
+                            <i class="far fa-clock fa-fw icon-date"></i>2025-03-02
+                            <i class="far fa-edit fa-fw icon-date"></i>2025-03-02
                         </span>
                         <span class="publish-author">
                             
@@ -606,21 +646,21 @@ token 助手正确预测为非 silent token。</li>
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/blog/llm/yu-yin-dui-hua/yu-yin-dui-hua-xi-tong/">
+                <a href="/blog/llm/yu-yin-dui-hua/lun-wen/step-audio/">
                     <div class="card-content">
-                        <span class="card-title">语音对话系统</span>
+                        <span class="card-title">Step-Audio</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            语音对话系统实现方案，持续整理中……
+                            阶跃星辰开源的 130B speech2text + 3B TTS 模型。
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-11-05
-                                <i class="far fa-edit fa-fw icon-date"></i>2025-03-16
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-02-27
+                                <i class="far fa-edit fa-fw icon-date"></i>2025-03-04
                             </span>
                         <span class="publish-author">
                             
@@ -632,6 +672,10 @@ token 助手正确预测为非 silent token。</li>
                             
                             <a href="/blog/categories/LLM/%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/" class="post-category">
                                     语音对话
+                                </a>
+                            
+                            <a href="/blog/categories/LLM/%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/%E8%AE%BA%E6%96%87/" class="post-category">
+                                    论文
                                 </a>
                             
                             
